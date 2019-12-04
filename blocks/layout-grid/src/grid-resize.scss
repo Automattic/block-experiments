@@ -1,0 +1,81 @@
+@import '../constants.scss';
+
+/**
+ * Resize grid overlay
+ */
+
+.wp-block-jetpack-layout-grid .wpcom-resize-grid {
+	user-select: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	touch-action: none;
+	// When resizing we switch to absolute positioning
+	&:not(.wpcom-resize-grid__resizing) {
+		display: grid;
+		grid-gap: 24px;
+		grid-template-columns: $grid-desktop;
+
+		// This padding adds end gutters.
+		padding-left: 24px;
+		padding-right: 24px;
+	}
+
+	// Reset inherited negative margins.
+	// These margins are in the block editor to compensate for the 14px block padding on all blocks.
+	// They don't play well with CSS Grid, so we reset them, and re-apply them later.
+	margin-left: 0;
+	margin-right: 0;
+
+	// Every block, including nested blocks, are born with an intrinsic minimum margin.
+	// This resets that for the containers, which aren't meant to have that intrinsically.
+	> .wp-block > .editor-block-list__block-edit > [data-block] {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+
+	.wp-block {
+		max-width: none;
+	}
+
+	&.wpcom-resize-grid__resizing .wpcom-resize-grid__column-resizing {
+		position: absolute !important;
+		height: 100%;
+	}
+}
+
+.wpcom-resize-grid__column-hidden {
+	display: none;
+}
+
+.wpcom-resize-grid__resizing {
+	user-select: none;
+	z-index: 10000;
+	touch-action: none;
+}
+
+// Elevate resize handle to be above column block hover & select layer.
+.wpcom-resize-grid__column .components-resizable-box__side-handle {
+	z-index: 121;
+}
+
+body.is-resizing [data-type="jetpack/layout-grid"] {
+	overflow: inherit;
+}
+
+[data-type="jetpack/layout-grid"][data-align="full"].has-child-selected,
+[data-type="jetpack/layout-grid"][data-align="full"].is-selected,
+body.is-resizing [data-type="jetpack/layout-grid"][data-align="full"] {
+	> .block-editor-block-list__block-edit {
+		width: 100%;
+	}
+
+	// Show borders again
+	> .block-editor-block-list__block-edit::before {
+		border-left-width: 1px;
+		border-right-width: 1px;
+		border-style: solid;
+	}
+}

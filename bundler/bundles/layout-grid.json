@@ -1,0 +1,9 @@
+{
+	"blocks": [
+		"layout-grid"
+	],
+	"version": "1.0.2",
+	"name": "Layout Grid",
+	"description": "Let any blocks align to a global grid",
+	"resource": "jetpack-layout-grid"
+}

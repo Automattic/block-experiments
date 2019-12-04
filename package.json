@@ -1,0 +1,46 @@
+{
+  "name": "block-experiments",
+  "version": "1.0.0",
+  "description": "A monorepo for blocks",
+  "main": "src/index.js",
+  "author": "Automattic",
+  "license": "GPL-2.0-or-later",
+  "scripts": {
+    "env": "wp-scripts env",
+    "start": "node-sass ./editor.scss -o build && node-sass ./style.scss -o build && wp-scripts start & node-sass --watch editor.scss -o build & node-sass --watch style.scss -o build",
+    "build": "wp-scripts build && node-sass ./editor.scss -o build && node-sass ./style.scss -o build",
+    "layout": "node-sass ./blocks/layout-grid/front.scss -o ./blocks/layout-grid",
+    "plugin": "yarn clean && node ./bundler/build",
+    "everything": "./bundler/build/everything.sh",
+    "bundle": "./build/bundle.sh",
+    "all": "node ./bundler/all.js",
+    "clean": "rm -rf ./build ./plugin",
+    "lint": "npm run lint-js & npm run lint-php",
+    "lint-js": "wp-scripts lint-js blocks",
+    "lint-php": "composer run lint"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
+    "@wordpress/scripts": "^6.0.0",
+    "eslint": "^6.7.1",
+    "eslint-config-wpcalypso": "^5.0.0",
+    "eslint-plugin-eslint-comments": "^3.1.2",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^23.0.4",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-wpcalypso": "^4.1.0",
+    "fs-extra": "^8.1.0",
+    "mkdirp": "^0.5.1",
+    "node-sass": "^4.13.0",
+    "replace-in-file": "^4.2.0",
+    "stringcase": "^4.3.1"
+  },
+  "dependencies": {
+    "classnames": "^2.2.6",
+    "fast-average-color": "^5.2.1",
+    "react-image-crop": "^8.4.1",
+    "tinycolor2": "^1.4.1",
+    "typed.js": "^2.0.11"
+  }
+}

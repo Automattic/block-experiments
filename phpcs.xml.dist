@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<ruleset name="WordPress Coding Standards for Gutenberg Plugin">
+	<description>Sniffs for WordPress plugins, with minor modifications for Gutenberg</description>
+
+	<rule ref="PHPCompatibility"/>
+	<config name="testVersion" value="5.6-"/>
+
+	<rule ref="WordPress-Core">
+		<!-- these are annoying or unnecessary -->
+		<exclude name="WordPress.PHP.YodaConditions.NotYoda"/>
+		<exclude name="WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned"/>
+		<exclude name="Generic.Formatting.MultipleStatementAlignment.NotSameWarning"/>
+		<exclude name="Generic.Arrays.DisallowShortArraySyntax.Found"/>
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+
+		<!-- documentation warnings -->
+		<exclude name="Squiz.Commenting.FunctionComment.Missing"/>
+		<exclude name="Squiz.Commenting.FileComment.Missing"/>
+		<exclude name="Squiz.Commenting.ClassComment.Missing"/>
+		<exclude name="Squiz.Commenting.VariableComment.Missing"/>
+		<exclude name="Squiz.Commenting.InlineComment.InvalidEndChar"/>
+		<exclude name="Squiz.Commenting.FileComment.WrongStyle"/>
+		<exclude name="Squiz.Commenting.FunctionComment.WrongStyle"/>
+		<exclude name="Generic.Commenting.DocComment.MissingShort"/>
+		<exclude name="PEAR.Functions.FunctionCallSignature.MultipleArguments"/>
+		<exclude name="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket"/>
+		<exclude name="PEAR.Functions.FunctionCallSignature.CloseBracketLine"/>
+	</rule>
+	<rule ref="WordPress-Docs"/>
+	<rule ref="WordPress.WP.I18n"/>
+	<config name="text_domain" value="default"/>
+
+	<rule ref="VariableAnalysis.CodeAnalysis.VariableAnalysis">
+		<properties>
+			<property name="allowUnusedParametersBeforeUsed" value="true"/>
+		</properties>
+	</rule>
+	<rule ref="WordPress.CodeAnalysis.EmptyStatement"/>
+
+	<rule ref="PEAR.Functions.FunctionCallSignature">
+		<properties>
+			<property name="allowMultipleArguments" value="false"/>
+		</properties>
+	</rule>
+
+	<rule ref="WordPress.WP.I18n.MissingArgDomainDefault" />
+
+	<arg value="ps"/>
+	<arg name="extensions" value="php"/>
+
+	<file>./index.php</file>
+	<file>./rest-api.php</file>
+	<file>./blocks</file>
+
+	<!-- These special comments are markers for the build process -->
+	<rule ref="Squiz.Commenting.InlineComment.WrongStyle"/>
+</ruleset>

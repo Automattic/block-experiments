@@ -1,0 +1,54 @@
+@import '../constants.scss';
+
+/**
+ * Visual grid overlay
+ */
+
+.wpcom-overlay-grid {
+	// The following rules are for Safari.
+	// A CSS grid rendering issue means the child nodes of this grid
+	// won't stretch to fit the vertical space, unless the position
+	// property is changed from absolute, to something else, and back.
+	// By being relative when unselected and absolute when selected, we
+	// constantly "refresh" this hack.
+	position: relative;
+	.is-hovered &,
+	.is-selected & {
+		position: absolute;
+	}
+
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	display: grid;
+	grid-gap: 24px;
+	grid-template-columns: $grid-desktop;
+
+	// This padding adds end gutters.
+	padding-left: 24px;
+	padding-right: 24px;
+
+	// Lower the z-index so it's under the block borders.
+	// @todo: Verify this doesn't mess with alternate templates and background styles.
+	z-index: -1;
+
+	.wpcom-overlay-grid__column {
+		border-left: 1px solid transparent;
+		border-right: 1px solid transparent;
+		transition: border .4s ease;
+
+		.has-child-selected &,
+		.is-hovered &,
+		.is-selected & {
+			border-left: 1px solid #e2e4e7;
+			border-right: 1px solid #e2e4e7;
+		}
+	}
+}
+
+
+body.is-resizing .wpcom-overlay-grid .wpcom-overlay-grid__column {
+	border-left: 1px solid #e2e4e7;
+	border-right: 1px solid #e2e4e7;
+}

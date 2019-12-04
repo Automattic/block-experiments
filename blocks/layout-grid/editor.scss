@@ -1,0 +1,175 @@
+@import './constants.scss';
+@import './src/grid-overlay.scss';
+@import './src/grid-resize.scss';
+@import './src/grid.scss';
+
+/**
+ * Margins & Paddings
+ */
+
+// Unset many of the paddings and margins the block editor sets.
+// This is to make sure resizing the column containers works as expected.
+
+// 1. Reset margins on immediate innerblocks container.
+[data-type="jetpack/layout-grid"] > .block-editor-block-list__block-edit > [data-block] {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+[data-type="jetpack/layout-grid-column"].wp-block { // Selector needs specificity to override.
+	// 2. Unset margins and paddings for column container.
+	padding-left: 0;
+	margin-left: 0;
+	padding-right: 0;
+	margin-right: 0;
+
+	// 3. Unset for contents of container.
+	> .block-editor-block-list__block-edit {
+		padding-left: 0;
+		margin-left: 0;
+		padding-right: 0;
+		margin-right: 0;
+	}
+}
+
+
+/**
+ * Visual Glitches
+ */
+
+[data-type="jetpack/layout-grid"] {
+	// Pending refinements, hide the v6.3 dashed outlines on grid children, they aren't helpful here.
+	.block-editor-block-list__block:not(.is-selected) > .block-editor-block-list__block-edit::before {
+		border-color: transparent !important;
+	}
+}
+
+// Make sure each column is full height in the editor, as it is on the frontend.
+[data-type="jetpack/layout-grid-column"] > .block-editor-block-list__block-edit,
+[data-type="jetpack/layout-grid-column"] > .block-editor-block-list__block-edit > [data-block],
+.wp-block-jetpack-layout-grid-column {
+	height: 100%;
+
+	// This prevents collapsing margins, which makes for a more stable experience.
+	// It is definitely needed for background colors to work.
+	border-top: 0.05px solid transparent;
+	border-bottom: 0.05px solid transparent;
+}
+
+// When grid is full-wide, pad the inner blocks so the side UI is available, including resize handles.
+// To make sure this is smooth, we add some animation.
+// For now this whole bit exists so the side UI, and resize handles, are available even on full-wide blocks.
+// Let's revisit if another solution presents itself.
+[data-type="jetpack/layout-grid"][data-align="full"] {
+	// We use flex to center here, because the margins are already being used.
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	> .block-editor-block-list__block-edit {
+		width: calc( 100% + 44px + 44px ); // The 44px here come from the margin applied left and right of all blocks. @todo, consider a more upgrade friendly method.
+		transition: all .1s ease;
+	}
+}
+
+// Try hiding the alignments dropdown.
+// The grid is only consistent across blocks, if every grid block has the same alignment, ideally full-wide.
+[data-type="jetpack/layout-grid"] > .block-editor-block-list__block-edit > .block-editor-block-contextual-toolbar > .block-editor-block-toolbar > .block-editor-block-switcher + .block-editor-block-toolbar__slot {
+	display: none;
+}
+
+// Hide the hover style & breadcrumbs for individual column containers.
+// This helps simplify the experience for resizing columns.
+// The hover effect may be removed entirely upstream, in which case we can remove this.
+// Ticket to watch: https://github.com/WordPress/gutenberg/issues/17088
+[data-type="jetpack/layout-grid-column"].is-hovered > .block-editor-block-list__block-edit {
+	// Don't show breadcrumbs.
+	> .block-editor-block-list__breadcrumb {
+		display: none;
+	}
+
+	// Don't show outline.
+	&::before {
+		content: none;
+	}
+}
+
+
+/**
+ * Inspector Controls
+ */
+
+.jetpack-layout-grid-columns .block-editor-block-styles__item-preview {
+	position: relative;
+
+	svg {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+}
+
+.components-button-group + .jetpack-layout-grid-settings {
+	margin-top: 16px;
+}
+
+.components-panel__body .jetpack-layout-grid-settings__group {
+	display: flex;
+	padding: 8px 0;
+	margin-bottom: 8px;
+
+	.components-base-control,
+	.components-base-control__field {
+		margin-bottom: 0;
+	}
+
+	.components-base-control:first-child {
+		margin-right: 16px;
+	}
+}
+
+
+/**
+ * Placeholder options
+ */
+
+.wp-block-jetpack-layout-grid .block-editor-inner-blocks__template-picker-options {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	width: 100%;
+	list-style: none;
+	margin-bottom: 0;
+
+	> li {
+		list-style: none;
+		flex-basis: 100%;
+		flex-shrink: 1;
+		max-width: 100px;
+	}
+
+	.block-editor-inner-blocks__template-picker-option {
+		height: auto;
+		line-height: inherit;
+		background: #fff;
+	}
+}
+
+.jetpack-layout-grid-previewing {
+	font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+	font-size: 13px;
+	position: absolute;
+	bottom: -24px - 14px;
+	left: -3px;
+	padding: 0 8px;
+	height: 24px;
+	background-color: rgba(0,0,0,0.8);
+	color: #fff;
+	display: none;
+}
+
+[data-type="jetpack/layout-grid"].has-child-selected .jetpack-layout-grid-previewing,
+[data-type="jetpack/layout-grid"].is-selected .jetpack-layout-grid-previewing {
+	display: block;
+}

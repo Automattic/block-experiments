@@ -1,0 +1,103 @@
+/**
+ * Grid Block styles.
+ * These styles are loaded into both the editor, and the frontend.
+ */
+
+@import './constants.scss';
+
+
+/**
+ * Responsive Grid Options
+ */
+
+.wp-block-jetpack-layout-grid {
+	display: grid;
+	grid-gap: $grid-gutter;
+	grid-template-columns: $grid-mobile;
+
+	// Grid rules.
+	// Mobile first.
+	@for $i from 1 through 12 {
+		@for $x from 1 through 4 {
+			&.column#{ $x }-mobile-grid__start-#{ $i } > .wp-block-jetpack-layout-grid-column:nth-child(#{ $x }) {
+				grid-column-start: $i;
+			}
+		}
+	}
+
+	@for $i from 1 through 12 {
+		@for $x from 1 through 4 {
+			&.column#{ $x }-mobile-grid__span-#{ $i } > .wp-block-jetpack-layout-grid-column:nth-child(#{ $x }) {
+				grid-column-end: span $i; // Set it to span $i columns, regardless of starting position.
+			}
+		}
+	}
+
+	@for $i from 1 through 4 {
+		@for $x from 1 through 4 {
+			&.column#{ $x }-mobile-grid__row-#{ $i } > .wp-block-jetpack-layout-grid-column:nth-child(#{ $x }) {
+				grid-row-start: $i;
+			}
+		}
+	}
+
+	// Tablet grid rules.
+	@media (min-width: #{ ($break-small) }) {
+
+		grid-template-columns: $grid-tablet;
+
+		@for $i from 1 through 12 {
+			@for $x from 1 through 4 {
+				&.column#{ $x }-tablet-grid__start-#{ $i } > .wp-block-jetpack-layout-grid-column:nth-child(#{ $x }) {
+					grid-column-start: $i;
+				}
+			}
+		}
+
+		@for $i from 1 through 12 {
+			@for $x from 1 through 4 {
+				&.column#{ $x }-tablet-grid__span-#{ $i } > .wp-block-jetpack-layout-grid-column:nth-child(#{ $x }) {
+					grid-column-end: span $i; // Set it to span $i columns, regardless of starting position.
+				}
+			}
+		}
+
+		@for $i from 1 through 4 {
+			@for $x from 1 through 4 {
+				&.column#{ $x }-tablet-grid__row-#{ $i } > .wp-block-jetpack-layout-grid-column:nth-child(#{ $x }) {
+					grid-row-start: $i;
+				}
+			}
+		}
+	}
+
+
+	// Desktop grid rules.
+	@media (min-width: #{ ($break-xlarge) }) {
+		grid-template-columns: $grid-desktop;
+
+		@for $i from 1 through 12 {
+			@for $x from 1 through 4 {
+				&.column#{ $x }-desktop-grid__start-#{ $i } > .wp-block-jetpack-layout-grid-column:nth-child(#{ $x }) {
+					grid-column-start: $i;
+				}
+			}
+		}
+
+		@for $i from 1 through 12 {
+			@for $x from 1 through 4 {
+				&.column#{ $x }-desktop-grid__span-#{ $i } > .wp-block-jetpack-layout-grid-column:nth-child(#{ $x }) {
+					grid-column-end: span $i; // Set it to span $i columns, regardless of starting position.
+				}
+			}
+		}
+
+		@for $i from 1 through 4 {
+			@for $x from 1 through 4 {
+				&.column#{ $x }-desktop-grid__row-#{ $i } > .wp-block-jetpack-layout-grid-column:nth-child(#{ $x }) {
+					grid-row-start: $i;
+				}
+			}
+		}
+	}
+}

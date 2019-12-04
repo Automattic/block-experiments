@@ -1,0 +1,119 @@
+/**
+ * Grid Block styles.
+ * These styles are loaded into both the editor, and the frontend.
+ */
+
+@import './constants.scss';
+
+/**
+ * Padding Options
+ */
+
+.wp-block-jetpack-layout-grid {
+	// This padding adds end gutters.
+	padding-left: 24px;
+	padding-right: 24px;
+
+	// Additional, user-set paddings.
+	// Apply both gutter padding and user-set padding, when a background is also set.
+	&.wp-block-jetpack-layout-grid__padding-none {
+		padding: $padding-none;
+
+		&.has-background {
+			padding: $padding-none ($padding-none + $grid-gutter__background-offset);
+		}
+	}
+
+	&.wp-block-jetpack-layout-grid__padding-small .wp-block-jetpack-layout-grid-column {
+		padding: $padding-small;
+
+		&.has-background {
+			padding: $padding-small ($padding-small + $grid-gutter__background-offset);
+		}
+	}
+
+	&.wp-block-jetpack-layout-grid__padding-medium .wp-block-jetpack-layout-grid-column {
+		padding: $padding-medium;
+
+		&.has-background {
+			padding: $padding-medium ($padding-medium + $grid-gutter__background-offset);
+		}
+	}
+
+	&.wp-block-jetpack-layout-grid__padding-large .wp-block-jetpack-layout-grid-column {
+		padding: $padding-large;
+
+		&.has-background {
+			padding: $padding-large ($padding-large + $grid-gutter__background-offset);
+		}
+	}
+
+	&.wp-block-jetpack-layout-grid__padding-huge .wp-block-jetpack-layout-grid-column {
+		padding: $padding-huge;
+
+		&.has-background {
+			padding: $padding-huge ($padding-huge + $grid-gutter__background-offset);
+		}
+	}
+}
+
+/**
+ * Individual Column Options
+ */
+
+.wp-block-jetpack-layout-grid .wp-block-jetpack-layout-grid-column {
+	// When a column has a background color, we add negative margins to enable
+	// some of the gutter to work as default padding.
+	&.has-background {
+		margin-left: -$grid-gutter__background-offset;
+		margin-right: -$grid-gutter__background-offset;
+		padding-left: $grid-gutter__background-offset;
+		padding-right: $grid-gutter__background-offset;
+
+		// This hack uncollapses the margins, which is important for the background color.
+		padding-top: .05px;
+		padding-bottom: .05px;
+	}
+
+	// Additional, user-set paddings.
+	// Apply both gutter padding and user-set padding, when a background is also set.
+	&.wp-block-jetpack-layout-grid__padding-none {
+		padding: $padding-none;
+
+		&.has-background {
+			padding: $padding-none ($padding-none + $grid-gutter__background-offset);
+		}
+	}
+
+	&.wp-block-jetpack-layout-grid__padding-small {
+		padding: $padding-small;
+
+		&.has-background {
+			padding: $padding-small ($padding-small + $grid-gutter__background-offset);
+		}
+	}
+
+	&.wp-block-jetpack-layout-grid__padding-medium {
+		padding: $padding-medium;
+
+		&.has-background {
+			padding: $padding-medium ($padding-medium + $grid-gutter__background-offset);
+		}
+	}
+
+	&.wp-block-jetpack-layout-grid__padding-large {
+		padding: $padding-large;
+
+		&.has-background {
+			padding: $padding-large ($padding-large + $grid-gutter__background-offset);
+		}
+	}
+
+	&.wp-block-jetpack-layout-grid__padding-huge {
+		padding: $padding-huge;
+
+		&.has-background {
+			padding: $padding-huge ($padding-huge + $grid-gutter__background-offset);
+		}
+	}
+}

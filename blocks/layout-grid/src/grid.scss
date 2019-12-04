@@ -1,0 +1,175 @@
+@import '../constants.scss';
+
+/**
+ * Grid columns
+ */
+
+// Output editor specific styles.
+.wp-block-jetpack-layout-grid > .block-editor-inner-blocks > .block-editor-block-list__layout {
+	display: grid;
+	grid-gap: 24px;
+	grid-template-columns: $grid-desktop;
+
+	// Reset inherited negative margins.
+	// These margins are in the block editor to compensate for the 14px block padding on all blocks.
+	// They don't play well with CSS Grid, so we reset them, and re-apply them later.
+	margin-left: 0;
+	margin-right: 0;
+
+	// Every block, including nested blocks, are born with an intrinsic minimum margin.
+	// This resets that for the containers, which aren't meant to have that intrinsically.
+	> .wp-block > .editor-block-list__block-edit > [data-block] {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+
+	.wp-block {
+		max-width: none;
+	}
+
+	// Prevent long unbroken words from overflowing.
+	word-break: break-word; // For back-compat.
+	overflow-wrap: break-word; // New standard.
+}
+
+// Editor grid styles
+.wp-block-jetpack-layout-grid {
+	// These three rules are only necessary for Safari.
+	// Safari interprets percentages in CSS grid differently.
+	// Flex causes children to "stretch", fixing that interpretation.
+	display: flex;
+	flex-direction: column;
+
+	touch-action: none;
+	user-select: none;
+
+	@for $i from 1 through 12 {
+		@for $x from 1 through 4 {
+			&.column#{ $x }-grid__start-#{ $i } > .wpcom-resize-grid > .wp-block:nth-child(#{ $x }),
+			&.column#{ $x }-grid__start-#{ $i } > .block-editor-inner-blocks > .editor-block-list__layout > .wp-block:nth-child(#{ $x }) {
+				grid-column-start: $i;
+			}
+		}
+	}
+
+	@for $i from 1 through 12 {
+		@for $x from 1 through 4 {
+			&.column#{ $x }-grid__span-#{ $i } > .wpcom-resize-grid > .wp-block:nth-child(#{ $x }),
+			&.column#{ $x }-grid__span-#{ $i } > .block-editor-inner-blocks > .editor-block-list__layout > .wp-block:nth-child(#{ $x }) {
+				grid-column-end: span $i; // Set it to span $i columns, regardless of starting position.
+			}
+		}
+
+		&.column4-grid__span-#{ $i } > .wpcom-resize-grid > .wp-block:nth-child(5) {
+			grid-column-end: span $i; // The re-resizable module adds extra elements that confuse the calculation in 4 column mode
+		}
+	}
+
+	@for $i from 1 through 4 {
+		@for $x from 1 through 4 {
+			&.column#{ $x }-grid__row-#{ $i } > .wpcom-resize-grid > .wp-block:nth-child(#{ $x }),
+			&.column#{ $x }-grid__row-#{ $i } > .block-editor-inner-blocks > .editor-block-list__layout > .wp-block:nth-child(#{ $x }) {
+				grid-row-start: $i;
+			}
+		}
+	}
+}
+
+/**
+ * Presets for tablet and mobile - switch the number of columns and layout
+ */
+
+.wp-block-jetpack-layout-grid.wp-block-jetpack-layout-tablet {
+	.wpcom-overlay-grid,
+	.wpcom-resize-grid,
+	> .block-editor-inner-blocks > .block-editor-block-list__layout {
+		grid-template-columns: $grid-tablet;
+	}
+}
+
+.wp-block-jetpack-layout-grid.wp-block-jetpack-layout-mobile {
+	.wpcom-overlay-grid,
+	.wpcom-resize-grid,
+	> .block-editor-inner-blocks > .block-editor-block-list__layout {
+		grid-template-columns: $grid-mobile;
+	}
+}
+
+// Resize handles.
+.wpcom-overlay-resize__handle,
+.wp-block-jetpack-layout-grid-column {
+	.components-resizable-box__container {
+		position: relative;
+		user-select: auto;
+		width: auto;
+		box-sizing: border-box;
+	}
+
+	.components-resizable-box__handle {
+		position: absolute;
+		user-select: none;
+		cursor: col-resize;
+	}
+}
+
+.wpcom-overlay-resize__handle {
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+}
+
+// Ensure the drag handles in the innerblocks are visible when the Grid, or Grid Column blocks are selected.
+[data-type="jetpack/layout-grid"].is-selected .wp-blocks-jetpack-layout-grid__resize-handles .components-resizable-box__handle,
+[data-type="jetpack/layout-grid-column"].is-selected .wp-blocks-jetpack-layout-grid__resize-handles .components-resizable-box__handle {
+	display: none;
+	z-index: 10000;
+}
+
+[data-type="jetpack/layout-grid"].is-selected .wp-block-jetpack-layout-resizable .wp-blocks-jetpack-layout-grid__resize-handles .components-resizable-box__handle,
+[data-type="jetpack/layout-grid"] .wp-block-jetpack-layout-resizable [data-type="jetpack/layout-grid-column"].is-selected .wp-blocks-jetpack-layout-grid__resize-handles .components-resizable-box__handle {
+	display: block;
+}
+
+// These colors are copied from upstream Gutenberg to ensure opacities when the theme is dark.
+$dark-opacity-light-800: rgba(#425863, 0.4);
+$light-opacity-light-800: rgba(#fff, 0.45);
+
+// Show a special style of block borders for the individual columns, so they line up with the drag handle.
+[data-type="jetpack/layout-grid-column"].is-selected > .block-editor-block-list__block-edit.block-editor-block-list__block-edit { // Increase specificity.
+	> .block-editor-block-contextual-toolbar > .block-editor-block-toolbar {
+		left: 18px;
+	}
+
+	&::before {
+		box-shadow: none;
+		left: 0;
+		right: 0;
+
+		border-left: 1px dashed $dark-opacity-light-800;
+		border-style: dashed;
+		// Use opacity to work in various editor styles
+		.is-dark-theme & {
+			border-left: 1px dashed $light-opacity-light-800;
+		}
+	}
+}
+
+/* When clicked, hide the fake drag handles and show the real one */
+.wp-block-jetpack-layout-grid__resizing {
+	user-select: none;
+	z-index: 10000;
+
+	.components-resizable-box__container .components-resizable-box__handle {
+		display: none !important;
+	}
+}
+
+.wpcom-overlay-resize__handle.components-resizable-box__container .components-resizable-box__handle {
+	display: block !important;
+}
+
+.wp-blocks-jetpack-layout-grid__showright.components-resizable-box__container .components-resizable-box__handle-right,
+.wp-blocks-jetpack-layout-grid__showleft.components-resizable-box__container .components-resizable-box__handle-left {
+	display: block !important;
+}
