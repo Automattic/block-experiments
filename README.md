@@ -13,12 +13,15 @@ For packaging, each block can be generated as its own stand-alone plugin.
 
 ## Development 
 
-Install node packages: `yarn install`
+1. Install node packages: `yarn install`
 
-Run the development build with: `yarn start`
+2. Run the development build with: `yarn start`
+   (or)
+   Run a production build with: `yarn build`
 
-Run a production build with: `yarn build`
+3. Once built, add copy this directory (or add a symlink) to your plugins directory. 
 
+4. Activate Block Experiments plugin, use blocks in Editor.
 
 ## Adding a block
 
