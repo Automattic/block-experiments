@@ -1,0 +1,7 @@
+[
+	"rest-api.php",
+	"image-editor/image-crop.php",
+	"image-editor/image-editor.php",
+	"image-editor/image-flip.php",
+	"image-editor/image-rotate.php"
+]
