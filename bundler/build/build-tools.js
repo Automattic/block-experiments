@@ -15,6 +15,10 @@ function buildIndexPhp( { blocks, version, name, description, resource } ) {
 
 	for ( let index = 0; index < blocks.length; index++ ) {
 		contents += "include_once __DIR__ . '/blocks/" + blocks[ index ] + ".php';\n";
+	
+		if ( fs.existsSync( path.join( "blocks", blocks[index], "rest-api.php" ) ) ) {
+			contents += "include_once __DIR__ . '/blocks/rest-api.php';\n";
+		}
 	}
 
 	return contents;
