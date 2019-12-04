@@ -4,9 +4,9 @@ A monorepo of block experiments by the fine folks at Automattic.
 
 ### About
 
-This repository holds a collection of blocks allowing a single place to develop, test, and package.
+This repository holds a collection of blocks allowing a single place to develop, test, and package. Plus it allows a single place for user's to submit issues. 
 
-To make development easier, the build script allows for building and bundling all of the blocks together showing up in its own category.
+To make development easier, the build script allows for building and bundling all of the blocks together.
 
 For packaging, each block can be generated as its own stand-alone plugin.
 
