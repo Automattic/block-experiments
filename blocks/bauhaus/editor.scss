@@ -1,0 +1,60 @@
+// Editor-only styles
+.wp-block-jetpack-bauhaus {
+	.components-placeholder__label svg {
+		margin-right: 0.75em;
+	}
+
+	.components-icon-button svg {
+		height: 100%;
+		width: auto;
+	}
+}
+
+.styles-panel {
+	cursor: pointer;
+	border-radius: 4px;
+	padding: 4px;
+	margin-bottom: 0.5em;
+
+	&.is-selected {
+		box-shadow: 0 0 0 2px #555d66;
+	}
+
+	&:focus {
+		box-shadow: 0 0 0 2px #00a0d2;
+	}
+
+	&:hover {
+		background-color: #f3f4f5;
+		color: #191e23;
+	}
+
+	&__preview {
+		border: 1px solid rgba( 25, 30, 35, 0.2 );
+		border-radius: 4px;
+		background-color: #fff;
+		padding: 4px;
+
+		svg {
+			border-radius: 4px;
+			display: block;
+			width: 100%;
+			height: auto;
+		}
+	}
+
+	&__label {
+		text-align: center;
+		margin-bottom: 0;
+	}
+}
+
+.components-button-group.is-radio-group {
+	display: flex;
+	margin-bottom: 0.5em;
+
+	.components-button.is-button {
+		display: inline-block;
+		flex-grow: 1;
+	}
+}
