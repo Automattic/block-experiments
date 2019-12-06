@@ -143,7 +143,7 @@ const categories = {
 				<RadioButtonGroup
 					options={ [
 						{ label: __( 'Centered' ), value: 'centered' },
-						{ label: __( 'Full-width' ), value: 'fullwidth' },
+						{ label: __( 'Full-width' ), value: 'full-width' },
 					] }
 					onChange={ ( ribbonSize ) => setAttributes( { ribbonSize } ) }
 					selected={ attributes.ribbonSize }
