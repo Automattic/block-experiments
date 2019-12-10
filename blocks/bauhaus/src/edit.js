@@ -11,12 +11,10 @@ import {
 	AlignmentToolbar,
 	BlockControls,
 	InspectorControls,
-	PanelColorSettings,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
 	Placeholder,
-	SelectControl,
 	IconButton,
 } from '@wordpress/components';
 import { ENTER } from '@wordpress/keycodes';
@@ -25,133 +23,12 @@ import { ENTER } from '@wordpress/keycodes';
  * Internal dependencies
  */
 import * as Icon from './icon';
-import RadioButtonGroup from './radio-button-group';
 
-const colors = [
-	{ name: 'Black', color: '#000000' },
-	{ name: 'Blue', color: '#051BF4' },
-	{ name: 'Red', color: '#D32121' },
-	{ name: 'Yellow', color: '#F7FC1C' },
-	{ name: 'White', color: '#FFFFFF' },
-];
+import forms from './forms';
+import year from './year';
+import ribbon from './ribbon';
 
-const categories = {
-	forms: {
-		label: 'Forms',
-		icon: <Icon.FormsIcon />,
-		preview: <Icon.FormsPreview />,
-		ColorPanel: ( { setAttributes, attributes } ) => (
-			<PanelColorSettings
-				title={ __( 'Color' ) }
-				initialOpen
-				colorSettings={ [
-					{
-						colors,
-						value: attributes.formsBackgroundFill,
-						onChange: ( formsBackgroundFill ) => setAttributes( { formsBackgroundFill } ),
-						label: __( 'Background Fill' ),
-					},
-				] }
-			/>
-		),
-		StyleSettings: ( { setAttributes, attributes } ) => (
-			<>
-				<RadioButtonGroup
-					options={ [
-						{ label: __( 'Small' ), value: 'small' },
-						{ label: __( 'Medium' ), value: 'medium' },
-						{ label: __( 'Large' ), value: 'large' },
-					] }
-					onChange={ ( formsSize ) => setAttributes( { formsSize } ) }
-					selected={ attributes.formsSize }
-				/>
-			</>
-		),
-	},
-	year: {
-		label: 'Year',
-		icon: <Icon.YearIcon />,
-		preview: <Icon.YearPreview />,
-		ColorPanel: ( { setAttributes, attributes } ) => (
-			<PanelColorSettings
-				title={ __( 'Color' ) }
-				initialOpen
-				colorSettings={ [
-					{
-						colors,
-						value: attributes.yearFill,
-						onChange: ( yearFill ) => setAttributes( { yearFill } ),
-						label: __( 'Fill' ),
-					},
-					{
-						colors,
-						value: attributes.yearBackgroundFill,
-						onChange: ( yearBackgroundFill ) => setAttributes( { yearBackgroundFill } ),
-						label: __( 'Background Fill' ),
-					},
-				] }
-			/>
-		),
-		StyleSettings: ( { setAttributes, attributes } ) => (
-			<>
-				<RadioButtonGroup
-					options={ [
-						{ label: __( 'Small' ), value: 'small' },
-						{ label: __( 'Medium' ), value: 'medium' },
-						{ label: __( 'Large' ), value: 'large' },
-					] }
-					onChange={ ( yearSize ) => setAttributes( { yearSize } ) }
-					selected={ attributes.yearSize }
-				/>
-				<SelectControl
-					options={ [
-						{ label: __( '1919' ), value: '1919' },
-						{ label: __( '2019' ), value: '2019' },
-						{ label: __( '1919–2019' ), value: 'range' },
-					] }
-					onChange={ ( yearDisplay ) => setAttributes( { yearDisplay } ) }
-				/>
-			</>
-		),
-	},
-	ribbon: {
-		label: 'Ribbon',
-		icon: <Icon.RibbonIcon />,
-		preview: <Icon.RibbonPreview />,
-		ColorPanel: ( { setAttributes, attributes } ) => (
-			<PanelColorSettings
-				title={ __( 'Color' ) }
-				initialOpen
-				colorSettings={ [
-					{
-						colors,
-						value: attributes.ribbonFill,
-						onChange: ( ribbonFill ) => setAttributes( { ribbonFill } ),
-						label: __( 'Fill' ),
-					},
-					{
-						colors,
-						value: attributes.ribbonBackgroundFill,
-						onChange: ( ribbonBackgroundFill ) => setAttributes( { ribbonBackgroundFill } ),
-						label: __( 'Background Fill' ),
-					},
-				] }
-			/>
-		),
-		StyleSettings: ( { setAttributes, attributes } ) => (
-			<>
-				<RadioButtonGroup
-					options={ [
-						{ label: __( 'Centered' ), value: 'centered' },
-						{ label: __( 'Full-width' ), value: 'full-width' },
-					] }
-					onChange={ ( ribbonSize ) => setAttributes( { ribbonSize } ) }
-					selected={ attributes.ribbonSize }
-				/>
-			</>
-		),
-	},
-};
+const categories = { forms, year, ribbon };
 
 const Edit = ( { className, setAttributes, attributes } ) => {
 	const categorySettings = categories[ attributes.category ];

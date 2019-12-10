@@ -1,57 +1,44 @@
 /**
+ * External dependencies
+ */
+import classnames from 'classnames';
+
+/**
+ * WordPress dependencies
+ */
+import { RichText } from '@wordpress/block-editor';
+
+/**
  * Internal dependencies
  */
-import * as Icon from './icon';
+import Forms from './forms';
+import Year from './year';
+import Ribbon from './ribbon';
 
-const Forms = ( {} ) => {
-	return (
-		<div className="forms">
-			<Icon.FormTriangle />
-			<Icon.FormSquare />
-			<Icon.FormCircle />
-		</div>
-	);
-};
-
-const Year = ( { display } ) => {
-	switch ( display ) {
-		case '1919':
-			return <Icon.Year1919 />;
-		case '2019':
-			return <Icon.Year2019 />;
-		case 'range':
-			return <Icon.YearRange />;
-		default:
-			return null;
-	}
-};
-
-const Ribbon = ( { size } ) => {
-	switch ( size ) {
-		case 'centered':
-			return <Icon.RibbonCentered />;
-		case 'full-width':
-			return <Icon.RibbonFull />;
+const Bauhaus = ( { attributes } ) => {
+	switch ( attributes.category ) {
+		case 'forms':
+			return <Forms size={ attributes.formsSize } />;
+		case 'year':
+			return <Year display={ attributes.yearDisplay } />;
+		case 'ribbon':
+			return <Ribbon size={ attributes.ribbonSize } />;
 		default:
 			return null;
 	}
 };
 
 const Save = ( { attributes, className } ) => {
+	const classes = classnames( className, {
+		[ `align${ attributes.align }` ]: attributes.align,
+		[ `size-${ attributes.sizeSlug }` ]: attributes.sizeSlug,
+		'is-resized': attributes.width || attributes.height,
+	} );
+
 	return (
-		<figure className={ className }>
-			{ ( () => {
-				switch ( attributes.category ) {
-					case 'forms':
-						return <Forms size={ attributes.formsSize } />;
-					case 'year':
-						return <Year display={ attributes.yearDisplay } />;
-					case 'ribbon':
-						return <Ribbon size={ attributes.ribbonSize } />;
-					default:
-						return null;
-				}
-			} )() }
+		<figure className={ classes }>
+			<Bauhaus attributes={ attributes } />
+			{ ! RichText.isEmpty( attributes.caption ) && <RichText.Content tagName="figcaption" value={ attributes.caption } /> }
 		</figure>
 	);
 };

@@ -17,10 +17,13 @@ export const registerBlock = () => {
 		description: __( 'Celebrate the centenary of the design school' ),
 		icon: BauhausIcon,
 		category: 'widgets',
+		supports: {
+			align: [ 'left', 'center', 'right' ],
+		},
 		attributes: {
 			align: {
 				type: 'string',
-				default: 'left',
+				default: 'center',
 			},
 			category: {
 				type: 'string',
