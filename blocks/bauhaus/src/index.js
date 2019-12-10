@@ -25,6 +25,9 @@ export const registerBlock = () => {
 				type: 'string',
 				default: 'center',
 			},
+			caption: {
+				type: 'string',
+			},
 			category: {
 				type: 'string',
 			},
