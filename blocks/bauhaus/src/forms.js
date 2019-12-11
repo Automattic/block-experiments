@@ -1,57 +1,65 @@
 /**
+ * External dependencies
+ */
+import classnames from 'classnames';
+
+/**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
-import { PanelColorSettings } from '@wordpress/block-editor';
+import { __, sprintf } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
 import * as Icon from './icon';
 import colors from './colors';
-import RadioButtonGroup from './radio-button-group';
 
-const Forms = ( {} ) => {
+const forms = {
+	triangle: Icon.FormTriangle,
+	square: Icon.FormSquare,
+	circle: Icon.FormCircle,
+};
+
+const Forms = ( { className, attributes } ) => {
 	return (
-		<div className="forms">
-			<Icon.FormTriangle />
-			<Icon.FormSquare />
-			<Icon.FormCircle />
+		<div className={ classnames( className, 'forms' ) }>
+			{ attributes.forms.map( ( form, index ) => {
+				const Form = forms[ form.type ];
+				return <Form key={ index } height={ attributes.height } />;
+			} ) }
 		</div>
 	);
 };
 
-Object.assign( Forms, {
-	label: 'Forms',
+const Content = Forms;
+
+const labels = {
+	triangle: __( 'Triangle' ),
+	square: __( 'Square' ),
+	circle: __( 'Circle' ),
+};
+
+const extraColors = ( { setAttributes, attributes } ) =>
+	// TODO: Check to see if we need to support flatMap on IE11
+	attributes.forms.flatMap( ( form, index ) => [
+		{
+			colors,
+			value: form.fill,
+			onChange: ( fill ) => setAttributes( ( prevForms ) => prevForms.splice( index, 1, { ...form, fill } ) ),
+			label: sprintf( __( '%s Fill [%d]' ), labels[ form.type ], index + 1 ),
+		},
+		{
+			colors,
+			value: form.stroke,
+			onChange: ( stroke ) => setAttributes( ( prevForms ) => prevForms.splice( index, 1, { ...form, stroke } ) ),
+			label: sprintf( __( '%s Stroke [%d]' ), labels[ form.type ], index + 1 ),
+		},
+	] );
+
+export default Object.assign( Forms, {
+	label: __( 'Forms' ),
 	icon: <Icon.FormsIcon />,
 	preview: <Icon.FormsPreview />,
-	ColorPanel: ( { setAttributes, attributes } ) => (
-		<PanelColorSettings
-			title={ __( 'Color' ) }
-			initialOpen
-			colorSettings={ [
-				{
-					colors,
-					value: attributes.formsBackgroundFill,
-					onChange: ( formsBackgroundFill ) => setAttributes( { formsBackgroundFill } ),
-					label: __( 'Background Fill' ),
-				},
-			] }
-		/>
-	),
-	StyleSettings: ( { setAttributes, attributes } ) => (
-		<>
-			<RadioButtonGroup
-				options={ [
-					{ label: __( 'Small' ), value: 'small' },
-					{ label: __( 'Medium' ), value: 'medium' },
-					{ label: __( 'Large' ), value: 'large' },
-				] }
-				onChange={ ( formsSize ) => setAttributes( { formsSize } ) }
-				selected={ attributes.formsSize }
-			/>
-		</>
-	),
+	Content,
+	// extraColors,
 } );
-
-export default Forms;

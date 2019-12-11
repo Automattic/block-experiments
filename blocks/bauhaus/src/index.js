@@ -18,7 +18,7 @@ export const registerBlock = () => {
 		icon: BauhausIcon,
 		category: 'widgets',
 		supports: {
-			align: [ 'left', 'center', 'right' ],
+			align: true,
 		},
 		attributes: {
 			align: {
@@ -28,57 +28,48 @@ export const registerBlock = () => {
 			caption: {
 				type: 'string',
 			},
+			height: {
+				type: 'integer',
+				default: 128,
+			},
 			category: {
 				type: 'string',
 			},
-			formsSquareFill: {
+			fillColor: {
 				type: 'string',
 			},
-			formsCircleFill: {
+			customFillColor: {
 				type: 'string',
 			},
-			formsTriangleFill: {
+			backgroundColor: {
 				type: 'string',
 			},
-			formsSquareStroke: {
+			customBackgroundColor: {
 				type: 'string',
 			},
-			formsCircleStroke: {
-				type: 'string',
-			},
-			formsTriangleStroke: {
-				type: 'string',
-			},
-			formsBackgroundFill: {
-				type: 'string',
-			},
-			formsSize: {
-				type: 'string',
-				default: 'medium',
-			},
-			yearFill: {
-				type: 'string',
-			},
-			yearBackgroundFill: {
-				type: 'string',
-			},
-			yearSize: {
-				type: 'string',
-				default: 'medium',
-			},
-			yearDisplay: {
+			year: {
 				type: 'string',
 				default: '1919',
 			},
-			ribbonFill: {
-				type: 'string',
-			},
-			ribbonBackgroundFill: {
-				type: 'string',
-			},
-			ribbonSize: {
-				type: 'string',
-				default: 'centered',
+			forms: {
+				type: 'array',
+				default: [
+					{
+						type: 'triangle',
+						fill: '#F7FC1C',
+						stroke: 'none',
+					},
+					{
+						type: 'square',
+						fill: '#D32121',
+						stroke: 'none',
+					},
+					{
+						type: 'circle',
+						fill: '#051BF4',
+						stroke: 'none',
+					},
+				],
 			},
 		},
 		edit: ( props ) => <Edit { ...props } />,

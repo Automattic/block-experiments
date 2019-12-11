@@ -8,9 +8,10 @@ import classnames from 'classnames';
  */
 import { __ } from '@wordpress/i18n';
 import {
-	AlignmentToolbar,
-	BlockControls,
 	InspectorControls,
+	RichText,
+	PanelColorSettings,
+	withColors,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
@@ -23,40 +24,40 @@ import { ENTER } from '@wordpress/keycodes';
  * Internal dependencies
  */
 import * as Icon from './icon';
+import RadioButtonGroup from './radio-button-group';
+import categories from './categories';
+import heights from './heights';
+import colors from './colors';
 
-import forms from './forms';
-import year from './year';
-import ribbon from './ribbon';
-
-const categories = { forms, year, ribbon };
-
-const Edit = ( { className, setAttributes, attributes } ) => {
-	const categorySettings = categories[ attributes.category ];
-	const ColorPanel = categorySettings ? categorySettings.ColorPanel : () => null;
-	const StyleSettings = categorySettings ? categorySettings.StyleSettings : () => null;
+const Edit = ( {
+	className,
+	setAttributes,
+	attributes,
+	fillColor,
+	setFillColor,
+	backgroundColor,
+	setBackgroundColor,
+	isSelected,
+} ) => {
+	const Category = categories[ attributes.category ];
+	const { ExtraStyles, extraColors } = Category || {};
 
 	return (
 		<>
-			<BlockControls>
-				<AlignmentToolbar
-					value={ attributes.align }
-					onChange={ ( align ) => setAttributes( { align } ) }
-				/>
-			</BlockControls>
 			<InspectorControls>
 				<PanelBody title={ __( 'Styles' ) }>
 					<div role="listbox">
 						{ Object.entries( categories ).map( ( [ category, { label, preview } ] ) => {
-							const isSelected = category === attributes.category;
+							const isCategorySelected = category === attributes.category;
 							const classes = classnames( 'styles-panel', {
-								'is-selected': isSelected,
+								'is-selected': isCategorySelected,
 							} );
 							return (
 								<div
 									key={ category }
 									tabIndex={ 0 }
 									role="option"
-									aria-selected={ isSelected }
+									aria-selected={ isCategorySelected }
 									className={ classes }
 									onClick={ () => setAttributes( { category } ) }
 									onKeyDown={ ( event ) =>
@@ -71,28 +72,77 @@ const Edit = ( { className, setAttributes, attributes } ) => {
 							);
 						} ) }
 					</div>
-					<StyleSettings setAttributes={ setAttributes } attributes={ attributes } />
-				</PanelBody>
-				<ColorPanel setAttributes={ setAttributes } attributes={ attributes } />
-			</InspectorControls>
-			<Placeholder
-				label={ __( 'Bauhaus' ) }
-				instructions={ __( 'Celebrate the centenary of the design school' ) }
-				icon={ <Icon.BauhausIcon /> }
-				className={ className }
-			>
-				{ Object.entries( categories ).map( ( [ category, { label, icon } ] ) => (
-					<IconButton
-						icon={ icon }
-						isDefault
-						key={ category }
-						label={ label }
-						onClick={ () => setAttributes( { category } ) }
+					<RadioButtonGroup
+						data-selected={ attributes.height }
+						options={ heights }
+						onChange={ ( height ) => setAttributes( { height } ) }
+						selected={ attributes.height }
 					/>
-				) ) }
-			</Placeholder>
+					{ ExtraStyles && <ExtraStyles setAttributes={ setAttributes } attributes={ attributes } /> }
+				</PanelBody>
+				<PanelColorSettings
+					title={ __( 'Color' ) }
+					initialOpen
+					colorSettings={ [
+						{
+							colors,
+							value: backgroundColor.color,
+							onChange: setBackgroundColor,
+							label: __( 'Background' ),
+						},
+						// {
+						// 	colors,
+						// 	value: fillColor.color,
+						// 	onChange: setFillColor,
+						// 	label: __( 'Fill' ),
+						// },
+						...( extraColors ? extraColors( { attributes, setAttributes } ) : [] ),
+					] }
+				/>
+			</InspectorControls>
+			{ Category ? (
+				<figure
+					className={ classnames(
+						className,
+						fillColor.class,
+						backgroundColor.class,
+					) }
+					style={ {
+						fill: fillColor.color,
+						backgroundColor: backgroundColor.color,
+					} }
+				>
+					<Category attributes={ attributes } setAttributes={ setAttributes } />
+					{ ( ! RichText.isEmpty( attributes.caption ) || isSelected ) && (
+						<RichText
+							tagName="figcaption"
+							placeholder={ __( 'Write caption…' ) }
+							value={ attributes.caption }
+							onChange={ ( caption ) => setAttributes( { caption } ) }
+							inlineToolbar
+						/>
+					) }
+				</figure>
+			) : (
+				<Placeholder
+					label={ __( 'Bauhaus' ) }
+					instructions={ __( 'Celebrate the centenary of the design school' ) }
+					icon={ <Icon.BauhausIcon /> }
+					className={ className }
+				>
+					{ Object.entries( categories ).map( ( [ category, { label, icon } ] ) => (
+						<IconButton
+							icon={ icon }
+							isDefault
+							key={ category }
+							label={ label }
+							onClick={ () => setAttributes( { category } ) }
+						/>
+					) ) }
+				</Placeholder>
+			) }
 		</>
 	);
 };
 
-export default Edit;
+export default withColors( 'fillColor', 'backgroundColor' )( Edit );

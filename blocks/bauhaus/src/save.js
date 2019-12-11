@@ -6,38 +6,30 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-import { RichText } from '@wordpress/block-editor';
+import { RichText, getColorClassName } from '@wordpress/block-editor';
 
 /**
  * Internal dependencies
  */
-import Forms from './forms';
-import Year from './year';
-import Ribbon from './ribbon';
-
-const Bauhaus = ( { attributes } ) => {
-	switch ( attributes.category ) {
-		case 'forms':
-			return <Forms size={ attributes.formsSize } />;
-		case 'year':
-			return <Year display={ attributes.yearDisplay } />;
-		case 'ribbon':
-			return <Ribbon size={ attributes.ribbonSize } />;
-		default:
-			return null;
-	}
-};
+import categories from './categories';
 
 const Save = ( { attributes, className } ) => {
-	const classes = classnames( className, {
-		[ `align${ attributes.align }` ]: attributes.align,
-		[ `size-${ attributes.sizeSlug }` ]: attributes.sizeSlug,
-		'is-resized': attributes.width || attributes.height,
-	} );
+	const Category = categories[ attributes.category ];
+	const style = {
+		color: attributes.customTextColor,
+		backgroundColor: attributes.customBackgroundColor,
+	};
+
+	const classNames = classnames(
+		className,
+		{ [ `align${ attributes.align }` ]: attributes.align },
+		getColorClassName( 'fill-color', attributes.fillColor ),
+		getColorClassName( 'background-color', attributes.backgroundColor ),
+	);
 
 	return (
-		<figure className={ classes }>
-			<Bauhaus attributes={ attributes } />
+		<figure className={ classNames } style={ style }>
+			<Category.Content attributes={ attributes } />
 			{ ! RichText.isEmpty( attributes.caption ) && <RichText.Content tagName="figcaption" value={ attributes.caption } /> }
 		</figure>
 	);

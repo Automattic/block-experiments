@@ -1,7 +1,34 @@
 // Editor and View styles
-.forms svg {
-    width: auto;
-    height: 120px;
-    display: inline-block;
-    margin-right: 1rem;
+.wp-block-jetpack-bauhaus {
+	padding: 2rem 0;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: center;
+
+	.forms,
+	.year,
+	.ribbon {
+		padding: 0 2rem;
+	}
+
+
+	.forms {
+		display: flex;
+		justify-content: center;
+		align-content: center;
+
+		svg {
+			width: auto;
+			margin-right: 1rem;
+		}
+	}
+
+	.ribbon {
+		width: 100%;
+		
+		&.is-full {
+			padding: 0;
+		}
+	}
 }

@@ -8,7 +8,7 @@ import classnames from 'classnames';
  */
 import { Button } from '@wordpress/components';
 
-const RadioButtonGroup = ( { options, selected, onChange, className } ) => (
+const RadioButtonGroup = ( { options, selected, onChange, className, ...props } ) => (
 	<div
 		// Borrowing just the styling from ButtonGroup so the role can be radiogroup
 		// `role` doesn't get overridden when using the ButtonGroup component
@@ -18,6 +18,7 @@ const RadioButtonGroup = ( { options, selected, onChange, className } ) => (
 			className
 		) }
 		role="radiogroup"
+		{ ...props }
 	>
 		{ options.map( ( { label, value } ) => (
 			<Button
