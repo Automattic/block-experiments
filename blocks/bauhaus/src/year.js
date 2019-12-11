@@ -22,13 +22,14 @@ const Year = ( { attributes } ) => {
 
 const Content = Year;
 
-const ExtraStyles = ( { setAttributes } ) => (
+const ExtraStyles = ( { attributes, setAttributes } ) => (
 	<SelectControl
 		options={ [
 			{ label: __( '1919' ), value: '1919' },
 			{ label: __( '2019' ), value: '2019' },
 			{ label: __( '1919–2019' ), value: 'range' },
 		] }
+		value={ attributes.year }
 		onChange={ ( year ) => setAttributes( { year } ) }
 	/>
 );
