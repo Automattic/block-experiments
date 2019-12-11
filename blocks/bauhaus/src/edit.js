@@ -33,8 +33,8 @@ const Edit = ( {
 	className,
 	setAttributes,
 	attributes,
-	fillColor,
-	setFillColor,
+	// fillColor,
+	// setFillColor,
 	backgroundColor,
 	setBackgroundColor,
 	isSelected,
@@ -104,11 +104,11 @@ const Edit = ( {
 				<figure
 					className={ classnames(
 						className,
-						fillColor.class,
+						// fillColor.class,
 						backgroundColor.class,
 					) }
 					style={ {
-						fill: fillColor.color,
+						// fill: fillColor.color,
 						backgroundColor: backgroundColor.color,
 					} }
 				>

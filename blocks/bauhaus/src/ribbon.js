@@ -20,7 +20,8 @@ const Ribbon = ( { attributes } ) => {
 		Icon.RibbonCentered;
 	return (
 		<RibbonVariation
-			height={ attributes.height }
+			// height={ attributes.height }
+			style={ { height: attributes.height } }
 			preserveAspectRatio={ isFullWidth ? 'none' : 'xMidYMid' }
 			className={ classnames( 'ribbon', { 'is-full': isFullWidth } ) }
 		/>

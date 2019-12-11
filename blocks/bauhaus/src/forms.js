@@ -25,7 +25,7 @@ const Forms = ( { className, attributes } ) => {
 		<div className={ classnames( className, 'forms' ) }>
 			{ attributes.forms.map( ( form, index ) => {
 				const Form = forms[ form.type ];
-				return <Form key={ index } height={ attributes.height } />;
+				return <Form key={ index } style={ { height: attributes.height } } />;
 			} ) }
 		</div>
 	);

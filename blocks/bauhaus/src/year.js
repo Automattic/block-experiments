@@ -17,7 +17,7 @@ const variations = {
 
 const Year = ( { attributes } ) => {
 	const YearVariation = variations[ attributes.year ];
-	return <YearVariation className="year" height={ attributes.height } />;
+	return <YearVariation className="year" style={ { height: attributes.height } } />;
 };
 
 const Content = Year;
