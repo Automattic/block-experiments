@@ -15,6 +15,7 @@ import categories from './categories';
 
 const Save = ( { attributes, className } ) => {
 	const Category = categories[ attributes.category ];
+
 	const style = {
 		color: attributes.customTextColor,
 		backgroundColor: attributes.customBackgroundColor,
