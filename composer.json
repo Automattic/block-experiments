@@ -1,14 +1,14 @@
 {
-	"name": "automattic/wpcom-blocks",
+	"name": "automattic/block-experiments",
 	"type": "wordpress-plugin",
 	"license": "GPL-3.0-or-later",
-	"description": "WordPress.com blocks",
+	"description": "Block Experiments",
 	"homepage": "https://wordpress.github.io/gutenberg/",
 	"keywords": [
 		"gutenberg", "wordpress", "editor", "wp", "react", "javascript"
 	],
 	"support": {
-		"issues": "https://github.com/Automattic/wpcom-blocks/issues"
+		"issues": "https://github.com/Automattic/block-experiments/issues"
 	},
 	"require-dev": {
 		"dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
