@@ -46,7 +46,7 @@
 	@for $i from 1 through 12 {
 		@for $x from 1 through 4 {
 			&.column#{ $x }-grid__start-#{ $i } > .wpcom-resize-grid > .wp-block:nth-child(#{ $x }),
-			&.column#{ $x }-grid__start-#{ $i } > .block-editor-inner-blocks > .editor-block-list__layout > .wp-block:nth-child(#{ $x }) {
+			&.column#{ $x }-grid__start-#{ $i } > .block-editor-inner-blocks > .block-editor-block-list__layout > .wp-block:nth-child(#{ $x }) {
 				grid-column-start: $i;
 			}
 		}
@@ -55,7 +55,7 @@
 	@for $i from 1 through 12 {
 		@for $x from 1 through 4 {
 			&.column#{ $x }-grid__span-#{ $i } > .wpcom-resize-grid > .wp-block:nth-child(#{ $x }),
-			&.column#{ $x }-grid__span-#{ $i } > .block-editor-inner-blocks > .editor-block-list__layout > .wp-block:nth-child(#{ $x }) {
+			&.column#{ $x }-grid__span-#{ $i } > .block-editor-inner-blocks > .block-editor-block-list__layout > .wp-block:nth-child(#{ $x }) {
 				grid-column-end: span $i; // Set it to span $i columns, regardless of starting position.
 			}
 		}
@@ -68,7 +68,7 @@
 	@for $i from 1 through 4 {
 		@for $x from 1 through 4 {
 			&.column#{ $x }-grid__row-#{ $i } > .wpcom-resize-grid > .wp-block:nth-child(#{ $x }),
-			&.column#{ $x }-grid__row-#{ $i } > .block-editor-inner-blocks > .editor-block-list__layout > .wp-block:nth-child(#{ $x }) {
+			&.column#{ $x }-grid__row-#{ $i } > .block-editor-inner-blocks > .block-editor-block-list__layout > .wp-block:nth-child(#{ $x }) {
 				grid-row-start: $i;
 			}
 		}
