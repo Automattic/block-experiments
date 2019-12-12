@@ -1,6 +1,6 @@
 === Layout Grid Block ===
 Contributors: automattic, jasmussen, johnny5, mkaz
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 Tested up to: 5.3
 Requires at least: 5.3
 License: GPLv2 or later
@@ -18,6 +18,10 @@ Want to create a column-based layout with easily customizable column-width and p
 2. Three column grid with resize handles.
 
 == Changelog ==
+
+= 1.0.3 - 12th December 2019 =
+* Fix grid values being ignored in the 7.1.0 editor
+* Fix cropping of grid when inside a group block
 
 = 1.0.2 - 28th November 2019 =
 * Fix a bug with duplicate column spans
