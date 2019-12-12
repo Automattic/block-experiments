@@ -65,17 +65,16 @@ body.is-resizing [data-type="jetpack/layout-grid"] {
 	overflow: inherit;
 }
 
+// When the block is selected, we scale it down to make room for the side UI.
 [data-type="jetpack/layout-grid"][data-align="full"].has-child-selected,
 [data-type="jetpack/layout-grid"][data-align="full"].is-selected,
 body.is-resizing [data-type="jetpack/layout-grid"][data-align="full"] {
 	> .block-editor-block-list__block-edit {
-		width: 100%;
-	}
+		width: calc( 100% + 30px + 30px + 8px ); // The 30 are from the canvas side padding (58px) minus the width of the side UI (28px).
 
-	// Show borders again
-	> .block-editor-block-list__block-edit::before {
-		border-left-width: 1px;
-		border-right-width: 1px;
-		border-style: solid;
+		// Make an exception for the group, which zeroes out a margin we need.
+		.wp-block-group & {
+			width: calc( 100% - 28px - 28px - 8px );
+		}
 	}
 }

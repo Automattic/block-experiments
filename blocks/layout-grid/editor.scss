@@ -67,8 +67,16 @@
 	align-items: center;
 
 	> .block-editor-block-list__block-edit {
-		width: calc( 100% + 44px + 44px ); // The 44px here come from the margin applied left and right of all blocks. @todo, consider a more upgrade friendly method.
 		transition: all .1s ease;
+
+		// The 58px here come from the padding applied to the body container.
+		// @todo, consider a more upgrade friendly method so this doesn't need to be aware of Gutenberg changes.
+		width: calc( 100% + 58px + 58px );
+
+		// Make an exception for the group, which zeroes out a margin we need.
+		.wp-block-group & {
+			width: 100%;
+		}
 	}
 }
 
