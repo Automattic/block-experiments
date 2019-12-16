@@ -1,0 +1,9 @@
+{
+	"blocks": [
+		"rich-image"
+	],
+	"version": 0.1,
+	"name": "Rich Image Tools",
+	"description": "Image editing tools",
+	"resource": "jetpack-rich-image"
+}
