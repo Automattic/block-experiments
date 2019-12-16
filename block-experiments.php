@@ -11,18 +11,12 @@
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  */
 
-// include_once dirname( __FILE__ ) . '/rest-api.php';
-
 // Auto-load any blocks in the block directory. These will behave like seperate plugins and will need to activate themselves
 $blocks = glob( dirname( __FILE__ ) . '/blocks/*', GLOB_ONLYDIR );
 
 foreach ( $blocks as $block ) {
 	if ( file_exists( $block . '/index.php' ) ) {
 		include_once( $block . '/index.php' );
-	}
-
-	if ( file_exists( $block . '/rest-api.php' ) ) {
-		include_once( $block . '/rest-api.php' );
 	}
 }
 
@@ -123,4 +117,3 @@ add_action( 'init', function() {
 		filemtime( plugin_dir_path( __FILE__ ) . 'build/editor.css' )
 	);
 } );
-

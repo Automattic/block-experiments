@@ -9,7 +9,7 @@ import classnames from 'classnames';
  */
 
 import { BlockControls } from '@wordpress/block-editor';
-import { Fragment, Component, useEffect, useRef, useState } from '@wordpress/element';
+import { Fragment, Component } from '@wordpress/element';
 import {
 	Toolbar,
 	IconButton,
@@ -51,28 +51,14 @@ class RichImage extends Component {
 		};
 	}
 
-	getProgressForImage( attrs ) {
-		if ( attrs.imageFlipH ) {
-			return 'fliph';
-		} else if ( attrs.imageFlipV ) {
-			return 'flipv';
-		} else if ( attrs.imageRotation === -ROTATE_STEP ) {
-			return 'rotateleft';
-		} else if ( attrs.imageRotation === ROTATE_STEP ) {
-			return 'rotateright';
-		}
-
-		return 'crop';
-	}
-
-	adjustImage = ( attrs ) => {
+	adjustImage = ( action, attrs ) => {
 		const { setAttributes, attributes, noticeOperations } = this.props;
 		const { id } = attributes;
 
-		this.setState( { inProgress: this.getProgressForImage( attrs ) } );
+		this.setState( { inProgress: action } );
 		noticeOperations.removeAllNotices();
 
-		richImageRequest( id, attrs )
+		richImageRequest( id, action, attrs )
 			.then( ( response ) => {
 				this.setState( { inProgress: null, isCrop: false } );
 
@@ -83,7 +69,7 @@ class RichImage extends Component {
 					} );
 				}
 			} )
-			.catch( ( error ) => {
+			.catch( () => {
 				noticeOperations.createErrorNotice( __( 'Unable to perform the image modification. Please check your media storage.' ) );
 				this.setState( { inProgress: null, isCrop: false } );
 			} );
@@ -100,7 +86,7 @@ class RichImage extends Component {
 	cropImage = () => {
 		const { crop } = this.state;
 
-		this.adjustImage( {
+		this.adjustImage( 'crop', {
 			cropX: crop.x,
 			cropY: crop.y,
 			cropWidth: crop.width,
@@ -126,6 +112,11 @@ class RichImage extends Component {
 			imageFilter,
 		} = attributes;
 		const isEditing = ! isCrop && isSelected && url;
+
+		if ( ! isSelected ) {
+			return <OriginalBlock { ...this.props } />;
+		}
+
 		const classes = classnames( {
 			richimage__working: inProgress !== null,
 			[ 'richimage__working__' + inProgress ]: inProgress !== null,
@@ -166,12 +157,12 @@ class RichImage extends Component {
 										{
 											icon: <RotateLeftIcon />,
 											title: __( 'Rotate left' ),
-											onClick: () => this.adjustImage( { imageRotation: -ROTATE_STEP } ),
+											onClick: () => this.adjustImage( 'rotate', { angle: -ROTATE_STEP } ),
 										},
 										{
 											icon: <RotateRightIcon />,
 											title: __( 'Rotate right' ),
-											onClick: () => this.adjustImage( { imageRotation: ROTATE_STEP } ),
+											onClick: () => this.adjustImage( 'rotate', { angle: ROTATE_STEP } ),
 										},
 									] }
 								/>
@@ -185,12 +176,12 @@ class RichImage extends Component {
 										{
 											icon: <FlipVerticalIcon />,
 											title: __( 'Flip vertical' ),
-											onClick: () => this.adjustImage( { imageFlipV: true } ),
+											onClick: () => this.adjustImage( 'flip', { direction: 'vertical' } ),
 										},
 										{
 											icon: <FlipHorizontalIcon />,
 											title: __( 'Flip horizontal' ),
-											onClick: () => this.adjustImage( { imageFlipH: true } ),
+											onClick: () => this.adjustImage( 'flip', { direction: 'horizontal' } ),
 										},
 									] }
 								/>
