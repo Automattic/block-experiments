@@ -1,7 +1,6 @@
-^build/
+/build
 /node_modules
 /plugin
 /bundles
 /vendor
 yarn-error.log
-/build
