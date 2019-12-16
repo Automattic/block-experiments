@@ -24,8 +24,30 @@
 	}
 
 	.ribbon {
+		display: flex;
+
+		svg {
+			height: 100%;
+		}
+
+		svg:first-child {
+			flex-grow: 0;
+		}
+
+		svg:last-child {
+			flex-grow: 1;
+		}
+
 		&.is-full {
 			padding: 0;
+
+			svg:first-child {
+				flex-grow: 1;
+			}
+
+			svg:last-child {
+				flex-grow: 3;
+			}
 		}
 	}
 }

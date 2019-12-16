@@ -1,9 +1,4 @@
 /**
- * External dependencies
- */
-import classnames from 'classnames';
-
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
@@ -14,17 +9,27 @@ import { __ } from '@wordpress/i18n';
 import * as Icon from './icon';
 
 const Ribbon = ( { attributes } ) => {
-	const isFullWidth = attributes.align === 'full';
-	const RibbonVariation = isFullWidth ?
-		Icon.RibbonFull :
-		Icon.RibbonCentered;
+	const props = {
+		style: { height: attributes.height },
+		role: 'img',
+		'aria-hidden': true,
+	};
+
+	if ( attributes.align === 'full' ) {
+		return (
+			<div className="ribbon is-full" { ...props }>
+				<Icon.RibbonFullLeft />
+				<Icon.RibbonFullCenter />
+				<Icon.RibbonFullRight />
+			</div>
+		);
+	}
+
 	return (
-		<RibbonVariation
-			// height={ attributes.height }
-			style={ { height: attributes.height } }
-			preserveAspectRatio={ isFullWidth ? 'none' : 'xMidYMid' }
-			className={ classnames( 'ribbon', { 'is-full': isFullWidth } ) }
-		/>
+		<div className="ribbon" { ...props }>
+			<Icon.RibbonLeft />
+			<Icon.RibbonRight />
+		</div>
 	);
 };
 
