@@ -5,7 +5,6 @@
  * Version:     [VERSION]
  * Author:      Automattic
  * Author URI:  https://automattic.com
- * Text Domain: [RESOURCE]
  * License:     GPL v2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  */
