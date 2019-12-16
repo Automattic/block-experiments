@@ -25,10 +25,10 @@ setCategories( [
 import * as eventBlock from '../blocks/event/src';
 import * as layoutGridBlock from '../blocks/layout-grid/src';
 import * as richImageTools from '../blocks/rich-image/src';
-import * as bauhausBlock from '../blocks/bauhaus/src';
+import * as bauhausCentenaryBlock from '../blocks/bauhaus-centenary/src';
 
 // Instantiate the blocks, adding them to our block category
 eventBlock.registerBlock();
 layoutGridBlock.registerBlock();
 richImageTools.registerBlock();
-bauhausBlock.registerBlock();
+bauhausCentenaryBlock.registerBlock();

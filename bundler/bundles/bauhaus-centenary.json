@@ -1,9 +1,9 @@
 {
 	"blocks": [
-		"bauhaus"
+		"bauhaus-centenary"
 	],
 	"version": "1.0.0",
-	"name": "Bauhaus Centennial",
+	"name": "Bauhaus Centenary",
 	"description": "Celebrate the centenary of the design school",
-	"resource": "jetpack-bauhaus"
+	"resource": "jetpack-bauhaus-centenary"
 }

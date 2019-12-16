@@ -125,7 +125,7 @@ const Edit = ( {
 				</figure>
 			) : (
 				<Placeholder
-					label={ __( 'Bauhaus' ) }
+					label={ __( 'Bauhaus Centenary' ) }
 					instructions={ __( 'Celebrate the centenary of the design school' ) }
 					icon={ <Icon.BauhausIcon /> }
 					className={ className }

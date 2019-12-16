@@ -1,4 +1,4 @@
-=== Bauhaus Centennial Block ===
+=== Bauhaus Centenary Block ===
 Contributors: automattic, ajlende, pablohoneyhoney
 Stable tag: 1.0.0
 Tested up to: 5.3
@@ -21,5 +21,5 @@ Celebrate the centenary of the design school
 
 == Changelog ==
 
-= 1.0 - 13th December 2019 =
+= 1.0 - 16th December 2019 =
 * Initial release
