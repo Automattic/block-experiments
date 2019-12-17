@@ -35,10 +35,16 @@ const Edit = ( {
 	attributes,
 	backgroundColor,
 	setBackgroundColor,
+	fill1Color,
+	setFill1Color,
+	fill2Color,
+	setFill2Color,
+	fill3Color,
+	setFill3Color,
 	isSelected,
 } ) => {
 	const Category = categories[ attributes.category ];
-	const { ExtraStyles, extraColors } = Category || {};
+	const { ExtraStyles } = Category || {};
 
 	return (
 		<>
@@ -88,7 +94,24 @@ const Edit = ( {
 							onChange: setBackgroundColor,
 							label: __( 'Background' ),
 						},
-						...( extraColors ? extraColors( { attributes, setAttributes } ) : [] ),
+						{
+							colors,
+							value: fill1Color.color,
+							onChange: setFill1Color,
+							label: __( 'Fill 1' ),
+						},
+						{
+							colors,
+							value: fill2Color.color,
+							onChange: setFill2Color,
+							label: __( 'Fill 2' ),
+						},
+						{
+							colors,
+							value: fill3Color.color,
+							onChange: setFill3Color,
+							label: __( 'Fill 3' ),
+						},
 					] }
 				/>
 			</InspectorControls>
@@ -135,4 +158,4 @@ const Edit = ( {
 	);
 };
 
-export default withColors( 'backgroundColor' )( Edit );
+export default withColors( 'backgroundColor', 'fill1', 'fill2', 'fill3' )( Edit );
