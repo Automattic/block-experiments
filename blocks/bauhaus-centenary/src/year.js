@@ -17,7 +17,15 @@ const variations = {
 
 const Year = ( { attributes } ) => {
 	const YearVariation = variations[ attributes.year ];
-	return <YearVariation className="year" style={ { height: attributes.height } } />;
+	return (
+		<YearVariation
+			className="year"
+			fill1={ attributes.fill1Color }
+			fill2={ attributes.fill2Color }
+			fill3={ attributes.fill3Color }
+			style={ { height: attributes.height } }
+		/>
+	);
 };
 
 const Content = Year;

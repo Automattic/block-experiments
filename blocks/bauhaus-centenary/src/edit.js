@@ -35,12 +35,6 @@ const Edit = ( {
 	attributes,
 	backgroundColor,
 	setBackgroundColor,
-	fill1Color,
-	setFill1Color,
-	fill2Color,
-	setFill2Color,
-	fill3Color,
-	setFill3Color,
 	isSelected,
 } ) => {
 	const Category = categories[ attributes.category ];
@@ -96,20 +90,20 @@ const Edit = ( {
 						},
 						{
 							colors,
-							value: fill1Color.color,
-							onChange: setFill1Color,
+							value: attributes.fill1Color,
+							onChange: ( fill1Color ) => setAttributes( { fill1Color } ),
 							label: __( 'Fill 1' ),
 						},
 						{
 							colors,
-							value: fill2Color.color,
-							onChange: setFill2Color,
+							value: attributes.fill2Color,
+							onChange: ( fill2Color ) => setAttributes( { fill2Color } ),
 							label: __( 'Fill 2' ),
 						},
 						{
 							colors,
-							value: fill3Color.color,
-							onChange: setFill3Color,
+							value: attributes.fill3Color,
+							onChange: ( fill3Color ) => setAttributes( { fill3Color } ),
 							label: __( 'Fill 3' ),
 						},
 					] }
@@ -158,4 +152,4 @@ const Edit = ( {
 	);
 };
 
-export default withColors( 'backgroundColor', 'fill1', 'fill2', 'fill3' )( Edit );
+export default withColors( 'backgroundColor' )( Edit );

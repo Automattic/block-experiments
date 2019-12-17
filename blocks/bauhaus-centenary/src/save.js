@@ -17,14 +17,12 @@ const Save = ( { attributes, className } ) => {
 	const Category = categories[ attributes.category ];
 
 	const style = {
-		color: attributes.customTextColor,
 		backgroundColor: attributes.customBackgroundColor,
 	};
 
 	const classNames = classnames(
 		className,
 		{ [ `align${ attributes.align }` ]: attributes.align },
-		getColorClassName( 'fill-color', attributes.fillColor ),
 		getColorClassName( 'background-color', attributes.backgroundColor ),
 	);
 

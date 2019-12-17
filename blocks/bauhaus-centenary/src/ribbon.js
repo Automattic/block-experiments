@@ -15,20 +15,26 @@ const Ribbon = ( { attributes } ) => {
 		'aria-hidden': true,
 	};
 
+	const iconProps = {
+		fill1: attributes.fill1Color,
+		fill2: attributes.fill2Color,
+		fill3: attributes.fill3Color,
+	};
+
 	if ( attributes.align === 'full' ) {
 		return (
 			<div className="ribbon is-full" { ...props }>
-				<Icon.RibbonFullLeft />
-				<Icon.RibbonFullCenter />
-				<Icon.RibbonFullRight />
+				<Icon.RibbonFullLeft { ...iconProps } />
+				<Icon.RibbonFullCenter { ...iconProps } />
+				<Icon.RibbonFullRight { ...iconProps } />
 			</div>
 		);
 	}
 
 	return (
 		<div className="ribbon" { ...props }>
-			<Icon.RibbonLeft />
-			<Icon.RibbonRight />
+			<Icon.RibbonLeft { ...iconProps } />
+			<Icon.RibbonRight { ...iconProps } />
 		</div>
 	);
 };

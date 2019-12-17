@@ -13,19 +13,12 @@ import { __ } from '@wordpress/i18n';
  */
 import * as Icon from './icon';
 
-const forms = {
-	triangle: Icon.FormTriangle,
-	square: Icon.FormSquare,
-	circle: Icon.FormCircle,
-};
-
 const Forms = ( { className, attributes } ) => {
 	return (
 		<div className={ classnames( className, 'forms' ) }>
-			{ attributes.forms.map( ( form, index ) => {
-				const Form = forms[ form.type ];
-				return <Form key={ index } style={ { height: attributes.height } } />;
-			} ) }
+			<Icon.FormTriangle fill={ attributes.fill1Color } style={ { height: attributes.height } } />
+			<Icon.FormSquare fill={ attributes.fill2Color } style={ { height: attributes.height } } />
+			<Icon.FormCircle fill={ attributes.fill3Color } style={ { height: attributes.height } } />
 		</div>
 	);
 };
@@ -37,5 +30,4 @@ export default Object.assign( Forms, {
 	icon: <Icon.FormsIcon />,
 	preview: <Icon.FormsPreview />,
 	Content,
-	// extraColors,
 } );

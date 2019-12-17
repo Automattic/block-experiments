@@ -35,10 +35,13 @@ export const registerBlock = () => {
 			category: {
 				type: 'string',
 			},
-			fillColor: {
+			fill1Color: {
 				type: 'string',
 			},
-			customFillColor: {
+			fill2Color: {
+				type: 'string',
+			},
+			fill3Color: {
 				type: 'string',
 			},
 			backgroundColor: {
