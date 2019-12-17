@@ -114,6 +114,7 @@ const Edit = ( {
 					className={ classnames(
 						className,
 						backgroundColor.class,
+						{ [ `align${ attributes.align }` ]: attributes.align },
 					) }
 					style={ {
 						backgroundColor: backgroundColor.color,

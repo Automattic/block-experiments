@@ -23,7 +23,7 @@ const Ribbon = ( { attributes } ) => {
 
 	if ( attributes.align === 'full' ) {
 		return (
-			<div className="ribbon is-full" { ...props }>
+			<div className="ribbon" { ...props }>
 				<Icon.RibbonFullLeft { ...iconProps } />
 				<Icon.RibbonFullCenter { ...iconProps } />
 				<Icon.RibbonFullRight { ...iconProps } />

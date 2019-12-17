@@ -5,6 +5,7 @@
 	flex-direction: column;
 	justify-content: center;
 	text-align: center;
+	border-radius: 4px;
 
 	.forms,
 	.year,
@@ -37,8 +38,12 @@
 		svg:last-child {
 			flex-grow: 1;
 		}
+	}
 
-		&.is-full {
+	&.alignfull {
+		border-radius: 0;
+
+		.ribbon {
 			padding: 0;
 
 			svg:first-child {
@@ -50,4 +55,5 @@
 			}
 		}
 	}
+
 }
