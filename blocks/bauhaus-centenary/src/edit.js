@@ -33,8 +33,6 @@ const Edit = ( {
 	className,
 	setAttributes,
 	attributes,
-	// fillColor,
-	// setFillColor,
 	backgroundColor,
 	setBackgroundColor,
 	isSelected,
@@ -90,12 +88,6 @@ const Edit = ( {
 							onChange: setBackgroundColor,
 							label: __( 'Background' ),
 						},
-						// {
-						// 	colors,
-						// 	value: fillColor.color,
-						// 	onChange: setFillColor,
-						// 	label: __( 'Fill' ),
-						// },
 						...( extraColors ? extraColors( { attributes, setAttributes } ) : [] ),
 					] }
 				/>
@@ -104,11 +96,9 @@ const Edit = ( {
 				<figure
 					className={ classnames(
 						className,
-						// fillColor.class,
 						backgroundColor.class,
 					) }
 					style={ {
-						// fill: fillColor.color,
 						backgroundColor: backgroundColor.color,
 					} }
 				>
@@ -145,4 +135,4 @@ const Edit = ( {
 	);
 };
 
-export default withColors( 'fillColor', 'backgroundColor' )( Edit );
+export default withColors( 'backgroundColor' )( Edit );
