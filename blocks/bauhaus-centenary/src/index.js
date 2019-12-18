@@ -35,6 +35,12 @@ export const registerBlock = () => {
 			category: {
 				type: 'string',
 			},
+			backgroundColor: {
+				type: 'string',
+			},
+			customBackgroundColor: {
+				type: 'string',
+			},
 			fill1Color: {
 				type: 'string',
 			},
@@ -44,35 +50,9 @@ export const registerBlock = () => {
 			fill3Color: {
 				type: 'string',
 			},
-			backgroundColor: {
-				type: 'string',
-			},
-			customBackgroundColor: {
-				type: 'string',
-			},
 			year: {
 				type: 'string',
 				default: '1919',
-			},
-			forms: {
-				type: 'array',
-				default: [
-					{
-						type: 'triangle',
-						fill: '#F7FC1C',
-						stroke: 'none',
-					},
-					{
-						type: 'square',
-						fill: '#D32121',
-						stroke: 'none',
-					},
-					{
-						type: 'circle',
-						fill: '#051BF4',
-						stroke: 'none',
-					},
-				],
 			},
 		},
 		edit: ( props ) => <Edit { ...props } />,
