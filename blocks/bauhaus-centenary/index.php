@@ -1,8 +1,6 @@
 <?php
 /**
  * Block to celebrate the Bauhaus centenary.
- *
- * @package Jetpack
  */
 
 /**
@@ -10,7 +8,7 @@
  */
 add_action( 'init', function() {
 	register_block_type(
-		'jetpack/bauhaus-centenary',
+		'a8c/bauhaus-centenary',
 		[
 			'editor_script'   => 'wpcom-blocks',
 			'style'           => 'wpcom-blocks',
