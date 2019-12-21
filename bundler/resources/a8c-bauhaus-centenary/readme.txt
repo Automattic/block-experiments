@@ -11,6 +11,10 @@ Celebrate the centenary of the design school
 == Description ==
 
 2019 marks the 100th anniversary of the Bauhaus design school. Choose from three different styles—forms, year, and ribbon—each paying homage to Bauhaus design.
+  
+## Development
+
+You can follow development, file an issue, suggest features, and view the source at the Github repo: https://github.com/automattic/block-experiments
 
 == Screenshots ==
 

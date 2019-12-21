@@ -1,7 +1,7 @@
 === Layout Grid Block ===
 Contributors: automattic, jasmussen, johnny5, mkaz
 Stable tag: 1.0.3
-Tested up to: 5.3
+Tested up to: 5.3.2
 Requires at least: 5.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -11,6 +11,10 @@ A Gutenberg container block to let you align items consistently across a global 
 == Description ==
 
 Want to create a column-based layout with easily customizable column-width and positions? Or perhaps you want to align your content to a global layout grid across your post. With this Layout Grid block you can do both or either. There are also options to provide specific layouts to mobile or tablet breakpoints. Pick a number of columns (1-4), then go ahead and resize and position each column as you want them to look, for any screen. Optionally apply background colours and paddings to add emphasis.
+
+## Development 
+
+You can follow development, file an issue, suggest features, and view the source at the Github repo: https://github.com/automattic/block-experiments
 
 == Screenshots ==
 
