@@ -1,0 +1,21 @@
+/* Front end styles */
+
+.wp-block-jetpack-strike-that {
+	position: relative;
+}
+.wp-block-jetpack-strike-that svg {
+	position: absolute;
+	fill: none;
+
+	path {
+		stroke-dasharray: 12400;
+		stroke-dashoffset: 12400;
+		animation: dash 5s linear forwards;
+	}
+	
+	@keyframes dash {
+		to {
+		stroke-dashoffset: 0;
+		}
+	}
+}
