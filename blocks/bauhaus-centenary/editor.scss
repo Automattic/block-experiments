@@ -5,8 +5,10 @@
 	}
 
 	.components-icon-button svg {
-		height: 100%;
-		width: auto;
+		// IE11 requires a fixed width & height for SVGs. Values are calculated
+		// from what `height: 100%` and `width: auto` would have resulted in.
+		height: 26px;
+		width: 39px;
 	}
 }
 
