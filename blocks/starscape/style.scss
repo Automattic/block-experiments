@@ -1,0 +1,34 @@
+/* Front end styles */
+.wp-block-a8c-starscape {
+	position: relative;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	padding: 0 40px;
+	min-height: 430px;
+	background: #00000c;
+
+	&__stars {
+		position: absolute;
+		top: 100%;
+		left: 50%;
+		transform: translateZ(0);
+	}
+
+	&__heading {
+		z-index: 1;
+		width: 100%;
+		font-size: 84px;
+	}
+}
+
+@keyframes wp-block-a8c-starscape-animation-rotate {
+	from {
+		transform: rotateZ(0deg);
+	}
+	to {
+		transform: rotateZ(360deg);
+	}
+}

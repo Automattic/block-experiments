@@ -1,0 +1,9 @@
+{
+	"blocks": [
+		"starscape"
+	],
+	"version": "1.0.0",
+	"name": "Starscape Motion Background",
+	"description": "A customizable animated starscape",
+	"resource": "a8c-starscape"
+}
