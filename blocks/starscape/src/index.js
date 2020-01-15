@@ -7,7 +7,7 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { BlockIcon } from '../../../src/block-icons';
+import StarsIcon from './icon';
 import Edit from './edit';
 import Save from './save';
 
@@ -29,7 +29,7 @@ export function registerBlock() {
 	registerBlockType( 'a8c/starscape', {
 		title: __( 'Starscape Motion Background' ),
 		description: __( 'Animated background of rotating stars' ),
-		icon: <BlockIcon />,
+		icon: <StarsIcon />,
 		category: 'widgets',
 		supports: {
 			html: false,
