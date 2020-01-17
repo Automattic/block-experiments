@@ -8,7 +8,7 @@ add_action( 'init', function() {
 	] );
 } );
 
-add_action( 'wp_enqueue_scripts', function() {
+add_action( 'enqueue_block_assets', function() {
 	if ( has_block( 'a8c/motion-background' ) ) {
 		wp_enqueue_script(
 			'wpcom-twgl-js',
