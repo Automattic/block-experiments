@@ -195,7 +195,7 @@ class Edit extends Component {
 						{ getColumns().map( ( column ) => (
 							<li key={ column.value }>
 								<IconButton
-									isLarge
+									isSecondary
 									icon={ <ColumnIcon columns={ column.value } /> }
 									onClick={ () => this.onChangeLayout( column.value ) }
 									className="block-editor-inner-blocks__template-picker-option"
