@@ -79,8 +79,12 @@ body.is-resizing [data-type="jetpack/layout-grid"] {
 [data-type="jetpack/layout-grid"][data-align="full"].has-child-selected,
 [data-type="jetpack/layout-grid"][data-align="full"].is-selected,
 body.is-resizing [data-type="jetpack/layout-grid"][data-align="full"] {
-	> div {
-		width: calc( 100% - 28px - 28px - 8px );
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+
+	&::before {
+		border-right-width: 1px;
 	}
 }
 
