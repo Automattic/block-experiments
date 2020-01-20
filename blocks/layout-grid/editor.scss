@@ -16,10 +16,6 @@
 	margin-bottom: 0;
 }
 
-[data-type="jetpack/layout-grid"] > div {
-	width: 100%;
-}
-
 [data-type="jetpack/layout-grid-column"].wp-block { // Selector needs specificity to override.
 	// 2. Unset margins and paddings for column container.
 	padding-left: 0;
@@ -71,6 +67,15 @@
 	flex-direction: column;
 	align-items: center;
 
+	// Fit available space.
+	// This rule is for newer versions of the plugin and WordPress 5.4.
+	> div {
+		width: 100%;
+		transition: all .1s ease;
+	}
+
+	// This rule is for older versions of the plugin and WordPress 5.3.
+	// @todo Revisit/remove for 5.4.
 	> .block-editor-block-list__block-edit {
 		transition: all .1s ease;
 
