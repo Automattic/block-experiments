@@ -161,11 +161,12 @@
 	margin-bottom: 0;
 	padding-left: 0;
 
-	> li {
+	> li .components-button {
 		list-style: none;
 		flex-shrink: 1;
-		max-width: 100px;
+		max-width: 72px;
 		margin-right: 8px;
+		flex-basis: 100%;
 	}
 
 	.block-editor-inner-blocks__template-picker-option {
