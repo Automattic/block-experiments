@@ -14,7 +14,7 @@ import {
 	InspectorControls,
 } from '@wordpress/block-editor';
 import { Component, createRef } from '@wordpress/element';
-import { PanelBody, TextControl, ButtonGroup, Button, Placeholder, IconButton, IsolatedEventContainer } from '@wordpress/components';
+import { PanelBody, TextControl, ButtonGroup, Button, IconButton, Placeholder, IsolatedEventContainer } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { ENTER, SPACE } from '@wordpress/keycodes';
 import { withSelect, withDispatch } from '@wordpress/data';
@@ -195,7 +195,7 @@ class Edit extends Component {
 						{ getColumns().map( ( column ) => (
 							<li key={ column.value }>
 								<IconButton
-									isLarge
+									isSecondary
 									icon={ <ColumnIcon columns={ column.value } /> }
 									onClick={ () => this.onChangeLayout( column.value ) }
 									className="block-editor-inner-blocks__template-picker-option"

@@ -31,7 +31,7 @@
 
 	// Lower the z-index so it's under the block borders.
 	// @todo: Verify this doesn't mess with alternate templates and background styles.
-	z-index: -1;
+	z-index: 0;
 
 	.wpcom-overlay-grid__column {
 		border-left: 1px solid transparent;

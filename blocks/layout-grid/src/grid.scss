@@ -127,16 +127,18 @@
 }
 
 [data-type="jetpack/layout-grid"].is-selected .wp-block-jetpack-layout-resizable .wp-blocks-jetpack-layout-grid__resize-handles .components-resizable-box__handle,
-[data-type="jetpack/layout-grid"] .wp-block-jetpack-layout-resizable [data-type="jetpack/layout-grid-column"].is-selected .wp-blocks-jetpack-layout-grid__resize-handles .components-resizable-box__handle {
+[data-type="jetpack/layout-grid"] [data-type="jetpack/layout-grid-column"].is-selected .wp-blocks-jetpack-layout-grid__resize-handles .components-resizable-box__handle {
 	display: block;
 }
 
 // These colors are copied from upstream Gutenberg to ensure opacities when the theme is dark.
+// @todo Revisit/remove for 5.4.
 $dark-opacity-light-800: rgba(#425863, 0.4);
 $light-opacity-light-800: rgba(#fff, 0.45);
 
 // Show a special style of block borders for the individual columns, so they line up with the drag handle.
-[data-type="jetpack/layout-grid-column"].is-selected > .block-editor-block-list__block-edit.block-editor-block-list__block-edit { // Increase specificity.
+[data-type="jetpack/layout-grid-column"].is-selected.is-selected, // This rule is for newer versions of the plugin and WordPress 5.3. Extra specificity can be removed when G2 UI lands.
+[data-type="jetpack/layout-grid-column"].is-selected > .block-editor-block-list__block-edit.block-editor-block-list__block-edit { // This rule is for older versions of the plugin and WordPress 5.3.
 	> .block-editor-block-contextual-toolbar > .block-editor-block-toolbar {
 		left: 18px;
 	}
@@ -146,10 +148,14 @@ $light-opacity-light-800: rgba(#fff, 0.45);
 		left: 0;
 		right: 0;
 
+		border-color:  $dark-opacity-light-800;
 		border-left: 1px dashed $dark-opacity-light-800;
 		border-style: dashed;
+		border-width: 1px;
+
 		// Use opacity to work in various editor styles
 		.is-dark-theme & {
+			border-color:  $light-opacity-light-800;
 			border-left: 1px dashed $light-opacity-light-800;
 		}
 	}

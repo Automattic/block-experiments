@@ -65,7 +65,35 @@ body.is-resizing [data-type="jetpack/layout-grid"] {
 	overflow: inherit;
 }
 
+
+/**
+ * Scale down the Grid Block when Selected.
+ */
+
+
 // When the block is selected, we scale it down to make room for the side UI.
+// This becomes unnecessary with https://github.com/WordPress/gutenberg/pull/19344.
+// @todo Revisit/remove for 5.4.
+
+// This rule is for newer versions of the plugin and WordPress 5.4.
+[data-type="jetpack/layout-grid"][data-align="full"].has-child-selected,
+[data-type="jetpack/layout-grid"][data-align="full"].is-selected,
+body.is-resizing [data-type="jetpack/layout-grid"][data-align="full"] {
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+
+	&::before {
+		border-right-width: 1px;
+	}
+
+	// @todo Remove for 5.4, as it won't be necessary.
+	.block-editor-block-list__block-edit::before {
+		border-right-width: 1px;
+	}
+}
+
+// This rule is for older versions of the plugin and WordPress 5.3.
 [data-type="jetpack/layout-grid"][data-align="full"].has-child-selected,
 [data-type="jetpack/layout-grid"][data-align="full"].is-selected,
 body.is-resizing [data-type="jetpack/layout-grid"][data-align="full"] {

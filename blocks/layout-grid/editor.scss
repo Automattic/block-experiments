@@ -18,12 +18,12 @@
 
 [data-type="jetpack/layout-grid-column"].wp-block { // Selector needs specificity to override.
 	// 2. Unset margins and paddings for column container.
+	margin: 0;
 	padding-left: 0;
-	margin-left: 0;
 	padding-right: 0;
-	margin-right: 0;
 
 	// 3. Unset for contents of container.
+	// @todo Revisit/remove for 5.4.
 	> .block-editor-block-list__block-edit {
 		padding-left: 0;
 		margin-left: 0;
@@ -39,6 +39,7 @@
 
 [data-type="jetpack/layout-grid"] {
 	// Pending refinements, hide the v6.3 dashed outlines on grid children, they aren't helpful here.
+	// @todo Revisit/remove for 5.4.
 	.block-editor-block-list__block:not(.is-selected) > .block-editor-block-list__block-edit::before {
 		border-color: transparent !important;
 	}
@@ -66,6 +67,14 @@
 	flex-direction: column;
 	align-items: center;
 
+	// Fit available space.
+	// This rule is for newer versions of the plugin and WordPress 5.4.
+	> div {
+		width: 100%;
+	}
+
+	// This rule is for older versions of the plugin and WordPress 5.3.
+	// @todo Revisit/remove for 5.4.
 	> .block-editor-block-list__block-edit {
 		transition: all .1s ease;
 
@@ -89,7 +98,7 @@
 // Hide the hover style & breadcrumbs for individual column containers.
 // This helps simplify the experience for resizing columns.
 // The hover effect may be removed entirely upstream, in which case we can remove this.
-// Ticket to watch: https://github.com/WordPress/gutenberg/issues/17088
+// @todo Revisit/remove for 5.4.
 [data-type="jetpack/layout-grid-column"].is-hovered > .block-editor-block-list__block-edit {
 	// Don't show breadcrumbs.
 	> .block-editor-block-list__breadcrumb {
@@ -148,13 +157,16 @@
 	flex-wrap: nowrap;
 	width: 100%;
 	list-style: none;
+	margin-left: 0;
 	margin-bottom: 0;
+	padding-left: 0;
 
-	> li {
+	> li .components-button {
 		list-style: none;
-		flex-basis: 100%;
 		flex-shrink: 1;
-		max-width: 100px;
+		max-width: 72px;
+		margin-right: 8px;
+		flex-basis: 100%;
 	}
 
 	.block-editor-inner-blocks__template-picker-option {
