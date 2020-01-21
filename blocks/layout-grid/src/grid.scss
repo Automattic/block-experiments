@@ -148,10 +148,14 @@ $light-opacity-light-800: rgba(#fff, 0.45);
 		left: 0;
 		right: 0;
 
+		border-color:  $dark-opacity-light-800;
 		border-left: 1px dashed $dark-opacity-light-800;
 		border-style: dashed;
+		border-width: 1px;
+
 		// Use opacity to work in various editor styles
 		.is-dark-theme & {
+			border-color:  $light-opacity-light-800;
 			border-left: 1px dashed $light-opacity-light-800;
 		}
 	}

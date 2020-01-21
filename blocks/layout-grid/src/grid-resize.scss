@@ -86,6 +86,11 @@ body.is-resizing [data-type="jetpack/layout-grid"][data-align="full"] {
 	&::before {
 		border-right-width: 1px;
 	}
+
+	// @todo Remove for 5.4, as it won't be necessary.
+	.block-editor-block-list__block-edit::before {
+		border-right-width: 1px;
+	}
 }
 
 // This rule is for older versions of the plugin and WordPress 5.3.
