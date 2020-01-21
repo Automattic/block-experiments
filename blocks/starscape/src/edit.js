@@ -51,7 +51,6 @@ const Edit = ( {
 			</BlockControls>
 			<InspectorControls>
 				<PanelBody title={ __( 'Stars' ) } initialOpen={ false }>
-
 					<RangeControl
 						label={ __( 'Density' ) }
 						value={ attributes.density }
@@ -73,8 +72,25 @@ const Edit = ( {
 						max={ 100 }
 					/>
 				</PanelBody>
+				<PanelColorGradientSettings
+					title={ __( 'Color' ) }
+					colors={ [ ...themeColors, ...colorGradientOptions.colors ] }
+					gradients={ colorGradientOptions.gradients }
+					settings={ [
+						{
+							label: __( 'Background' ),
+							gradientValue: attributes.background,
+							onGradientChange: ( background ) => setAttributes( { background } ),
+						},
+						{
+							label: __( 'Text' ),
+							colorValue: textColor.color,
+							onColorChange: setTextColor,
+						},
+					] }
+				/>
 				<PanelBody title={ __( 'Dimensions' ) } initialOpen={ false }>
-					<p>{ __( 'The maximum dimensions control how far out to render stars. It does not change the size of the container. Keep these values as small as possible, especially with higher density stars, for better performance on low-powered devices.' ) }</p>
+					<p>{ __( 'Control the area of stars you want. Smaller values have better performance, but blocks larger than the area specified will not be completely covered.' ) }</p>
 					<BaseControl
 						className="wp-block-a8c-starscape-resolution-control"
 						id={ `wp-block-a8c-starscape-width-control-${ instanceId }` }
@@ -114,23 +130,6 @@ const Edit = ( {
 						/>
 					</BaseControl>
 				</PanelBody>
-				<PanelColorGradientSettings
-					title={ __( 'Color' ) }
-					colors={ [ ...themeColors, ...colorGradientOptions.colors ] }
-					gradients={ colorGradientOptions.gradients }
-					settings={ [
-						{
-							label: __( 'Background' ),
-							gradientValue: attributes.background,
-							onGradientChange: ( background ) => setAttributes( { background } ),
-						},
-						{
-							label: __( 'Text' ),
-							colorValue: textColor.color,
-							onColorChange: setTextColor,
-						},
-					] }
-				/>
 			</InspectorControls>
 			<Starscape
 				className={ className }
