@@ -24,6 +24,7 @@
 	gl.canvas.style.height = '100%';
 	document.body.appendChild( gl.canvas );
 
+	// Based on http://glslsandbox.com/e#8143.0
 	const programInfo = twgl.createProgramInfo( gl, [
 		`
 			attribute vec3 position;
@@ -35,26 +36,37 @@
 		`
 			precision mediump float;
 
-			const float PI_DOUBLE = 6.283185307;
-
 			uniform float time;
-			uniform float timeExecution;
-			uniform float timeDelta;
 
 			uniform vec2 mouse;
-			uniform vec2 scroll;
-			uniform vec2 window;
 			uniform vec2 resolution;
+			uniform vec2 offset;
 
-			vec3 hsv2rgb( vec3 c ) {
-			    vec4 K = vec4( 1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0 );
-			    vec3 p = abs( fract( c.xxx + K.xyz ) * 6.0 - K.www );
-			    return c.z * mix( K.xxx, clamp( p - K.xxx, 0.0, 1.0 ), c.y );
-			}
+			const int max_complexity = 32;
 
-			void main () {
-				vec3 color = hsv2rgb( vec3( scroll.y / window.y, mouse / window ) );
-				gl_FragColor = vec4( color, 1.0 );
+			uniform int complexity;
+			uniform float mouse_speed;
+			uniform float mouse_curls;
+			uniform float fluid_speed;
+			uniform float color_intensity;
+
+			void main() {
+				vec2 p = ( 2.0 * ( gl_FragCoord.xy - offset ) - resolution ) / max( resolution.x, resolution.y );
+				for ( int i = 1; i < max_complexity; i++ ) {
+					if ( i >= complexity ) continue;
+					vec2 q = p + ( time * 0.001 );
+					q.x += 0.6 / float( i ) * sin( ( float( i ) * p.y ) + ( time / fluid_speed ) + ( 0.3 * float( i ) ) );
+					q.x += 0.5 + ( mouse.y / resolution.y / mouse_speed ) + mouse_curls;
+					q.y += 0.6 / float( i ) * sin( ( float( i ) * p.x ) + ( time / fluid_speed ) + ( 0.3 * float( i + 10 ) ) );
+					q.y -= 0.5 - ( mouse.x / resolution.x / mouse_speed ) + mouse_curls;
+					p = q;
+				}
+				gl_FragColor = vec4(
+					( color_intensity * sin( 3.0 * p.x ) ) + ( 1.0 - color_intensity ),
+					( color_intensity * sin( 3.0 * p.y ) ) + ( 1.0 - color_intensity ),
+					( color_intensity * sin( p.x + p.y ) ) + ( 1.0 - color_intensity ),
+					1.0
+				);
 			}
 		`,
 	] );
@@ -63,12 +75,9 @@
 		position: [ -1, -1, 0, 1, -1, 0, -1, 1, 0, -1, 1, 0, 1, -1, 0, 1, 1, 0 ],
 	} );
 
-	const timeStart = window.performance.now();
-	let time = timeStart;
-	let timeDelta = 0;
-	let timeExecution = 0;
+	let time = window.performance.now() * 0.001;
 
-	const mouse = [ 0, 0 ];
+	const mouseScreen = [ 0, 0 ];
 
 	/**
 	 * Manage rendering the various different blocks.
@@ -104,7 +113,11 @@
 			gl.scissor( left, bottom, width, height );
 			gl.clearColor( 0, 0, 0, 0 ); // Clear to transparent to match background
 
-			renderBlock( block, width, height );
+			const resolution = [ width, height ];
+			const offset = [ left, bottom ];
+			const mouse = [ mouseScreen[ 0 ] - left, mouseScreen[ 1 ] - bottom ];
+
+			renderBlock( block, resolution, offset, mouse );
 		}
 	}
 
@@ -112,26 +125,38 @@
 	 * Draw an individual block.
 	 *
 	 * @param {Node} block Block to draw
-	 * @param {number} width Width of the block
-	 * @param {number} height Height of the block
+	 * @param {number[]} resolution The [ x, y ] resolution of the block
+	 * @param {number[]} offset The [ x, y ] offset for the block
+	 * @param {number[]} mouse The [ x, y ] coordinates of the mouse
 	 */
-	function renderBlock( block, width, height ) {
-		// TODO: Extract data- values from the block for the individual settings
+	function renderBlock( block, resolution, offset, mouse ) {
+		const globalUniforms = { time };
 
-		const uniforms = {
-			timeExecution,
-			timeDelta,
-			time,
-			mouse,
-			scroll: [ window.scrollX, window.scrollY ],
-			window: [ gl.canvas.width, gl.canvas.height ],
-			resolution: [ width, height ],
+		const blockUniforms = { resolution, offset, mouse };
+
+		const complexity = Number.parseInt( block.dataset.complexity, 10 );
+		const mouseSpeed = Number.parseFloat( block.dataset.mouseSpeed );
+		const mouseCurls = Number.parseFloat( block.dataset.mouseCurls );
+		const fluidSpeed = Number.parseFloat( block.dataset.fluidSpeed );
+		const colorIntensity = Number.parseFloat( block.dataset.colorIntensity );
+
+		const dataUniforms = {
+			// More points of color.
+			complexity,
+			// Makes it more/less jumpy. Range [50, 1]
+			mouse_speed: ( 4 * ( 175 + mouseSpeed ) ) / ( 11 * mouseSpeed ) * complexity,
+			// Drives complexity in the amount of curls/curves. Zero is a single whirlpool.
+			mouse_curls: mouseCurls / 10,
+			// Drives speed, higher number will make it slower. Range [256, 1]
+			fluid_speed: -( 4 * ( -2125 + ( 13 * fluidSpeed ) ) ) / ( 33 * fluidSpeed ),
+			// Changes how bright the colors are
+			color_intensity: colorIntensity / 100,
 		};
 
 		gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT ); // eslint-disable-line no-bitwise
 		gl.useProgram( programInfo.program );
 		twgl.setBuffersAndAttributes( gl, programInfo, bufferInfo );
-		twgl.setUniforms( programInfo, uniforms );
+		twgl.setUniforms( programInfo, globalUniforms, blockUniforms, dataUniforms );
 		twgl.drawBufferInfo( gl, gl.TRIANGLES, bufferInfo );
 	}
 
@@ -141,9 +166,7 @@
 	 * @param {DOMHighResTimeStamp} t Point in time when function begins to be called in milliseconds
 	 */
 	function updateTime( t ) {
-		timeExecution = t - timeStart;
-		timeDelta = t - time;
-		time = t;
+		time = t * 0.001;
 	}
 
 	/**
@@ -152,8 +175,8 @@
 	 * @param {MouseEvent} e Mouse event
 	 */
 	function updateMouse( e ) {
-		mouse[ 0 ] = e.screenX;
-		mouse[ 1 ] = e.screenY;
+		mouseScreen[ 0 ] = e.screenX;
+		mouseScreen[ 1 ] = e.screenY;
 	}
 	document.addEventListener( 'mousemove', updateMouse );
 

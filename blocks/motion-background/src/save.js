@@ -1,7 +1,14 @@
 
-const Save = ( { className } ) => {
+const Save = ( { className, attributes } ) => {
 	return (
-		<div className={ className } data-custom="40" />
+		<div
+			className={ className }
+			data-complexity={ attributes.complexity }
+			data-mouse-speed={ attributes.mouseSpeed }
+			data-mouse-curls={ attributes.mouseCurls }
+			data-fluid-speed={ attributes.fluidSpeed }
+			data-color-intensity={ attributes.colorIntensity }
+		/>
 	);
 };
 
