@@ -27,8 +27,8 @@ import generated from './generated.json';
 
 export function registerBlock() {
 	registerBlockType( 'a8c/starscape', {
-		title: __( 'Starscape Motion Background' ),
-		description: __( 'Animated background of rotating stars' ),
+		title: __( 'Starscape' ),
+		description: __( 'Create content with stars in motion.' ),
 		icon: <StarsIcon />,
 		category: 'widgets',
 		supports: {
