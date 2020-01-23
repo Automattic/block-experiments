@@ -18,7 +18,7 @@
 
 	// Every block, including nested blocks, are born with an intrinsic minimum margin.
 	// This resets that for the containers, which aren't meant to have that intrinsically.
-	> .wp-block > .editor-block-list__block-edit > [data-block] {
+	> .wp-block > .block-editor-block-list__block-edit > [data-block] {
 		margin-top: 0;
 		margin-bottom: 0;
 	}
@@ -161,7 +161,7 @@ $light-opacity-light-800: rgba(#fff, 0.45);
 	}
 }
 
-/* When clicked, hide the fake drag handles and show the real one */
+// When clicked, hide the fake drag handles and show the real one.
 .wp-block-jetpack-layout-grid__resizing {
 	user-select: none;
 	z-index: 10000;
