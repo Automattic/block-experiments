@@ -127,7 +127,7 @@
 }
 
 [data-type="jetpack/layout-grid"].is-selected .wp-block-jetpack-layout-resizable .wp-blocks-jetpack-layout-grid__resize-handles .components-resizable-box__handle,
-[data-type="jetpack/layout-grid"] [data-type="jetpack/layout-grid-column"].is-selected .wp-blocks-jetpack-layout-grid__resize-handles .components-resizable-box__handle {
+[data-type="jetpack/layout-grid"] .wp-block-jetpack-layout-resizable [data-type="jetpack/layout-grid-column"].is-selected .wp-blocks-jetpack-layout-grid__resize-handles .components-resizable-box__handle {
 	display: block;
 }
 
