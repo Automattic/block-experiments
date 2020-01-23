@@ -13,7 +13,8 @@
 	// constantly "refresh" this hack.
 	position: relative;
 	.is-hovered &,
-	.is-selected & {
+	.is-selected &,
+	.has-child-selected & {
 		position: absolute;
 	}
 
