@@ -1,0 +1,9 @@
+{
+	"blocks": [
+		"starscape"
+	],
+	"version": "1.0.0",
+	"name": "Starscape Block",
+	"description": "Stars in motion",
+	"resource": "a8c-starscape"
+}
