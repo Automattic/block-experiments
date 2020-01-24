@@ -1,6 +1,6 @@
 === Starscape Block ===
 Contributors: automattic, ajlende, pablohoneyhoney
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 Tested up to: 5.3.2
 Requires at least: 5.3
 License: GPLv2 or later
@@ -25,5 +25,8 @@ You can follow development, file an issue, suggest features, and view the source
 
 == Changelog ==
 
-= 1.0 - 23rd January 2020 =
+= 1.0.1 - 24th January 2020 =
+* Fix custom gradients for Gutenberg 7.3.0
+
+= 1.0.0 - 23rd January 2020 =
 * Initial release
