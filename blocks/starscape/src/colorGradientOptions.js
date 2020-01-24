@@ -7,51 +7,51 @@ export default {
 	gradients: [
 		{
 			name: __( 'Midnight' ),
-			gradient: '#00000c',
+			gradient: 'linear-gradient(141deg, rgb(0, 0, 12) 0%,rgb(0, 0, 12) 100%)',
 		},
 		{
 			name: __( 'Astronomical Dawn' ),
-			gradient: 'linear-gradient(141deg, #020111 60%,#20202c 100%)',
+			gradient: 'linear-gradient(141deg, rgb(2, 1, 17) 60%,rgb(32, 32, 44) 100%)',
 		},
 		{
 			name: __( 'Nautical Dawn' ),
-			gradient: 'linear-gradient(141deg, #020111 10%,#3a3a52 100%)',
+			gradient: 'linear-gradient(141deg, rgb(2, 1, 17) 10%,rgb(58, 58, 82) 100%)',
 		},
 		{
 			name: __( 'Civil Dawn' ),
-			gradient: 'linear-gradient(141deg, #20202c 0%,#515175 100%)',
+			gradient: 'linear-gradient(141deg, rgb(32, 32, 44) 0%,rgb(81, 81, 117) 100%)',
 		},
 		{
 			name: __( 'Sunrise' ),
-			gradient: 'linear-gradient(141deg, #20202c 0%,#6f71aa 80%,#8a76ab 100%)',
+			gradient: 'linear-gradient(141deg, rgb(32, 32, 44) 0%,rgb(111, 113, 170) 80%,rgb(138, 118, 171) 100%)',
 		},
 		{
 			name: __( 'Morning' ),
-			gradient: 'linear-gradient(141deg, #40405c 0%,#7072ab 50%,#cd82a0 100%)',
+			gradient: 'linear-gradient(141deg, rgb(64, 64, 92) 0%,rgb(112, 114, 171) 50%,rgb(205, 130, 160) 100%)',
 		},
 		{
 			name: __( 'Atmosphere' ),
-			gradient: 'linear-gradient(180deg, #00000c 65%,#1b2741 85%,#2e4473 95%,#4463a3 100%)',
+			gradient: 'linear-gradient(180deg, rgb(0, 0, 12) 65%,rgb(27, 39, 65) 85%,rgb(46, 68, 115) 95%,rgb(68, 99, 163) 100%)',
 		},
 		{
 			name: __( 'Astronomical Dusk' ),
-			gradient: 'linear-gradient(141deg, #0b050b 60%,#27171c 100%)',
+			gradient: 'linear-gradient(141deg, rgb(11, 5, 11) 60%,rgb(39, 23, 28) 100%)',
 		},
 		{
 			name: __( 'Nautical Dusk' ),
-			gradient: 'linear-gradient(141deg, #0b050b 10%,#4c2d2f 100%)',
+			gradient: 'linear-gradient(141deg, rgb(11, 5, 11) 10%,rgb(76, 45, 47) 100%)',
 		},
 		{
 			name: __( 'Civil Dusk' ),
-			gradient: 'linear-gradient(141deg, #130f13 0%,#2f2122 50%,#6c353a 100%)',
+			gradient: 'linear-gradient(141deg, rgb(19, 15, 19) 0%,rgb(47, 33, 34) 50%,rgb(108, 53, 58) 100%)',
 		},
 		{
 			name: __( 'Sunset' ),
-			gradient: 'linear-gradient(141deg, #1e1818 0%,#2f2122 30%,#6c353a 70%,#cf804b 100%)',
+			gradient: 'linear-gradient(141deg, rgb(30, 24, 24) 0%,rgb(47, 33, 34) 30%,rgb(108, 53, 58) 70%,rgb(207, 128, 75) 100%)',
 		},
 		{
 			name: __( 'Evening' ),
-			gradient: 'linear-gradient(141deg, #2f2122 10%,#6c353a 40%,#cf804b 80%,#ffeb59 100%)',
+			gradient: 'linear-gradient(141deg, rgb(47, 33, 34) 10%,rgb(108, 53, 58) 40%,rgb(207, 128, 75) 80%,rgb(255, 235, 89) 100%)',
 		},
 	],
 	colors: [
