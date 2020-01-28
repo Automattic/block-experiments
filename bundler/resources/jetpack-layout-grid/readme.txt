@@ -1,6 +1,6 @@
 === Layout Grid Block ===
 Contributors: automattic, jasmussen, johnny5, mkaz
-Stable tag: 1.0.3
+Stable tag: 1.0.5
 Tested up to: 5.3.2
 Requires at least: 5.3
 License: GPLv2 or later
@@ -22,6 +22,12 @@ You can follow development, file an issue, suggest features, and view the source
 2. Three column grid with resize handles.
 
 == Changelog ==
+
+= 1.0.5 - 28th January 2020
+* Fix editor layout issues with themes that don't support Gutenberg
+
+= 1.0.4 - 21st January 2020
+* Fix layout issues with Gutenberg 7.3
 
 = 1.0.3 - 12th December 2019 =
 * Fix grid values being ignored in the 7.1.0 editor
