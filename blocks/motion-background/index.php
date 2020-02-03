@@ -12,9 +12,9 @@ add_action( 'enqueue_block_assets', function() {
 	if ( has_block( 'a8c/motion-background' ) ) {
 		wp_enqueue_script(
 			'wpcom-twgl-js',
-			plugins_url( 'twgl.js', __FILE__ ),
+			plugins_url( 'twgl/twgl.js', __FILE__ ),
 			[], // no dependencies
-			filemtime( plugin_dir_path( __FILE__ ) . 'twgl.js' ),
+			filemtime( plugin_dir_path( __FILE__ ) . 'twgl/twgl.js' ),
 			true // in footer
 		);
 		wp_enqueue_script(

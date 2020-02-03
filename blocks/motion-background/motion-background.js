@@ -157,7 +157,7 @@
 		gl.useProgram( programInfo.program );
 		twgl.setBuffersAndAttributes( gl, programInfo, bufferInfo );
 		twgl.setUniforms( programInfo, globalUniforms, blockUniforms, dataUniforms );
-		twgl.drawBufferInfo( gl, gl.TRIANGLES, bufferInfo );
+		twgl.drawBufferInfo( gl, bufferInfo );
 	}
 
 	/**

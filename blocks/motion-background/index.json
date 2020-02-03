@@ -1,4 +1,4 @@
 [
-	"twgl.min.js",
+	"twgl/twgl.js",
 	"motion-background.js"
 ]
