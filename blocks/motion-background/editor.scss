@@ -3,3 +3,19 @@
 .wp-block-a8c-motion-background {
 	background-color: magenta;
 }
+
+.wp-block-a8c-motion-background-canvas {
+	// Fix positioning from toolbar/menus
+	top: -32px; // html.wp-toolbar
+	left: -36px; // #adminmenumain
+
+	@media screen and (max-width: 782px) {
+		top: -46px;
+		left: 0;
+	}
+}
+
+// Position footer above canvas at same z-index as header
+.edit-post-editor-regions__footer {
+	z-index: 30;
+}

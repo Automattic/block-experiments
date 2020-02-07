@@ -4,3 +4,14 @@
 	background-color: yellow;
 	min-height: 450px;
 }
+
+.wp-block-a8c-motion-background-canvas {
+	// Pointer events are handled on the document level so UI is still clickable
+	pointer-events: none;
+
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+	top: 0;
+	left: 0;
+}
