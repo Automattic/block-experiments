@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { InspectorControls } from '@wordpress/block-editor';
+import { InspectorControls, PanelColorSettings } from '@wordpress/block-editor';
 import { PanelBody, RangeControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
@@ -14,7 +14,10 @@ const Edit = ( { className, attributes, setAttributes } ) => {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={ __( 'Paint' ) } initialOpen>
+				<PanelBody
+					title={ __( 'Paint' ) }
+					initialOpen
+				>
 					<RangeControl
 						label={ __( 'Complexity' ) }
 						value={ attributes.complexity }
@@ -32,14 +35,6 @@ const Edit = ( { className, attributes, setAttributes } ) => {
 						allowReset
 					/>
 					<RangeControl
-						label={ __( 'Mouse Curling' ) }
-						value={ attributes.mouseCurls }
-						onChange={ ( mouseCurls ) => setAttributes( { mouseCurls } ) }
-						min={ 1 }
-						max={ 100 }
-						allowReset
-					/>
-					<RangeControl
 						label={ __( 'Fluid Speed' ) }
 						value={ attributes.fluidSpeed }
 						onChange={ ( fluidSpeed ) => setAttributes( { fluidSpeed } ) }
@@ -47,15 +42,33 @@ const Edit = ( { className, attributes, setAttributes } ) => {
 						max={ 100 }
 						allowReset
 					/>
-					<RangeControl
-						label={ __( 'Color Intensity' ) }
-						value={ attributes.colorIntensity }
-						onChange={ ( colorIntensity ) => setAttributes( { colorIntensity } ) }
-						min={ 1 }
-						max={ 100 }
-						allowReset
-					/>
 				</PanelBody>
+				<PanelColorSettings
+					title={ __( 'Color' ) }
+					initialOpen
+					colorSettings={ [
+						{
+							label: __( 'Color 1' ),
+							value: attributes.color1,
+							onChange: ( color1 ) => setAttributes( { color1 } ),
+						},
+						{
+							label: __( 'Color 2' ),
+							value: attributes.color2,
+							onChange: ( color2 ) => setAttributes( { color2 } ),
+						},
+						{
+							label: __( 'Color 3' ),
+							value: attributes.color3,
+							onChange: ( color3 ) => setAttributes( { color3 } ),
+						},
+						{
+							label: __( 'Color 4' ),
+							value: attributes.color4,
+							onChange: ( color4 ) => setAttributes( { color4 } ),
+						},
+					] }
+				/>
 			</InspectorControls>
 			<Save className={ className } attributes={ attributes } />
 		</>

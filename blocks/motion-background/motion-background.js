@@ -187,6 +187,26 @@
 		renderEffect( block, blockUniforms, framebufferInfo );
 	}
 
+	function parseColor( color ) {
+		let r, g, b;
+
+		if ( color.length === 4 ) {
+			r = '0x' + color[ 1 ] + color[ 1 ];
+			g = '0x' + color[ 2 ] + color[ 2 ];
+			b = '0x' + color[ 3 ] + color[ 3 ];
+		} else if ( color.length === 7 ) {
+			r = '0x' + color[ 1 ] + color[ 2 ];
+			g = '0x' + color[ 3 ] + color[ 4 ];
+			b = '0x' + color[ 5 ] + color[ 6 ];
+		}
+
+		return [
+			+( r / 255 ).toFixed( 1 ),
+			+( g / 255 ).toFixed( 1 ),
+			+( b / 255 ).toFixed( 1 ),
+		];
+	}
+
 	/**
 	 * @typedef {Object} FramebufferInfo
 	 * @see {@link https://twgljs.org/docs/module-twgl.html#.FramebufferInfo}
@@ -204,12 +224,11 @@
 	 * @param {FramebufferInfo} framebufferInfo Framebuffer info from twgl
 	 */
 	function renderGradient( block, blockUniforms, framebufferInfo ) {
-		// TODO: Parse colors from block.dataset
 		const colorUniforms = {
-			color1: [ 1., 0., 0. ],
-			color2: [ 1., 1., 0. ],
-			color3: [ 0., 1., 1. ],
-			color4: [ 0., 1., 0. ],
+			color1: parseColor( block.dataset.color1 || '#F00' ),
+			color2: parseColor( block.dataset.color2 || '#FF0' ),
+			color3: parseColor( block.dataset.color3 || '#0FF' ),
+			color4: parseColor( block.dataset.color4 || '#0F0' ),
 		};
 
 		// TODO: We only need to render the framebuffer when the uniforms change
@@ -224,6 +243,17 @@
 		twgl.drawBufferInfo( gl, screenBufferInfo );
 	}
 
+	/**
+	 * Draw the custom gradient to the framebuffer
+	 *
+	 * @param {Node} block Block to draw
+	 * @param {Object} blockUniforms Per-block uniforms
+	 * @param {number[]} blockUniforms.resolution The [ x, y ] resolution of the block
+	 * @param {number[]} blockUniforms.offset The [ x, y ] offset for the block
+	 * @param {number[]} blockUniforms.mouse The [ x, y ] coordinates of the mouse
+	 * @param {number[]} blockUniforms.matrix The mat4 transformation matrix for positioning the block
+	 * @param {FramebufferInfo} framebufferInfo Framebuffer info from twgl
+	 */
 	function renderEffect( block, blockUniforms, framebufferInfo ) {
 		const { offset, resolution } = blockUniforms;
 

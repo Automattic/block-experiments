@@ -26,17 +26,25 @@ export const registerBlock = () => {
 				type: 'integer',
 				default: 2,
 			},
-			mouseCurls: {
-				type: 'integer',
-				default: 10,
-			},
 			fluidSpeed: {
 				type: 'integer',
 				default: 4,
 			},
-			colorIntensity: {
-				type: 'integer',
-				default: 50,
+			color1: {
+				type: 'string',
+				default: '#F00',
+			},
+			color2: {
+				type: 'string',
+				default: '#FF0',
+			},
+			color3: {
+				type: 'string',
+				default: '#0FF',
+			},
+			color4: {
+				type: 'string',
+				default: '#0F0',
 			},
 		},
 		edit: ( props ) => <Edit { ...props } />,
