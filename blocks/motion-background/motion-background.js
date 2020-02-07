@@ -47,10 +47,8 @@
 		precision mediump float;
 
 		// Blend gradients in the linear color space for more accurate intermediate colors
-		// #define SRGB_TO_LINEAR(c) pow(c, vec3(2.2))
-		// #define LINEAR_TO_SRGB(c) pow(c, vec3(1.0 / 2.2))
-		#define SRGB_TO_LINEAR(c) c
-		#define LINEAR_TO_SRGB(c) c
+		#define SRGB_TO_LINEAR(c) pow(c, vec3(2.2))
+		#define LINEAR_TO_SRGB(c) pow(c, vec3(1.0 / 2.2))
 
 		uniform vec2 resolution;
 		uniform vec2 offset;
@@ -110,7 +108,6 @@
 				c.y -= 0.5 - ( mouse.x / resolution.x / mouse_speed ) + mouse_curls;
 			}
 			gl_FragColor = texture2D( texture, MIRRORED_REPEAT( c ) );
-			if ( distance( mouse, uv ) < .1 ) gl_FragColor = vec4( 1. );
 		}
 	`;
 
