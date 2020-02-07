@@ -99,7 +99,7 @@ const Edit = ( { className, attributes, setAttributes } ) => {
 				) }
 			</InspectorControls>
 			<Save className={ className } attributes={ attributes }>
-				{ ! attributes.url && (
+				{ attributes.mode === 'image' && ! attributes.url && (
 					<MediaPlaceholder
 						icon="awards"
 						labels={ {
