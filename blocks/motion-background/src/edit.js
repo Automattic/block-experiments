@@ -1,9 +1,20 @@
 /**
  * WordPress dependencies
  */
-import { InspectorControls, PanelColorSettings } from '@wordpress/block-editor';
+import {
+	BlockControls,
+	InspectorControls,
+	PanelColorSettings,
+	MediaReplaceFlow,
+} from '@wordpress/block-editor';
 import { PanelBody, RangeControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies
+ */
+// TODO: Move to components folder
+import RadioButtonGroup from '../../bauhaus-centenary/src/radio-button-group';
 
 /**
  * Internal dependencies
@@ -13,6 +24,14 @@ import Save from './save';
 const Edit = ( { className, attributes, setAttributes } ) => {
 	return (
 		<>
+			<BlockControls>
+				{ attributes.mode === 'image' && (
+					<MediaReplaceFlow
+						mediaURL={ attributes.url }
+						onSelect={ ( { url } ) => setAttributes( { url } ) }
+					/>
+				) }
+			</BlockControls>
 			<InspectorControls>
 				<PanelBody
 					title={ __( 'Paint' ) }
@@ -39,33 +58,44 @@ const Edit = ( { className, attributes, setAttributes } ) => {
 						min={ 1 }
 						max={ 100 }
 					/>
+					<RadioButtonGroup
+						data-selected={ attributes.mode }
+						options={ [
+							{ label: __( 'Image' ), value: 'image' },
+							{ label: __( 'Gradient' ), value: 'gradient' },
+						] }
+						onChange={ ( mode ) => setAttributes( { mode } ) }
+						selected={ attributes.mode }
+					/>
 				</PanelBody>
-				<PanelColorSettings
-					title={ __( 'Color' ) }
-					initialOpen
-					colorSettings={ [
-						{
-							label: __( 'Color 1' ),
-							value: attributes.color1,
-							onChange: ( color1 ) => setAttributes( { color1 } ),
-						},
-						{
-							label: __( 'Color 2' ),
-							value: attributes.color2,
-							onChange: ( color2 ) => setAttributes( { color2 } ),
-						},
-						{
-							label: __( 'Color 3' ),
-							value: attributes.color3,
-							onChange: ( color3 ) => setAttributes( { color3 } ),
-						},
-						{
-							label: __( 'Color 4' ),
-							value: attributes.color4,
-							onChange: ( color4 ) => setAttributes( { color4 } ),
-						},
-					] }
-				/>
+				{ attributes.mode === 'gradient' && (
+					<PanelColorSettings
+						title={ __( 'Color' ) }
+						initialOpen
+						colorSettings={ [
+							{
+								label: __( 'Color 1' ),
+								value: attributes.color1,
+								onChange: ( color1 ) => setAttributes( { color1 } ),
+							},
+							{
+								label: __( 'Color 2' ),
+								value: attributes.color2,
+								onChange: ( color2 ) => setAttributes( { color2 } ),
+							},
+							{
+								label: __( 'Color 3' ),
+								value: attributes.color3,
+								onChange: ( color3 ) => setAttributes( { color3 } ),
+							},
+							{
+								label: __( 'Color 4' ),
+								value: attributes.color4,
+								onChange: ( color4 ) => setAttributes( { color4 } ),
+							},
+						] }
+					/>
+				) }
 			</InspectorControls>
 			<Save className={ className } attributes={ attributes } />
 		</>

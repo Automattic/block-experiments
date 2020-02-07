@@ -18,3 +18,13 @@
 		top: 0;
 	}
 }
+
+.components-button-group.is-radio-group {
+	display: flex;
+	margin-bottom: 0.5em;
+
+	.components-button {
+		display: inline-block;
+		flex-grow: 1;
+	}
+}

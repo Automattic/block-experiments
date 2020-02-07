@@ -30,6 +30,10 @@ export const registerBlock = () => {
 				type: 'integer',
 				default: 4,
 			},
+			mode: {
+				type: 'string',
+				default: 'gradient',
+			},
 			color1: {
 				type: 'string',
 				default: '#F00',
@@ -45,6 +49,9 @@ export const registerBlock = () => {
 			color4: {
 				type: 'string',
 				default: '#0F0',
+			},
+			url: {
+				type: 'string',
 			},
 		},
 		edit: ( props ) => <Edit { ...props } />,

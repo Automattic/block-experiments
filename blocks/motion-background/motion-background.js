@@ -124,7 +124,7 @@
 		texcoord: [ 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1 ], // vec2
 	} );
 
-	const framebufferInfos = new WeakMap();
+	const textureInfos = new WeakMap();
 
 	const globalState = {
 		time: window.performance.now(),
@@ -173,15 +173,35 @@
 	 * @param {number[]} offset Pixel [ left, bottom ] offset of the block
 	 */
 	function renderBlock( block, resolution, offset ) {
-		if ( ! framebufferInfos.has( block ) ) {
-			// A 512x512 resolution seemed to have a smooth enough gradient for the size of blocks
-			framebufferInfos.set( block, twgl.createFramebufferInfo( gl, null, 512, 512 ) );
+		let textureInfo = textureInfos.get( block );
+
+		if (
+			! textureInfo ||
+			textureInfo.mode !== block.dataset.mode ||
+			textureInfo.imageUrl !== block.dataset.imageUrl
+		) {
+			if ( block.dataset.mode === 'image' ) {
+				// Default to solid 50% gray
+				const src = block.dataset.imageUrl || [ 128, 128, 128, 255 ];
+				// Match the structure of what createFramebufferInfo makes for the WebGLTexture
+				textureInfo = {
+					mode: block.dataset.mode,
+					imageUrl: block.dataset.imageUrl,
+					attachments: [ twgl.createTexture( gl, { src } ) ],
+				};
+			} else if ( block.dataset.mode === 'gradient' ) {
+				// A 512x512 resolution seemed to have a smooth enough gradient for the size of blocks
+				textureInfo = twgl.createFramebufferInfo( gl, null, 512, 512 );
+				textureInfo.mode = block.dataset.mode;
+				textureInfos.set( block, textureInfo );
+			}
+			textureInfos.set( block, textureInfo );
 		}
 
-		const framebufferInfo = framebufferInfos.get( block );
-
-		renderGradient( block.dataset, framebufferInfo );
-		renderEffect( block.dataset, resolution, offset, framebufferInfo );
+		if ( block.dataset.mode === 'gradient' ) {
+			renderGradient( block.dataset, textureInfo );
+		}
+		renderEffect( block.dataset, resolution, offset, textureInfo );
 	}
 
 	/**
