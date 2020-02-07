@@ -1,6 +1,6 @@
 /**
- * JavaScript to render multiple WebGL canvases
- * See https://webglfundamentals.org/webgl/lessons/webgl-multiple-views.html
+ * Shaders based on fluid effect from {@link http://glslsandbox.com/e#8143.0}
+ * Draws multiple blocks on a canvas using a technique from {@link https://webglfundamentals.org/webgl/lessons/webgl-multiple-views.html}
  */
 
 /* global twgl */
@@ -43,16 +43,11 @@
 		}
 	`;
 
-	// Blend gradients in the linear color space for more accurate intermediate colors
 	const fragmentShader = `
 		precision mediump float;
 
 		#define SRGB_TO_LINEAR( c ) pow( c, vec3( 2.2 ) )
 		#define LINEAR_TO_SRGB( c ) pow( c, vec3( 1.0 / 2.2 ) )
-
-		uniform vec2 resolution;
-		uniform vec2 offset;
-		uniform vec2 mouse;
 
 		uniform vec3 color1;
 		uniform vec3 color2;
@@ -76,7 +71,6 @@
 		}
 	`;
 
-	// Based on http://glslsandbox.com/e#8143.0
 	const fragmentShaderEffect = `
 		precision mediump float;
 
@@ -117,20 +111,17 @@
 		texcoord: [ 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1 ], // vec2
 	} );
 
-	// Will get populated during the loop so we can add framebufferInfos as blocks are added to
-	// the live HTMLCollection list
 	const framebufferInfos = new WeakMap();
 
-	const globalUniforms = {
-		time: window.performance.now() * 0.001,
-		mouseScreen: [ 0, 0 ],
+	const globalState = {
+		time: window.performance.now(),
+		mouse: [ 0, 0 ],
 	};
 
 	/**
 	 * Manage rendering the various different blocks.
 	 */
 	function renderAllBlocks() {
-		// TODO: Can this be moved to a resize event instead?
 		twgl.resizeCanvasToDisplaySize( gl.canvas );
 
 		// Move the canvas to top of the current scroll position without jittering
@@ -157,7 +148,7 @@
 			const left = rect.left;
 			const bottom = gl.canvas.clientHeight - rect.bottom;
 
-			renderBlock( block, width, height, left, bottom );
+			renderBlock( block, [ width, height ], [ left, bottom ] );
 		}
 	}
 
@@ -165,28 +156,27 @@
 	 * Draw an individual block.
 	 *
 	 * @param {Node} block Block's DOM Node
-	 * @param {number} width Pixel width of the block
-	 * @param {number} height Pixel height of the block
-	 * @param {number} left Pixel offset from left
-	 * @param {number} bottom Pixel offset from bottom
+	 * @param {number[]} resolution Pixel [ width, height ] resolution of the block
+	 * @param {number[]} offset Pixel [ left, bottom ] offset of the block
 	 */
-	function renderBlock( block, width, height, left, bottom ) {
-		const resolution = [ width, height ];
-		const offset = [ left, bottom ];
-		const mouse = globalUniforms.mouseScreen.map( ( v, i ) => ( v - offset[ i ] ) / resolution[ i ] );
-
-		const blockUniforms = { resolution, offset, mouse };
-
+	function renderBlock( block, resolution, offset ) {
 		if ( ! framebufferInfos.has( block ) ) {
+			// A 512x512 resolution seemed to have a smooth enough gradient for the size of blocks
 			framebufferInfos.set( block, twgl.createFramebufferInfo( gl, null, 512, 512 ) );
 		}
 
 		const framebufferInfo = framebufferInfos.get( block );
 
-		renderGradient( block, blockUniforms, framebufferInfo );
-		renderEffect( block, blockUniforms, framebufferInfo );
+		renderGradient( block.dataset, framebufferInfo );
+		renderEffect( block.dataset, resolution, offset, framebufferInfo );
 	}
 
+	/**
+	 * Convert a hex color string to a WebGL color vector
+	 *
+	 * @param {string} color Hex color string
+	 * @return {number[]} RGB array for WebGL
+	 */
 	function parseColor( color ) {
 		let r, g, b;
 
@@ -215,23 +205,17 @@
 	/**
 	 * Draw the custom gradient to the framebuffer
 	 *
-	 * @param {Node} block Block to draw
-	 * @param {Object} blockUniforms Per-block uniforms
-	 * @param {number[]} blockUniforms.resolution The [ x, y ] resolution of the block
-	 * @param {number[]} blockUniforms.offset The [ x, y ] offset for the block
-	 * @param {number[]} blockUniforms.mouse The [ x, y ] coordinates of the mouse
-	 * @param {number[]} blockUniforms.matrix The mat4 transformation matrix for positioning the block
+	 * @param {Object} blockData Dataset from block
 	 * @param {FramebufferInfo} framebufferInfo Framebuffer info from twgl
 	 */
-	function renderGradient( block, blockUniforms, framebufferInfo ) {
-		const colorUniforms = {
-			color1: parseColor( block.dataset.color1 || '#F00' ),
-			color2: parseColor( block.dataset.color2 || '#FF0' ),
-			color3: parseColor( block.dataset.color3 || '#0FF' ),
-			color4: parseColor( block.dataset.color4 || '#0F0' ),
+	function renderGradient( blockData, framebufferInfo ) {
+		const uniforms = {
+			color1: parseColor( blockData.color1 || '#F00' ),
+			color2: parseColor( blockData.color2 || '#FF0' ),
+			color3: parseColor( blockData.color3 || '#0FF' ),
+			color4: parseColor( blockData.color4 || '#0F0' ),
 		};
 
-		// TODO: We only need to render the framebuffer when the uniforms change
 		twgl.bindFramebufferInfo( gl, framebufferInfo );
 		gl.viewport( 0, 0, framebufferInfo.width, framebufferInfo.height );
 		gl.scissor( 0, 0, framebufferInfo.width, framebufferInfo.height );
@@ -239,34 +223,33 @@
 		gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT ); // eslint-disable-line no-bitwise
 		gl.useProgram( programInfoGradient.program );
 		twgl.setBuffersAndAttributes( gl, programInfoGradient, screenBufferInfo );
-		twgl.setUniforms( programInfoGradient, blockUniforms, colorUniforms );
+		twgl.setUniforms( programInfoGradient, uniforms );
 		twgl.drawBufferInfo( gl, screenBufferInfo );
 	}
 
 	/**
-	 * Draw the custom gradient to the framebuffer
+	 * Renders the paint effect to the canvas
 	 *
-	 * @param {Node} block Block to draw
-	 * @param {Object} blockUniforms Per-block uniforms
-	 * @param {number[]} blockUniforms.resolution The [ x, y ] resolution of the block
-	 * @param {number[]} blockUniforms.offset The [ x, y ] offset for the block
-	 * @param {number[]} blockUniforms.mouse The [ x, y ] coordinates of the mouse
-	 * @param {number[]} blockUniforms.matrix The mat4 transformation matrix for positioning the block
+	 * @param {Object} blockData Dataset from block
+	 * @param {number[]} resolution Pixel [ width, height ] resolution of the block
+	 * @param {number[]} offset Pixel [ left, bottom ] offset of the block
 	 * @param {FramebufferInfo} framebufferInfo Framebuffer info from twgl
 	 */
-	function renderEffect( block, blockUniforms, framebufferInfo ) {
-		const { offset, resolution } = blockUniforms;
+	function renderEffect( blockData, resolution, offset, framebufferInfo ) {
+		const complexity = Number.parseInt( blockData.complexity, 10 );
+		const mouseSpeed = Number.parseFloat( blockData.mouseSpeed );
+		const fluidSpeed = Number.parseFloat( blockData.fluidSpeed );
 
-		const complexity = Number.parseInt( block.dataset.complexity, 10 );
-		const mouseSpeed = Number.parseFloat( block.dataset.mouseSpeed );
-		const fluidSpeed = Number.parseFloat( block.dataset.fluidSpeed );
-
-		const effectUniforms = {
-			// More points of color.
+		const uniforms = {
+			// Time since beginning of the program in seconds
+			time: globalState.time * 0.001,
+			// Mouse position in normalized block coordinates
+			mouse: globalState.mouse.map( ( v, i ) => ( v - offset[ i ] ) / resolution[ i ] ),
+			// 'Swirly-ness' of the effect
 			complexity,
-			// Makes it more/less jumpy. Range [50, 1]
+			// Makes it more/less jumpy. f from [1, 100] to [50, 1]
 			mouseSpeed: ( 4 * ( 175 + mouseSpeed ) ) / ( 11 * mouseSpeed ) * complexity,
-			// Drives speed, higher number will make it slower. Range [256, 1]
+			// Drives speed, higher number will make it slower. f from [1, 100] to [256, 1]
 			fluidSpeed: -( 4 * ( -2125 + ( 13 * fluidSpeed ) ) ) / ( 33 * fluidSpeed ),
 			// Framebuffer from the first pass
 			texture: framebufferInfo.attachments[ 0 ],
@@ -279,7 +262,7 @@
 		gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT ); // eslint-disable-line no-bitwise
 		gl.useProgram( programInfoEffectPass.program );
 		twgl.setBuffersAndAttributes( gl, programInfoEffectPass, screenBufferInfo );
-		twgl.setUniforms( programInfoEffectPass, globalUniforms, blockUniforms, effectUniforms );
+		twgl.setUniforms( programInfoEffectPass, uniforms );
 		twgl.drawBufferInfo( gl, screenBufferInfo );
 	}
 
@@ -289,7 +272,7 @@
 	 * @param {DOMHighResTimeStamp} t Point in time when function begins to be called in milliseconds
 	 */
 	function updateTime( t ) {
-		globalUniforms.time = t * 0.001;
+		globalState.time = t;
 	}
 
 	/**
@@ -298,8 +281,8 @@
 	 * @param {MouseEvent} e Mouse event
 	 */
 	function updateMouse( e ) {
-		globalUniforms.mouseScreen[ 0 ] = e.clientX;
-		globalUniforms.mouseScreen[ 1 ] = gl.canvas.height - e.clientY; // From bottom
+		globalState.mouse[ 0 ] = e.clientX;
+		globalState.mouse[ 1 ] = gl.canvas.height - e.clientY; // From bottom
 	}
 	document.body.addEventListener( 'mousemove', updateMouse );
 
