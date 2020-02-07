@@ -119,6 +119,10 @@
 		texcoord: [ 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1 ], // vec2
 	} );
 
+	// Will get populated during the loop so we can add framebufferInfos as blocks are added to
+	// the live HTMLCollection list
+	const framebufferInfos = new WeakMap();
+
 	const globalUniforms = {
 		time: window.performance.now() * 0.001,
 		mouseScreen: [ 0, 0 ],
@@ -175,7 +179,11 @@
 
 		const blockUniforms = { resolution, offset, mouse };
 
-		const framebufferInfo = twgl.createFramebufferInfo( gl, null, 1024, 1024 );
+		if ( ! framebufferInfos.has( block ) ) {
+			framebufferInfos.set( block, twgl.createFramebufferInfo( gl, null, 512, 512 ) );
+		}
+
+		const framebufferInfo = framebufferInfos.get( block );
 
 		renderGradient( block, blockUniforms, framebufferInfo );
 		renderEffect( block, blockUniforms, framebufferInfo );
