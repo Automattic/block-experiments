@@ -24,7 +24,6 @@ const Edit = ( { className, attributes, setAttributes } ) => {
 						onChange={ ( complexity ) => setAttributes( { complexity } ) }
 						min={ 2 }
 						max={ 32 }
-						allowReset
 					/>
 					<RangeControl
 						label={ __( 'Mouse Speed' ) }
@@ -32,7 +31,6 @@ const Edit = ( { className, attributes, setAttributes } ) => {
 						onChange={ ( mouseSpeed ) => setAttributes( { mouseSpeed } ) }
 						min={ 1 }
 						max={ 100 }
-						allowReset
 					/>
 					<RangeControl
 						label={ __( 'Fluid Speed' ) }
@@ -40,7 +38,6 @@ const Edit = ( { className, attributes, setAttributes } ) => {
 						onChange={ ( fluidSpeed ) => setAttributes( { fluidSpeed } ) }
 						min={ 1 }
 						max={ 100 }
-						allowReset
 					/>
 				</PanelBody>
 				<PanelColorSettings
