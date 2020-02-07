@@ -149,6 +149,7 @@
 			}
 		}
 
+		let blocksRendered = 0;
 		for ( const block of blocks ) {
 			const rect = block.getBoundingClientRect();
 
@@ -167,6 +168,16 @@
 			const bottom = gl.canvas.clientHeight - rect.bottom;
 
 			renderBlock( block, [ width, height ], [ left, bottom ] );
+
+			blocksRendered++;
+		}
+
+		// Clear out the last frame if no blocks are on screen
+		if ( blocksRendered === 0 ) {
+			gl.viewport( 0, 0, gl.canvas.width, gl.canvas.height );
+			gl.scissor( 0, 0, gl.canvas.width, gl.canvas.height );
+			gl.clearColor( 0, 0, 0, 0 );
+			gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT ); // eslint-disable-line no-bitwise
 		}
 	}
 
