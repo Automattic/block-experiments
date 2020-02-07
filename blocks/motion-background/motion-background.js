@@ -191,7 +191,9 @@
 	 * @return {number[]} RGB array for WebGL
 	 */
 	function parseColor( color ) {
-		let r, g, b;
+		let r = '0';
+		let g = '0';
+		let b = '0';
 
 		if ( color.length === 4 ) {
 			r = '0x' + color[ 1 ] + color[ 1 ];
