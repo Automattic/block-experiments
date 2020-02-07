@@ -36,19 +36,15 @@ export const registerBlock = () => {
 			},
 			color1: {
 				type: 'string',
-				default: '#F00',
 			},
 			color2: {
 				type: 'string',
-				default: '#FF0',
 			},
 			color3: {
 				type: 'string',
-				default: '#0FF',
 			},
 			color4: {
 				type: 'string',
-				default: '#0F0',
 			},
 			url: {
 				type: 'string',
