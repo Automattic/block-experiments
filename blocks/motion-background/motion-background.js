@@ -191,12 +191,11 @@
 	function renderBlock( block, resolution, offset ) {
 		let textureInfo = textureInfos.get( block );
 
-		if (
-			! textureInfo ||
-			textureInfo.mode !== block.dataset.mode ||
-			textureInfo.imageUrl !== block.dataset.imageUrl
-		) {
-			if ( block.dataset.mode === 'image' ) {
+		if ( ! textureInfo || textureInfo.mode !== block.dataset.mode ) {
+			if (
+				block.dataset.mode === 'image' &&
+				( ! textureInfo || textureInfo.imageUrl !== block.dataset.imageUrl )
+			) {
 				// Default to transparent so the media placeholder shows behind
 				const src = block.dataset.imageUrl || [ 0, 0, 0, 0 ];
 				// Match the structure of what createFramebufferInfo makes for the WebGLTexture
