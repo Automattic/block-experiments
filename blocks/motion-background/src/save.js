@@ -1,5 +1,5 @@
 
-const Save = ( { className, attributes } ) => {
+const Save = ( { className, attributes, children } ) => {
 	return (
 		<div
 			className={ className }
@@ -12,7 +12,7 @@ const Save = ( { className, attributes } ) => {
 			data-color2={ attributes.color2 }
 			data-color3={ attributes.color3 }
 			data-color4={ attributes.color4 }
-		/>
+		>{ children }</div>
 	);
 };
 

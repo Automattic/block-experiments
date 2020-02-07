@@ -1,7 +1,10 @@
 /* Editor styles */
 
 .wp-block-a8c-motion-background {
-	background-color: magenta;
+	display: flex;
+	.components-placeholder.components-placeholder {
+		margin-bottom: 0;
+	}
 }
 
 .wp-block-a8c-motion-background-canvas {

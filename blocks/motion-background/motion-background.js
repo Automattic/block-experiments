@@ -181,8 +181,8 @@
 			textureInfo.imageUrl !== block.dataset.imageUrl
 		) {
 			if ( block.dataset.mode === 'image' ) {
-				// Default to solid 50% gray
-				const src = block.dataset.imageUrl || [ 128, 128, 128, 255 ];
+				// Default to transparent so the media placeholder shows behind
+				const src = block.dataset.imageUrl || [ 0, 0, 0, 0 ];
 				// Match the structure of what createFramebufferInfo makes for the WebGLTexture
 				textureInfo = {
 					mode: block.dataset.mode,

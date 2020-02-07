@@ -4,8 +4,9 @@
 import {
 	BlockControls,
 	InspectorControls,
-	PanelColorSettings,
+	MediaPlaceholder,
 	MediaReplaceFlow,
+	PanelColorSettings,
 } from '@wordpress/block-editor';
 import { PanelBody, RangeControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
@@ -61,8 +62,8 @@ const Edit = ( { className, attributes, setAttributes } ) => {
 					<RadioButtonGroup
 						data-selected={ attributes.mode }
 						options={ [
-							{ label: __( 'Image' ), value: 'image' },
 							{ label: __( 'Gradient' ), value: 'gradient' },
+							{ label: __( 'Image' ), value: 'image' },
 						] }
 						onChange={ ( mode ) => setAttributes( { mode } ) }
 						selected={ attributes.mode }
@@ -97,7 +98,18 @@ const Edit = ( { className, attributes, setAttributes } ) => {
 					/>
 				) }
 			</InspectorControls>
-			<Save className={ className } attributes={ attributes } />
+			<Save className={ className } attributes={ attributes }>
+				{ ! attributes.url && (
+					<MediaPlaceholder
+						icon="awards"
+						labels={ {
+							title: __( 'Motion Background' ),
+							instructions: __( 'Upload an image file, or pick one from your media library.' ),
+						} }
+						onSelect={ ( { url } ) => setAttributes( { url } ) }
+					/>
+				) }
+			</Save>
 		</>
 	);
 };
