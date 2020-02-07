@@ -18,17 +18,11 @@
 		return;
 	}
 
-	// TODO: Position z-index below editor UI, but above content
-	// Ideally it would be after .edit-post-editor-regions__body, but that node
-	// doesn't exist. Unfortunately, this means that the block is going to be
-	// drawn on top of some UI elements. Maybe we'll have to insert the canvas
-	// in the block code, but we'll have to make sure that there's only one
-	// canvas still.
 	const editor = document.getElementById( 'editor' );
 	if ( editor ) {
-		editor.parentNode.insertBefore( gl.canvas, editor.nextSibling ); // insertAfter
+		editor.parentNode.insertBefore( gl.canvas, editor );
 	} else {
-		document.body.appendChild( gl.canvas );
+		document.body.insertBefore( gl.canvas, document.body.firstChild );
 	}
 
 	const vertexShader = `
@@ -143,6 +137,17 @@
 		gl.enable( gl.CULL_FACE );
 		gl.enable( gl.DEPTH_TEST );
 		gl.enable( gl.SCISSOR_TEST );
+
+		// Hack to move the background behind the canvas
+		const node = document.querySelector( '.editor-styles-wrapper' );
+		if ( node ) {
+			const nodeStyle = window.getComputedStyle( node, null );
+			if ( nodeStyle.backgroundColor !== 'rgba(0, 0, 0, 0)' ) {
+				gl.canvas.style.backgroundColor = nodeStyle.backgroundColor;
+				// TODO: Set other background styles
+				node.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+			}
+		}
 
 		for ( const block of blocks ) {
 			const rect = block.getBoundingClientRect();
