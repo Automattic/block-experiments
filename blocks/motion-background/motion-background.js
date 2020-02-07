@@ -76,6 +76,7 @@
 		}
 	`;
 
+	// Based on http://glslsandbox.com/e#8143.0
 	const fragmentShaderEffect = `
 		precision mediump float;
 
@@ -108,7 +109,6 @@
 		}
 	`;
 
-	// Based on http://glslsandbox.com/e#8143.0
 	const programInfoGradient = twgl.createProgramInfo( gl, [ vertexShader, fragmentShader ] );
 	const programInfoEffectPass = twgl.createProgramInfo( gl, [ vertexShader, fragmentShaderEffect ] );
 
