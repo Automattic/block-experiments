@@ -43,18 +43,17 @@
 		}
 	`;
 
+	// Blend gradients in the linear color space for more accurate intermediate colors
 	const fragmentShader = `
 		precision mediump float;
 
-		// Blend gradients in the linear color space for more accurate intermediate colors
-		#define SRGB_TO_LINEAR(c) pow(c, vec3(2.2))
-		#define LINEAR_TO_SRGB(c) pow(c, vec3(1.0 / 2.2))
+		#define SRGB_TO_LINEAR( c ) pow( c, vec3( 2.2 ) )
+		#define LINEAR_TO_SRGB( c ) pow( c, vec3( 1.0 / 2.2 ) )
 
 		uniform vec2 resolution;
 		uniform vec2 offset;
 		uniform vec2 mouse;
 
-		// TODO: I think I can get nicer readability as vertex attributes, maybe
 		uniform vec3 color1;
 		uniform vec3 color2;
 		uniform vec3 color3;
@@ -81,18 +80,15 @@
 		precision mediump float;
 
 		#define MAX_COMPLEXITY 32
-		#define MIRRORED_REPEAT(p) abs(2.*fract(p/2.)-1.)
+		#define MIRRORED_REPEAT( p ) abs( 2. * fract( p / 2. ) - 1. )
 
 		uniform float time;
 
 		uniform vec2 mouse;
-		uniform vec2 resolution;
-		uniform vec2 offset;
 
 		uniform int complexity;
-		uniform float mouse_speed;
-		uniform float mouse_curls;
-		uniform float fluid_speed;
+		uniform float mouseSpeed;
+		uniform float fluidSpeed;
 		uniform sampler2D texture;
 
 		varying vec2 uv;
@@ -101,11 +97,12 @@
 			vec2 c = uv;
 			for ( int i = 1; i < MAX_COMPLEXITY; i++ ) {
 				if ( i >= complexity ) continue;
+				float f = float( i );
 				c += ( time * 0.001 );
-				c.x += 0.6 / float( i ) * sin( ( float( i ) * c.y ) + ( time / fluid_speed ) + ( 0.3 * float( i ) ) );
-				c.x += 0.5 + ( mouse.y / resolution.y / mouse_speed ) + mouse_curls;
-				c.y += 0.6 / float( i ) * sin( ( float( i ) * c.x ) + ( time / fluid_speed ) + ( 0.3 * float( i + 10 ) ) );
-				c.y -= 0.5 - ( mouse.x / resolution.x / mouse_speed ) + mouse_curls;
+				c.x += 0.6 / f * sin( ( f * c.y ) + ( time / fluidSpeed ) + ( 0.3 * f ) );
+				c.x += 0.5 + ( mouse.y / mouseSpeed );
+				c.y += 0.6 / f * sin( ( f * c.x ) + ( time / fluidSpeed ) + ( 0.3 * f + 10. ) );
+				c.y -= 0.5 - ( mouse.x / mouseSpeed );
 			}
 			gl_FragColor = texture2D( texture, MIRRORED_REPEAT( c ) );
 		}
@@ -232,21 +229,15 @@
 
 		const complexity = Number.parseInt( block.dataset.complexity, 10 );
 		const mouseSpeed = Number.parseFloat( block.dataset.mouseSpeed );
-		const mouseCurls = Number.parseFloat( block.dataset.mouseCurls );
 		const fluidSpeed = Number.parseFloat( block.dataset.fluidSpeed );
-		const colorIntensity = Number.parseFloat( block.dataset.colorIntensity );
 
 		const effectUniforms = {
 			// More points of color.
 			complexity,
 			// Makes it more/less jumpy. Range [50, 1]
-			mouse_speed: ( 4 * ( 175 + mouseSpeed ) ) / ( 11 * mouseSpeed ) * complexity,
-			// Drives complexity in the amount of curls/curves. Zero is a single whirlpool.
-			mouse_curls: mouseCurls / 10,
+			mouseSpeed: ( 4 * ( 175 + mouseSpeed ) ) / ( 11 * mouseSpeed ) * complexity,
 			// Drives speed, higher number will make it slower. Range [256, 1]
-			fluid_speed: -( 4 * ( -2125 + ( 13 * fluidSpeed ) ) ) / ( 33 * fluidSpeed ),
-			// Changes how bright the colors are
-			color_intensity: colorIntensity / 100,
+			fluidSpeed: -( 4 * ( -2125 + ( 13 * fluidSpeed ) ) ) / ( 33 * fluidSpeed ),
 			// Framebuffer from the first pass
 			texture: framebufferInfo.attachments[ 0 ],
 		};
