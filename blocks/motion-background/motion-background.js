@@ -71,6 +71,20 @@
 		}
 	`;
 
+	const vertexShaderEffect = `
+		attribute vec3 position;
+		attribute vec2 texcoord;
+
+		uniform vec2 resolution;
+
+		varying vec2 uv;
+	
+		void main () {
+			uv = texcoord * normalize( resolution );
+			gl_Position = vec4( position, 1. );
+		}
+	`;
+
 	const fragmentShaderEffect = `
 		precision mediump float;
 
@@ -80,7 +94,6 @@
 		uniform float time;
 
 		uniform vec2 mouse;
-
 		uniform int complexity;
 		uniform float mouseSpeed;
 		uniform float fluidSpeed;
@@ -104,7 +117,7 @@
 	`;
 
 	const programInfoGradient = twgl.createProgramInfo( gl, [ vertexShader, fragmentShader ] );
-	const programInfoEffectPass = twgl.createProgramInfo( gl, [ vertexShader, fragmentShaderEffect ] );
+	const programInfoEffectPass = twgl.createProgramInfo( gl, [ vertexShaderEffect, fragmentShaderEffect ] );
 
 	const screenBufferInfo = twgl.createBufferInfoFromArrays( gl, {
 		position: [ -1, -1, 0, 1, -1, 0, -1, 1, 0, -1, 1, 0, 1, -1, 0, 1, 1, 0 ], // vec3
@@ -241,6 +254,8 @@
 		const fluidSpeed = Number.parseFloat( blockData.fluidSpeed );
 
 		const uniforms = {
+			// Required in the vertex shader to prevent stretching
+			resolution,
 			// Time since beginning of the program in seconds
 			time: globalState.time * 0.001,
 			// Mouse position in normalized block coordinates
