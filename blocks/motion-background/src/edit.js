@@ -29,6 +29,8 @@ const Edit = ( { className, attributes, setAttributes } ) => {
 				{ attributes.mode === 'image' && (
 					<MediaReplaceFlow
 						mediaURL={ attributes.url }
+						accept="image/*"
+						allowedTypes={ [ 'image' ] }
 						onSelect={ ( { url } ) => setAttributes( { url } ) }
 						onSelectURL={ ( url ) => setAttributes( { url, id: undefined } ) }
 					/>
@@ -107,6 +109,8 @@ const Edit = ( { className, attributes, setAttributes } ) => {
 							title: __( 'Motion Background' ),
 							instructions: __( 'Upload an image file, or pick one from your media library.' ),
 						} }
+						accept="image/*"
+						allowedTypes={ [ 'image' ] }
 						onSelect={ ( { url } ) => setAttributes( { url } ) }
 						onSelectURL={ ( url ) => setAttributes( { url, id: undefined } ) }
 					/>
