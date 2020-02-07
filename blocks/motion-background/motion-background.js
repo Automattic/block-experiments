@@ -19,10 +19,14 @@
 	}
 
 	// TODO: Position z-index below editor UI, but above content
-	// It appears that this div doesn't exist yet when the code is run
-	const editor = document.querySelector( '.edit-post-editor-regions__body' );
+	// Ideally it would be after .edit-post-editor-regions__body, but that node
+	// doesn't exist. Unfortunately, this means that the block is going to be
+	// drawn on top of some UI elements. Maybe we'll have to insert the canvas
+	// in the block code, but we'll have to make sure that there's only one
+	// canvas still.
+	const editor = document.getElementById( 'editor' );
 	if ( editor ) {
-		editor.append( gl.canvas );
+		editor.parentNode.insertBefore( gl.canvas, editor.nextSibling ); // insertAfter
 	} else {
 		document.body.appendChild( gl.canvas );
 	}
