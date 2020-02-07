@@ -30,6 +30,7 @@ const Edit = ( { className, attributes, setAttributes } ) => {
 					<MediaReplaceFlow
 						mediaURL={ attributes.url }
 						onSelect={ ( { url } ) => setAttributes( { url } ) }
+						onSelectURL={ ( url ) => setAttributes( { url, id: undefined } ) }
 					/>
 				) }
 			</BlockControls>
@@ -107,6 +108,7 @@ const Edit = ( { className, attributes, setAttributes } ) => {
 							instructions: __( 'Upload an image file, or pick one from your media library.' ),
 						} }
 						onSelect={ ( { url } ) => setAttributes( { url } ) }
+						onSelectURL={ ( url ) => setAttributes( { url, id: undefined } ) }
 					/>
 				) }
 			</Save>
