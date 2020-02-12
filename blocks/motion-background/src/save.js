@@ -1,20 +1,36 @@
+/**
+ * External dependencies
+ */
+import classnames from 'classnames';
 
-const Save = ( { className, attributes, children } ) => {
+/**
+ * WordPress dependencies
+ */
+import { RichText, getColorClassName } from '@wordpress/block-editor';
+
+/**
+ * Internal dependencies
+ */
+import MotionBackground from './motion-background';
+
+const Save = ( { attributes, className } ) => {
+	const textColorClass = getColorClassName( 'color', attributes.textColor );
+
 	return (
-		<div
-			className={ className }
-			data-complexity={ attributes.complexity }
-			data-mouse-speed={ attributes.mouseSpeed }
-			data-fluid-speed={ attributes.fluidSpeed }
-			data-mode={ attributes.mode }
-			data-image-url={ attributes.url }
-			data-color1={ attributes.color1 }
-			data-color2={ attributes.color2 }
-			data-color3={ attributes.color3 }
-			data-color4={ attributes.color4 }
-		>{ children }</div>
+		<MotionBackground className={ className } attributes={ attributes } >
+			<RichText.Content
+				tagName="div"
+				className={ classnames(
+					'wp-block-a8c-motion-background__heading',
+					{ [ `align${ attributes.align }` ]: attributes.align },
+					{ [ `has-text-align-${ attributes.textAlign }` ]: attributes.textAlign },
+					textColorClass
+				) }
+				style={ { color: textColorClass ? undefined : attributes.customTextColor } }
+				value={ attributes.heading }
+			/>
+		</MotionBackground>
 	);
 };
 
 export default Save;
-

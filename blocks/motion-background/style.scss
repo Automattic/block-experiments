@@ -1,7 +1,15 @@
 /* Front end styles */
 
 .wp-block-a8c-motion-background {
-	min-height: 450px;
+	display: flex;
+	align-items: center;
+	min-height: 430px;
+
+	&__heading {
+		z-index: 1;
+		width: 100%;
+		font-size: 84px;
+	}
 }
 
 .wp-block-a8c-motion-background-canvas {

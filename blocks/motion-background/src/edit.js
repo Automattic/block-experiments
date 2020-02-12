@@ -1,12 +1,20 @@
 /**
+ * External dependencies
+ */
+import classnames from 'classnames';
+
+/**
  * WordPress dependencies
  */
 import {
+	AlignmentToolbar,
 	BlockControls,
 	InspectorControls,
 	MediaPlaceholder,
 	MediaReplaceFlow,
 	PanelColorSettings,
+	RichText,
+	withColors,
 } from '@wordpress/block-editor';
 import { PanelBody, RangeControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
@@ -20,12 +28,22 @@ import RadioButtonGroup from '../../bauhaus-centenary/src/radio-button-group';
 /**
  * Internal dependencies
  */
-import Save from './save';
+import MotionBackground from './motion-background';
 
-const Edit = ( { className, attributes, setAttributes } ) => {
+const Edit = ( {
+	textColor,
+	setTextColor,
+	attributes,
+	setAttributes,
+	className,
+} ) => {
 	return (
 		<>
 			<BlockControls>
+				<AlignmentToolbar
+					value={ attributes.textAlign }
+					onChange={ ( textAlign ) => setAttributes( { textAlign } ) }
+				/>
 				{ attributes.mode === 'image' && (
 					<MediaReplaceFlow
 						mediaURL={ attributes.url }
@@ -72,36 +90,53 @@ const Edit = ( { className, attributes, setAttributes } ) => {
 						selected={ attributes.mode }
 					/>
 				</PanelBody>
-				{ attributes.mode === 'gradient' && (
-					<PanelColorSettings
-						title={ __( 'Color' ) }
-						initialOpen
-						colorSettings={ [
+				<PanelColorSettings
+					title={ __( 'Color' ) }
+					initialOpen
+					colorSettings={ [
+						{
+							label: __( 'Text Color' ),
+							value: textColor.color,
+							onChange: setTextColor,
+						},
+						...( attributes.mode === 'gradient' ? [
 							{
-								label: __( 'Color 1' ),
+								label: __( 'Gradient 1' ),
 								value: attributes.color1,
 								onChange: ( color1 ) => setAttributes( { color1 } ),
 							},
 							{
-								label: __( 'Color 2' ),
+								label: __( 'Gradient 2' ),
 								value: attributes.color2,
 								onChange: ( color2 ) => setAttributes( { color2 } ),
 							},
 							{
-								label: __( 'Color 3' ),
+								label: __( 'Gradient 3' ),
 								value: attributes.color3,
 								onChange: ( color3 ) => setAttributes( { color3 } ),
 							},
 							{
-								label: __( 'Color 4' ),
+								label: __( 'Gradient 4' ),
 								value: attributes.color4,
 								onChange: ( color4 ) => setAttributes( { color4 } ),
 							},
-						] }
-					/>
-				) }
+						] : [] ),
+					] }
+				/>
 			</InspectorControls>
-			<Save className={ className } attributes={ attributes }>
+			<MotionBackground className={ className } attributes={ attributes }>
+				<RichText
+					tagName="div"
+					className={ classnames(
+						'wp-block-a8c-motion-background__heading',
+						textColor.class,
+						attributes.textAlign && `has-text-align-${ attributes.textAlign }`
+					) }
+					style={ { color: textColor.color } }
+					value={ attributes.heading }
+					placeholder={ __( 'Heading' ) }
+					onChange={ ( heading ) => setAttributes( { heading } ) }
+				/>
 				{ attributes.mode === 'image' && ! attributes.url && (
 					<MediaPlaceholder
 						icon="awards"
@@ -115,9 +150,9 @@ const Edit = ( { className, attributes, setAttributes } ) => {
 						onSelectURL={ ( url ) => setAttributes( { url, id: undefined } ) }
 					/>
 				) }
-			</Save>
+			</MotionBackground>
 		</>
 	);
 };
 
-export default Edit;
+export default withColors( 'textColor' )( Edit );

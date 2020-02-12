@@ -18,6 +18,14 @@ export const registerBlock = () => {
 			align: true,
 		},
 		attributes: {
+			align: {
+				type: 'string',
+				default: 'full',
+			},
+			textAlign: {
+				type: 'string',
+				default: 'center',
+			},
 			complexity: {
 				type: 'integer',
 				default: 32,
@@ -48,6 +56,16 @@ export const registerBlock = () => {
 			},
 			url: {
 				type: 'string',
+			},
+			heading: {
+				type: 'string',
+			},
+			textColor: {
+				type: 'string',
+			},
+			customTextColor: {
+				type: 'string',
+				default: '#ffffff',
 			},
 		},
 		edit: ( props ) => <Edit { ...props } />,
