@@ -257,9 +257,9 @@
 	function renderGradient( blockData, framebufferInfo ) {
 		const uniforms = {
 			color1: parseColor( blockData.color1 || '#F00' ),
-			color2: parseColor( blockData.color2 || '#FF0' ),
-			color3: parseColor( blockData.color3 || '#0FF' ),
-			color4: parseColor( blockData.color4 || '#0F0' ),
+			color2: parseColor( blockData.color2 || '#0F0' ),
+			color3: parseColor( blockData.color3 || '#000' ),
+			color4: parseColor( blockData.color4 || '#00F' ),
 		};
 
 		twgl.bindFramebufferInfo( gl, framebufferInfo );
