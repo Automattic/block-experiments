@@ -126,7 +126,26 @@
 	};
 
 	/**
-	 * Manage rendering the various different blocks.
+	 * Hack to move the background behind the canvas since the canvas is added
+	 * underneath the editor to allow for UI elements to draw overtop.
+	 */
+	function replaceBackground() {
+		const node = document.querySelector( '.editor-styles-wrapper' );
+		if ( node ) {
+			const nodeStyle = window.getComputedStyle( node, null );
+			if ( nodeStyle.backgroundColor !== 'rgba(0, 0, 0, 0)' ) {
+				gl.canvas.style.backgroundColor = nodeStyle.backgroundColor;
+				// TODO: Set other background styles
+				node.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+			}
+		}
+	}
+
+	/**
+	 * Manage rendering all of the blocks by calculating the position of each
+	 * div and only rendering the blocks on screen. The position information is
+	 * sent to the render functions to allow them to do a viewport change and
+	 * scissor test for that specific block.
 	 */
 	function renderAllBlocks() {
 		twgl.resizeCanvasToDisplaySize( gl.canvas );
@@ -138,18 +157,9 @@
 		gl.enable( gl.DEPTH_TEST );
 		gl.enable( gl.SCISSOR_TEST );
 
-		// Hack to move the background behind the canvas
-		const node = document.querySelector( '.editor-styles-wrapper' );
-		if ( node ) {
-			const nodeStyle = window.getComputedStyle( node, null );
-			if ( nodeStyle.backgroundColor !== 'rgba(0, 0, 0, 0)' ) {
-				gl.canvas.style.backgroundColor = nodeStyle.backgroundColor;
-				// TODO: Set other background styles
-				node.style.backgroundColor = 'rgba(0, 0, 0, 0)';
-			}
-		}
+		replaceBackground();
 
-		let blocksRendered = 0;
+		let blocksRendered = false;
 		for ( const block of blocks ) {
 			const rect = block.getBoundingClientRect();
 
@@ -169,11 +179,11 @@
 
 			renderBlock( block, [ width, height ], [ left, bottom ] );
 
-			blocksRendered++;
+			blocksRendered = true;
 		}
 
 		// Clear out the last frame if no blocks are on screen
-		if ( blocksRendered === 0 ) {
+		if ( ! blocksRendered ) {
 			gl.viewport( 0, 0, gl.canvas.width, gl.canvas.height );
 			gl.scissor( 0, 0, gl.canvas.width, gl.canvas.height );
 			gl.clearColor( 0, 0, 0, 0 );
@@ -196,8 +206,8 @@
 				block.dataset.mode === 'image' &&
 				( ! textureInfo || textureInfo.imageUrl !== block.dataset.imageUrl )
 			) {
-				// Default to transparent so the media placeholder shows behind
-				const src = block.dataset.imageUrl || [ 0, 0, 0, 0 ];
+				// Default to semi-transparent placeholder color
+				const src = block.dataset.imageUrl || [ 0.55, 0.55, 0.59, 0.1 ];
 				// Match the structure of what createFramebufferInfo makes for the WebGLTexture
 				textureInfo = {
 					mode: block.dataset.mode,
@@ -216,11 +226,11 @@
 		if ( block.dataset.mode === 'gradient' ) {
 			renderGradient( block.dataset, textureInfo );
 		}
-		renderEffect( block.dataset, resolution, offset, textureInfo );
+		renderLiquidEffect( block.dataset, resolution, offset, textureInfo );
 	}
 
 	/**
-	 * Convert a hex color string to a WebGL color vector
+	 * Convert a hex color string to a WebGL color vector.
 	 *
 	 * @param {string} color Hex color string (#FFFFFF or #FFF)
 	 * @return {number[]} RGB array for WebGL
@@ -246,15 +256,17 @@
 	/**
 	 * @typedef {Object} FramebufferInfo
 	 * @see {@link https://twgljs.org/docs/module-twgl.html#.FramebufferInfo}
+	 * Either a twlg FramebufferInfo or an image texture in the same shape as
+	 * a FramebufferInfo.
 	 */
 
 	/**
-	 * Draw the custom gradient to the framebuffer
+	 * Draw the custom gradient to the framebuffer.
 	 *
 	 * @param {Object} blockData Dataset from block
-	 * @param {FramebufferInfo} framebufferInfo Framebuffer info from twgl
+	 * @param {FramebufferInfo} textureInfo Framebuffer info from twgl
 	 */
-	function renderGradient( blockData, framebufferInfo ) {
+	function renderGradient( blockData, textureInfo ) {
 		const uniforms = {
 			color1: parseColor( blockData.color1 || '#F00' ),
 			color2: parseColor( blockData.color2 || '#0F0' ),
@@ -262,9 +274,9 @@
 			color4: parseColor( blockData.color4 || '#00F' ),
 		};
 
-		twgl.bindFramebufferInfo( gl, framebufferInfo );
-		gl.viewport( 0, 0, framebufferInfo.width, framebufferInfo.height );
-		gl.scissor( 0, 0, framebufferInfo.width, framebufferInfo.height );
+		twgl.bindFramebufferInfo( gl, textureInfo );
+		gl.viewport( 0, 0, textureInfo.width, textureInfo.height );
+		gl.scissor( 0, 0, textureInfo.width, textureInfo.height );
 		gl.clearColor( 1, 1, 1, 1 );
 		gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT ); // eslint-disable-line no-bitwise
 		gl.useProgram( programInfoGradient.program );
@@ -274,14 +286,14 @@
 	}
 
 	/**
-	 * Renders the paint effect to the canvas
+	 * Draw the liquid effect to the canvas.
 	 *
 	 * @param {Object} blockData Dataset from block
 	 * @param {number[]} resolution Pixel [ width, height ] resolution of the block
 	 * @param {number[]} offset Pixel [ left, bottom ] offset of the block
-	 * @param {FramebufferInfo} framebufferInfo Framebuffer info from twgl
+	 * @param {FramebufferInfo} textureInfo Framebuffer info from twgl
 	 */
-	function renderEffect( blockData, resolution, offset, framebufferInfo ) {
+	function renderLiquidEffect( blockData, resolution, offset, textureInfo ) {
 		const complexity = Number.parseInt( blockData.complexity, 10 );
 		const mouseSpeed = Number.parseFloat( blockData.mouseSpeed );
 		const fluidSpeed = Number.parseFloat( blockData.fluidSpeed );
@@ -295,12 +307,12 @@
 			mouse: globalState.mouse.map( ( v, i ) => ( v - offset[ i ] ) / resolution[ i ] ),
 			// 'Swirly-ness' of the effect
 			complexity,
-			// Makes it more/less jumpy. f from [1, 100] to [50, 1]
-			mouseSpeed: ( 4 * ( 175 + mouseSpeed ) ) / ( 11 * mouseSpeed ) * complexity,
-			// Drives speed, higher number will make it slower. f from [1, 100] to [256, 1]
-			fluidSpeed: -( 4 * ( -2125 + ( 13 * fluidSpeed ) ) ) / ( 33 * fluidSpeed ),
-			// Framebuffer from the first pass
-			texture: framebufferInfo.attachments[ 0 ],
+			// Makes it more/less jumpy. f(x) from [1, 100] to [50, 1]
+			mouseSpeed: ( 700 + ( 4 * mouseSpeed ) ) / ( 11 * mouseSpeed ) * complexity,
+			// Drives speed, higher number will make it slower. f(x) from [1, 100] to [256, 1]
+			fluidSpeed: ( 8500 - ( 52 * fluidSpeed ) ) / ( 33 * fluidSpeed ),
+			// Framebuffer texture from the first pass
+			texture: textureInfo.attachments[ 0 ],
 		};
 
 		twgl.bindFramebufferInfo( gl, null ); // Draw to screen
@@ -312,15 +324,6 @@
 		twgl.setBuffersAndAttributes( gl, programInfoEffectPass, screenBufferInfo );
 		twgl.setUniforms( programInfoEffectPass, uniforms );
 		twgl.drawBufferInfo( gl, screenBufferInfo );
-	}
-
-	/**
-	 * Update time globals.
-	 *
-	 * @param {DOMHighResTimeStamp} t Point in time when function begins to be called in milliseconds
-	 */
-	function updateTime( t ) {
-		globalState.time = t;
 	}
 
 	/**
@@ -341,7 +344,7 @@
 	 */
 	function animate( t ) {
 		window.requestAnimationFrame( animate );
-		updateTime( t );
+		globalState.time = t;
 		renderAllBlocks();
 	}
 	window.requestAnimationFrame( animate );
