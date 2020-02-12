@@ -222,7 +222,7 @@
 	/**
 	 * Convert a hex color string to a WebGL color vector
 	 *
-	 * @param {string} color Hex color string
+	 * @param {string} color Hex color string (#FFFFFF or #FFF)
 	 * @return {number[]} RGB array for WebGL
 	 */
 	function parseColor( color ) {
@@ -230,21 +230,17 @@
 		let g = '0';
 		let b = '0';
 
-		if ( color.length === 4 ) {
-			r = '0x' + color[ 1 ] + color[ 1 ];
-			g = '0x' + color[ 2 ] + color[ 2 ];
-			b = '0x' + color[ 3 ] + color[ 3 ];
-		} else if ( color.length === 7 ) {
+		if ( color.length === 7 ) {
 			r = '0x' + color[ 1 ] + color[ 2 ];
 			g = '0x' + color[ 3 ] + color[ 4 ];
 			b = '0x' + color[ 5 ] + color[ 6 ];
+		} else if ( color.length === 4 ) {
+			r = '0x' + color[ 1 ] + color[ 1 ];
+			g = '0x' + color[ 2 ] + color[ 2 ];
+			b = '0x' + color[ 3 ] + color[ 3 ];
 		}
 
-		return [
-			+( r / 255 ).toFixed( 1 ),
-			+( g / 255 ).toFixed( 1 ),
-			+( b / 255 ).toFixed( 1 ),
-		];
+		return [ r / 0xFF, g / 0xFF, b / 0xFF ];
 	}
 
 	/**
