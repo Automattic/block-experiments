@@ -3,8 +3,11 @@
 .wp-block-a8c-motion-background {
 	display: flex;
 	.components-placeholder.components-placeholder {
+		position: absolute;
+		height: 100%;
+		width: 100%;
 		margin-bottom: 0;
-		background: rgba(242, 242, 243, 0.7);
+		z-index: 1;
 	}
 }
 
