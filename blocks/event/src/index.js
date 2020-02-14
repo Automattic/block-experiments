@@ -16,7 +16,7 @@ import Edit from './edit';
 import Save from './save';
 
 export function registerBlock() {
-	registerBlockType( 'jetpack/event', {
+	registerBlockType( 'a8c/event', {
 		title: __( 'Event' ),
 		description: __( 'Show the time and location of an event.' ),
 		icon: <Icon />,

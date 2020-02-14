@@ -28,7 +28,7 @@ const Save = ( { attributes } ) => {
 	];
 
 	return (
-		<div className={ classnames( 'wp-block-jetpack-event', classNames ) } style={ style } >
+		<div className={ classnames( 'wp-block-a8c-event', classNames ) } style={ style } >
 			<div className="event__details">
 				{ attributes.eventStart && (
 					<div className="event__datebox">

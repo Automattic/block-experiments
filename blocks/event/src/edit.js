@@ -84,7 +84,7 @@ const Edit = ( {
 				</PanelColorSettings>
 			</InspectorControls>
 			<div
-				className={ classnames( 'wp-block-jetpack-event', classNames ) }
+				className={ classnames( 'wp-block-a8c-event', classNames ) }
 				style={ style }
 			>
 				<div

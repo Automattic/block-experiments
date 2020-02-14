@@ -2,8 +2,8 @@
 	"blocks": [
 		"event"
 	],
-	"version": 0.1,
+	"version": 1.0,
 	"name": "Event",
-	"description": "Show the time and location of an event.",
-	"resource": "jetpack-event"
+	"description": "Show the time and location of an event",
+	"resource": "a8c-event"
 }
