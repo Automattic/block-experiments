@@ -201,11 +201,12 @@
 	function renderBlock( block, resolution, offset ) {
 		let textureInfo = textureInfos.get( block );
 
-		if ( ! textureInfo || textureInfo.mode !== block.dataset.mode ) {
-			if (
-				block.dataset.mode === 'image' &&
-				( ! textureInfo || textureInfo.imageUrl !== block.dataset.imageUrl )
-			) {
+		if (
+			! textureInfo ||
+			textureInfo.mode !== block.dataset.mode ||
+			textureInfo.imageUrl !== block.dataset.imageUrl
+		) {
+			if ( block.dataset.mode === 'image' ) {
 				// Default to semi-transparent placeholder color
 				const src = block.dataset.imageUrl || [ 0.55, 0.55, 0.59, 0.1 ];
 				// Match the structure of what createFramebufferInfo makes for the WebGLTexture
