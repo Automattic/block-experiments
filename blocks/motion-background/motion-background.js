@@ -8,7 +8,7 @@
 ( function() {
 	const blocks = document.getElementsByClassName( 'wp-block-a8c-motion-background' );
 
-	const gl = document.createElement( 'canvas' ).getContext( 'webgl' );
+	const gl = twgl.getWebGLContext( document.createElement( 'canvas' ) );
 	gl.canvas.className = 'wp-block-a8c-motion-background-canvas';
 	if ( ! gl ) {
 		for ( const block of blocks ) {
