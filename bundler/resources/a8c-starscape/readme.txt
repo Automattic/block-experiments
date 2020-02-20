@@ -12,6 +12,10 @@ Stars in motion
 
 Everything was made of collapsing stars, we are all made of star stuff. Now we also can create content in WordPress with stars in motion.
 
+## Requirements
+
+As this is part of a series of block experiments, the latest version of the <a href="https://wordpress.org/plugins/gutenberg/">Gutenberg Plugin</a> is required.
+
 ## Source and Support
 
 You can follow development, file an issue, suggest features, and view the source at the Github repo: <a href="https://github.com/Automattic/block-experiments">https://github.com/Automattic/block-experiments</a>
