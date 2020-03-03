@@ -123,18 +123,45 @@
 		mouse: [ 0, 0 ],
 	};
 
+	let backgroundColor; // Used for replaceBackgroundHack
+
 	/**
 	 * Hack to move the background behind the canvas since the canvas is added
 	 * underneath the editor to allow for UI elements to draw overtop.
 	 */
-	function replaceBackground() {
-		const node = document.querySelector( '.editor-styles-wrapper' );
-		if ( node ) {
-			const nodeStyle = window.getComputedStyle( node, null );
-			if ( nodeStyle.backgroundColor !== 'rgba(0, 0, 0, 0)' ) {
-				gl.canvas.style.backgroundColor = nodeStyle.backgroundColor;
-				// TODO: Set other background styles
-				node.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+	function replaceBackgroundHack() {
+		// Handle the gray background for the device preview
+		const editorBackground = document.querySelector( '.block-editor-editor-skeleton__content' );
+		if ( editorBackground ) {
+			const computedStyle = window.getComputedStyle( editorBackground, null );
+			if ( computedStyle.backgroundColor !== 'rgba(0, 0, 0, 0)' ) {
+				gl.canvas.style.backgroundColor = computedStyle.backgroundColor;
+				editorBackground.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+			}
+		}
+
+		// Handle the theme background, if present
+		const themeStyleRoot = document.querySelector( '.edit-post-visual-editor.editor-styles-wrapper' );
+		if ( themeStyleRoot ) {
+			const computedStyle = window.getComputedStyle( themeStyleRoot, null );
+
+			if ( computedStyle.backgroundColor !== 'rgba(0, 0, 0, 0)' || ! backgroundColor ) {
+				backgroundColor = parseRGB( computedStyle.backgroundColor );
+				themeStyleRoot.style.backgroundColor = 'rgba(0, 0, 0, 0)';
+			}
+
+			if ( backgroundColor ) {
+				const rect = themeStyleRoot.getBoundingClientRect();
+
+				const width = rect.right - rect.left;
+				const height = rect.bottom - rect.top;
+				const left = rect.left;
+				const bottom = gl.canvas.clientHeight - rect.bottom;
+
+				gl.viewport( left, bottom, width, height );
+				gl.scissor( left, bottom, width, height );
+				gl.clearColor( ...backgroundColor, 1 );
+				gl.clear( gl.COLOR_BUFFER_BIT );
 			}
 		}
 	}
@@ -155,9 +182,7 @@
 		gl.enable( gl.DEPTH_TEST );
 		gl.enable( gl.SCISSOR_TEST );
 
-		replaceBackground();
-
-		let blocksRendered = false;
+		replaceBackgroundHack();
 
 		_.forEach( blocks, ( block ) => {
 			const rect = block.getBoundingClientRect();
@@ -177,17 +202,7 @@
 			const bottom = gl.canvas.clientHeight - rect.bottom;
 
 			renderBlock( block, [ width, height ], [ left, bottom ] );
-
-			blocksRendered = true;
 		} );
-
-		// Clear out the last frame if no blocks are on screen
-		if ( ! blocksRendered ) {
-			gl.viewport( 0, 0, gl.canvas.width, gl.canvas.height );
-			gl.scissor( 0, 0, gl.canvas.width, gl.canvas.height );
-			gl.clearColor( 0, 0, 0, 0 );
-			gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT ); // eslint-disable-line no-bitwise
-		}
 	}
 
 	/**
@@ -251,6 +266,13 @@
 		}
 
 		return [ r / 0xFF, g / 0xFF, b / 0xFF ];
+	}
+
+	function parseRGB( color ) {
+		return color
+			.replace( /[^\d,]/g, '' )
+			.split( ',' )
+			.map( ( v ) => v / 255 );
 	}
 
 	/**
