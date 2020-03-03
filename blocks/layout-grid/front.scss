@@ -100,4 +100,10 @@
 			}
 		}
 	}
+
+	// Ensure long lines wrap in themes that don't already enforce this
+	.wp-block-jetpack-layout-grid-column * {
+		word-break: break-word;
+		word-wrap: break-word;
+	}
 }
