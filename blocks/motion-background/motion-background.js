@@ -3,18 +3,16 @@
  * Draws multiple blocks on a canvas using a technique from {@link https://webglfundamentals.org/webgl/lessons/webgl-multiple-views.html}
  */
 
-/* global twgl */
-
-( function() {
+( function( _, twgl ) {
 	const blocks = document.getElementsByClassName( 'wp-block-a8c-motion-background' );
 
 	const gl = twgl.getWebGLContext( document.createElement( 'canvas' ) );
 	gl.canvas.className = 'wp-block-a8c-motion-background-canvas';
 	if ( ! gl ) {
-		for ( const block of blocks ) {
+		_.forEach( blocks, ( block ) => {
 			// TODO: I18n
 			block.textContent = 'WebGL must be enabled to view this content.';
-		}
+		} );
 		return;
 	}
 
@@ -160,7 +158,8 @@
 		replaceBackground();
 
 		let blocksRendered = false;
-		for ( const block of blocks ) {
+
+		_.forEach( blocks, ( block ) => {
 			const rect = block.getBoundingClientRect();
 
 			if (
@@ -169,7 +168,7 @@
 				rect.right < 0 ||
 				rect.left > gl.canvas.clientWidth
 			) {
-				continue; // Block is off screen
+				return; // Block is off screen
 			}
 
 			const width = rect.right - rect.left;
@@ -180,7 +179,7 @@
 			renderBlock( block, [ width, height ], [ left, bottom ] );
 
 			blocksRendered = true;
-		}
+		} );
 
 		// Clear out the last frame if no blocks are on screen
 		if ( ! blocksRendered ) {
@@ -349,4 +348,4 @@
 		renderAllBlocks();
 	}
 	window.requestAnimationFrame( animate );
-}() );
+}( window.lodash, window.twgl ) );
