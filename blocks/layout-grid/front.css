@@ -687,3 +687,6 @@
         grid-row-start: 4; }
       .wp-block-jetpack-layout-grid.column4-desktop-grid__row-4 > .wp-block-jetpack-layout-grid-column:nth-child(4) {
         grid-row-start: 4; } }
+  .wp-block-jetpack-layout-grid .wp-block-jetpack-layout-grid-column * {
+    word-break: break-word;
+    word-wrap: break-word; }
