@@ -22,8 +22,7 @@ import {
 	IconButton,
 	Placeholder,
 	IsolatedEventContainer,
-	SelectControl,
-	CheckboxControl,
+	ToggleControl,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { ENTER, SPACE } from '@wordpress/keycodes';
@@ -182,7 +181,7 @@ class Edit extends Component {
 		} = this.props;
 		const { selectedDevice } = this.state;
 		const extra = getAsDeviceCSS( selectedDevice, columns, attributes );
-		const { removeGutterWrap } = attributes;
+		const { addGutterEnds } = attributes;
 		const layoutGrid = new LayoutGrid( attributes, selectedDevice, columns );
 		const classes = classnames(
 			removeGridClasses( className ),
@@ -192,7 +191,7 @@ class Edit extends Component {
 				'wp-block-jetpack-layout-desktop': selectedDevice === 'Desktop',
 				'wp-block-jetpack-layout-mobile': selectedDevice === 'Mobile',
 				'wp-block-jetpack-layout-resizable': this.canResizeBreakpoint( selectedDevice ),
-				'wp-block-jetpack-layout-grid__nowrap': removeGutterWrap,
+				'wp-block-jetpack-layout-grid__nowrap': ! addGutterEnds,
 			}
 		);
 
@@ -294,11 +293,11 @@ class Edit extends Component {
 						</PanelBody>
 
 						<PanelBody title={ __( 'Gutter' ) }>
-							<CheckboxControl
-								label={ __( 'Remove end gutters' ) }
-								help={ __( 'Remove gutters at start and end of the grid' ) }
-								checked={ removeGutterWrap }
-								onChange={ newValue => setAttributes( { removeGutterWrap: newValue } )  }
+							<ToggleControl
+								label={ __( 'Add end gutters' ) }
+								help={ __( 'Toggle to remove the spacing left and right of the grid.' ) }
+								checked={ addGutterEnds }
+								onChange={ newValue => setAttributes( { addGutterEnds: newValue } )  }
 							/>
 						</PanelBody>
 					</InspectorControls>

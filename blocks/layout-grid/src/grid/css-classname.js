@@ -124,7 +124,7 @@ export function getAsCSS( columns, attributes = {} ) {
 		};
 	}
 
-	if ( attributes.removeGutterWrap ) {
+	if ( ! attributes.addGutterEnds ) {
 		classes[ 'wp-block-jetpack-layout-grid__nowrap' ] = true;
 	}
 
@@ -139,5 +139,6 @@ export function removeGridClasses( classes ) {
 	return classes
 		.replace( /column\d-\w*-grid__\w*-\d*/g, '' )
 		.replace( /column\d-grid__\w*-\d*/g, '' )
-		.replace( /\s{2,}/, '' );
+		.replace( /\s{2,}/, '' )
+		.replace( 'wp-block-jetpack-layout-grid__nowrap', '' );
 }

@@ -75,9 +75,9 @@ export function registerBlock() {
 				type: 'string',
 				default: 'full',
 			},
-			removeGutterWrap: {
+			addGutterEnds: {
 				type: 'boolean',
-				default: false,
+				default: true,
 			},
 			...getColumnAttributes( MAX_COLUMNS, DEVICE_BREAKPOINTS ),
 		},
