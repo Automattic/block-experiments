@@ -34,7 +34,7 @@ import { createBlock } from '@wordpress/blocks';
  * Internal dependencies
  */
 
-import { getAsDeviceCSS, removeGridClasses } from './css-classname';
+import { getAsDeviceCSS, removeGridClasses, getGutterClasses } from './css-classname';
 import ColumnIcon from '../icons';
 import { getLayouts, getColumns, DEVICE_BREAKPOINTS, getSpanForDevice, getOffsetForDevice } from '../constants';
 import { getGridWidth, getDefaultSpan } from './grid-defaults';
@@ -191,8 +191,8 @@ class Edit extends Component {
 				'wp-block-jetpack-layout-desktop': selectedDevice === 'Desktop',
 				'wp-block-jetpack-layout-mobile': selectedDevice === 'Mobile',
 				'wp-block-jetpack-layout-resizable': this.canResizeBreakpoint( selectedDevice ),
-				'wp-block-jetpack-layout-grid__nowrap': ! addGutterEnds,
-			}
+			},
+			getGutterClasses( attributes ),
 		);
 
 		if ( columns === 0 ) {
@@ -295,7 +295,9 @@ class Edit extends Component {
 						<PanelBody title={ __( 'Gutter' ) }>
 							<ToggleControl
 								label={ __( 'Add end gutters' ) }
-								help={ __( 'Toggle to remove the spacing left and right of the grid.' ) }
+								help={
+									addGutterEnds ? __( 'Toggle off to remove the spacing left and right of the grid.' ) : __( 'Toggle on to add space left and right of the layout grid. ' )
+								}
 								checked={ addGutterEnds }
 								onChange={ newValue => setAttributes( { addGutterEnds: newValue } )  }
 							/>

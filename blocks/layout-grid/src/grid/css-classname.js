@@ -125,7 +125,7 @@ export function getAsCSS( columns, attributes = {} ) {
 	}
 
 	if ( ! attributes.addGutterEnds ) {
-		classes[ 'wp-block-jetpack-layout-grid__nowrap' ] = true;
+		classes[ 'wp-block-jetpack-layout-gutter__nowrap' ] = true;
 	}
 
 	return classes;
@@ -140,5 +140,17 @@ export function removeGridClasses( classes ) {
 		.replace( /column\d-\w*-grid__\w*-\d*/g, '' )
 		.replace( /column\d-grid__\w*-\d*/g, '' )
 		.replace( /\s{2,}/, '' )
-		.replace( 'wp-block-jetpack-layout-grid__nowrap', '' );
+		.replace( /wp-block-jetpack-layout-gutter__\w*/, '' );
+}
+
+export function getGutterClasses( { gutterSize, addGutterEnds } ) {
+	console.log( addGutterEnds );
+	return {
+		'wp-block-jetpack-layout-gutter__nowrap': ! addGutterEnds,
+		'wp-block-jetpack-layout-gutter__none': gutterSize === 'none',
+		'wp-block-jetpack-layout-gutter__small': gutterSize === 'small',
+		'wp-block-jetpack-layout-gutter__medium': gutterSize === 'medium',
+		'wp-block-jetpack-layout-gutter__large': gutterSize === 'large',
+		'wp-block-jetpack-layout-gutter__huge': gutterSize === 'huge',
+	};
 }
