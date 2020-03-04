@@ -14,7 +14,17 @@ import {
 	InspectorControls,
 } from '@wordpress/block-editor';
 import { Component, createRef } from '@wordpress/element';
-import { PanelBody, TextControl, ButtonGroup, Button, IconButton, Placeholder, IsolatedEventContainer } from '@wordpress/components';
+import {
+	PanelBody,
+	TextControl,
+	ButtonGroup,
+	Button,
+	IconButton,
+	Placeholder,
+	IsolatedEventContainer,
+	SelectControl,
+	CheckboxControl,
+} from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { ENTER, SPACE } from '@wordpress/keycodes';
 import { withSelect, withDispatch } from '@wordpress/data';
@@ -168,9 +178,11 @@ class Edit extends Component {
 			attributes = {},
 			isSelected,
 			columns,
+			setAttributes,
 		} = this.props;
 		const { selectedDevice } = this.state;
 		const extra = getAsDeviceCSS( selectedDevice, columns, attributes );
+		const { removeGutterWrap } = attributes;
 		const layoutGrid = new LayoutGrid( attributes, selectedDevice, columns );
 		const classes = classnames(
 			removeGridClasses( className ),
@@ -180,6 +192,7 @@ class Edit extends Component {
 				'wp-block-jetpack-layout-desktop': selectedDevice === 'Desktop',
 				'wp-block-jetpack-layout-mobile': selectedDevice === 'Mobile',
 				'wp-block-jetpack-layout-resizable': this.canResizeBreakpoint( selectedDevice ),
+				'wp-block-jetpack-layout-grid__nowrap': removeGutterWrap,
 			}
 		);
 
@@ -278,6 +291,15 @@ class Edit extends Component {
 							</ButtonGroup>
 
 							{ this.renderDeviceSettings( columns, selectedDevice, attributes ) }
+						</PanelBody>
+
+						<PanelBody title={ __( 'Gutter' ) }>
+							<CheckboxControl
+								label={ __( 'Remove end gutters' ) }
+								help={ __( 'Remove gutters at start and end of the grid' ) }
+								checked={ removeGutterWrap }
+								onChange={ newValue => setAttributes( { removeGutterWrap: newValue } )  }
+							/>
 						</PanelBody>
 					</InspectorControls>
 

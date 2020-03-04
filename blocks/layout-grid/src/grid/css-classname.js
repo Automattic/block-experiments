@@ -124,6 +124,10 @@ export function getAsCSS( columns, attributes = {} ) {
 		};
 	}
 
+	if ( attributes.removeGutterWrap ) {
+		classes[ 'wp-block-jetpack-layout-grid__nowrap' ] = true;
+	}
+
 	return classes;
 }
 

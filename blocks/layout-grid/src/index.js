@@ -75,6 +75,10 @@ export function registerBlock() {
 				type: 'string',
 				default: 'full',
 			},
+			removeGutterWrap: {
+				type: 'boolean',
+				default: false,
+			},
 			...getColumnAttributes( MAX_COLUMNS, DEVICE_BREAKPOINTS ),
 		},
 		edit: editGrid,
