@@ -48,9 +48,33 @@
 	}
 }
 
+.wp-block-jetpack-layout-gutter__none .wpcom-overlay-grid {
+	grid-gap: $grid-gutter-none;
+	padding-left: $padding-none;
+	padding-right: $padding-none;
+}
+
+.wp-block-jetpack-layout-gutter__small .wpcom-overlay-grid {
+	grid-gap: $grid-gutter-small;
+	padding-left: $padding-small;
+	padding-right: $padding-small;
+}
+
+.wp-block-jetpack-layout-gutter__medium .wpcom-overlay-grid {
+	grid-gap: $grid-gutter-medium;
+	padding-left: $padding-medium;
+	padding-right: $padding-medium;
+}
+
+.wp-block-jetpack-layout-gutter__huge .wpcom-overlay-grid {
+	grid-gap: $grid-gutter-huge;
+	padding-left: $padding-huge;
+	padding-right: $padding-huge;
+}
+
 .wp-block-jetpack-layout-gutter__nowrap .wpcom-overlay-grid {
-	padding-left: 0;
-	padding-right: 0;
+	padding-left: $padding-none;
+	padding-right: $padding-none;
 }
 
 body.is-resizing .wpcom-overlay-grid .wpcom-overlay-grid__column {

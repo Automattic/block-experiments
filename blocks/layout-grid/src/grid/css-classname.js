@@ -144,7 +144,12 @@ export function removeGridClasses( classes ) {
 }
 
 export function getGutterClasses( { gutterSize, addGutterEnds } ) {
+	// Note that 'large' is the default and doesn't output any CSS class
 	return {
 		'wp-block-jetpack-layout-gutter__nowrap': ! addGutterEnds,
+		'wp-block-jetpack-layout-gutter__none': gutterSize === 'none',
+		'wp-block-jetpack-layout-gutter__small': gutterSize === 'small',
+		'wp-block-jetpack-layout-gutter__medium': gutterSize === 'medium',
+		'wp-block-jetpack-layout-gutter__huge': gutterSize === 'huge',
 	};
 }

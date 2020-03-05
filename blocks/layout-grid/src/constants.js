@@ -4,13 +4,22 @@
 
 import { __ } from '@wordpress/i18n';
 
+function getSpacingValues() {
+	return [
+		{ value: 'small', label: __( 'Small', 'layout-grid' ) },
+		{ value: 'medium', label: __( 'Medium', 'layout-grid' ) },
+		{ value: 'large', label: __( 'Large', 'layout-grid' ) },
+		{ value: 'huge', label: __( 'Huge', 'layout-grid' ) },
+	];
+}
+
 export const getPaddingValues = () => (	[
 	{ value: 'none', label: __( 'No padding', 'layout-grid' ) },
-	{ value: 'small', label: __( 'Small', 'layout-grid' ) },
-	{ value: 'medium', label: __( 'Medium', 'layout-grid' ) },
-	{ value: 'large', label: __( 'Large', 'layout-grid' ) },
-	{ value: 'huge', label: __( 'Huge', 'layout-grid' ) },
-] );
+].concat( getSpacingValues() ) );
+
+export const getGutterValues = () => ( [
+	{ value: 'none', label: __( 'No gutter', 'layout-grid' ) },
+].concat( getSpacingValues() ) );
 
 export const getColumns = () => ( [
 	{

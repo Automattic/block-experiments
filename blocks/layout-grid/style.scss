@@ -16,9 +16,29 @@
 	padding-left: 24px;
 	padding-right: 24px;
 
+	&.wp-block-jetpack-layout-gutter__none {
+		padding-left: $padding-none;
+		padding-right: $padding-none;
+	}
+
+	&.wp-block-jetpack-layout-gutter__small {
+		padding-left: $padding-small;
+		padding-right: $padding-small;
+	}
+
+	&.wp-block-jetpack-layout-gutter__medium {
+		padding-left: $padding-medium;
+		padding-right: $padding-medium;
+	}
+
+	&.wp-block-jetpack-layout-gutter__huge {
+		padding-left: $padding-huge;
+		padding-right: $padding-huge;
+	}
+
 	&.wp-block-jetpack-layout-gutter__nowrap {
-		padding-left: 0;
-		padding-right: 0;
+		padding-left: $padding-none;
+		padding-right: $padding-none;
 	}
 
 	// Additional, user-set paddings.
