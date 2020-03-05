@@ -11,21 +11,6 @@
 	}
 }
 
-.wp-block-a8c-motion-background-canvas {
-	// Fix positioning from toolbar/menus
-	top: -32px; // html.wp-toolbar
-	left: -36px; // #adminmenumain
-
-	@media screen and (max-width: 782px) {
-		top: -46px;
-		left: 0;
-	}
-
-	@media screen and (max-width: 600px) {
-		top: 0;
-	}
-}
-
 .components-button-group.is-radio-group {
 	display: flex;
 	margin-bottom: 0.5em;

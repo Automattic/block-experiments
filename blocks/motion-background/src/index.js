@@ -6,14 +6,29 @@ import { registerBlockType } from '@wordpress/blocks';
 /**
  * Internal dependencies
  */
-import Edit from './edit';
-import Save from './save';
+import BlockEdit from './motion-background-block/edit';
+import BlockSave from './motion-background-block/save';
+import ContainerEdit from './motion-background-container/edit';
+import ContainerSave from './motion-background-container/save';
 
 export const registerBlock = () => {
+	registerBlockType( 'a8c/motion-background-container', {
+		title: 'Motion Background Container',
+		icon: 'awards',
+		category: 'widgets',
+		supports: {
+			html: false,
+			multiple: false,
+		},
+		edit: ContainerEdit,
+		save: ContainerSave,
+	} );
+
 	registerBlockType( 'a8c/motion-background', {
 		title: 'Motion Background',
 		icon: 'awards',
 		category: 'widgets',
+		parent: [ 'a8c/motion-background-container' ],
 		supports: {
 			align: true,
 		},
@@ -68,7 +83,7 @@ export const registerBlock = () => {
 				default: '#ffffff',
 			},
 		},
-		edit: ( props ) => <Edit { ...props } />,
-		save: ( props ) => <Save { ...props } />,
+		edit: BlockEdit,
+		save: BlockSave,
 	} );
 };

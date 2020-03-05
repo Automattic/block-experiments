@@ -23,7 +23,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 // TODO: Move to components folder
-import RadioButtonGroup from '../../bauhaus-centenary/src/radio-button-group';
+import RadioButtonGroup from '../../../bauhaus-centenary/src/radio-button-group';
 
 /**
  * Internal dependencies
