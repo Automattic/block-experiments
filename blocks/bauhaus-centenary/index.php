@@ -15,4 +15,6 @@ add_action( 'init', function() {
 			'editor_style'    => 'wpcom-blocks-editor',
 		]
 	);
+
+	wp_set_script_translations( 'a8c/bauhaus-centenary', 'bauhaus-centenary' );
 } );
