@@ -48,6 +48,10 @@
 	}
 }
 
+.wp-block-jetpack-layout-gutter__nowrap .wpcom-overlay-grid {
+	padding-left: 0;
+	padding-right: 0;
+}
 
 body.is-resizing .wpcom-overlay-grid .wpcom-overlay-grid__column {
 	border-left: 1px solid #e2e4e7;

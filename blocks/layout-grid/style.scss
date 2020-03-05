@@ -14,6 +14,11 @@
 	padding-left: 24px;
 	padding-right: 24px;
 
+	&.wp-block-jetpack-layout-gutter__nowrap {
+		padding-left: 0;
+		padding-right: 0;
+	}
+
 	// Additional, user-set paddings.
 	// Apply both gutter padding and user-set padding, when a background is also set.
 	&.wp-block-jetpack-layout-grid__padding-none {
@@ -56,6 +61,7 @@
 		}
 	}
 }
+
 
 /**
  * Individual Column Options

@@ -75,6 +75,10 @@ export function registerBlock() {
 				type: 'string',
 				default: 'full',
 			},
+			addGutterEnds: {
+				type: 'boolean',
+				default: true,
+			},
 			...getColumnAttributes( MAX_COLUMNS, DEVICE_BREAKPOINTS ),
 		},
 		edit: editGrid,

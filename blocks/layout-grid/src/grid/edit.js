@@ -14,7 +14,16 @@ import {
 	InspectorControls,
 } from '@wordpress/block-editor';
 import { Component, createRef } from '@wordpress/element';
-import { PanelBody, TextControl, ButtonGroup, Button, IconButton, Placeholder, IsolatedEventContainer } from '@wordpress/components';
+import {
+	PanelBody,
+	TextControl,
+	ButtonGroup,
+	Button,
+	IconButton,
+	Placeholder,
+	IsolatedEventContainer,
+	ToggleControl,
+} from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { ENTER, SPACE } from '@wordpress/keycodes';
 import { withSelect, withDispatch } from '@wordpress/data';
@@ -25,7 +34,7 @@ import { createBlock } from '@wordpress/blocks';
  * Internal dependencies
  */
 
-import { getAsDeviceCSS, removeGridClasses } from './css-classname';
+import { getAsDeviceCSS, removeGridClasses, getGutterClasses } from './css-classname';
 import ColumnIcon from '../icons';
 import { getLayouts, getColumns, DEVICE_BREAKPOINTS, getSpanForDevice, getOffsetForDevice } from '../constants';
 import { getGridWidth, getDefaultSpan } from './grid-defaults';
@@ -168,9 +177,11 @@ class Edit extends Component {
 			attributes = {},
 			isSelected,
 			columns,
+			setAttributes,
 		} = this.props;
 		const { selectedDevice } = this.state;
 		const extra = getAsDeviceCSS( selectedDevice, columns, attributes );
+		const { addGutterEnds } = attributes;
 		const layoutGrid = new LayoutGrid( attributes, selectedDevice, columns );
 		const classes = classnames(
 			removeGridClasses( className ),
@@ -180,7 +191,8 @@ class Edit extends Component {
 				'wp-block-jetpack-layout-desktop': selectedDevice === 'Desktop',
 				'wp-block-jetpack-layout-mobile': selectedDevice === 'Mobile',
 				'wp-block-jetpack-layout-resizable': this.canResizeBreakpoint( selectedDevice ),
-			}
+			},
+			getGutterClasses( attributes ),
 		);
 
 		if ( columns === 0 ) {
@@ -278,6 +290,17 @@ class Edit extends Component {
 							</ButtonGroup>
 
 							{ this.renderDeviceSettings( columns, selectedDevice, attributes ) }
+						</PanelBody>
+
+						<PanelBody title={ __( 'Gutter' ) }>
+							<ToggleControl
+								label={ __( 'Add end gutters' ) }
+								help={
+									addGutterEnds ? __( 'Toggle off to remove the spacing left and right of the grid.' ) : __( 'Toggle on to add space left and right of the layout grid. ' )
+								}
+								checked={ addGutterEnds }
+								onChange={ newValue => setAttributes( { addGutterEnds: newValue } )  }
+							/>
 						</PanelBody>
 					</InspectorControls>
 
