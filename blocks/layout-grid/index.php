@@ -12,6 +12,8 @@ add_action( 'init', function() {
 		'style' => 'wpcom-blocks',
 		'editor_style' => 'wpcom-blocks-editor',
 	] );
+
+	wp_set_script_translations( 'jetpack/layout-grid', 'layout-grid' );
 } );
 
 add_action( 'wp_head', function() {
