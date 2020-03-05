@@ -125,11 +125,11 @@ class Edit extends Component {
 
 			settings.push( (
 				<div className="jetpack-layout-grid-settings" key={ column }>
-					<strong>{ __( 'Column' ) } { column + 1 }</strong>
+					<strong>{ __( 'Column', 'layout-grid' ) } { column + 1 }</strong>
 					<div className="jetpack-layout-grid-settings__group">
 						<TextControl
 							type="number"
-							label={ __( 'Offset' ) }
+							label={ __( 'Offset', 'layout-grid' ) }
 							value={ offset || 0 }
 							min={ 0 }
 							max={ getGridWidth( device ) - 1 }
@@ -137,7 +137,7 @@ class Edit extends Component {
 						/>
 						<TextControl
 							type="number"
-							label={ __( 'Span' ) }
+							label={ __( 'Span', 'layout-grid' ) }
 							value={ span }
 							min={ 1 }
 							max={ getGridWidth( device ) }
@@ -153,12 +153,12 @@ class Edit extends Component {
 
 	getPreviewText( device ) {
 		if ( device === 'Mobile' ) {
-			return __( 'Showing mobile layout' );
+			return __( 'Showing mobile layout', 'layout-grid' );
 		} else if ( device === 'Tablet' ) {
-			return __( 'Showing tablet layout' );
+			return __( 'Showing tablet layout', 'layout-grid' );
 		}
 
-		return __( 'Showing desktop layout' );
+		return __( 'Showing desktop layout', 'layout-grid' );
 	}
 
 	canResizeBreakpoint( device ) {
@@ -199,8 +199,8 @@ class Edit extends Component {
 			return (
 				<Placeholder
 					icon="layout"
-					label={ __( 'Choose Layout' ) }
-					instructions={ __( 'Select a layout to start with:' ) }
+					label={ __( 'Choose Layout', 'layout-grid' ) }
+					instructions={ __( 'Select a layout to start with:', 'layout-grid' ) }
 					className={ classes }
 				>
 					<ul className="block-editor-inner-blocks__template-picker-options">
@@ -240,7 +240,7 @@ class Edit extends Component {
 					/>
 
 					<InspectorControls>
-						<PanelBody title={ __( 'Layout' ) }>
+						<PanelBody title={ __( 'Layout', 'layout-grid' ) }>
 							<div className="jetpack-layout-grid-columns block-editor-block-styles">
 								{ getColumns().map( ( column ) => (
 									<div
@@ -271,10 +271,10 @@ class Edit extends Component {
 								) ) }
 							</div>
 
-							<p><em>{ __( 'Changing the number of columns will reset your layout and could remove content.' ) }</em></p>
+							<p><em>{ __( 'Changing the number of columns will reset your layout and could remove content.', 'layout-grid' ) }</em></p>
 						</PanelBody>
 
-						<PanelBody title={ __( 'Responsive Breakpoints' ) }>
+						<PanelBody title={ __( 'Responsive Breakpoints', 'layout-grid' ) }>
 							<p><em>{ __( "Note that previewing your post will show your browser's breakpoint, not the currently selected one." ) }</em></p>
 							<ButtonGroup>
 								{ getLayouts().map( ( layout ) => (
@@ -292,11 +292,11 @@ class Edit extends Component {
 							{ this.renderDeviceSettings( columns, selectedDevice, attributes ) }
 						</PanelBody>
 
-						<PanelBody title={ __( 'Gutter' ) }>
+						<PanelBody title={ __( 'Gutter', 'layout-grid' ) }>
 							<ToggleControl
-								label={ __( 'Add end gutters' ) }
+								label={ __( 'Add end gutters', 'layout-grid' ) }
 								help={
-									addGutterEnds ? __( 'Toggle off to remove the spacing left and right of the grid.' ) : __( 'Toggle on to add space left and right of the layout grid. ' )
+									addGutterEnds ? __( 'Toggle off to remove the spacing left and right of the grid.', 'layout-grid' ) : __( 'Toggle on to add space left and right of the layout grid. ', 'layout-grid' )
 								}
 								checked={ addGutterEnds }
 								onChange={ newValue => setAttributes( { addGutterEnds: newValue } )  }

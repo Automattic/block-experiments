@@ -42,7 +42,7 @@ const Ribbon = ( { attributes } ) => {
 const Content = Ribbon;
 
 export default Object.assign( Ribbon, {
-	label: __( 'Ribbon' ),
+	label: __( 'Ribbon', 'bauhaus-centenary' ),
 	icon: <Icon.RibbonIcon />,
 	preview: <Icon.RibbonPreview />,
 	Content,
