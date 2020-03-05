@@ -144,13 +144,7 @@ export function removeGridClasses( classes ) {
 }
 
 export function getGutterClasses( { gutterSize, addGutterEnds } ) {
-	console.log( addGutterEnds );
 	return {
 		'wp-block-jetpack-layout-gutter__nowrap': ! addGutterEnds,
-		'wp-block-jetpack-layout-gutter__none': gutterSize === 'none',
-		'wp-block-jetpack-layout-gutter__small': gutterSize === 'small',
-		'wp-block-jetpack-layout-gutter__medium': gutterSize === 'medium',
-		'wp-block-jetpack-layout-gutter__large': gutterSize === 'large',
-		'wp-block-jetpack-layout-gutter__huge': gutterSize === 'huge',
 	};
 }
