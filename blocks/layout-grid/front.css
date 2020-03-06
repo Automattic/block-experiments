@@ -1032,6 +1032,16 @@
     word-break: break-word;
     word-wrap: break-word; }
 
+  .wp-block-jetpack-layout-grid.wp-block-jetpack-layout-gutter__none {
+    grid-gap: 0px; }
+  .wp-block-jetpack-layout-grid.wp-block-jetpack-layout-gutter__small {
+    grid-gap: 8px; }
+  .wp-block-jetpack-layout-grid.wp-block-jetpack-layout-gutter__medium {
+    grid-gap: 16px; }
+  .wp-block-jetpack-layout-grid.wp-block-jetpack-layout-gutter__huge {
+    grid-gap: 48px; }
+
 @-moz-document url-prefix() {
   .wp-block-jetpack-layout-grid .wp-block-cover {
     max-height: 0; } }
+

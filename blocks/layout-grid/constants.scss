@@ -4,6 +4,11 @@ $grid-tablet: repeat(8, 1fr);
 $grid-mobile: repeat(4, 1fr);
 
 $grid-gutter: 24px;
+$grid-gutter-none: 0px;
+$grid-gutter-small: 8px;
+$grid-gutter-medium: 16px;
+$grid-gutter-large: $grid-gutter;
+$grid-gutter-huge: 48px;
 $grid-gutter__background-offset: $grid-gutter / 2 + 1px;
 $padding-none: 0px;
 $padding-small: 8px;

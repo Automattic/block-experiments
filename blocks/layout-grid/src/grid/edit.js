@@ -23,6 +23,8 @@ import {
 	Placeholder,
 	IsolatedEventContainer,
 	ToggleControl,
+	SelectControl,
+	Disabled,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { ENTER, SPACE } from '@wordpress/keycodes';
@@ -36,7 +38,7 @@ import { createBlock } from '@wordpress/blocks';
 
 import { getAsDeviceCSS, removeGridClasses, getGutterClasses } from './css-classname';
 import ColumnIcon from '../icons';
-import { getLayouts, getColumns, DEVICE_BREAKPOINTS, getSpanForDevice, getOffsetForDevice } from '../constants';
+import { getLayouts, getColumns, DEVICE_BREAKPOINTS, getSpanForDevice, getOffsetForDevice, getGutterValues } from '../constants';
 import { getGridWidth, getDefaultSpan } from './grid-defaults';
 import ResizeGrid from './resize-grid';
 import LayoutGrid from './layout-grid';
@@ -181,7 +183,7 @@ class Edit extends Component {
 		} = this.props;
 		const { selectedDevice } = this.state;
 		const extra = getAsDeviceCSS( selectedDevice, columns, attributes );
-		const { addGutterEnds } = attributes;
+		const { gutterSize, addGutterEnds } = attributes;
 		const layoutGrid = new LayoutGrid( attributes, selectedDevice, columns );
 		const classes = classnames(
 			removeGridClasses( className ),
@@ -219,6 +221,17 @@ class Edit extends Component {
 				</Placeholder>
 			);
 		}
+
+		const toggleControl = (
+			<ToggleControl
+				label={ __( 'Add end gutters', 'layout-grid' ) }
+				help={
+					addGutterEnds ? __( 'Toggle off to remove the spacing left and right of the grid.', 'layout-grid' ) : __( 'Toggle on to add space left and right of the layout grid. ', 'layout-grid' )
+				}
+				checked={ addGutterEnds }
+				onChange={ newValue => setAttributes( { addGutterEnds: newValue } )  }
+			/>
+		);
 
 		return (
 			<IsolatedEventContainer>
@@ -275,12 +288,11 @@ class Edit extends Component {
 						</PanelBody>
 
 						<PanelBody title={ __( 'Responsive Breakpoints', 'layout-grid' ) }>
-							<p><em>{ __( "Note that previewing your post will show your browser's breakpoint, not the currently selected one." ) }</em></p>
+							<p><em>{ __( "Note that previewing your post will show your browser's breakpoint, not the currently selected one.", 'layout-grid' ) }</em></p>
 							<ButtonGroup>
 								{ getLayouts().map( ( layout ) => (
 									<Button
 										key={ layout.value }
-										isDefault
 										isPrimary={ layout.value === selectedDevice }
 										onClick={ () => this.onChangeDevice( layout.value ) }
 									>
@@ -293,14 +305,20 @@ class Edit extends Component {
 						</PanelBody>
 
 						<PanelBody title={ __( 'Gutter', 'layout-grid' ) }>
-							<ToggleControl
-								label={ __( 'Add end gutters', 'layout-grid' ) }
-								help={
-									addGutterEnds ? __( 'Toggle off to remove the spacing left and right of the grid.', 'layout-grid' ) : __( 'Toggle on to add space left and right of the layout grid. ', 'layout-grid' )
-								}
-								checked={ addGutterEnds }
-								onChange={ newValue => setAttributes( { addGutterEnds: newValue } )  }
+							<p>{ __( 'Gutter size', 'layout-grid' ) }</p>
+
+							<SelectControl
+								value={ gutterSize }
+								onChange={ newValue => setAttributes( { gutterSize: newValue, addGutterEnds: newValue === 'none' ? false : addGutterEnds } ) }
+								options={ getGutterValues() }
 							/>
+
+							{ gutterSize === 'none' ? (
+								<Disabled>
+									{ toggleControl }
+								</Disabled>
+							) : toggleControl }
+
 						</PanelBody>
 					</InspectorControls>
 

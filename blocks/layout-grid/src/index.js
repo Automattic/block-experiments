@@ -75,6 +75,10 @@ export function registerBlock() {
 				type: 'string',
 				default: 'full',
 			},
+			gutterSize: {
+				type: 'string',
+				default: 'large',
+			},
 			addGutterEnds: {
 				type: 'boolean',
 				default: true,

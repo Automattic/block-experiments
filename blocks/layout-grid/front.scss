@@ -108,6 +108,22 @@
 		word-wrap: break-word;
 	}
 
+	&.wp-block-jetpack-layout-gutter__none {
+		grid-gap: $grid-gutter-none;
+	}
+
+	&.wp-block-jetpack-layout-gutter__small {
+		grid-gap: $grid-gutter-small;
+	}
+
+	&.wp-block-jetpack-layout-gutter__medium {
+		grid-gap: $grid-gutter-medium;
+	}
+
+	&.wp-block-jetpack-layout-gutter__huge {
+		grid-gap: $grid-gutter-huge;
+	}
+
 	// Fixes an issue in Firefox where a block in the grid with 100% height causes the grid to increase in height
 	@-moz-document url-prefix() {
 		.wp-block-cover {
