@@ -140,6 +140,7 @@ const Edit = ( {
 				>
 					{ Object.entries( categories ).map( ( [ category, { label, icon } ] ) => (
 						<IconButton
+							className="icon-button"
 							icon={ icon }
 							isDefault
 							key={ category }
