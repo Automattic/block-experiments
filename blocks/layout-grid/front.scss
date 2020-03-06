@@ -107,4 +107,11 @@
 		word-break: break-word;
 		word-wrap: break-word;
 	}
+
+	// Fixes an issue in Firefox where a block in the grid with 100% height causes the grid to increase in height
+	@-moz-document url-prefix() {
+		.wp-block-cover {
+			max-height: 0;
+		}
+	}
 }
