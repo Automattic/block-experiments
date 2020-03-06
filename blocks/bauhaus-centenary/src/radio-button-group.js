@@ -26,7 +26,7 @@ const RadioButtonGroup = ( { options, selected, onChange, className, ...props } 
 				role="radio"
 				aria-checked={ selected === value }
 				isPrimary={ selected === value }
-				isDefault={ selected !== value }
+				isSecondary={ selected !== value }
 				onClick={ () => onChange( value ) }
 			>
 				{ label }

@@ -16,7 +16,7 @@ import {
 import {
 	PanelBody,
 	Placeholder,
-	IconButton,
+	Button,
 } from '@wordpress/components';
 import { ENTER } from '@wordpress/keycodes';
 
@@ -139,10 +139,10 @@ const Edit = ( {
 					className={ className }
 				>
 					{ Object.entries( categories ).map( ( [ category, { label, icon } ] ) => (
-						<IconButton
+						<Button
 							className="icon-button"
 							icon={ icon }
-							isDefault
+							isSecondary
 							key={ category }
 							label={ label }
 							onClick={ () => setAttributes( { category } ) }
