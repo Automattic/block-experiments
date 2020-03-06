@@ -29,6 +29,9 @@ You can follow development, file an issue, suggest features, and view the source
 
 == Changelog ==
 
+= 1.0.2 - 6th March 2020 =
+* Fix button style in IE
+
 = 1.0.1 - 6th March 2020 =
 * Fix button styling and deprecation warnings in Gutenberg v6.7.0
 * Fix missing text domains for translations
