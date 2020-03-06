@@ -281,7 +281,6 @@ class Edit extends Component {
 								{ getLayouts().map( ( layout ) => (
 									<Button
 										key={ layout.value }
-										isDefault
 										isPrimary={ layout.value === selectedDevice }
 										onClick={ () => this.onChangeDevice( layout.value ) }
 									>
@@ -298,19 +297,18 @@ class Edit extends Component {
 
 							<SelectControl
 								value={ gutterSize }
-								onChange={ newValue => setAttributes( { gutterSize: newValue } ) }
+								onChange={ newValue => setAttributes( { gutterSize: newValue, addGutterEnds: newValue === 'none' ? false : addGutterEnds } ) }
 								options={ getGutterValues() }
 							/>
 
-						<PanelBody title={ __( 'Gutter', 'layout-grid' ) }>
-							<ToggleControl
+							{ gutterSize !== 'none' && <ToggleControl
 								label={ __( 'Add end gutters', 'layout-grid' ) }
 								help={
 									addGutterEnds ? __( 'Toggle off to remove the spacing left and right of the grid.', 'layout-grid' ) : __( 'Toggle on to add space left and right of the layout grid. ', 'layout-grid' )
 								}
 								checked={ addGutterEnds }
 								onChange={ newValue => setAttributes( { addGutterEnds: newValue } )  }
-							/>
+							/> }
 						</PanelBody>
 					</InspectorControls>
 
