@@ -24,6 +24,7 @@ import {
 	IsolatedEventContainer,
 	ToggleControl,
 	SelectControl,
+	Disabled,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { ENTER, SPACE } from '@wordpress/keycodes';
@@ -221,6 +222,17 @@ class Edit extends Component {
 			);
 		}
 
+		const toggleControl = (
+			<ToggleControl
+				label={ __( 'Add end gutters', 'layout-grid' ) }
+				help={
+					addGutterEnds ? __( 'Toggle off to remove the spacing left and right of the grid.', 'layout-grid' ) : __( 'Toggle on to add space left and right of the layout grid. ', 'layout-grid' )
+				}
+				checked={ addGutterEnds }
+				onChange={ newValue => setAttributes( { addGutterEnds: newValue } )  }
+			/>
+		);
+
 		return (
 			<IsolatedEventContainer>
 				<ResizeGrid
@@ -301,14 +313,12 @@ class Edit extends Component {
 								options={ getGutterValues() }
 							/>
 
-							{ gutterSize !== 'none' && <ToggleControl
-								label={ __( 'Add end gutters', 'layout-grid' ) }
-								help={
-									addGutterEnds ? __( 'Toggle off to remove the spacing left and right of the grid.', 'layout-grid' ) : __( 'Toggle on to add space left and right of the layout grid. ', 'layout-grid' )
-								}
-								checked={ addGutterEnds }
-								onChange={ newValue => setAttributes( { addGutterEnds: newValue } )  }
-							/> }
+							{ gutterSize === 'none' ? (
+								<Disabled>
+									{ toggleControl }
+								</Disabled>
+							) : toggleControl }
+
 						</PanelBody>
 					</InspectorControls>
 
