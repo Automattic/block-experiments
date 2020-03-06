@@ -6,4 +6,6 @@ add_action( 'init', function() {
 		'style' => 'wpcom-blocks',
 		'editor_style' => 'wpcom-blocks-editor',
 	] );
+
+	wp_set_script_translations( 'a8c/starscape', 'starscape' );
 } );

@@ -50,9 +50,9 @@ const Edit = ( {
 				/>
 			</BlockControls>
 			<InspectorControls>
-				<PanelBody title={ __( 'Stars' ) } initialOpen={ false }>
+				<PanelBody title={ __( 'Stars', 'starscape' ) } initialOpen={ false }>
 					<RangeControl
-						label={ __( 'Density' ) }
+						label={ __( 'Density', 'starscape' ) }
 						value={ attributes.density }
 						onChange={ ( density ) => setAttributes( {
 							density,
@@ -62,7 +62,7 @@ const Edit = ( {
 						max={ 100 }
 					/>
 					<RangeControl
-						label={ __( 'Speed' ) }
+						label={ __( 'Speed', 'starscape' ) }
 						value={ attributes.speed }
 						onChange={ ( speed ) => setAttributes( {
 							speed,
@@ -73,28 +73,28 @@ const Edit = ( {
 					/>
 				</PanelBody>
 				<PanelColorGradientSettings
-					title={ __( 'Color' ) }
+					title={ __( 'Color', 'starscape' ) }
 					colors={ [ ...themeColors, ...colorGradientOptions.colors ] }
 					gradients={ colorGradientOptions.gradients }
 					settings={ [
 						{
-							label: __( 'Background' ),
+							label: __( 'Background', 'starscape' ),
 							gradientValue: attributes.background,
 							onGradientChange: ( background ) => setAttributes( { background } ),
 						},
 						{
-							label: __( 'Text' ),
+							label: __( 'Text', 'starscape' ),
 							colorValue: textColor.color,
 							onColorChange: setTextColor,
 						},
 					] }
 				/>
-				<PanelBody title={ __( 'Dimensions' ) } initialOpen={ false }>
-					<p>{ __( 'Control the area of stars you want. Smaller values have better performance, but blocks larger than the area specified will not be completely covered.' ) }</p>
+				<PanelBody title={ __( 'Dimensions', 'starscape' ) } initialOpen={ false }>
+					<p>{ __( 'Control the area of stars you want. Smaller values have better performance, but blocks larger than the area specified will not be completely covered.', 'starscape' ) }</p>
 					<BaseControl
 						className="wp-block-a8c-starscape-resolution-control"
 						id={ `wp-block-a8c-starscape-width-control-${ instanceId }` }
-						label={ __( 'Max Width' ) }
+						label={ __( 'Max Width', 'starscape' ) }
 					>
 						<input
 							id={ `wp-block-a8c-starscape-width-control-${ instanceId }` }
@@ -113,7 +113,7 @@ const Edit = ( {
 					<BaseControl
 						className="wp-block-a8c-starscape-resolution-control"
 						id={ `wp-block-a8c-starscape-height-control-${ instanceId }` }
-						label={ __( 'Max Height' ) }
+						label={ __( 'Max Height', 'starscape' ) }
 					>
 						<input
 							id={ `wp-block-a8c-starscape-height-control-${ instanceId }` }
@@ -146,7 +146,7 @@ const Edit = ( {
 					) }
 					style={ { color: textColor.color } }
 					value={ attributes.heading }
-					placeholder={ __( 'Heading' ) }
+					placeholder={ __( 'Heading', 'starscape' ) }
 					onChange={ ( heading ) => setAttributes( { heading } ) }
 				/>
 			</Starscape>

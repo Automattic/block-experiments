@@ -14,7 +14,7 @@ import { BauhausIcon } from './icon';
 export const registerBlock = () => {
 	registerBlockType( 'a8c/bauhaus-centenary', {
 		title: 'Bauhaus Centenary',
-		description: __( 'Celebrate the centenary of the design school' ),
+		description: __( 'Celebrate the centenary of the design school', 'bauhaus-centenary' ),
 		icon: BauhausIcon,
 		category: 'widgets',
 		supports: {

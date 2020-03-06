@@ -26,7 +26,7 @@ const Forms = ( { className, attributes } ) => {
 const Content = Forms;
 
 export default Object.assign( Forms, {
-	label: __( 'Forms' ),
+	label: __( 'Forms', 'bauhaus-centenary' ),
 	icon: <Icon.FormsIcon />,
 	preview: <Icon.FormsPreview />,
 	Content,

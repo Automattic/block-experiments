@@ -43,7 +43,7 @@ const Edit = ( {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={ __( 'Styles' ) }>
+				<PanelBody title={ __( 'Styles', 'bauhaus-centenary' ) }>
 					<div role="listbox">
 						{ Object.entries( categories ).map( ( [ category, { label, preview } ] ) => {
 							const isCategorySelected = category === attributes.category;
@@ -79,32 +79,32 @@ const Edit = ( {
 					{ ExtraStyles && <ExtraStyles setAttributes={ setAttributes } attributes={ attributes } /> }
 				</PanelBody>
 				<PanelColorSettings
-					title={ __( 'Color' ) }
+					title={ __( 'Color', 'bauhaus-centenary' ) }
 					initialOpen
 					colorSettings={ [
 						{
 							colors,
 							value: backgroundColor.color,
 							onChange: setBackgroundColor,
-							label: __( 'Background' ),
+							label: __( 'Background', 'bauhaus-centenary' ),
 						},
 						{
 							colors,
 							value: attributes.fill1Color,
 							onChange: ( fill1Color ) => setAttributes( { fill1Color } ),
-							label: __( 'Fill 1' ),
+							label: __( 'Fill 1', 'bauhaus-centenary' ),
 						},
 						{
 							colors,
 							value: attributes.fill2Color,
 							onChange: ( fill2Color ) => setAttributes( { fill2Color } ),
-							label: __( 'Fill 2' ),
+							label: __( 'Fill 2', 'bauhaus-centenary' ),
 						},
 						{
 							colors,
 							value: attributes.fill3Color,
 							onChange: ( fill3Color ) => setAttributes( { fill3Color } ),
-							label: __( 'Fill 3' ),
+							label: __( 'Fill 3', 'bauhaus-centenary' ),
 						},
 					] }
 				/>
@@ -124,7 +124,7 @@ const Edit = ( {
 					{ ( ! RichText.isEmpty( attributes.caption ) || isSelected ) && (
 						<RichText
 							tagName="figcaption"
-							placeholder={ __( 'Write caption…' ) }
+							placeholder={ __( 'Write caption…', 'bauhaus-centenary' ) }
 							value={ attributes.caption }
 							onChange={ ( caption ) => setAttributes( { caption } ) }
 							inlineToolbar
@@ -133,8 +133,8 @@ const Edit = ( {
 				</figure>
 			) : (
 				<Placeholder
-					label={ __( 'Bauhaus Centenary' ) }
-					instructions={ __( 'Celebrate the centenary of the design school' ) }
+					label={ __( 'Bauhaus Centenary', 'bauhaus-centenary' ) }
+					instructions={ __( 'Celebrate the centenary of the design school', 'bauhaus-centenary' ) }
 					icon={ <Icon.BauhausIcon /> }
 					className={ className }
 				>

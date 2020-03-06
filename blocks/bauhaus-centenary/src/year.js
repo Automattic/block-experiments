@@ -33,9 +33,9 @@ const Content = Year;
 const ExtraStyles = ( { attributes, setAttributes } ) => (
 	<SelectControl
 		options={ [
-			{ label: __( '1919' ), value: '1919' },
-			{ label: __( '2019' ), value: '2019' },
-			{ label: __( '1919–2019' ), value: 'range' },
+			{ label: __( '1919', 'bauhaus-centenary' ), value: '1919' },
+			{ label: __( '2019', 'bauhaus-centenary' ), value: '2019' },
+			{ label: __( '1919–2019', 'bauhaus-centenary' ), value: 'range' },
 		] }
 		value={ attributes.year }
 		onChange={ ( year ) => setAttributes( { year } ) }
@@ -43,7 +43,7 @@ const ExtraStyles = ( { attributes, setAttributes } ) => (
 );
 
 export default Object.assign( Year, {
-	label: __( 'Year' ),
+	label: __( 'Year', 'bauhaus-centenary' ),
 	icon: <Icon.YearIcon />,
 	preview: <Icon.YearPreview />,
 	Content,

@@ -107,19 +107,19 @@ class Edit extends Component {
 
 				<InspectorControls>
 					<PanelColorSettings
-						title={ __( 'Column Color' ) }
+						title={ __( 'Column Color', 'layout-grid' ) }
 						initialOpen
 						colorSettings={ [
 							{
 								value: backgroundColor.color,
 								onChange: setBackgroundColor,
-								label: __( 'Background' ),
+								label: __( 'Background', 'layout-grid' ),
 							},
 						] }
 					/>
 
-					<PanelBody title={ __( 'Column Padding' ) }>
-						<p>{ __( 'Choose padding for this column:' ) }</p>
+					<PanelBody title={ __( 'Column Padding', 'layout-grid' ) }>
+						<p>{ __( 'Choose padding for this column:', 'layout-grid' ) }</p>
 						<SelectControl
 							value={ padding }
 							onChange={ newValue => setAttributes( { padding: newValue } ) }

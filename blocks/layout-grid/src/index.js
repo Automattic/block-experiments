@@ -31,8 +31,8 @@ function getColumnAttributes( total, breakpoints ) {
 
 export function registerBlock() {
 	registerBlockType( 'jetpack/layout-grid', {
-		title: __( 'Layout Grid' ),
-		description: __( 'Align blocks to to a global grid, with support for responsive breakpoints.' ),
+		title: __( 'Layout Grid', 'layout-grid' ),
+		description: __( 'Align blocks to to a global grid, with support for responsive breakpoints.', 'layout-grid' ),
 		icon: GridIcon,
 		category: 'layout',
 		supports: {
@@ -51,7 +51,7 @@ export function registerBlock() {
 							name: 'core/paragraph',
 							attributes: {
 								customFontSize: 32,
-								content: __( '<strong>Snow Patrol</strong>' ),
+								content: __( '<strong>Snow Patrol</strong>', 'layout-grid' ),
 								align: 'center',
 							},
 						},
@@ -86,8 +86,8 @@ export function registerBlock() {
 	} );
 
 	registerBlockType( 'jetpack/layout-grid-column', {
-		description: __( 'A column used inside a Layout Grid block.' ),
-		title: __( 'Column' ),
+		description: __( 'A column used inside a Layout Grid block.', 'layout-grid' ),
+		title: __( 'Column', 'layout-grid' ),
 		icon: GridIcon,
 		category: 'layout',
 		parent: [ 'jetpack/layout-grid' ],
