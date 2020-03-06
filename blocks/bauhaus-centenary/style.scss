@@ -7,6 +7,10 @@
 	text-align: center;
 	border-radius: 4px;
 
+	.icon-button svg {
+		height: 100%;
+	}
+
 	.forms,
 	.year,
 	.ribbon {
