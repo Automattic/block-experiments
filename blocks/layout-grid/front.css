@@ -1031,7 +1031,6 @@
   .wp-block-jetpack-layout-grid .wp-block-jetpack-layout-grid-column * {
     word-break: break-word;
     word-wrap: break-word; }
-
   .wp-block-jetpack-layout-grid.wp-block-jetpack-layout-gutter__none {
     grid-gap: 0px; }
   .wp-block-jetpack-layout-grid.wp-block-jetpack-layout-gutter__small {
@@ -1044,4 +1043,3 @@
 @-moz-document url-prefix() {
   .wp-block-jetpack-layout-grid .wp-block-cover {
     max-height: 0; } }
-

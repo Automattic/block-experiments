@@ -1,6 +1,6 @@
 === Layout Grid Block ===
 Contributors: automattic, jasmussen, johnny5, mkaz
-Stable tag: 1.0.5
+Stable tag: 1.1
 Tested up to: 5.3.2
 Requires at least: 5.3
 License: GPLv2 or later
@@ -23,10 +23,16 @@ You can follow development, file an issue, suggest features, and view the source
 
 == Changelog ==
 
-= 1.0.5 - 28th January 2020
+= 1.1 - ??? March 2020 =
+* Add option to disable start and end gutters for full-bleed layout
+* Add option to control gutter size
+* Fix a Firefox 100% height bug when multiple blocks are inside one column
+* Improve IE11 support
+
+= 1.0.5 - 28th January 2020 =
 * Fix editor layout issues with themes that don't support Gutenberg
 
-= 1.0.4 - 21st January 2020
+= 1.0.4 - 21st January 2020 =
 * Fix layout issues with Gutenberg 7.3
 
 = 1.0.3 - 12th December 2019 =
