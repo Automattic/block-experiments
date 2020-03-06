@@ -2,7 +2,7 @@
 	"blocks": [
 		"starscape"
 	],
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"name": "Starscape Block",
 	"description": "Stars in motion",
 	"resource": "a8c-starscape"

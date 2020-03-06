@@ -1,6 +1,6 @@
 === Starscape Block ===
 Contributors: automattic, ajlende, pablohoneyhoney
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 Tested up to: 5.3.2
 Requires at least: 5.3
 License: GPLv2 or later
@@ -28,6 +28,9 @@ You can follow development, file an issue, suggest features, and view the source
 4. Control the quantity of stars and speed of rotation.
 
 == Changelog ==
+
+= 1.0.2 - 6th March 2020 =
+* Fix missing text domains for translations
 
 = 1.0.1 - 24th January 2020 =
 * Fix custom gradients for Gutenberg 7.3.0
