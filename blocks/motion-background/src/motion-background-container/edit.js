@@ -206,7 +206,7 @@ function useMotionBackground() {
 
 				const width = blockRect.width;
 				const height = blockRect.height;
-				const left = blockRect.left;
+				const left = canvasRect.left - blockRect.left;
 				const bottom = canvasRect.bottom - blockRect.bottom;
 
 				renderBlock( block, [ width, height ], [ left, bottom ] );
@@ -372,7 +372,7 @@ function useMotionBackground() {
 		 */
 		function updateMouse( e ) {
 			const rect = gl.canvas.getBoundingClientRect();
-			globalState.mouse[ 0 ] = e.clientX;
+			globalState.mouse[ 0 ] = e.clientX - rect.left;
 			globalState.mouse[ 1 ] = rect.top + rect.height - e.clientY; // From bottom
 		}
 		document.body.addEventListener( 'mousemove', updateMouse );
