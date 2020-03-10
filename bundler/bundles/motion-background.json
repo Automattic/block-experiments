@@ -1,0 +1,9 @@
+{
+	"blocks": [
+		"motion-background"
+	],
+	"version": "1.0.0",
+	"name": "Motion Background",
+	"description": "Add a fancy background to a thing",
+	"resource": "a8c-motion-background"
+}
