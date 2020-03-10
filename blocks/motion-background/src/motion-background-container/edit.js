@@ -31,8 +31,6 @@ function useMotionBackground() {
 	);
 
 	useEffect( () => {
-		console.log( 'useMotionBackground' );
-
 		if ( ! canvasRef.current || ! blocksRef.current.length ) {
 			return;
 		}
