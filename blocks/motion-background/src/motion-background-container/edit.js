@@ -186,21 +186,23 @@ function useMotionBackground() {
 			gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT ); // eslint-disable-line no-bitwise
 
 			forEach( blocksRef.current, ( block ) => {
-				const rect = block.getBoundingClientRect();
+				const blockRect = block.getBoundingClientRect();
 
 				if (
-					rect.bottom < 0 ||
-					rect.top > gl.canvas.clientHeight ||
-					rect.right < 0 ||
-					rect.left > gl.canvas.clientWidth
+					blockRect.bottom < 0 ||
+					blockRect.top > gl.canvas.clientHeight ||
+					blockRect.right < 0 ||
+					blockRect.left > gl.canvas.clientWidth
 				) {
 					return; // Block is off screen
 				}
 
-				const width = rect.width;
-				const height = rect.height;
-				const left = rect.left;
-				const bottom = gl.canvas.height - rect.bottom;
+				const canvasRect = gl.canvas.getBoundingClientRect();
+
+				const width = blockRect.width;
+				const height = blockRect.height;
+				const left = blockRect.left;
+				const bottom = canvasRect.bottom - blockRect.bottom;
 
 				renderBlock( block, [ width, height ], [ left, bottom ] );
 			} );
