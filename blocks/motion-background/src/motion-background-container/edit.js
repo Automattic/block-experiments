@@ -346,7 +346,7 @@ function useMotionBackground() {
 				// Makes it more/less jumpy. f(x) from [1, 100] to [50, 1]
 				mouseSpeed: ( ( 700 + ( 4 * mouseSpeed ) ) / ( 11 * mouseSpeed ) ) * complexity,
 				// Drives speed, higher number will make it slower. f(x) from [1, 100] to [256, 1]
-				fluidSpeed: ( 8500 - 52 * fluidSpeed ) / ( 33 * fluidSpeed ),
+				fluidSpeed: ( 8500 - ( 52 * fluidSpeed ) ) / ( 33 * fluidSpeed ),
 				// Framebuffer texture from the first pass
 				texture: textureInfo.attachments[ 0 ],
 			};
