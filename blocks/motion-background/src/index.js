@@ -19,6 +19,13 @@ export const registerBlock = () => {
 		supports: {
 			html: false,
 			multiple: false,
+			align: [ 'full' ],
+		},
+		attributes: {
+			align: {
+				type: 'string',
+				default: 'full',
+			},
 		},
 		edit: ContainerEdit,
 		save: ContainerSave,
