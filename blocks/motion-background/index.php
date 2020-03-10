@@ -19,7 +19,7 @@ add_action( 'enqueue_block_assets', function() {
 	wp_enqueue_script(
 		'wpcom-motion-background-js',
 		plugins_url( 'motion-background.js', __FILE__ ),
-		[ 'wpcom-twgl-js' ],
+		[ 'wpcom-twgl-js', 'lodash' ],
 		filemtime( plugin_dir_path( __FILE__ ) . 'motion-background.js' ),
 		true // in footer
 	);
