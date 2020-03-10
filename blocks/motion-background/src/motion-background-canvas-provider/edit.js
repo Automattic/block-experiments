@@ -91,7 +91,6 @@ function useMotionBackground() {
 	
 			void main () {
 				uv = texcoord * normalize( resolution );
-				st = texcoord;
 				gl_Position = vec4( position, 1. );
 			}
 		`;
