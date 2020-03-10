@@ -8,12 +8,12 @@ import { registerBlockType } from '@wordpress/blocks';
  */
 import BlockEdit from './motion-background-block/edit';
 import BlockSave from './motion-background-block/save';
-import ContainerEdit from './motion-background-container/edit';
-import ContainerSave from './motion-background-container/save';
+import CanvasProviderEdit from './motion-background-canvas-provider/edit';
+import CanvasProviderSave from './motion-background-canvas-provider/save';
 
 export const registerBlock = () => {
 	registerBlockType( 'a8c/motion-background-container', {
-		title: 'Motion Background Container',
+		title: 'Motion Background Canvas Provider',
 		icon: 'awards',
 		category: 'widgets',
 		supports: {
@@ -27,8 +27,8 @@ export const registerBlock = () => {
 				default: 'full',
 			},
 		},
-		edit: ContainerEdit,
-		save: ContainerSave,
+		edit: CanvasProviderEdit,
+		save: CanvasProviderSave,
 	} );
 
 	registerBlockType( 'a8c/motion-background', {
