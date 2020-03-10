@@ -88,7 +88,6 @@ function useMotionBackground() {
 			uniform vec2 resolution;
 
 			varying vec2 uv;
-			varying vec2 st;
 	
 			void main () {
 				uv = texcoord * normalize( resolution );
@@ -112,7 +111,6 @@ function useMotionBackground() {
 			uniform sampler2D texture;
 
 			varying vec2 uv;
-			varying vec2 st;
 
 			void main() {
 				vec2 c = uv;
@@ -126,11 +124,6 @@ function useMotionBackground() {
 					c.y -= 0.5 - ( mouse.x / mouseSpeed );
 				}
 				gl_FragColor = texture2D( texture, MIRRORED_REPEAT( c ) );
-				gl_FragColor = distance( st, mouse ) < 0.01
-					? dot( gl_FragColor.rgb, vec3( 0.299, 0.587, 0.114 ) ) > 0.73
-						? vec4( 0., 0., 0., 1. )
-						: vec4( 1., 1., 1., 1. )
-					: gl_FragColor;
 			}
 		`;
 
