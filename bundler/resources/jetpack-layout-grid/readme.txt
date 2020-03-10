@@ -23,7 +23,7 @@ You can follow development, file an issue, suggest features, and view the source
 
 == Changelog ==
 
-= 1.1 - ??? March 2020 =
+= 1.1 - 10th March 2020 =
 * Add option to disable start and end gutters for full-bleed layout
 * Add option to control gutter size
 * Fix a Firefox 100% height bug when multiple blocks are inside one column
