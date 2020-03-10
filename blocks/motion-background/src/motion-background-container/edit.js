@@ -88,9 +88,11 @@ function useMotionBackground() {
 			uniform vec2 resolution;
 
 			varying vec2 uv;
+			varying vec2 st;
 	
 			void main () {
 				uv = texcoord * normalize( resolution );
+				st = texcoord;
 				gl_Position = vec4( position, 1. );
 			}
 		`;
@@ -110,6 +112,7 @@ function useMotionBackground() {
 			uniform sampler2D texture;
 
 			varying vec2 uv;
+			varying vec2 st;
 
 			void main() {
 				vec2 c = uv;
@@ -123,7 +126,7 @@ function useMotionBackground() {
 					c.y -= 0.5 - ( mouse.x / mouseSpeed );
 				}
 				gl_FragColor = texture2D( texture, MIRRORED_REPEAT( c ) );
-				gl_FragColor = distance( uv, mouse ) < 0.01
+				gl_FragColor = distance( st, mouse ) < 0.01
 					? dot( gl_FragColor.rgb, vec3( 0.299, 0.587, 0.114 ) ) > 0.73
 						? vec4( 0., 0., 0., 1. )
 						: vec4( 1., 1., 1., 1. )
@@ -363,13 +366,14 @@ function useMotionBackground() {
 		}
 
 		/**
-		 * Update mouse globals.
+		 * Update mouse position global in canvas space.
 		 *
 		 * @param {MouseEvent} e Mouse event
 		 */
 		function updateMouse( e ) {
+			const rect = gl.canvas.getBoundingClientRect();
 			globalState.mouse[ 0 ] = e.clientX;
-			globalState.mouse[ 1 ] = gl.canvas.height - e.clientY; // From bottom
+			globalState.mouse[ 1 ] = rect.top + rect.height - e.clientY; // From bottom
 		}
 		document.body.addEventListener( 'mousemove', updateMouse );
 
