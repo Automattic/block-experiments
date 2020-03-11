@@ -4,10 +4,6 @@
  */
 
 ( function( _, twgl ) {
-	if ( document.getElementById( 'editor' ) ) {
-		return; // TODO: disable this properly rather than with this return
-	}
-
 	const blocks = document.getElementsByClassName( 'wp-block-a8c-motion-background' );
 
 	const gl = twgl.getWebGLContext( document.createElement( 'canvas' ) );
