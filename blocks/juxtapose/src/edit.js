@@ -4,9 +4,10 @@
  */
 import { InspectorControls } from '@wordpress/block-editor';
 import { MediaPlaceholder } from '@wordpress/editor';
-import { SelectControl, TextControl } from '@wordpress/components';
+import { SelectControl, TextControl, Placeholder } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
 
-const edit= ({ attributes, setAttributes, className }) => {
+const edit = ( { attributes, setAttributes, className } ) => {
 	const { imageBefore, imageAfter, caption, orientation } = attributes;
 
 	// if both are defined, add juxtaspose class
@@ -16,7 +17,7 @@ const edit= ({ attributes, setAttributes, className }) => {
 
 	return (
 		<>
-			<InspectorControls key='controls'>
+			<InspectorControls key="controls">
 				<h4> Orientation </h4>
 				<SelectControl
 					value={ orientation }
@@ -28,53 +29,57 @@ const edit= ({ attributes, setAttributes, className }) => {
 						setAttributes( { orientation: val } );
 						// need slight delay so markup can be updated before
 						// scan page gets triggered
-						setTimeout( function() { juxtapose.scanPage(); }, 100 );
+						setTimeout( function() {
+							juxtapose.scanPage();
+						}, 100 );
 					} }
 				/>
 			</InspectorControls>
-			<div className={cls} data-mode={orientation}>
+			<div className={ cls } data-mode={ orientation }>
 
-				{ imageBefore ? (
-					<img src={imageBefore} />
-				) : (
-					<div className='img-edit-before'>
-						<MediaPlaceholder
-							onSelect = {
-								( el ) => {
-									setAttributes( { imageBefore: el.url } );
-									juxtapose.scanPage();
+				<Placeholder>
+					{ imageBefore ? (
+						<img src={ imageBefore } />
+					) : (
+						<div className="img-edit-before">
+							<MediaPlaceholder
+								onSelect ={
+									( el ) => {
+										setAttributes( { imageBefore: el.url } );
+										juxtapose.scanPage();
+									}
 								}
-							}
-							allowedTypes = {[ 'image' ]}
-							labels ={ {title: 'Image Before'} }
-						/>
-					</div>
-				)}
+								allowedTypes={ [ 'image' ] }
+								labels={ { title: 'Image Before' } }
+							/>
+						</div>
+					) }
 
-				{ imageAfter ? (
-					<img src={imageAfter} />
-				) : (
-					<div className='img-edit-after'>
-						<MediaPlaceholder
-							onSelect = {
-								( el ) => {
-									setAttributes( { imageAfter: el.url } );
-									juxtapose.scanPage();
+					{ imageAfter ? (
+						<img src={ imageAfter } />
+					) : (
+						<div className="img-edit-after">
+							<MediaPlaceholder
+								onSelect={
+									( el ) => {
+										setAttributes( { imageAfter: el.url } );
+										juxtapose.scanPage();
+									}
 								}
-							}
-							allowedTypes = {[ 'image' ]}
-							labels = { {title: 'Image After'} }
-						/>
-					</div>
-				)}
+								allowedTypes={ [ 'image' ] }
+								labels={ { title: 'Image After' } }
+							/>
+						</div>
+					) }
+				</Placeholder>
 			</div>
-			<div className='caption'>
-				<TextControl
-					placeholder="Write caption…"
-					onChange={ (val) => setAttributes({ caption: val }) }
-					value={caption}
-				/>
-			</div>
+			<TextControl
+				tagName="figcaption"
+				placeholder={ __( 'Write caption…' ) }
+				onChange={ ( val ) => setAttributes( { caption: val } ) }
+				value={ caption }
+				inlineToolbar
+			/>
 		</>
 	);
 };
