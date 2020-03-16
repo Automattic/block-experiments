@@ -1,0 +1,30 @@
+
+/* main block wrapper */
+.controls {
+	display: flex;
+}
+
+.img-edit-before,
+.img-edit-after {
+	min-width: 180px;
+	width: 100%;
+	max-width: 50%;
+	display: block;
+	text-align: center;
+}
+
+.img-edit-before {
+	border-right: 1px solid #999999;
+}
+
+.caption {
+	text-align: center;
+}
+
+.caption input[type="text"],
+.caption input[type="text"]:focus {
+	width: 50%;
+	border: none;
+	text-align:center;
+	box-shadow: none;
+}
