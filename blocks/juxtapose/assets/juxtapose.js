@@ -1,4 +1,6 @@
-/* juxtapose - v1.2.0 - 2017-12-18
+/**
+ * Original Juxtapose code licensed under MPLv2
+ * juxtapose - v1.2.0 - 2017-12-18
  * Copyright (c) 2017 Alex Duner and Northwestern University Knight Lab
  */
 
