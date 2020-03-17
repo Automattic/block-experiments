@@ -8,6 +8,7 @@
 
 // WordPress dependencies
 import { registerBlockType } from '@wordpress/blocks';
+import { RichText } from '@wordpress/block-editor';
 
 /**
  * Internal dependencies
@@ -64,7 +65,9 @@ export function registerBlock() {
 						<img src={attributes.imageBefore} className='imgBefore'/>
 						<img src={attributes.imageAfter} className= 'imgAfter'/>
 					</figure>
-					<figcaption>{attributes.caption}</figcaption>
+					{ ! RichText.isEmpty( attributes.caption ) && (
+						<RichText.Content tagName="figcaption" value={ attributes.caption } />
+					) }
 				</>
 			);
 		}

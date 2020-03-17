@@ -2,12 +2,12 @@
 /**
  * WordPress dependencies
  */
-import { InspectorControls } from '@wordpress/block-editor';
+import { InspectorControls, RichText } from '@wordpress/block-editor';
 import { MediaPlaceholder } from '@wordpress/editor';
 import { SelectControl, TextControl, Placeholder } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
-const edit = ( { attributes, setAttributes, className } ) => {
+const edit = ( { attributes, className, isSelected, setAttributes } ) => {
 	const { imageBefore, imageAfter, caption, orientation } = attributes;
 
 	// if both are defined, add juxtaspose class
@@ -73,13 +73,20 @@ const edit = ( { attributes, setAttributes, className } ) => {
 					) }
 				</Placeholder>
 			</div>
-			<TextControl
-				tagName="figcaption"
-				placeholder={ __( 'Write caption…' ) }
-				onChange={ ( val ) => setAttributes( { caption: val } ) }
-				value={ caption }
-				inlineToolbar
-			/>
+			{ ( ! RichText.isEmpty( caption ) || isSelected ) && (
+				<RichText
+					tagName="figcaption"
+					placeholder={ __( 'Write caption' ) }
+					value={ caption }
+					onChange={ ( value ) =>
+						setAttributes( { caption: value } )
+					}
+					// these are from image caption, do we need?
+					//unstableOnFocus={ this.onFocusCaption }
+					//isSelected={ this.state.captionFocused }
+					inlineToolbar
+				/>
+			) }
 		</>
 	);
 };
