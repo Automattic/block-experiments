@@ -2,9 +2,13 @@
  * WordPress dependencies
  */
 import { InspectorControls, RichText } from '@wordpress/block-editor';
-import { MediaPlaceholder } from '@wordpress/editor';
 import { SelectControl, TextControl, Placeholder } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies
+ */
+import UploadPlaceholder from './upload-placeholder';
 
 const edit = ( { attributes, className, isSelected, setAttributes } ) => {
 	const { imageBefore, imageAfter, caption, orientation } = attributes;
@@ -41,7 +45,7 @@ const edit = ( { attributes, className, isSelected, setAttributes } ) => {
 						<img src={ imageBefore } />
 					) : (
 						<div className="img-edit-before">
-							<MediaPlaceholder
+							<UploadPlaceholder
 								onSelect ={
 									( el ) => {
 										setAttributes( { imageBefore: el.url } );
@@ -58,7 +62,7 @@ const edit = ( { attributes, className, isSelected, setAttributes } ) => {
 						<img src={ imageAfter } />
 					) : (
 						<div className="img-edit-after">
-							<MediaPlaceholder
+							<UploadPlaceholder
 								onSelect={
 									( el ) => {
 										setAttributes( { imageAfter: el.url } );
