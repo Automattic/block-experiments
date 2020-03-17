@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name:  Juxtapose Block
+ * Plugin Name:  Image Compare Block
  * Plugin URI:   https://github.com/Auomattic/block-experiments
- * Description:  A plugin that adds a Juxtapose Block, allowing side-by-side image comparison.
+ * Description:  Adds a block to allowing side-by-side image comparison.
  * Version:      0.4.0
  * Author:       Automattic
  * Author URI:   https://automattic.com/
@@ -13,11 +13,11 @@
  * Uses modified source from JuxtaposeJS under MPLV2
  * https://github.com/NUKnightLab/juxtapose/
  *
- * @package Juxtapose_Block
+ * @package ImageCompare_Block
  */
 
 /**
- * Enqueue assets for editor portion of Gutenberg
+ * Enqueue assets for editor and front-end view.
  */
 add_action( 'enqueue_block_assets', function() {
 

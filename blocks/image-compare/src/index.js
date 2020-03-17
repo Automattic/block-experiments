@@ -1,8 +1,6 @@
 /**
- * Juxtapose Block
+ * Image Compare Block
  * A block that allows inserting side-by-side image comparison.
- * Uses JuxtaposeJS from KnightLab.
- * https://github.com/NUKnightLab/juxtapose
  */
 
 
@@ -17,9 +15,9 @@ import edit from './edit';
 
 export function registerBlock() {
 
-	registerBlockType( 'mkaz/juxtapose-block', {
+	registerBlockType( 'jetpack/image-compare-block', {
 
-		title: 'Juxtapose Images',
+		title: 'Image Compare',
 
 		icon: 'image-flip-horizontal',
 
