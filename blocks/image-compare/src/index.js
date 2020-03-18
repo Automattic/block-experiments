@@ -4,7 +4,9 @@
  */
 
 
-// WordPress dependencies
+/**
+ * WordPress dependencies
+ */
 import { registerBlockType } from '@wordpress/blocks';
 import { RichText } from '@wordpress/block-editor';
 

@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { InspectorControls, RichText } from '@wordpress/block-editor';
-import { SelectControl, TextControl, Placeholder } from '@wordpress/components';
+import { SelectControl, Placeholder } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -10,7 +10,9 @@ import { __ } from '@wordpress/i18n';
  */
 import UploadPlaceholder from './upload-placeholder';
 
-const edit = ( { attributes, className, isSelected, setAttributes } ) => {
+/* global juxtapose */
+
+const edit = ( { attributes, isSelected, setAttributes } ) => {
 	const { imageBefore, imageAfter, caption, orientation } = attributes;
 
 	// if both are defined, add juxtaspose class
@@ -46,7 +48,7 @@ const edit = ( { attributes, className, isSelected, setAttributes } ) => {
 					) : (
 						<div className="img-edit-before">
 							<UploadPlaceholder
-								onSelect ={
+								onSelect={
 									( el ) => {
 										setAttributes( { imageBefore: el.url } );
 										juxtapose.scanPage();
