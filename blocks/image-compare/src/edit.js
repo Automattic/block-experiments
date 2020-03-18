@@ -23,7 +23,7 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 	return (
 		<>
 			<InspectorControls key="controls">
-				<h4> Orientation </h4>
+				<h4> { __( 'Orientation' ) } </h4>
 				<SelectControl
 					value={ orientation }
 					options={ [
@@ -55,7 +55,7 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 									}
 								}
 								allowedTypes={ [ 'image' ] }
-								labels={ { title: 'Image Before' } }
+								labels={ { title: __( 'Image Before' ) } }
 							/>
 						</div>
 					) }
@@ -72,7 +72,7 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 									}
 								}
 								allowedTypes={ [ 'image' ] }
-								labels={ { title: 'Image After' } }
+								labels={ { title: __( 'Image After' ) } }
 							/>
 						</div>
 					) }
