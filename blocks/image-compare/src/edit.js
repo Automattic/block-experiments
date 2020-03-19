@@ -16,7 +16,7 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 	const { imageBefore, imageAfter, caption, orientation } = attributes;
 
 	// If both images are set, add juxtaspose class, which is picked up by the library.
-	const classes = ( imageBefore && imageAfter ) ? 'image-compare__compare juxtapose' : 'image-compare__placeholder';
+	const classes = ( imageBefore && imageAfter ) ? 'image-compare__comparison juxtapose' : 'image-compare__placeholder';
 
 	return (
 		<>
@@ -30,8 +30,7 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 					] }
 					onChange={ ( val ) => {
 						setAttributes( { orientation: val } );
-						// need slight delay so markup can be updated before
-						// scan page gets triggered
+						// Set a delay so markup can be updated before scan page gets triggered.
 						setTimeout( function() {
 							juxtapose.scanPage();
 						}, 100 );
@@ -82,7 +81,7 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 					</div>
 				</Placeholder>
 			</div>
-			{ ( ! RichText.isEmpty( caption ) || isSelected ) && (
+			{ ( ! RichText.isEmpty( caption ) || isSelected && imageBefore && imageAfter ) && (
 				<RichText
 					tagName="figcaption"
 					placeholder={ __( 'Write caption' ) }

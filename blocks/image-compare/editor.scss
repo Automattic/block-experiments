@@ -26,3 +26,9 @@
 .image-compare__image-before {
 	border-right: 1px solid #e2e4e7;
 }
+
+
+// Disable the juxtaposition effect until the block itself is selected.
+[data-type="jetpack/image-compare-block"]:not(.is-selected) .image-compare__comparison {
+	pointer-events: none;
+}
