@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { InspectorControls, RichText } from '@wordpress/block-editor';
-import { SelectControl, Placeholder } from '@wordpress/components';
+import { PanelBody, RadioControl, Placeholder } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -21,21 +21,26 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 	return (
 		<>
 			<InspectorControls key="controls">
-				<h4> { __( 'Orientation' ) } </h4>
-				<SelectControl
-					value={ orientation }
-					options={ [
-						{ label: __( 'Side by Side' ), value: 'horizontal' },
-						{ label: __( 'Above and Below' ), value: 'vertical' },
-					] }
-					onChange={ ( val ) => {
-						setAttributes( { orientation: val } );
-						// Set a delay so markup can be updated before scan page gets triggered.
-						setTimeout( function() {
-							juxtapose.scanPage();
-						}, 100 );
-					} }
-				/>
+				<PanelBody title={ __( 'Orientation' ) }>
+					<RadioControl
+						label={ __( 'Show:' ) }
+						selected={ orientation }
+						options={ [
+							{ label: __( 'Side by side' ), value: 'horizontal' },
+							{ label: __( 'Above and below' ), value: 'vertical' },
+						] }
+						onChange={ ( value ) => {
+							setAttributes( {
+								orientation: value,
+							} )
+
+							// Set a delay so markup can be updated before scan page gets triggered.
+							setTimeout( function() {
+								juxtapose.scanPage();
+							}, 100 );
+						} }
+					/>
+				</PanelBody>
 			</InspectorControls>
 			<div className={ classes } data-mode={ orientation }>
 
