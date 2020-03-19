@@ -10,7 +10,6 @@ import classnames from 'classnames';
 import {
 	Button,
 	FormFileUpload,
-	Placeholder,
 	DropZone,
 	withFilters,
 } from '@wordpress/components';
@@ -145,16 +144,10 @@ export class MediaPlaceholder extends Component {
 		this.setState( { isURLInputVisible: false } );
 	}
 
-	renderPlaceholder( content, onClick ) {
+	renderPlaceholder( content ) {
 		const {
 			allowedTypes = [],
-			className,
-			icon,
-			isAppender,
 			labels = {},
-			onDoubleClick,
-			mediaPreview,
-			notices,
 			onSelectURL,
 			mediaUpload,
 			children,
@@ -376,18 +369,9 @@ export class MediaPlaceholder extends Component {
 	}
 
 	render() {
-		const { disableMediaButtons, dropZoneUIOnly } = this.props;
+		const { disableMediaButtons } = this.props;
 
-		if ( dropZoneUIOnly || disableMediaButtons ) {
-			if ( dropZoneUIOnly ) {
-				deprecated(
-					'wp.blockEditor.MediaPlaceholder dropZoneUIOnly prop',
-					{
-						alternative: 'disableMediaButtons',
-					}
-				);
-			}
-
+		if ( disableMediaButtons ) {
 			return (
 				<MediaUploadCheck>{ this.renderDropZone() }</MediaUploadCheck>
 			);

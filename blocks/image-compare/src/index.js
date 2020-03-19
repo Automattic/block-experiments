@@ -8,7 +8,6 @@
  * WordPress dependencies
  */
 import { registerBlockType } from '@wordpress/blocks';
-import { RichText } from '@wordpress/block-editor';
 import { Path, SVG } from '@wordpress/primitives';
 import { __ } from '@wordpress/i18n';
 
@@ -16,6 +15,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import edit from './edit';
+import save from './save';
 
 export function registerBlock() {
 
@@ -81,37 +81,18 @@ export function registerBlock() {
 
 		example: {
 			attributes: {
-				imageBefore: 'https://upload.wikimedia.org/wikipedia/commons/archive/d/d8/20180325051241%21Lynda_Carter_Wonder_Woman.JPG',
-				imageAfter: 'https://upload.wikimedia.org/wikipedia/commons/d/d8/Lynda_Carter_Wonder_Woman.JPG',
+				imageBeforeId: '1',
+				imageBeforeUrl: 'https://upload.wikimedia.org/wikipedia/commons/archive/d/d8/20180325051241%21Lynda_Carter_Wonder_Woman.JPG',
+				imageBeforeAlt: __( 'Before' ),
+				imageAfterId: '2',
+				imageAfterUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/d8/Lynda_Carter_Wonder_Woman.JPG',
+				imageAfterAlt: __( 'After' ),
 				caption: __( 'Wonder Woman' ),
 			},
 		},
 
 		edit,
+		save,
 
-		save: ({ attributes }) => {
-			const {
-				imageBeforeId,
-				imageBeforeUrl,
-				imageBeforeAlt,
-				imageAfterId,
-				imageAfterUrl,
-				imageAfterAlt,
-				caption,
-				orientation,
-			} = attributes;
-
-			return (
-				<>
-					<figure className="juxtapose" data-mode={ orientation }>
-						<img id={ imageBeforeId } src={ imageBeforeUrl } alt={ imageBeforeAlt } className="image-compare__image-before" />
-						<img id={ imageAfterId } src={ imageAfterUrl } alt={ imageAfterAlt } className="image-compare__image-after" />
-					</figure>
-					{ ! RichText.isEmpty( caption ) && (
-						<RichText.Content tagName="figcaption" value={ caption } />
-					) }
-				</>
-			);
-		}
 	});
 };
