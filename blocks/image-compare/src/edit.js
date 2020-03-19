@@ -60,7 +60,7 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 							<img alt={ __( 'Comparison image 1' ) } src={ imageBefore } />
 						) : (
 							<>
-								<div className="components-placeholder__label">{ __( 'Image 1' ) }</div>
+								<div className="components-placeholder__label">{ __( 'Image Before' ) }</div>
 								<UploadPlaceholder
 									onSelect={
 										( el ) => {
@@ -80,7 +80,7 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 							<img alt={ __( 'Comparison image 2' ) }  src={ imageAfter } />
 						) : (
 							<>
-								<div className="components-placeholder__label">{ __( 'Image 2' ) }</div>
+								<div className="components-placeholder__label">{ __( 'Image After' ) }</div>
 								<UploadPlaceholder
 									onSelect={
 										( el ) => {

@@ -329,7 +329,7 @@ div.jx-arrow.jx-right {
 	right: 0;
 }
 
-div.jx-arrow.jx-left,
-div.jx-arrow.jx-right {
+div.vertical div.jx-arrow.jx-left,
+div.vertical div.jx-arrow.jx-right {
 	transform: rotate(90deg);
 }
