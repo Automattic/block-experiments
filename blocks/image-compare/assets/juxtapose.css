@@ -283,3 +283,38 @@ figcaption {
 	text-align: center;
 	font-size: 85%;
 }
+
+
+/**
+ * Custom styling for handle.
+ */
+
+div.jx-control {
+	color: white;
+}
+
+div.jx-controller {
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	margin-left: -22.5px; /* 48px / 2 - 3px separator width */
+}
+
+div.jx-arrow.jx-left,
+div.jx-arrow.jx-right {
+	width: 24px;
+	height: 24px;
+	border: none;
+	background-repeat: no-repeat;
+	z-index: 1;
+}
+
+div.jx-arrow.jx-left {
+	background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEzLjQgMThMOCAxMmw1LjQtNiAxLjIgMS00LjYgNSA0LjYgNXoiLz48L3N2Zz4=');
+	left: 0;
+}
+
+div.jx-arrow.jx-right {
+	background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEwLjYgNkw5LjQgN2w0LjYgNS00LjYgNSAxLjIgMSA1LjQtNnoiLz48L3N2Zz4=');
+	right: 0;
+}
