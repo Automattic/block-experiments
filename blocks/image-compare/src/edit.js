@@ -15,10 +15,8 @@ import UploadPlaceholder from './upload-placeholder';
 const edit = ( { attributes, isSelected, setAttributes } ) => {
 	const { imageBefore, imageAfter, caption, orientation } = attributes;
 
-	// if both are defined, add juxtaspose class
-	// the juxtapose library uses class when page is scanned
-	// to find the images and apply the side-by-side magic
-	const cls = ( imageBefore && imageAfter ) ? 'juxtapose' : 'controls';
+	// If both images are set, add juxtaspose class, which is picked up by the library.
+	const classes = ( imageBefore && imageAfter ) ? 'image-compare__compare juxtapose' : 'image-compare__placeholder';
 
 	return (
 		<>
@@ -27,8 +25,8 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 				<SelectControl
 					value={ orientation }
 					options={ [
-						{ label: 'Side by Side', value: 'horizontal' },
-						{ label: 'Above and Below', value: 'vertical' },
+						{ label: __( 'Side by Side' ), value: 'horizontal' },
+						{ label: __( 'Above and Below' ), value: 'vertical' },
 					] }
 					onChange={ ( val ) => {
 						setAttributes( { orientation: val } );
@@ -40,13 +38,14 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 					} }
 				/>
 			</InspectorControls>
-			<div className={ cls } data-mode={ orientation }>
+			<div className={ classes } data-mode={ orientation }>
 
 				<Placeholder>
 					{ imageBefore ? (
-						<img src={ imageBefore } />
+						<img alt={ __( 'Comparison image 1' ) } src={ imageBefore } />
 					) : (
-						<div className="img-edit-before">
+						<div className="image-compare__image-before">
+							<div className="components-placeholder__label">{ __( 'Image 1' ) }</div>
 							<UploadPlaceholder
 								onSelect={
 									( el ) => {
@@ -55,15 +54,16 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 									}
 								}
 								allowedTypes={ [ 'image' ] }
-								labels={ { title: __( 'Image Before' ) } }
+								labels={ { title: __( 'First image to compare' ) } }
 							/>
 						</div>
 					) }
 
 					{ imageAfter ? (
-						<img src={ imageAfter } />
+						<img alt={ __( 'Comparison image 2' ) }  src={ imageAfter } />
 					) : (
-						<div className="img-edit-after">
+						<div className="image-compare__image-after">
+							<div className="components-placeholder__label">{ __( 'Image 2' ) }</div>
 							<UploadPlaceholder
 								onSelect={
 									( el ) => {
@@ -72,7 +72,7 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 									}
 								}
 								allowedTypes={ [ 'image' ] }
-								labels={ { title: __( 'Image After' ) } }
+								labels={ { title: __( 'Second image to compare' ) } }
 							/>
 						</div>
 					) }

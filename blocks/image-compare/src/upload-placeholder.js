@@ -208,28 +208,11 @@ export class MediaPlaceholder extends Component {
 			}
 		}
 
-		const placeholderClassName = classnames(
-			'block-editor-media-placeholder',
-			className,
-			{
-				'is-appender': isAppender,
-			}
-		);
-
 		return (
-			<Placeholder
-				icon={ icon }
-				label={ title }
-				instructions={ instructions }
-				className={ placeholderClassName }
-				notices={ notices }
-				onClick={ onClick }
-				onDoubleClick={ onDoubleClick }
-				preview={ mediaPreview }
-			>
+			<>
 				{ content }
 				{ children }
-			</Placeholder>
+			</>
 		);
 	}
 

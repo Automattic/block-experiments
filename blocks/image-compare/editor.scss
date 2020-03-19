@@ -1,29 +1,28 @@
+.image-compare__placeholder {
+	> .components-placeholder > .components-placeholder__label {
+		display: none;
+	}
 
-.controls {
+	.components-placeholder__fieldset .components-button {
+		margin-right: auto;
+	}
+}
+
+.image-compare__image-before,
+.image-compare__image-after {
 	display: flex;
+	flex-direction: column;
+	flex: 1;
 }
 
-.img-edit-before,
-.img-edit-after {
-	min-width: 180px;
-	width: 100%;
-	max-width: 50%;
-	display: block;
-	text-align: center;
+.image-compare__image-before {
+	padding-right: 24px;
 }
 
-.img-edit-before {
-	border-right: 1px solid #999999;
+.image-compare__image-after {
+	padding-left: 24px;
 }
 
-.caption {
-	text-align: center;
-}
-
-.caption input[type="text"],
-.caption input[type="text"]:focus {
-	width: 50%;
-	border: none;
-	text-align: center;
-	box-shadow: none;
+.image-compare__image-before {
+	border-right: 1px solid #e2e4e7;
 }
