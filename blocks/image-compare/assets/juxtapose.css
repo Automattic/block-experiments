@@ -293,15 +293,25 @@ div.jx-control {
 	color: white;
 }
 
-div.jx-controller {
+div.jx-controller,
+.vertical div.jx-controller {
 	width: 48px;
 	height: 48px;
 	border-radius: 50%;
+}
+
+div.jx-controller {
 	margin-left: -22.5px; /* 48px / 2 - 3px separator width */
 }
 
+.vertical div.jx-controller {
+	top: -22.5px;
+}
+
 div.jx-arrow.jx-left,
-div.jx-arrow.jx-right {
+div.jx-arrow.jx-right,
+.vertical div.jx-arrow.jx-left,
+.vertical div.jx-arrow.jx-right {
 	width: 24px;
 	height: 24px;
 	border: none;
@@ -317,4 +327,9 @@ div.jx-arrow.jx-left {
 div.jx-arrow.jx-right {
 	background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTEwLjYgNkw5LjQgN2w0LjYgNS00LjYgNSAxLjIgMSA1LjQtNnoiLz48L3N2Zz4=');
 	right: 0;
+}
+
+div.jx-arrow.jx-left,
+div.jx-arrow.jx-right {
+	transform: rotate(90deg);
 }
