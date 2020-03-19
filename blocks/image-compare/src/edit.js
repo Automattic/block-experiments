@@ -4,7 +4,6 @@
 import { InspectorControls, RichText } from '@wordpress/block-editor';
 import { PanelBody, RadioControl, Placeholder } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -16,26 +15,6 @@ import UploadPlaceholder from './upload-placeholder';
 const edit = ( { attributes, isSelected, setAttributes } ) => {
 	const { imageBefore, imageAfter, caption, orientation } = attributes;
 
-	const RadioControlWithState = ( props ) => {
-		const [ option ] = useState( 'horizontal' );
-
-		return (
-			<RadioControl { ...props }
-				selected={ option }
-				onChange={ ( value ) => {
-					setAttributes( {
-						orientation: value,
-					} )
-
-					// Set a delay so markup can be updated before scan page gets triggered.
-					setTimeout( function() {
-						juxtapose.scanPage();
-					}, 100 );
-				} }
-			/>
-		);
-	};
-
 	// If both images are set, add juxtaspose class, which is picked up by the library.
 	const classes = ( imageBefore && imageAfter ) ? 'image-compare__comparison juxtapose' : 'image-compare__placeholder';
 
@@ -43,12 +22,23 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 		<>
 			<InspectorControls key="controls">
 				<PanelBody title={ __( 'Orientation' ) }>
-					<RadioControlWithState
-						selected={ orientation }
+					<RadioControl
+						selected={ orientation || 'horizontal' }
 						options={ [
 							{ label: __( 'Side by side' ), value: 'horizontal' },
 							{ label: __( 'Above and below' ), value: 'vertical' },
 						] }
+						onChange={ ( value ) => {
+							console.log("Value:", value);
+							setAttributes( {
+								orientation: value,
+							} );
+
+							// Set a delay so markup can be updated before scan page gets triggered.
+							setTimeout( function() {
+								juxtapose.scanPage();
+							}, 100 );
+						} }
 					/>
 				</PanelBody>
 			</InspectorControls>
