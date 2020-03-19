@@ -41,41 +41,45 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 			<div className={ classes } data-mode={ orientation }>
 
 				<Placeholder>
-					{ imageBefore ? (
-						<img alt={ __( 'Comparison image 1' ) } src={ imageBefore } />
-					) : (
-						<div className="image-compare__image-before">
-							<div className="components-placeholder__label">{ __( 'Image 1' ) }</div>
-							<UploadPlaceholder
-								onSelect={
-									( el ) => {
-										setAttributes( { imageBefore: el.url } );
-										juxtapose.scanPage();
+					<div className="image-compare__image-before">
+						{ imageBefore ? (
+							<img alt={ __( 'Comparison image 1' ) } src={ imageBefore } />
+						) : (
+							<>
+								<div className="components-placeholder__label">{ __( 'Image 1' ) }</div>
+								<UploadPlaceholder
+									onSelect={
+										( el ) => {
+											setAttributes( { imageBefore: el.url } );
+											juxtapose.scanPage();
+										}
 									}
-								}
-								allowedTypes={ [ 'image' ] }
-								labels={ { title: __( 'First image to compare' ) } }
-							/>
-						</div>
-					) }
+									allowedTypes={ [ 'image' ] }
+									labels={ { title: __( 'First image to compare' ) } }
+								/>
+							</>
+						) }
+					</div>
 
-					{ imageAfter ? (
-						<img alt={ __( 'Comparison image 2' ) }  src={ imageAfter } />
-					) : (
-						<div className="image-compare__image-after">
-							<div className="components-placeholder__label">{ __( 'Image 2' ) }</div>
-							<UploadPlaceholder
-								onSelect={
-									( el ) => {
-										setAttributes( { imageAfter: el.url } );
-										juxtapose.scanPage();
+					<div className="image-compare__image-after">
+						{ imageAfter ? (
+							<img alt={ __( 'Comparison image 2' ) }  src={ imageAfter } />
+						) : (
+							<>
+								<div className="components-placeholder__label">{ __( 'Image 2' ) }</div>
+								<UploadPlaceholder
+									onSelect={
+										( el ) => {
+											setAttributes( { imageAfter: el.url } );
+											juxtapose.scanPage();
+										}
 									}
-								}
-								allowedTypes={ [ 'image' ] }
-								labels={ { title: __( 'Second image to compare' ) } }
-							/>
-						</div>
-					) }
+									allowedTypes={ [ 'image' ] }
+									labels={ { title: __( 'Second image to compare' ) } }
+								/>
+							</>
+						) }
+					</div>
 				</Placeholder>
 			</div>
 			{ ( ! RichText.isEmpty( caption ) || isSelected ) && (
