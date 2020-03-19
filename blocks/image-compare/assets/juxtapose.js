@@ -351,22 +351,9 @@ wp.domReady( function() {
 				this.leftImage.className = 'jx-image jx-left';
 				this.leftImage.appendChild(this.imgBefore.image);
 
-				this.labCredit = document.createElement("a");
-				this.labCredit.setAttribute('href', 'http://juxtapose.knightlab.com');
-				this.labCredit.setAttribute('target', '_blank');
-				this.labCredit.className = 'jx-knightlab';
-				this.labLogo = document.createElement("div");
-				this.labLogo.className = 'knightlab-logo';
-				this.labCredit.appendChild(this.labLogo);
-				this.projectName = document.createElement("span");
-				this.projectName.className = 'juxtapose-name';
-				setText(this.projectName, 'JuxtaposeJS');
-				this.labCredit.appendChild(this.projectName);
-
 				this.slider.appendChild(this.handle);
 				this.slider.appendChild(this.leftImage);
 				this.slider.appendChild(this.rightImage);
-				this.slider.appendChild(this.labCredit);
 
 				this.leftArrow = document.createElement("div");
 				this.rightArrow = document.createElement("div");
