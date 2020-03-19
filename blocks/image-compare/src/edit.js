@@ -13,10 +13,19 @@ import UploadPlaceholder from './upload-placeholder';
 /* global juxtapose */
 
 const edit = ( { attributes, isSelected, setAttributes } ) => {
-	const { imageBefore, imageAfter, caption, orientation } = attributes;
+	const {
+		imageBeforeId,
+		imageBeforeUrl,
+		imageBeforeAlt,
+		imageAfterId,
+		imageAfterUrl,
+		imageAfterAlt,
+		caption,
+		orientation,
+	} = attributes;
 
 	// If both images are set, add juxtaspose class, which is picked up by the library.
-	const classes = ( imageBefore && imageAfter ) ? 'image-compare__comparison juxtapose' : 'image-compare__placeholder';
+	const classes = ( imageBeforeUrl && imageAfterUrl ) ? 'image-compare__comparison juxtapose' : 'image-compare__placeholder';
 
 	return (
 		<>
@@ -29,7 +38,6 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 							{ label: __( 'Above and below' ), value: 'vertical' },
 						] }
 						onChange={ ( value ) => {
-							console.log("Value:", value);
 							setAttributes( {
 								orientation: value,
 							} );
@@ -46,15 +54,19 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 
 				<Placeholder>
 					<div className="image-compare__image-before">
-						{ imageBefore ? (
-							<img alt={ __( 'Comparison image 1' ) } src={ imageBefore } />
+						{ imageBeforeUrl ? (
+							<img id={ imageBeforeId } src={ imageBeforeUrl } alt={ imageBeforeAlt } />
 						) : (
 							<>
 								<div className="components-placeholder__label">{ __( 'Image Before' ) }</div>
 								<UploadPlaceholder
 									onSelect={
 										( el ) => {
-											setAttributes( { imageBefore: el.url } );
+											setAttributes( {
+												imageBeforeId: el.id,
+												imageBeforeUrl: el.url,
+												imageBeforeAlt: el.alt
+											} );
 											juxtapose.scanPage();
 										}
 									}
@@ -66,15 +78,19 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 					</div>
 
 					<div className="image-compare__image-after">
-						{ imageAfter ? (
-							<img alt={ __( 'Comparison image 2' ) }  src={ imageAfter } />
+						{ imageAfterUrl ? (
+							<img id={ imageAfterId } src={ imageAfterUrl } alt={ imageAfterAlt } />
 						) : (
 							<>
 								<div className="components-placeholder__label">{ __( 'Image After' ) }</div>
 								<UploadPlaceholder
 									onSelect={
 										( el ) => {
-											setAttributes( { imageAfter: el.url } );
+											setAttributes( {
+												imageAfterId: el.id,
+												imageAfterUrl: el.url,
+												imageAfterAlt: el.alt
+											} );
 											juxtapose.scanPage();
 										}
 									}
@@ -86,7 +102,7 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 					</div>
 				</Placeholder>
 			</div>
-			{ ( ! RichText.isEmpty( caption ) || isSelected && imageBefore && imageAfter ) && (
+			{ ( ! RichText.isEmpty( caption ) || isSelected && imageBeforeUrl && imageAfterUrl ) && (
 				<RichText
 					tagName="figcaption"
 					placeholder={ __( 'Write caption' ) }

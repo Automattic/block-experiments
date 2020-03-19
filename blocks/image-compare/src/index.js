@@ -33,16 +33,40 @@ export function registerBlock() {
 		category: 'layout',
 
 		attributes: {
-			imageBefore: {
+			imageBeforeId: {
+				type: 'string',
+				source: 'attribute',
+				attribute: 'id',
+				selector: '.image-compare__image-before',
+			},
+			imageBeforeUrl: {
 				type: 'string',
 				source: 'attribute',
 				attribute: 'src',
 				selector: '.image-compare__image-before',
 			},
-			imageAfter: {
+			imageBeforeAlt: {
+				type: 'string',
+				source: 'attribute',
+				attribute: 'alt',
+				selector: '.image-compare__image-before',
+			},
+			imageAfterId: {
+				type: 'string',
+				source: 'attribute',
+				attribute: 'id',
+				selector: '.image-compare__image-after',
+			},
+			imageAfterUrl: {
 				type: 'string',
 				source: 'attribute',
 				attribute: 'src',
+				selector: '.image-compare__image-after',
+			},
+			imageAfterAlt: {
+				type: 'string',
+				source: 'attribute',
+				attribute: 'alt',
 				selector: '.image-compare__image-after',
 			},
 			caption: {
@@ -66,14 +90,25 @@ export function registerBlock() {
 		edit,
 
 		save: ({ attributes }) => {
+			const {
+				imageBeforeId,
+				imageBeforeUrl,
+				imageBeforeAlt,
+				imageAfterId,
+				imageAfterUrl,
+				imageAfterAlt,
+				caption,
+				orientation,
+			} = attributes;
+
 			return (
 				<>
-					<figure className="juxtapose" data-mode={ attributes.orientation }>
-						<img alt={ __( 'Comparison image 1' ) } src={ attributes.imageBefore } className="image-compare__image-before" />
-						<img alt={ __( 'Comparison image 2' ) } src={ attributes.imageAfter } className="image-compare__image-after" />
+					<figure className="juxtapose" data-mode={ orientation }>
+						<img id={ imageBeforeId } src={ imageBeforeUrl } alt={ imageBeforeAlt } className="image-compare__image-before" />
+						<img id={ imageAfterId } src={ imageAfterUrl } alt={ imageAfterAlt } className="image-compare__image-after" />
 					</figure>
-					{ ! RichText.isEmpty( attributes.caption ) && (
-						<RichText.Content tagName="figcaption" value={ attributes.caption } />
+					{ ! RichText.isEmpty( caption ) && (
+						<RichText.Content tagName="figcaption" value={ caption } />
 					) }
 				</>
 			);
