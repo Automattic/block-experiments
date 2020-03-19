@@ -15,18 +15,27 @@
 	flex: 1;
 }
 
-.image-compare__image-before {
-	padding-right: 24px;
+.components-placeholder.is-large {
+	.image-compare__image-before {
+		border-right: 1px solid #e2e4e7;
+		padding-right: 24px;
+	}
+
+	.image-compare__image-after {
+		padding-left: 24px;
+	}
 }
 
-.image-compare__image-after {
-	padding-left: 24px;
-}
+.components-placeholder.is-medium {
+	.image-compare__image-before {
+		border-bottom: 1px solid #e2e4e7;
+		padding-bottom: 24px;
+	}
 
-.image-compare__image-before {
-	border-right: 1px solid #e2e4e7;
+	.image-compare__image-after {
+		padding-top: 24px;
+	}
 }
-
 
 // Disable the juxtaposition effect until the block itself is selected.
 [data-type="jetpack/image-compare-block"]:not(.is-selected) .image-compare__comparison {
