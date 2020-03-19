@@ -182,13 +182,13 @@ wp.domReady( function() {
 		}
 
 		if (images.length === 2) {
-			this.image-compare__image-before = new Graphic(images[0], this);
-			this.image-compare__image-after = new Graphic(images[1], this);
+			this.imgBefore = new Graphic(images[0], this);
+			this.imgAfter = new Graphic(images[1], this);
 		} else {
 			console.warn("The images parameter takes two Image objects.");
 		}
 
-		if (this.image-compare__image-before.credit || this.image-compare__image-after.credit) {
+		if (this.imgBefore.credit || this.imgAfter.credit) {
 			this.options.showCredits = true;
 		} else {
 			this.options.showCredits = false;
@@ -252,15 +252,15 @@ wp.domReady( function() {
 		},
 
 		checkImages: function() {
-			if (getImageDimensions(this.image-compare__image-before.image).aspect() ===
-				getImageDimensions(this.image-compare__image-after.image).aspect()) {
+			if (getImageDimensions(this.imgBefore.image).aspect() ===
+				getImageDimensions(this.imgAfter.image).aspect()) {
 				return true;
 			}
 			return false;
 		},
 
 		calculateDims: function(width, height){
-			const ratio = getImageDimensions(this.image-compare__image-before.image).aspect();
+			const ratio = getImageDimensions(this.imgBefore.image).aspect();
 			if (width) {
 				height = width / ratio;
 			} else if (height) {
@@ -308,13 +308,13 @@ wp.domReady( function() {
 
 		optimizeWrapper: function(maxWidth){
 			let result = juxtapose.OPTIMIZATION_ACCEPTED;
-			if ((this.image-compare__image-before.image.naturalWidth >= maxWidth) && (this.image-compare__image-after.image.naturalWidth >= maxWidth)) {
+			if ((this.imgBefore.image.naturalWidth >= maxWidth) && (this.imgAfter.image.naturalWidth >= maxWidth)) {
 				this.wrapper.style.width = maxWidth + "px";
 				result = juxtapose.OPTIMIZATION_WAS_CONSTRAINED;
-			} else if (this.image-compare__image-after.image.naturalWidth < maxWidth) {
-				this.wrapper.style.width = this.image-compare__image-after.image.naturalWidth + "px";
+			} else if (this.imgAfter.image.naturalWidth < maxWidth) {
+				this.wrapper.style.width = this.imgAfter.image.naturalWidth + "px";
 			} else {
-				this.wrapper.style.width = this.image-compare__image-before.image.naturalWidth + "px";
+				this.wrapper.style.width = this.imgBefore.image.naturalWidth + "px";
 			}
 			this.setWrapperDimensions();
 			return result;
@@ -322,13 +322,13 @@ wp.domReady( function() {
 
 		_onLoaded: function() {
 
-			if (this.image-compare__image-before && this.image-compare__image-before.loaded === true &&
-				this.image-compare__image-after && this.image-compare__image-after.loaded === true) {
+			if (this.imgBefore && this.imgBefore.loaded === true &&
+				this.imgAfter && this.imgAfter.loaded === true) {
 
 				this.wrapper = document.querySelector(this.selector);
 				addClass(this.wrapper, 'juxtapose');
 
-				this.wrapper.style.width = getNaturalDimensions(this.image-compare__image-before.image).width;
+				this.wrapper.style.width = getNaturalDimensions(this.imgBefore.image).width;
 				this.setWrapperDimensions();
 
 				this.slider = document.createElement("div");
@@ -344,12 +344,12 @@ wp.domReady( function() {
 
 				this.rightImage = document.createElement("div");
 				this.rightImage.className = 'jx-image jx-right';
-				this.rightImage.appendChild(this.image-compare__image-after.image);
+				this.rightImage.appendChild(this.imgAfter.image);
 
 
 				this.leftImage = document.createElement("div");
 				this.leftImage.className = 'jx-image jx-left';
-				this.leftImage.appendChild(this.image-compare__image-before.image);
+				this.leftImage.appendChild(this.imgBefore.image);
 
 				this.labCredit = document.createElement("a");
 				this.labCredit.setAttribute('href', 'http://juxtapose.knightlab.com');
@@ -402,8 +402,8 @@ wp.domReady( function() {
 			this.updateSlider(this.options.startingPosition, false);
 
 			if (this.options.showLabels === true) {
-				if (this.image-compare__image-before.label) { this.displayLabel(this.leftImage, this.image-compare__image-before.label); }
-				if (this.image-compare__image-after.label) { this.displayLabel(this.rightImage, this.image-compare__image-after.label); }
+				if (this.imgBefore.label) { this.displayLabel(this.leftImage, this.imgBefore.label); }
+				if (this.imgAfter.label) { this.displayLabel(this.rightImage, this.imgAfter.label); }
 			}
 
 			const self = this;

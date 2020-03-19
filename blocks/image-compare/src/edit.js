@@ -4,11 +4,20 @@
 import { InspectorControls, RichText } from '@wordpress/block-editor';
 import { PanelBody, RadioControl, Placeholder } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
+import { useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import UploadPlaceholder from './upload-placeholder';
+
+const RadioControlWithState = ( props ) => {
+	const [ option, setOption ] = useState( 'horizontal' );
+
+	return (
+		<RadioControl { ...props } selected={ option } onChange={ setOption } />
+	);
+};
 
 /* global juxtapose */
 
@@ -22,8 +31,7 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 		<>
 			<InspectorControls key="controls">
 				<PanelBody title={ __( 'Orientation' ) }>
-					<RadioControl
-						label={ __( 'Show:' ) }
+					<RadioControlWithState
 						selected={ orientation }
 						options={ [
 							{ label: __( 'Side by side' ), value: 'horizontal' },
