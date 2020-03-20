@@ -33,6 +33,14 @@
 }
 
 // Disable the juxtaposition effect until the block itself is selected.
-[data-type="jetpack/image-compare-block"]:not(.is-selected) .image-compare__comparison {
-	pointer-events: none;
+[data-type="jetpack/image-compare-block"] {
+	&:not(.is-selected) .image-compare__comparison {
+		pointer-events: none;
+	}
+
+	// This duplicates CSS from the front-end due to differing markup. Would be good to revisit.
+	figcaption {
+		margin-top: 0.5em;
+		margin-bottom: 1em;
+	}
 }

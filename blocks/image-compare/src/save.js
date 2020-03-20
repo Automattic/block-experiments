@@ -16,15 +16,15 @@ const save = ( { attributes } ) => {
 	} = attributes;
 
 	return (
-		<>
-			<figure className="juxtapose" data-mode={ orientation }>
+		<figure>
+			<div className="juxtapose" data-mode={ orientation }>
 				<img id={ imageBeforeId } src={ imageBeforeUrl } alt={ imageBeforeAlt } className="image-compare__image-before" />
 				<img id={ imageAfterId } src={ imageAfterUrl } alt={ imageAfterAlt } className="image-compare__image-after" />
-			</figure>
+			</div>
 			{ ! RichText.isEmpty( caption ) && (
 				<RichText.Content tagName="figcaption" value={ caption } />
 			) }
-		</>
+		</figure>
 	);
 };
 
