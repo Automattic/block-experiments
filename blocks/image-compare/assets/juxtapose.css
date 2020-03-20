@@ -305,7 +305,8 @@ div.jx-controller {
 }
 
 .vertical div.jx-controller {
-	top: -22.5px;
+	/*top: -22.5px; */
+	transform: translateY(-19.5px);
 }
 
 div.jx-arrow.jx-left,
@@ -317,6 +318,7 @@ div.jx-arrow.jx-right,
 	border: none;
 	background-repeat: no-repeat;
 	z-index: 1;
+	will-change: transform;
 }
 
 div.jx-arrow.jx-left {
