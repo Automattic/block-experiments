@@ -1,0 +1,38 @@
+.image-compare__placeholder {
+	> .components-placeholder > .components-placeholder__label {
+		display: none;
+	}
+
+	.components-placeholder__fieldset .components-button {
+		margin-right: auto;
+	}
+}
+
+.image-compare__image-before,
+.image-compare__image-after {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	position: relative;
+}
+
+.components-placeholder.is-large {
+	.image-compare__image-before {
+		padding-right: 12px;
+	}
+
+	.image-compare__image-after {
+		padding-left: 12px;
+	}
+}
+
+.components-placeholder.is-medium {
+	.image-compare__image-before {
+		margin-bottom: 24px;
+	}
+}
+
+// Disable the juxtaposition effect until the block itself is selected.
+[data-type="jetpack/image-compare-block"]:not(.is-selected) .image-compare__comparison {
+	pointer-events: none;
+}
