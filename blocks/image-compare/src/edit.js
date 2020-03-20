@@ -28,7 +28,7 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 	const classes = ( imageBeforeUrl && imageAfterUrl ) ? 'image-compare__comparison juxtapose' : 'image-compare__placeholder';
 
 	return (
-		<>
+		<figure className="wp-block-jetpack-image-compare-block">
 			<InspectorControls key="controls">
 				<PanelBody title={ __( 'Orientation' ) }>
 					<RadioControl
@@ -116,7 +116,7 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 					inlineToolbar
 				/>
 			) }
-		</>
+		</figure>
 	);
 };
 
