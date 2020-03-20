@@ -1,0 +1,9 @@
+{
+	"blocks": [
+		"image-compare"
+	],
+	"version": "0.9.0",
+	"name": "Image Compare",
+	"description": "Images compared.",
+	"resource": "jetpack-image-compare"
+}
