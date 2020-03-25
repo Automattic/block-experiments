@@ -1,8 +1,15 @@
 /**
+ * External dependencies
+ */
+import { debounce } from 'lodash';
+
+/**
  * WordPress dependencies
  */
 import { InspectorControls, RichText } from '@wordpress/block-editor';
 import { PanelBody, RadioControl, Placeholder } from '@wordpress/components';
+import { useResizeObserver } from '@wordpress/compose';
+import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -27,8 +34,32 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 	// If both images are set, add juxtaspose class, which is picked up by the library.
 	const classes = ( imageBeforeUrl && imageAfterUrl ) ? 'image-compare__comparison juxtapose' : 'image-compare__placeholder';
 
+	// Let's look for resize so we can trigger the thing
+	const [ resizeListener, sizes ] = useResizeObserver();
+	useEffect(
+		debounce(
+			() => {
+				// debounce
+				if ( juxtapose && juxtapose.sliders ) {
+					// get width
+					const fig = document.getElementsByClassName("wp-block-jetpack-image-compare-block");
+					const width = ( fig ) ? fig[0].offsetWidth : 0;
+					if ( width > 0 ) {
+						juxtapose.sliders.forEach( elem => {
+							elem.optimizeWrapper(width);
+						} );
+					}
+				}
+			},
+			200
+		),
+		[sizes.width]
+	);
+
+
 	return (
 		<figure className="wp-block-jetpack-image-compare-block">
+			{ resizeListener }
 			<InspectorControls key="controls">
 				<PanelBody title={ __( 'Orientation' ) }>
 					<RadioControl
@@ -50,7 +81,9 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<div className={ classes } data-mode={ orientation }>
+			<div
+				className={ classes }
+				data-mode={ orientation }>
 
 				<Placeholder>
 					<div className="image-compare__image-before">
