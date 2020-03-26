@@ -1,18 +1,26 @@
 /**
+ * External dependencies
+ */
+import { debounce } from 'lodash';
+
+/**
  * WordPress dependencies
  */
 import { InspectorControls, RichText } from '@wordpress/block-editor';
 import { PanelBody, RadioControl, Placeholder } from '@wordpress/components';
+import { useResizeObserver } from '@wordpress/compose';
+import { useEffect } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
 import UploadPlaceholder from './upload-placeholder';
+import useDebounce from './use-debounce';
 
 /* global juxtapose */
 
-const edit = ( { attributes, isSelected, setAttributes } ) => {
+const edit = ( { attributes, clientId, isSelected, setAttributes } ) => {
 	const {
 		imageBeforeId,
 		imageBeforeUrl,
@@ -27,8 +35,27 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 	// If both images are set, add juxtaspose class, which is picked up by the library.
 	const classes = ( imageBeforeUrl && imageAfterUrl ) ? 'image-compare__comparison juxtapose' : 'image-compare__placeholder';
 
+	// Let's look for resize so we can trigger the thing
+	const [ resizeListener, sizes ] = useResizeObserver();
+	const debouncedSize = useDebounce(sizes.width, 100);
+
+	useEffect( () => {
+		if ( sizes &&  sizes.width > 0 ) {
+			if ( juxtapose && juxtapose.sliders ) {
+				// only update for *this* slide
+				juxtapose.sliders.forEach( elem => {
+					const parentElem = elem.wrapper.parentElement;
+					if ( parentElem.id === clientId ) {
+						elem.optimizeWrapper(sizes.width);
+					}
+				} );
+			}
+		}
+	}, [debouncedSize] );
+
 	return (
-		<figure className="wp-block-jetpack-image-compare-block">
+		<figure className="wp-block-jetpack-image-compare-block" id={ clientId }>
+			{ resizeListener }
 			<InspectorControls key="controls">
 				<PanelBody title={ __( 'Orientation' ) }>
 					<RadioControl
@@ -50,7 +77,9 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<div className={ classes } data-mode={ orientation }>
+			<div
+				className={ classes }
+				data-mode={ orientation }>
 
 				<Placeholder>
 					<div className="image-compare__image-before">
