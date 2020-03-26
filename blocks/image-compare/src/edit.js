@@ -16,6 +16,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import UploadPlaceholder from './upload-placeholder';
+import useDebounce from './use-debounce';
 
 /* global juxtapose */
 
@@ -36,27 +37,21 @@ const edit = ( { attributes, clientId, isSelected, setAttributes } ) => {
 
 	// Let's look for resize so we can trigger the thing
 	const [ resizeListener, sizes ] = useResizeObserver();
-	useEffect(
-		debounce(
-			() => {
-				if ( juxtapose && juxtapose.sliders ) {
-					// get width
-					if ( sizes &&  sizes.width > 0 ) {
-						// only update this slide
-						juxtapose.sliders.forEach( elem => {
-							const parentElem = elem.wrapper.parentElement;
-							if ( parentElem.id === clientId ) {
-								elem.optimizeWrapper(sizes.width);
-							}
-						} );
-					}
-				}
-			},
-			200
-		),
-		[sizes.width]
-	);
+	const debouncedSize = useDebounce(sizes.width, 100);
 
+	useEffect( () => {
+		if ( sizes &&  sizes.width > 0 ) {
+			if ( juxtapose && juxtapose.sliders ) {
+				// only update for *this* slide
+				juxtapose.sliders.forEach( elem => {
+					const parentElem = elem.wrapper.parentElement;
+					if ( parentElem.id === clientId ) {
+						elem.optimizeWrapper(sizes.width);
+					}
+				} );
+			}
+		}
+	}, [debouncedSize] );
 
 	return (
 		<figure className="wp-block-jetpack-image-compare-block" id={ clientId }>
