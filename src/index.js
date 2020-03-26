@@ -12,7 +12,7 @@ import { TinkerBlocksLogo } from './block-icons';
 
 setCategories( [
 	{
-		slug: 'wpcom-blocks',
+		slug: 'block-experiments',
 		title: 'Block Experiments',
 		icon: <TinkerBlocksLogo />,
 	},

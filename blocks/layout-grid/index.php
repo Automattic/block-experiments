@@ -2,15 +2,15 @@
 
 add_action( 'init', function() {
 	register_block_type( 'jetpack/layout-grid', [
-		'editor_script' => 'wpcom-blocks',
-		'style' => 'wpcom-blocks',
-		'editor_style' => 'wpcom-blocks-editor',
+		'editor_script' => 'block-experiments',
+		'style' => 'block-experiments',
+		'editor_style' => 'block-experiments-editor',
 	] );
 
 	register_block_type( 'jetpack/layout-grid-column', [
-		'editor_script' => 'wpcom-blocks',
-		'style' => 'wpcom-blocks',
-		'editor_style' => 'wpcom-blocks-editor',
+		'editor_script' => 'block-experiments',
+		'style' => 'block-experiments',
+		'editor_style' => 'block-experiments-editor',
 	] );
 
 	wp_set_script_translations( 'jetpack/layout-grid', 'layout-grid' );
