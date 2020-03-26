@@ -6,7 +6,7 @@
  * Version:     1.0.0
  * Author:      Automattic
  * Author URI:  https://automattic.com
- * Text Domain: wpcom-blocks
+ * Text Domain: block-experiments
  * License:     GPL v2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  */
@@ -94,7 +94,7 @@ add_action( 'init', function() {
 
 	// Block JS
 	wp_register_script(
-		'wpcom-blocks',
+		'block-experiments',
 		plugins_url( 'build/index.js', __FILE__ ),
 		$dependencies,
 		$version,
@@ -103,7 +103,7 @@ add_action( 'init', function() {
 
 	// Block front end style
 	wp_register_style(
-		'wpcom-blocks',
+		'block-experiments',
 		plugins_url( 'build/style.css', __FILE__ ),
 		[],
 		filemtime( plugin_dir_path( __FILE__ ) . 'build/style.css' )
@@ -111,7 +111,7 @@ add_action( 'init', function() {
 
 	// Block editor style
 	wp_register_style(
-		'wpcom-blocks-editor',
+		'block-experiments-editor',
 		plugins_url( 'build/editor.css', __FILE__ ),
 		[],
 		filemtime( plugin_dir_path( __FILE__ ) . 'build/editor.css' )

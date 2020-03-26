@@ -4,14 +4,14 @@ A monorepo of block experiments by the fine folks at Automattic.
 
 ### About
 
-This repository holds a collection of blocks allowing a single place to develop, test, and package. Plus it allows a single place for user's to submit issues. 
+This repository holds a collection of blocks allowing a single place to develop, test, and package. Plus it allows a single place for user's to submit issues.
 
 To make development easier, the build script allows for building and bundling all of the blocks together.
 
 For packaging, each block can be generated as its own stand-alone plugin.
 
 
-## Development 
+## Development
 
 1. Install node packages: `yarn install`
 
@@ -19,7 +19,7 @@ For packaging, each block can be generated as its own stand-alone plugin.
    (or)
    Run a production build with: `yarn build`
 
-3. Once built, add copy this directory (or add a symlink) to your plugins directory. 
+3. Once built, add copy this directory (or add a symlink) to your plugins directory.
 
 4. Activate Block Experiments plugin, use blocks in Editor.
 
@@ -36,9 +36,9 @@ When registering your block, use these values so it works when used inside of th
 
 ```php
 register_block_type( 'jetpack/your-block-name', [
-	'editor_script' => 'wpcom-blocks',
-	'style' => 'wpcom-blocks',
-	'editor_style' => 'wpcom-blocks-editor',
+	'editor_script' => 'block-experiments',
+	'style' => 'block-experiments',
+	'editor_style' => 'block-experiments-editor',
 ] );
 ```
 

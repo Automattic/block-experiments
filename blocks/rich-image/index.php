@@ -4,9 +4,9 @@ require_once __DIR__ . '/rest-api.php';
 
 add_action( 'init', function() {
 	register_block_type( 'jetpack/rich-image', [
-		'editor_script' => 'wpcom-blocks',
-		'style' => 'wpcom-blocks',
-		'editor_style' => 'wpcom-blocks-editor',
+		'editor_script' => 'block-experiments',
+		'style' => 'block-experiments',
+		'editor_style' => 'block-experiments-editor',
 	] );
 } );
 
