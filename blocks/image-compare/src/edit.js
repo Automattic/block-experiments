@@ -19,7 +19,7 @@ import UploadPlaceholder from './upload-placeholder';
 
 /* global juxtapose */
 
-const edit = ( { attributes, isSelected, setAttributes } ) => {
+const edit = ( { attributes, clientId, isSelected, setAttributes } ) => {
 	const {
 		imageBeforeId,
 		imageBeforeUrl,
@@ -39,14 +39,15 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 	useEffect(
 		debounce(
 			() => {
-				// debounce
 				if ( juxtapose && juxtapose.sliders ) {
 					// get width
-					const fig = document.getElementsByClassName("wp-block-jetpack-image-compare-block");
-					const width = ( fig ) ? fig[0].offsetWidth : 0;
-					if ( width > 0 ) {
+					if ( sizes &&  sizes.width > 0 ) {
+						// only update this slide
 						juxtapose.sliders.forEach( elem => {
-							elem.optimizeWrapper(width);
+							const parentElem = elem.wrapper.parentElement;
+							if ( parentElem.id === clientId ) {
+								elem.optimizeWrapper(sizes.width);
+							}
 						} );
 					}
 				}
@@ -58,7 +59,7 @@ const edit = ( { attributes, isSelected, setAttributes } ) => {
 
 
 	return (
-		<figure className="wp-block-jetpack-image-compare-block">
+		<figure className="wp-block-jetpack-image-compare-block" id={ clientId }>
 			{ resizeListener }
 			<InspectorControls key="controls">
 				<PanelBody title={ __( 'Orientation' ) }>
