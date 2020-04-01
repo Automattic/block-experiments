@@ -1,15 +1,13 @@
 /**
  * WordPress dependencies
  */
-import { useState, useEffect } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 
-export default (value, timeout) => {
-	const [state, setState] = useState(value);
+const useDebounce = ( callback, delay, deps ) => {
+	useEffect( () => {
+		const handler = setTimeout( () => callback( deps ), delay );
+		return () => clearTimeout( handler );
+	}, [ deps ] );
+};
 
-	useEffect(() => {
-		const handler = setTimeout(() => setState(value), timeout);
-		return () => clearTimeout(handler);
-	}, [value]);
-
-	return state;
-}
+export default useDebounce;

@@ -32,21 +32,20 @@ const edit = ( { attributes, clientId, isSelected, setAttributes } ) => {
 
 	// Let's look for resize so we can trigger the thing
 	const [ resizeListener, sizes ] = useResizeObserver();
-	const debouncedSize = useDebounce(sizes.width, 100);
 
-	useEffect( () => {
-		if ( sizes &&  sizes.width > 0 ) {
-			if ( juxtapose && juxtapose.sliders ) {
+	useDebounce( (sz) => {
+		if ( sz > 0 ) {
+			if ( ( typeof juxtapose !== "undefined" ) && juxtapose.sliders ) {
 				// only update for *this* slide
 				juxtapose.sliders.forEach( elem => {
 					const parentElem = elem.wrapper.parentElement;
 					if ( parentElem.id === clientId ) {
-						elem.optimizeWrapper(sizes.width);
+						elem.optimizeWrapper(sz);
 					}
 				} );
 			}
 		}
-	}, [debouncedSize] );
+	}, 200, sizes.width );
 
 	return (
 		<figure className="wp-block-jetpack-image-compare-block" id={ clientId }>
