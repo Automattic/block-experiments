@@ -1,4 +1,9 @@
 /**
+ * Internal dependencies
+ */
+import Tree from "./tree";
+
+/**
  * WordPress dependencies
  */
 import { useDispatch, useSelect } from "@wordpress/data";
@@ -8,7 +13,12 @@ import { useDispatch, useSelect } from "@wordpress/data";
  */
 import { kebabCase } from "lodash";
 
-const node = block => ({ block, children: [], level: block.attributes.level });
+const node = block => ({
+  children: [],
+  level: block.attributes.level,
+  anchor: block.attributes.anchor,
+  content: block.attributes.content
+});
 
 const nestTree = blocks => {
   const targetStack = [];
@@ -38,29 +48,6 @@ const nestTree = blocks => {
   return rootNode.children;
 };
 
-const Tree = ({ nodes }) => {
-  if (!nodes || !nodes.length) {
-    return null;
-  }
-
-  return (
-    <ul>
-      {nodes.map(node => {
-        const { children, block } = node;
-        const { anchor, content, clientId } = block.attributes;
-        const link = anchor ? <a href={"#" + anchor}>{content}</a> : content;
-
-        return (
-          <li key={clientId}>
-            {link}
-            <Tree nodes={children} />
-          </li>
-        );
-      })}
-    </ul>
-  );
-};
-
 const makeAnchor = (title, usedAnchors) => {
   const kebabTitle = kebabCase(title);
   let titleCandidate = kebabTitle,
@@ -71,8 +58,9 @@ const makeAnchor = (title, usedAnchors) => {
   return titleCandidate;
 };
 
-export default () => {
+export default ({ setAttributes }) => {
   const { updateBlockAttributes } = useDispatch("core/editor");
+
   const { headings, anchors } = useSelect(select => {
     const headings = select("core/block-editor")
       .getBlocks()
@@ -80,6 +68,7 @@ export default () => {
 
     const anchors = select("core/block-editor")
       .getBlocks()
+      // ignore uncommitted anchors so they continue to update
       .filter(block => block.attributes.anchor && !block.attributes.tempAnchor)
       .map(block => block.attributes.anchor);
 
@@ -103,5 +92,8 @@ export default () => {
     usedAnchors.add(newAnchor);
   });
 
-  return <Tree nodes={nestTree(headings)} />;
+  const nodes = nestTree(headings);
+  setAttributes({ nodes });
+
+  return <Tree nodes={nodes} />;
 };
