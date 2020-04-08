@@ -4,7 +4,7 @@
 import Tree from "./tree";
 
 export default ({ attributes }) => {
-  const { nodes } = attributes;
-
-  return <Tree nodes={nodes} />;
+  const { nodes, ordered } = attributes;
+  const ListType = ordered ? "ol" : "ul";
+  return <Tree nodes={nodes} ListType={ListType} />;
 };

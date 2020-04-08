@@ -1,17 +1,22 @@
 /**
+ * WordPress dependencies
+ */
+import { BlockControls } from "@wordpress/block-editor";
+import { ToolbarGroup } from "@wordpress/components";
+import { useDispatch, useSelect } from "@wordpress/data";
+import { useEffect } from "@wordpress/element";
+import { __ } from "@wordpress/i18n";
+import { formatListBullets, formatListNumbered } from "@wordpress/icons";
+
+/**
  * Internal dependencies
  */
 import Tree from "./tree";
 
 /**
- * WordPress dependencies
- */
-import { useDispatch, useSelect } from "@wordpress/data";
-
-/**
  * External dependencies
  */
-import { kebabCase } from "lodash";
+import { kebabCase, last } from "lodash";
 
 const node = block => ({
   children: [],
@@ -20,31 +25,32 @@ const node = block => ({
   content: block.attributes.content
 });
 
-const nestTree = blocks => {
-  const targetStack = [];
-  const rootNode = node({ attributes: { level: 0 } });
-  let prevNode = rootNode;
-  let target = rootNode;
-  for (let i = 0; i < blocks.length; i++) {
-    const currentNode = node(blocks[i]);
+const parent = stack => last(stack);
+const sibling = stack => last(parent(stack).children);
 
-    // if it has the same level, append it to target
-    if (currentNode.level === prevNode.level) {
-      target.children.push(currentNode);
-    } else if (currentNode.level > prevNode.level) {
-      // if it has a higher level, push target onto stack, set target to current children, append it to target
-      targetStack.push(prevNode);
-      target = prevNode;
-      target.children.push(currentNode);
-    } else if (currentNode.level < prevNode.level) {
-      // if it has a lower level, set target to stack pop value, append it to target
-      do {
-        target = targetStack.pop(); // TODO wrap in while loop
-      } while (target.level > currentNode.level);
-      target.children.push(currentNode);
+const nestTree = blocks => {
+  const rootNode = node({ attributes: { level: 0 } });
+  rootNode.children = [node(blocks[0])];
+  const nodeStack = [rootNode];
+  for (let i = 1; i < blocks.length; i++) {
+    const currentNode = node(blocks[i]);
+    let parentNode = parent(nodeStack);
+    let siblingNode = sibling(nodeStack);
+
+    if (currentNode.level === siblingNode.level) {
+      parentNode.children.push(currentNode);
+    } else if (siblingNode.level < currentNode.level) {
+      nodeStack.push(siblingNode);
+      siblingNode.children.push(currentNode);
+    } else if (currentNode.level < siblingNode.level) {
+      while (currentNode.level < siblingNode.level) {
+        siblingNode = nodeStack.pop();
+        parentNode = parent(nodeStack);
+      }
+      parentNode.children.push(currentNode);
     }
-    prevNode = currentNode;
   }
+
   return rootNode.children;
 };
 
@@ -58,7 +64,7 @@ const makeAnchor = (title, usedAnchors) => {
   return titleCandidate;
 };
 
-export default ({ setAttributes }) => {
+export default ({ attributes, setAttributes }) => {
   const { updateBlockAttributes } = useDispatch("core/editor");
 
   const { headings, anchors } = useSelect(select => {
@@ -93,7 +99,37 @@ export default ({ setAttributes }) => {
   });
 
   const nodes = nestTree(headings);
-  setAttributes({ nodes });
+  useEffect(() => {
+    setAttributes({ nodes });
+  }, [...headings]);
 
-  return <Tree nodes={nodes} />;
+  const ListType = attributes.ordered ? "ol" : "ul";
+
+  return (
+    <>
+      <BlockControls>
+        <ToolbarGroup
+          controls={[
+            {
+              icon: formatListBullets,
+              title: __("Convert to unordered list"),
+              isActive: ListType === "ul",
+              onClick() {
+                setAttributes({ ordered: false });
+              }
+            },
+            {
+              icon: formatListNumbered,
+              title: __("Convert to ordered list"),
+              isActive: ListType === "ol",
+              onClick() {
+                setAttributes({ ordered: true });
+              }
+            }
+          ]}
+        />
+      </BlockControls>
+      <Tree nodes={nodes} ListType={ListType} />
+    </>
+  );
 };

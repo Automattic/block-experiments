@@ -1,21 +1,21 @@
-const Tree = ({ nodes }) => {
+const Tree = ({ nodes, ListType }) => {
   if (!nodes || !nodes.length) {
     return null;
   }
 
   return (
-    <ul>
+    <ListType>
       {nodes.map(node => {
         const { children, anchor, content } = node;
 
         return (
           <li key={anchor}>
             <a href={"#" + anchor}>{content}</a>
-            <Tree nodes={children} />
+            <Tree nodes={children} ListType={ListType} />
           </li>
         );
       })}
-    </ul>
+    </ListType>
   );
 };
 
