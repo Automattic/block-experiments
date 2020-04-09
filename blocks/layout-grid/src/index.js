@@ -13,7 +13,7 @@ import editGrid from './grid/edit';
 import saveGrid from './grid/save';
 import editColumn from './grid-column/edit';
 import saveColumn from './grid-column/save';
-import { GridIcon } from './icons';
+import { GridIcon, GridColumnIcon } from './icons';
 import { getSpanForDevice, getOffsetForDevice, DEVICE_BREAKPOINTS, MAX_COLUMNS } from './constants';
 
 function getColumnAttributes( total, breakpoints ) {
@@ -92,7 +92,7 @@ export function registerBlock() {
 	registerBlockType( 'jetpack/layout-grid-column', {
 		description: __( 'A column used inside a Layout Grid block.', 'layout-grid' ),
 		title: __( 'Column', 'layout-grid' ),
-		icon: GridIcon,
+		icon: GridColumnIcon,
 		category: 'layout',
 		parent: [ 'jetpack/layout-grid' ],
 		supports: {
