@@ -159,7 +159,8 @@
 [data-type="jetpack/layout-grid"] {
 
 	// New vertical appearance.
-	.components-resizable-box__side-handle {
+	.wpcom-overlay-resize__handle .components-resizable-box__side-handle,
+	.wp-blocks-jetpack-layout-grid__resize-handles .components-resizable-box__side-handle {
 		// Make the circle a pill shape instead.
 		&::after {
 			width: 8px;
@@ -181,8 +182,9 @@
 	// Provide special treatment for the drag handles when the end-gutters are enabled, as they will otherwise cause scrollbars.
 	.wp-block-jetpack-layout-gutter__nowrap {
 
-		.components-resizable-box__side-handle.components-resizable-box__handle-right {
-			right: 0;
+		.wpcom-overlay-resize__handle .components-resizable-box__side-handle.components-resizable-box__handle-right,
+		.wp-blocks-jetpack-layout-grid__resize-handles .components-resizable-box__side-handle.components-resizable-box__handle-right {
+				right: 0;
 
 			&::before,
 			&::after {
@@ -190,7 +192,8 @@
 			}
 		}
 
-		.components-resizable-box__side-handle.components-resizable-box__handle-left {
+		.wpcom-overlay-resize__handle .components-resizable-box__side-handle.components-resizable-box__handle-left,
+		.wp-blocks-jetpack-layout-grid__resize-handles .components-resizable-box__side-handle.components-resizable-box__handle-left {
 			left: 0;
 
 			&::before,
