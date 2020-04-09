@@ -32,7 +32,7 @@ function getColumnAttributes( total, breakpoints ) {
 export function registerBlock() {
 	registerBlockType( 'jetpack/layout-grid', {
 		title: __( 'Layout Grid', 'layout-grid' ),
-		description: __( 'Align blocks to to a global grid, with support for responsive breakpoints.', 'layout-grid' ),
+		description: __( 'Align blocks to a global grid, with support for responsive breakpoints.', 'layout-grid' ),
 		icon: GridIcon,
 		category: 'layout',
 		supports: {
