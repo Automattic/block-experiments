@@ -5,6 +5,9 @@
 		"ListType": {
 			"type": "string",
 			"default": "ol"
+		},
+		"nodes": {
+			"type": "array"
 		}
 	}
 }
