@@ -83,7 +83,7 @@ class Edit extends Component {
 		return (
 			<div className={ classes } style={ style }>
 				<span className="wp-blocks-jetpack-layout-grid__resize-handles">
-					<div
+					<div 
 						className="components-resizable-box__handle components-resizable-box__side-handle components-resizable-box__handle-right"
 						onMouseDown={ this.onRightIn }
 						data-resize-right

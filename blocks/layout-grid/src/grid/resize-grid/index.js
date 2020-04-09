@@ -11,7 +11,7 @@ import classnames from 'classnames';
 import { Component, createRef } from '@wordpress/element';
 
 /**
- * Local dependencies
+ * Internal dependencies
  */
 
 import findNearest from './nearest';
@@ -191,7 +191,7 @@ class ResizeGrid extends Component {
 
 		return (
 			<div className={ classes } onMouseDown={ this.onMouseDown } onTouchStart={ this.onMouseDown } ref={ this.containerRef }>
-				{ resizingColumn !== -1 && <ResizeHandle height={ height } xPos={ xPos } top={ this.state.top } isSelected={ isSelected } /> }
+				{ resizingColumn !== -1 && <ResizeHandle direction={ this.state.direction } height={ height } xPos={ xPos } top={ this.state.top } isSelected={ isSelected } /> }
 				{ children }
 			</div>
 		);

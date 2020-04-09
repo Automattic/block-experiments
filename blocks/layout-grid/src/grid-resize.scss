@@ -12,37 +12,10 @@
 	width: 100%;
 	height: 100%;
 	touch-action: none;
-	// When resizing we switch to absolute positioning
-	&:not(.wpcom-resize-grid__resizing) {
-		display: grid;
-		grid-gap: 24px;
-		grid-template-columns: $grid-desktop;
 
-		// This padding adds end gutters.
-		padding-left: 24px;
-		padding-right: 24px;
-	}
-
-	// Reset inherited negative margins.
-	// These margins are in the block editor to compensate for the 14px block padding on all blocks.
-	// They don't play well with CSS Grid, so we reset them, and re-apply them later.
-	margin-left: 0;
-	margin-right: 0;
-
-	// Every block, including nested blocks, are born with an intrinsic minimum margin.
-	// This resets that for the containers, which aren't meant to have that intrinsically.
-	> .wp-block > .block-editor-block-list__block-edit > [data-block] {
-		margin-top: 0;
-		margin-bottom: 0;
-	}
-
+	// Likely necessary to override bleed from themes.
 	.wp-block {
 		max-width: none;
-	}
-
-	&.wpcom-resize-grid__resizing .wpcom-resize-grid__column-resizing {
-		position: absolute !important;
-		height: 100%;
 	}
 }
 
@@ -79,46 +52,4 @@
 
 body.is-resizing [data-type="jetpack/layout-grid"] {
 	overflow: inherit;
-}
-
-
-/**
- * Scale down the Grid Block when Selected.
- */
-
-
-// When the block is selected, we scale it down to make room for the side UI.
-// This becomes unnecessary with https://github.com/WordPress/gutenberg/pull/19344.
-// @todo Revisit/remove for 5.4.
-
-// This rule is for newer versions of the plugin and WordPress 5.4.
-[data-type="jetpack/layout-grid"][data-align="full"].has-child-selected,
-[data-type="jetpack/layout-grid"][data-align="full"].is-selected,
-body.is-resizing [data-type="jetpack/layout-grid"][data-align="full"] {
-	width: 100%;
-	margin-left: auto;
-	margin-right: auto;
-
-	&::before {
-		border-right-width: 1px;
-	}
-
-	// @todo Remove for 5.4, as it won't be necessary.
-	.block-editor-block-list__block-edit::before {
-		border-right-width: 1px;
-	}
-}
-
-// This rule is for older versions of the plugin and WordPress 5.3.
-[data-type="jetpack/layout-grid"][data-align="full"].has-child-selected,
-[data-type="jetpack/layout-grid"][data-align="full"].is-selected,
-body.is-resizing [data-type="jetpack/layout-grid"][data-align="full"] {
-	> .block-editor-block-list__block-edit {
-		width: calc( 100% + 30px + 30px + 8px ); // The 30 are from the canvas side padding (58px) minus the width of the side UI (28px).
-
-		// Make an exception for the group, which zeroes out a margin we need.
-		.wp-block-group & {
-			width: calc( 100% - 28px - 28px - 8px );
-		}
-	}
 }
