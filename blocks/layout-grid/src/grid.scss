@@ -148,7 +148,7 @@
 }
 
 // These colors are copied from upstream Gutenberg to ensure opacities when the theme is dark.
-// @todo Revisit/remove for 5.4.
+// @todo: Can be removed when the G2 UI is merged, likely 5.5.
 $dark-opacity-light-800: rgba(#425863, 0.4);
 $light-opacity-light-800: rgba(#fff, 0.45);
 
@@ -164,7 +164,7 @@ $light-opacity-light-800: rgba(#fff, 0.45);
 		left: 0;
 		right: 0;
 
-		border-color:  $dark-opacity-light-800;
+		border-color: $dark-opacity-light-800;
 		border-left: 1px dashed $dark-opacity-light-800;
 		border-style: dashed;
 		border-width: 1px;

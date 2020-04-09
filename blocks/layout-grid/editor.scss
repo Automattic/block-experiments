@@ -21,29 +21,12 @@
 	margin: 0;
 	padding-left: 0;
 	padding-right: 0;
-
-	// 3. Unset for contents of container.
-	// @todo Revisit/remove for 5.4.
-	> .block-editor-block-list__block-edit {
-		padding-left: 0;
-		margin-left: 0;
-		padding-right: 0;
-		margin-right: 0;
-	}
 }
 
 
 /**
  * Visual Glitches
  */
-
-[data-type="jetpack/layout-grid"] {
-	// Pending refinements, hide the v6.3 dashed outlines on grid children, they aren't helpful here.
-	// @todo Revisit/remove for 5.4.
-	.block-editor-block-list__block:not(.is-selected) > .block-editor-block-list__block-edit::before {
-		border-color: transparent !important;
-	}
-}
 
 // Make sure each column is full height in the editor, as it is on the frontend.
 [data-type="jetpack/layout-grid-column"] > .block-editor-block-list__block-edit,
@@ -68,49 +51,10 @@
 	align-items: center;
 
 	// Fit available space.
-	// This rule is for newer versions of the plugin and WordPress 5.4.
-	> div {
+	.is-block-content {
 		width: 100%;
 	}
-
-	// This rule is for older versions of the plugin and WordPress 5.3.
-	// @todo Revisit/remove for 5.4.
-	> .block-editor-block-list__block-edit {
-		transition: all .1s ease;
-
-		// The 58px here come from the padding applied to the body container.
-		// @todo, consider a more upgrade friendly method so this doesn't need to be aware of Gutenberg changes.
-		width: calc( 100% + 58px + 58px );
-
-		// Make an exception for the group, which zeroes out a margin we need.
-		.wp-block-group & {
-			width: 100%;
-		}
-	}
 }
-
-// Try hiding the alignments dropdown.
-// The grid is only consistent across blocks, if every grid block has the same alignment, ideally full-wide.
-[data-type="jetpack/layout-grid"] > .block-editor-block-list__block-edit > .block-editor-block-contextual-toolbar > .block-editor-block-toolbar > .block-editor-block-switcher + .block-editor-block-toolbar__slot {
-	display: none;
-}
-
-// Hide the hover style & breadcrumbs for individual column containers.
-// This helps simplify the experience for resizing columns.
-// The hover effect may be removed entirely upstream, in which case we can remove this.
-// @todo Revisit/remove for 5.4.
-[data-type="jetpack/layout-grid-column"].is-hovered > .block-editor-block-list__block-edit {
-	// Don't show breadcrumbs.
-	> .block-editor-block-list__breadcrumb {
-		display: none;
-	}
-
-	// Don't show outline.
-	&::before {
-		content: none;
-	}
-}
-
 
 /**
  * Inspector Controls
@@ -186,8 +130,8 @@
 	font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
 	font-size: 13px;
 	position: absolute;
-	bottom: -24px - 14px;
-	left: -3px;
+	bottom: -24px;
+	left: 0;
 	padding: 0 8px;
 	height: 24px;
 	background-color: rgba(0,0,0,0.8);
@@ -198,4 +142,62 @@
 [data-type="jetpack/layout-grid"].has-child-selected .jetpack-layout-grid-previewing,
 [data-type="jetpack/layout-grid"].is-selected .jetpack-layout-grid-previewing {
 	display: block;
+}
+
+
+/**
+ * Redesign resize handles to handle literal edge cases.
+ */
+
+[data-type="jetpack/layout-grid"] {
+
+	// New vertical appearance.
+	.components-resizable-box__side-handle {
+		// Make the circle a pill shape instead.
+		&::after {
+			width: 8px;
+			border: none;
+			border-radius: 2px;
+			height: 24px;
+			top: calc(50% - 12px);
+			right: calc(50% - 4px);
+		}
+
+		// Adjust the vertical separator.
+		&::before {
+			width: 2px;
+			right: calc(50% - 1px);
+			border: none;
+		}
+	}
+
+	// Provide special treatment for the drag handles when the end-gutters are enabled, as they will otherwise cause scrollbars.
+	.wp-block-jetpack-layout-gutter__nowrap {
+
+		.components-resizable-box__side-handle.components-resizable-box__handle-right {
+			right: 0;
+
+			&::before,
+			&::after {
+				right: 0;
+			}
+		}
+
+		.components-resizable-box__side-handle.components-resizable-box__handle-left {
+			left: 0;
+
+			&::before,
+			&::after {
+				left: 0;
+			}
+		}
+
+		// On 5.4, when end-gutters are untoggled, collapse the left and right borders.
+		// This avoids a horizontal scrollbar that would otherwise appear.
+		// @todo: Can be removed when the G2 UI is merged, likely 5.5.
+		.wp-block::before {
+			right: 0;
+			left: 0;
+		}
+	}
 }
