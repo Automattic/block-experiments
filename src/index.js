@@ -29,6 +29,7 @@ import * as layoutGridBlock from '../blocks/layout-grid/src';
 import * as motionBackgroundBlock from '../blocks/motion-background/src';
 import * as richImageTools from '../blocks/rich-image/src';
 import * as starscapeBlock from '../blocks/starscape/src';
+import * as tocBlock from '../blocks/toc/src';
 
 // Instantiate the blocks, adding them to our block category
 bauhausCentenaryBlock.registerBlock();
@@ -38,3 +39,5 @@ layoutGridBlock.registerBlock();
 motionBackgroundBlock.registerBlock();
 richImageTools.registerBlock();
 starscapeBlock.registerBlock();
+tocBlock.registerBlock();
+

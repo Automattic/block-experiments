@@ -1,0 +1,10 @@
+{
+	"name": "jetpack/toc",
+	"category": "layout",
+	"attributes": {
+		"ListType": {
+			"type": "string",
+			"default": "ol"
+		}
+	}
+}
