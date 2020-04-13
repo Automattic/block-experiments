@@ -165,9 +165,10 @@
 		&::after {
 			width: 8px;
 			border: none;
-			border-radius: 2px;
+			border-radius: 0;
 			height: 24px;
-			top: calc(50% - 12px);
+			top: 50%;
+			transform: translateY(-50%);
 			right: calc(50% - 4px);
 		}
 

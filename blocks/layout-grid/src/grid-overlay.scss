@@ -23,60 +23,127 @@
 	bottom: 0;
 	right: 0;
 	display: grid;
-	grid-gap: 24px;
+	grid-gap: $grid-gutter;
 	grid-template-columns: $grid-desktop;
 
 	// This padding adds end gutters.
-	padding-left: 24px;
-	padding-right: 24px;
+	padding-left: $grid-gutter;
+	padding-right: $grid-gutter;
 
 	// Lower the z-index so it's under the block borders.
 	z-index: 0;
 
+	// Colorize for dark themes also.
+	color: rgba(0,0,0,0.03);
+	.is-dark-theme & {
+		color: rgba(255,255,255,0.15);
+	}
+
+	// Solid gutter shading.
 	.wpcom-overlay-grid__column {
-		border-left: 1px solid transparent;
-		border-right: 1px solid transparent;
 		transition: border .4s ease;
 
+		// Default gutter.
 		.has-child-selected &,
 		.is-hovered &,
 		.is-selected & {
-			border-left: 1px solid #e2e4e7;
-			border-right: 1px solid #e2e4e7;
+			box-shadow:
+			-($grid-gutter / 2) 0 0 0 currentColor,
+			($grid-gutter / 2) 0 0 0 currentColor;
+		}
+
+		// No gutter.
+		.wp-block-jetpack-layout-gutter__none & {
+			.has-child-selected &,
+			.is-hovered &,
+			.is-selected & {
+				box-shadow:
+				-1px 0 0 0 currentColor,
+				1px 0 0 0 currentColor;
+			}
+		}
+
+		// Small gutter.
+		.wp-block-jetpack-layout-gutter__small & {
+			.has-child-selected &,
+			.is-hovered &,
+			.is-selected & {
+				box-shadow:
+				-($grid-gutter-small / 2) 0 0 0 currentColor,
+				($grid-gutter-small / 2) 0 0 0 currentColor;
+			}
+		}
+
+		// Medium gutter.
+		.wp-block-jetpack-layout-gutter__medium & {
+			.has-child-selected &,
+			.is-hovered &,
+			.is-selected & {
+				box-shadow:
+				-($grid-gutter-medium / 2) 0 0 0 currentColor,
+				($grid-gutter-medium / 2) 0 0 0 currentColor;
+			}
+		}
+		
+		// Huge gutter.
+		.wp-block-jetpack-layout-gutter__huge & {
+			.has-child-selected &,
+			.is-hovered &,
+			.is-selected & {
+				box-shadow:
+				-($grid-gutter-huge / 2) 0 0 0 currentColor,
+				($grid-gutter-huge / 2) 0 0 0 currentColor;
+			}
 		}
 	}
 }
 
+// End gutters and gap.
+.wpcom-overlay-grid {
+	box-shadow:
+	inset -#{ $grid-gutter-large / 2 } 0 0 0 currentColor,
+	inset #{ $grid-gutter-large / 2 } 0 0 0 currentColor;
+}
+
 .wp-block-jetpack-layout-gutter__none .wpcom-overlay-grid {
 	grid-gap: $grid-gutter-none;
-	padding-left: $padding-none;
-	padding-right: $padding-none;
+	padding-left: $grid-gutter;
+	padding-right: $grid-gutter;
 }
 
 .wp-block-jetpack-layout-gutter__small .wpcom-overlay-grid {
 	grid-gap: $grid-gutter-small;
-	padding-left: $padding-small;
-	padding-right: $padding-small;
+	padding-left: $grid-gutter-small;
+	padding-right: $grid-gutter-small;
+
+	box-shadow:
+	inset -#{ $grid-gutter-small / 2 } 0 0 0 currentColor,
+	inset #{ $grid-gutter-small / 2 } 0 0 0 currentColor;
 }
 
 .wp-block-jetpack-layout-gutter__medium .wpcom-overlay-grid {
 	grid-gap: $grid-gutter-medium;
-	padding-left: $padding-medium;
-	padding-right: $padding-medium;
+	padding-left: $grid-gutter-medium;
+	padding-right: $grid-gutter-medium;
+
+	box-shadow:
+	inset -#{ $grid-gutter-medium / 2 } 0 0 0 currentColor,
+	inset #{ $grid-gutter-medium / 2 } 0 0 0 currentColor;
 }
 
 .wp-block-jetpack-layout-gutter__huge .wpcom-overlay-grid {
 	grid-gap: $grid-gutter-huge;
-	padding-left: $padding-huge;
-	padding-right: $padding-huge;
+	padding-left: $grid-gutter-huge;
+	padding-right: $grid-gutter-huge;
+
+	box-shadow:
+	inset -#{ $grid-gutter-huge / 2 } 0 0 0 currentColor,
+	inset #{ $grid-gutter-huge / 2 } 0 0 0 currentColor;
 }
 
 .wp-block-jetpack-layout-gutter__nowrap .wpcom-overlay-grid {
-	padding-left: $padding-none;
-	padding-right: $padding-none;
-}
+	padding-left: $grid-gutter-none;
+	padding-right: $grid-gutter-none;
 
-body.is-resizing .wpcom-overlay-grid .wpcom-overlay-grid__column {
-	border-left: 1px solid #e2e4e7;
-	border-right: 1px solid #e2e4e7;
+	box-shadow: none;
 }
