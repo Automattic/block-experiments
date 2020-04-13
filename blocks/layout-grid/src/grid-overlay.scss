@@ -23,16 +23,18 @@
 	bottom: 0;
 	right: 0;
 	display: grid;
-	grid-gap: 24px;
+	grid-gap: $grid-gutter;
 	grid-template-columns: $grid-desktop;
 
 	// This padding adds end gutters.
-	padding-left: 24px;
-	padding-right: 24px;
+	padding-left: $grid-gutter;
+	padding-right: $grid-gutter;
 
 	// Lower the z-index so it's under the block borders.
 	z-index: 0;
 
+	/*
+	// Previous border-gutter indicator.
 	.wpcom-overlay-grid__column {
 		border-left: 1px solid transparent;
 		border-right: 1px solid transparent;
@@ -43,6 +45,75 @@
 		.is-selected & {
 			border-left: 1px solid #e2e4e7;
 			border-right: 1px solid #e2e4e7;
+		}
+	}
+	*/
+
+	// Solid gutter shading.
+	.wpcom-overlay-grid__column {
+		transition: border .4s ease;
+		color: rgba(0,0,0,0.03);
+
+		.is-dark-theme & {
+			color: rgba(255,255,255,0.15);
+		}
+
+		// Default gutter.
+		.has-child-selected &,
+		.is-hovered &,
+		.is-selected & {
+
+			box-shadow:
+			-($grid-gutter / 2) 0 0 0 currentColor,
+			($grid-gutter / 2) 0 0 0 currentColor;
+		}
+
+		// No gutter.
+		.wp-block-jetpack-layout-gutter__none & {
+			.has-child-selected &,
+			.is-hovered &,
+			.is-selected & {
+	
+				box-shadow:
+				-1px 0 0 0 currentColor,
+				1px 0 0 0 currentColor;
+			}
+		}
+
+		// Small gutter.
+		.wp-block-jetpack-layout-gutter__small & {
+			.has-child-selected &,
+			.is-hovered &,
+			.is-selected & {
+	
+				box-shadow:
+				-($grid-gutter-small / 2) 0 0 0 currentColor,
+				($grid-gutter-small / 2) 0 0 0 currentColor;
+			}
+		}
+
+		// Medium gutter.
+		.wp-block-jetpack-layout-gutter__medium & {
+			.has-child-selected &,
+			.is-hovered &,
+			.is-selected & {
+	
+				box-shadow:
+				-($grid-gutter-medium / 2) 0 0 0 currentColor,
+				($grid-gutter-medium / 2) 0 0 0 currentColor;
+			}
+		}
+		
+		// Huge gutter.
+		.wp-block-jetpack-layout-gutter__huge & {
+			.has-child-selected &,
+			.is-hovered &,
+			.is-selected & {
+	
+				box-shadow:
+				-($grid-gutter-huge / 2) 0 0 0 currentColor,
+				($grid-gutter-huge / 2) 0 0 0 currentColor;
+			}
 		}
 	}
 }
