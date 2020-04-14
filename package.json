@@ -41,6 +41,7 @@
     "stringcase": "^4.3.1"
   },
   "dependencies": {
+    "@wordpress/prettier-config": "^0.1.0",
     "classnames": "^2.2.6",
     "fast-average-color": "^6.0.2",
     "react-image-crop": "^8.6.2",
