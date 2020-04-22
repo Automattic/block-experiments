@@ -17,6 +17,12 @@ import {
 	RichText,
 	withColors,
 } from '@wordpress/block-editor';
+import {
+	FocalPointPicker,
+	PanelBody,
+	PanelRow,
+	Button,
+} from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { __experimentalGetSettings, dateI18n } from '@wordpress/date';
 
@@ -24,7 +30,6 @@ import { __experimentalGetSettings, dateI18n } from '@wordpress/date';
  * Internal dependencies
  */
 import DateSelect from './date-select';
-import { EditImageIcon } from './icons';
 
 const ALLOWED_MEDIA_TYPES = [ 'image' ];
 const ACCEPT_MEDIA_TYPES = 'image/*';
@@ -39,11 +44,22 @@ const Edit = ( {
 	isSelected,
 } ) => {
 	const settings = __experimentalGetSettings();
+
+	const classNames = [ textColor.class, backgroundColor.class ];
 	const style = {
 		color: textColor.color,
 		backgroundColor: backgroundColor.color,
 	};
-	const classNames = [ textColor.class, backgroundColor.class ];
+	const imgStyle = {
+		backgroundImage:
+			attributes.eventImageURL && `url(${ attributes.eventImageURL })`,
+		backgroundPosition:
+			attributes.focalPoint &&
+			`${ attributes.focalPoint.x * 100 }% ${ attributes.focalPoint.y *
+				100 }%`,
+		backgroundSize: 'cover',
+	};
+
 	const onSelectMedia = ( media ) => {
 		setAttributes( {
 			eventImageId: media.id,
@@ -64,6 +80,35 @@ const Edit = ( {
 				/>
 			</BlockControls>
 			<InspectorControls>
+				{ attributes.eventImageURL && (
+					<PanelBody title={ __( 'Media settings' ) }>
+						<FocalPointPicker
+							label={ __( 'Focal point picker' ) }
+							url={ attributes.eventImageURL }
+							value={ attributes.focalPoint }
+							onChange={ ( focalPoint ) =>
+								setAttributes( { focalPoint } )
+							}
+						/>
+						<PanelRow>
+							<Button
+								isSecondary
+								isSmall
+								className="block-library-cover__reset-button"
+								onClick={ () =>
+									setAttributes( {
+										eventImageURL: undefined,
+										eventImageId: undefined,
+										eventImageAlt: undefined,
+										focalPoint: undefined,
+									} )
+								}
+							>
+								{ __( 'Clear Media' ) }
+							</Button>
+						</PanelRow>
+					</PanelBody>
+				) }
 				<PanelColorSettings
 					title={ __( 'Color Settings' ) }
 					initialOpen
@@ -157,12 +202,10 @@ const Edit = ( {
 					</div>
 				</div>
 				{ attributes.eventImageURL ? (
-					<div className="event__image event__image--save">
-						<img
-							src={ attributes.eventImageURL }
-							alt={ attributes.eventImageAlt }
-						/>
-					</div>
+					<div
+						className="event__image event__image--save"
+						style={ imgStyle }
+					/>
 				) : (
 					<div className="event__image">
 						<MediaPlaceholder

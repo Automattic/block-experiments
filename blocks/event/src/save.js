@@ -22,14 +22,23 @@ import DateSelect from './date-select';
 const Save = ( { attributes } ) => {
 	const settings = __experimentalGetSettings();
 
-	const style = {
-		color: attributes.customTextColor,
-		backgroundColor: attributes.customBackgroundColor,
-	};
 	const classNames = [
 		getColorClassName( 'color', attributes.textColor ),
 		getColorClassName( 'background-color', attributes.backgroundColor ),
 	];
+	const style = {
+		color: attributes.customTextColor,
+		backgroundColor: attributes.customBackgroundColor,
+	};
+	const imgStyle = {
+		backgroundImage:
+			attributes.eventImageURL && `url(${ attributes.eventImageURL })`,
+		backgroundPosition:
+			attributes.focalPoint &&
+			`${ attributes.focalPoint.x * 100 }% ${ attributes.focalPoint.y *
+				100 }%`,
+		backgroundSize: 'cover',
+	};
 
 	return (
 		<div
@@ -67,12 +76,10 @@ const Save = ( { attributes } ) => {
 				<InnerBlocks.Content className="event__description" />
 			</div>
 			{ attributes.eventImageURL && (
-				<div className="event__image event__image--save">
-					<img
-						src={ attributes.eventImageURL }
-						alt={ attributes.eventImageAlt }
-					/>
-				</div>
+				<div
+					className="event__image event__image--save"
+					style={ imgStyle }
+				/>
 			) }
 		</div>
 	);

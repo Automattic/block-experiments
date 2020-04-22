@@ -44,6 +44,9 @@ export function registerBlock() {
 				type: 'string',
 				default: '',
 			},
+			focalPoint: {
+				type: 'object',
+			},
 			backgroundColor: {
 				type: 'string',
 			},
