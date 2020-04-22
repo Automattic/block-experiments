@@ -34,7 +34,6 @@
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-wpcalypso": "^4.1.0",
     "fs-extra": "^9.0.0",
-    "mkdirp": "^1.0.4",
     "node-sass": "^4.13.1",
     "postcss-cli": "^7.1.0",
     "replace-in-file": "^5.0.2",
