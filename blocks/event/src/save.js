@@ -81,6 +81,8 @@ const Save = ( { attributes } ) => {
 			</div>
 			{ attributes.eventImageURL && (
 				<div
+					role="img"
+					aria-label={ attributes.eventImageAlt }
 					className="event__image event__image--save"
 					style={ imgStyle }
 				/>
