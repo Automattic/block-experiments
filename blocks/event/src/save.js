@@ -59,7 +59,9 @@ const Save = ( { attributes } ) => {
 				/>
 				{ attributes.eventStart && (
 					<div className="event__time">
-						<span className="event__label">{ __( 'When:' ) }</span>
+						<span className="event__label">
+							{ __( 'When:', 'event' ) }
+						</span>
 						<DateSelect.Content
 							className="event__date-select"
 							dateFormat={ settings.formats.datetimeAbbreviated }
@@ -69,7 +71,9 @@ const Save = ( { attributes } ) => {
 				) }
 				{ attributes.eventLocation && (
 					<div className="event__location">
-						<span className="event__label">{ __( 'Where:' ) }</span>
+						<span className="event__label">
+							{ __( 'Where:', 'event' ) }
+						</span>
 						<RichText.Content value={ attributes.eventLocation } />
 					</div>
 				) }

@@ -81,9 +81,9 @@ const Edit = ( {
 			</BlockControls>
 			<InspectorControls>
 				{ attributes.eventImageURL && (
-					<PanelBody title={ __( 'Media settings' ) }>
+					<PanelBody title={ __( 'Media settings', 'event' ) }>
 						<FocalPointPicker
-							label={ __( 'Focal point picker' ) }
+							label={ __( 'Focal point picker', 'event' ) }
 							url={ attributes.eventImageURL }
 							value={ attributes.focalPoint }
 							onChange={ ( focalPoint ) =>
@@ -104,24 +104,24 @@ const Edit = ( {
 									} )
 								}
 							>
-								{ __( 'Clear Media' ) }
+								{ __( 'Clear Media', 'event' ) }
 							</Button>
 						</PanelRow>
 					</PanelBody>
 				) }
 				<PanelColorSettings
-					title={ __( 'Color Settings' ) }
+					title={ __( 'Color Settings', 'event' ) }
 					initialOpen
 					colorSettings={ [
 						{
 							value: backgroundColor.color,
 							onChange: setBackgroundColor,
-							label: __( 'Background Color' ),
+							label: __( 'Background Color', 'event' ),
 						},
 						{
 							value: textColor.color,
 							onChange: setTextColor,
-							label: __( 'Text Color' ),
+							label: __( 'Text Color', 'event' ),
 						},
 					] }
 				>
@@ -152,10 +152,12 @@ const Edit = ( {
 						onChange={ ( eventTitle ) =>
 							setAttributes( { eventTitle } )
 						}
-						placeholder={ __( 'Event Title' ) }
+						placeholder={ __( 'Event Title', 'event' ) }
 					/>
 					<div className="event__time">
-						<span className="event__label">{ __( 'When:' ) }</span>
+						<span className="event__label">
+							{ __( 'When:', 'event' ) }
+						</span>
 						{ attributes.eventStart && ! isSelected ? (
 							<DateSelect.Content
 								className="event__date-select"
@@ -174,12 +176,14 @@ const Edit = ( {
 								onChange={ ( eventStart ) =>
 									setAttributes( { eventStart } )
 								}
-								placeholder={ __( 'Choose a Date' ) }
+								placeholder={ __( 'Choose a Date', 'event' ) }
 							/>
 						) }
 					</div>
 					<div className="event__location">
-						<span className="event__label">{ __( 'Where:' ) }</span>
+						<span className="event__label">
+							{ __( 'Where:', 'event' ) }
+						</span>
 						<RichText
 							value={ attributes.eventLocation }
 							multiline="false"
@@ -187,7 +191,7 @@ const Edit = ( {
 							onChange={ ( eventLocation ) =>
 								setAttributes( { eventLocation } )
 							}
-							placeholder={ __( 'Event Location' ) }
+							placeholder={ __( 'Event Location', 'event' ) }
 						/>
 					</div>
 					<div className="event__description">
@@ -209,7 +213,7 @@ const Edit = ( {
 				) : (
 					<div className="event__image">
 						<MediaPlaceholder
-							labels={ { title: __( 'Event Image' ) } }
+							labels={ { title: __( 'Event Image', 'event' ) } }
 							allowedTypes={ ALLOWED_MEDIA_TYPES }
 							accept={ ACCEPT_MEDIA_TYPES }
 							onSelect={ onSelectMedia }

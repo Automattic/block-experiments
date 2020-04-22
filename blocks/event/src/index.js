@@ -17,8 +17,8 @@ import Save from './save';
 
 export function registerBlock() {
 	registerBlockType( 'a8c/event', {
-		title: __( 'Event' ),
-		description: __( 'Show the time and location of an event.' ),
+		title: __( 'Event', 'event' ),
+		description: __( 'Show the time and location of an event.', 'event' ),
 		icon: <Icon />,
 		category: 'widgets',
 		supports: {
