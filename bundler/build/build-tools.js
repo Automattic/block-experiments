@@ -95,7 +95,7 @@ function copyBlocks( { blocks, resource }, targetDir ) {
 
 			replace.sync( {
 				files: targetFile,
-				from: /wpcom-blocks/g,
+				from: /block-experiments/g,
 				to: spinalcase( resource ),
 			} );
 
