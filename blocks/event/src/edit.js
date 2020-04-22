@@ -42,10 +42,7 @@ const Edit = ( {
 		color: textColor.color,
 		backgroundColor: backgroundColor.color,
 	};
-	const classNames = [
-		textColor.class,
-		backgroundColor.class,
-	];
+	const classNames = [ textColor.class, backgroundColor.class ];
 
 	return (
 		<>
@@ -88,10 +85,9 @@ const Edit = ( {
 				style={ style }
 			>
 				<div
-					className={ classnames(
-						'event__details',
-						{ 'has-custom-color': textColor.color }
-					) }
+					className={ classnames( 'event__details', {
+						'has-custom-color': textColor.color,
+					} ) }
 				>
 					<div className="event__datebox">
 						<span>{ dateI18n( 'M', attributes.eventStart ) }</span>
@@ -102,7 +98,9 @@ const Edit = ( {
 						className="event__title"
 						value={ attributes.eventTitle }
 						keepPlaceholderOnFocus
-						onChange={ ( eventTitle ) => setAttributes( { eventTitle } ) }
+						onChange={ ( eventTitle ) =>
+							setAttributes( { eventTitle } )
+						}
 						placeholder={ __( 'Event Title' ) }
 					/>
 					<div className="event__time">
@@ -110,15 +108,21 @@ const Edit = ( {
 						{ attributes.eventStart && ! isSelected ? (
 							<DateSelect.Content
 								className="event__date-select"
-								dateFormat={ settings.formats.datetimeAbbreviated }
+								dateFormat={
+									settings.formats.datetimeAbbreviated
+								}
 								value={ attributes.eventStart }
 							/>
 						) : (
 							<DateSelect
 								className="event__date-select"
-								dateFormat={ settings.formats.datetimeAbbreviated }
+								dateFormat={
+									settings.formats.datetimeAbbreviated
+								}
 								value={ attributes.eventStart }
-								onChange={ ( eventStart ) => setAttributes( { eventStart } ) }
+								onChange={ ( eventStart ) =>
+									setAttributes( { eventStart } )
+								}
 								placeholder={ __( 'Choose a Date' ) }
 							/>
 						) }
@@ -129,14 +133,19 @@ const Edit = ( {
 							value={ attributes.eventLocation }
 							multiline="false"
 							keepPlaceholderOnFocus
-							onChange={ ( eventLocation ) => setAttributes( { eventLocation } ) }
+							onChange={ ( eventLocation ) =>
+								setAttributes( { eventLocation } )
+							}
 							placeholder={ __( 'Event Location' ) }
 						/>
 					</div>
 					<div className="event__description">
 						<InnerBlocks
 							template={ [
-								[ 'core/paragraph', { placeholder: 'Event Description' } ],
+								[
+									'core/paragraph',
+									{ placeholder: 'Event Description' },
+								],
 							] }
 						/>
 					</div>
@@ -154,12 +163,14 @@ const Edit = ( {
 							labels={ { title: __( 'Event Image' ) } }
 							allowedTypes={ [ 'image' ] }
 							multiple={ false }
-							mediaPreview={ isEditing && (
-								<img
-									src={ attributes.eventImage }
-									alt={ attributes.eventImageAlt }
-								/>
-							) }
+							mediaPreview={
+								isEditing && (
+									<img
+										src={ attributes.eventImage }
+										alt={ attributes.eventImageAlt }
+									/>
+								)
+							}
 							onSelect={ ( { url, alt } ) => {
 								setAttributes( {
 									eventImage: url,
@@ -171,9 +182,12 @@ const Edit = ( {
 								setAttributes( { eventImage } );
 								setIsEditing( false );
 							} }
-							onCancel={ attributes.eventImage && ( () => {
-								setIsEditing( false );
-							} ) }
+							onCancel={
+								attributes.eventImage &&
+								( () => {
+									setIsEditing( false );
+								} )
+							}
 						/>
 					</div>
 				) }

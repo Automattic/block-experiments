@@ -6,7 +6,11 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-import { InnerBlocks, RichText, getColorClassName } from '@wordpress/block-editor';
+import {
+	InnerBlocks,
+	RichText,
+	getColorClassName,
+} from '@wordpress/block-editor';
 import { __experimentalGetSettings, dateI18n } from '@wordpress/date';
 import { __ } from '@wordpress/i18n';
 
@@ -28,7 +32,10 @@ const Save = ( { attributes } ) => {
 	];
 
 	return (
-		<div className={ classnames( 'wp-block-a8c-event', classNames ) } style={ style } >
+		<div
+			className={ classnames( 'wp-block-a8c-event', classNames ) }
+			style={ style }
+		>
 			<div className="event__details">
 				{ attributes.eventStart && (
 					<div className="event__datebox">
