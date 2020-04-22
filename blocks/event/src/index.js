@@ -21,7 +21,9 @@ export function registerBlock() {
 		description: __( 'Show the time and location of an event.' ),
 		icon: <Icon />,
 		category: 'widgets',
-		example: {},
+		supports: {
+			align: true,
+		},
 		attributes: {
 			eventTitle: {
 				type: 'string',
