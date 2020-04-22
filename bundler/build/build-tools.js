@@ -1,6 +1,5 @@
 const path = require( 'path' );
 const fs = require( 'fs-extra' );
-const mkdirp = require( 'mkdirp' );
 const { camelcase, spinalcase } = require( 'stringcase' );
 const replace = require( 'replace-in-file' );
 
@@ -57,14 +56,13 @@ function buildStyle( blocks, title, fileType ) {
 }
 
 function storeFile( contents, fileName ) {
-	mkdirp( path.dirname( fileName ), function( error ) {
-		if ( error ) {
+	fs.mkdirp( path.dirname( fileName ) )
+		.then( function() {
+			fs.writeFileSync( fileName, contents );
+		} )
+		.catch( function() {
 			console.error( 'Unable to create directory: ' + fileName );
-			return;
-		}
-
-		fs.writeFileSync( fileName, contents );
-	} );
+		});
 }
 
 function copyExtra( sourceDir, targetDir ) {
@@ -85,21 +83,20 @@ function copyBlocks( { blocks, resource }, targetDir ) {
 		const targetFile = path.join( targetDir, 'blocks', blocks[ index ] + '.php' );
 		const manifest = path.join( 'blocks', blocks[ index ] );
 
-		mkdirp( path.dirname( targetFile ), function( error ) {
-			if ( error ) {
+		fs.mkdirp( path.dirname( targetFile ) )
+			.then( function() {
+				fs.copySync( sourceFile, targetFile );
+
+				replace.sync( {
+					files: targetFile,
+					from: /block-experiments/g,
+					to: spinalcase( resource ),
+				} );
+
+				copyExtra( manifest, path.join( targetDir, 'blocks' ) );
+			} )
+			.catch( function( error ) {
 				console.error( 'Unable to create directory: ' + targetFile );
-				return;
-			}
-
-			fs.copySync( sourceFile, targetFile );
-
-			replace.sync( {
-				files: targetFile,
-				from: /wpcom-blocks/g,
-				to: spinalcase( resource ),
-			} );
-
-			copyExtra( manifest, path.join( targetDir, 'blocks' ) );
 		} );
 	}
 }
@@ -122,8 +119,11 @@ function packageBundle( { resource, version } ) {
 		`mv plugin/${ versioned }.zip bundles/${ versioned }.zip`,
 	];
 
-	fs.writeFileSync( './build/bundle.sh', lines.join( '\n' ) );
-	fs.chmodSync( './build/bundle.sh', 0755 );
+	fs.mkdirp( 'build' )
+		.then( function() {
+			fs.writeFileSync( './build/bundle.sh', lines.join( '\n' ) );
+			fs.chmodSync( './build/bundle.sh', 0755 );
+		} );
 }
 
 module.exports = {
