@@ -66,10 +66,10 @@ const Save = ( { attributes } ) => {
 				) }
 				<InnerBlocks.Content className="event__description" />
 			</div>
-			{ attributes.eventImage && (
+			{ attributes.eventImageURL && (
 				<div className="event__image event__image--save">
 					<img
-						src={ attributes.eventImage }
+						src={ attributes.eventImageURL }
 						alt={ attributes.eventImageAlt }
 					/>
 				</div>

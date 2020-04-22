@@ -32,7 +32,10 @@ export function registerBlock() {
 			eventStart: {
 				type: 'string',
 			},
-			eventImage: {
+			eventImageId: {
+				type: 'number',
+			},
+			eventImageURL: {
 				type: 'string',
 			},
 			eventImageAlt: {

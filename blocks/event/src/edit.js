@@ -1,7 +1,6 @@
 /**
  * External dependencies
  */
-import { useState } from 'react';
 import classnames from 'classnames';
 
 /**
@@ -13,11 +12,11 @@ import {
 	InnerBlocks,
 	InspectorControls,
 	MediaPlaceholder,
+	MediaReplaceFlow,
 	PanelColorSettings,
 	RichText,
 	withColors,
 } from '@wordpress/block-editor';
-import { Toolbar, IconButton } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { __experimentalGetSettings, dateI18n } from '@wordpress/date';
 
@@ -26,6 +25,9 @@ import { __experimentalGetSettings, dateI18n } from '@wordpress/date';
  */
 import DateSelect from './date-select';
 import { EditImageIcon } from './icons';
+
+const ALLOWED_MEDIA_TYPES = [ 'image' ];
+const ACCEPT_MEDIA_TYPES = 'image/*';
 
 const Edit = ( {
 	attributes,
@@ -37,25 +39,29 @@ const Edit = ( {
 	isSelected,
 } ) => {
 	const settings = __experimentalGetSettings();
-	const [ isEditing, setIsEditing ] = useState( false );
 	const style = {
 		color: textColor.color,
 		backgroundColor: backgroundColor.color,
 	};
 	const classNames = [ textColor.class, backgroundColor.class ];
+	const onSelectMedia = ( media ) => {
+		setAttributes( {
+			eventImageId: media.id,
+			eventImageURL: media.url,
+			eventImageAlt: media.alt,
+		} );
+	};
 
 	return (
 		<>
 			<BlockControls>
-				{ attributes.eventImage && (
-					<Toolbar>
-						<IconButton
-							label={ __( 'Edit image' ) }
-							icon={ <EditImageIcon /> }
-							onClick={ () => setIsEditing( true ) }
-						/>
-					</Toolbar>
-				) }
+				<MediaReplaceFlow
+					mediaId={ attributes.eventImageId }
+					mediaURL={ attributes.eventImageURL }
+					allowedTypes={ ALLOWED_MEDIA_TYPES }
+					accept={ ACCEPT_MEDIA_TYPES }
+					onSelect={ onSelectMedia }
+				/>
 			</BlockControls>
 			<InspectorControls>
 				<PanelColorSettings
@@ -150,10 +156,10 @@ const Edit = ( {
 						/>
 					</div>
 				</div>
-				{ attributes.eventImage && ! isEditing ? (
+				{ attributes.eventImageURL ? (
 					<div className="event__image event__image--save">
 						<img
-							src={ attributes.eventImage }
+							src={ attributes.eventImageURL }
 							alt={ attributes.eventImageAlt }
 						/>
 					</div>
@@ -161,33 +167,12 @@ const Edit = ( {
 					<div className="event__image">
 						<MediaPlaceholder
 							labels={ { title: __( 'Event Image' ) } }
-							allowedTypes={ [ 'image' ] }
-							multiple={ false }
-							mediaPreview={
-								isEditing && (
-									<img
-										src={ attributes.eventImage }
-										alt={ attributes.eventImageAlt }
-									/>
-								)
-							}
-							onSelect={ ( { url, alt } ) => {
-								setAttributes( {
-									eventImage: url,
-									eventImageAlt: alt,
-								} );
-								setIsEditing( false );
+							allowedTypes={ ALLOWED_MEDIA_TYPES }
+							accept={ ACCEPT_MEDIA_TYPES }
+							onSelect={ onSelectMedia }
+							onSelectURL={ ( eventImageURL ) => {
+								setAttributes( { eventImageURL } );
 							} }
-							onSelectURL={ ( eventImage ) => {
-								setAttributes( { eventImage } );
-								setIsEditing( false );
-							} }
-							onCancel={
-								attributes.eventImage &&
-								( () => {
-									setIsEditing( false );
-								} )
-							}
 						/>
 					</div>
 				) }
