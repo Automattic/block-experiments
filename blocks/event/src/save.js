@@ -77,7 +77,9 @@ const Save = ( { attributes } ) => {
 						<RichText.Content value={ attributes.eventLocation } />
 					</div>
 				) }
-				<InnerBlocks.Content className="event__description" />
+				<div className="event__description">
+					<InnerBlocks.Content className="event__description" />
+				</div>
 			</div>
 			{ attributes.eventImageURL && (
 				<div

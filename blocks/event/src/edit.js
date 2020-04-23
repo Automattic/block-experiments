@@ -94,7 +94,6 @@ const Edit = ( {
 							<Button
 								isSecondary
 								isSmall
-								className="block-library-cover__reset-button"
 								onClick={ () =>
 									setAttributes( {
 										eventImageURL: undefined,
