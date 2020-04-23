@@ -50,6 +50,10 @@
 	flex-direction: column;
 	align-items: center;
 
+	// Some themes override this.
+	margin-left: 0;
+	margin-right: 0;
+
 	// Fit available space.
 	.is-block-content {
 		width: 100%;
