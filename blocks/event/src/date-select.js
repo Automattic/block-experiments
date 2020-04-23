@@ -32,7 +32,9 @@ const DateSelect = ( {
 
 DateSelect.Content = ( { value, dateFormat, className } ) =>
 	value && (
-		<span className={ className }>{ dateI18n( dateFormat, value ) }</span>
+		<time className={ className } dateTime={ dateI18n( 'c', value ) }>
+			{ dateI18n( dateFormat, value ) }
+		</time>
 	);
 
 export default DateSelect;
