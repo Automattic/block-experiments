@@ -16,6 +16,10 @@ Let everyone know about the events going on. Whether you're hosting or attending
 
 You can follow development, file an issue, suggest features, and view the source at the Github repo: <a href="https://github.com/Automattic/block-experiments">https://github.com/Automattic/block-experiments</a>
 
+== Screenshots ==
+
+1. Event Block
+
 == Changelog ==
 
 = 1.0.0 - 17th February 2020 =
