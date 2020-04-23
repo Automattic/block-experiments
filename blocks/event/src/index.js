@@ -22,7 +22,7 @@ export function registerBlock() {
 		icon: <Icon />,
 		category: 'widgets',
 		supports: {
-			align: true,
+			align: [ 'center', 'wide' ],
 		},
 		attributes: {
 			eventTitle: {
