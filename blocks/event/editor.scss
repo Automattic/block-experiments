@@ -6,6 +6,8 @@
 
 	// Fixes for overriding editor styles
 	.editor-styles-wrapper & {
+		text-align: left;
+
 		p {
 			font-family: inherit;
 		}
