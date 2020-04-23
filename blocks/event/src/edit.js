@@ -1,7 +1,6 @@
 /**
  * External dependencies
  */
-import { useState } from 'react';
 import classnames from 'classnames';
 
 /**
@@ -13,11 +12,17 @@ import {
 	InnerBlocks,
 	InspectorControls,
 	MediaPlaceholder,
+	MediaReplaceFlow,
 	PanelColorSettings,
 	RichText,
 	withColors,
 } from '@wordpress/block-editor';
-import { Toolbar, IconButton } from '@wordpress/components';
+import {
+	FocalPointPicker,
+	PanelBody,
+	PanelRow,
+	Button,
+} from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { __experimentalGetSettings, dateI18n } from '@wordpress/date';
 
@@ -25,7 +30,9 @@ import { __experimentalGetSettings, dateI18n } from '@wordpress/date';
  * Internal dependencies
  */
 import DateSelect from './date-select';
-import { EditImageIcon } from './icons';
+
+const ALLOWED_MEDIA_TYPES = [ 'image' ];
+const ACCEPT_MEDIA_TYPES = 'image/*';
 
 const Edit = ( {
 	attributes,
@@ -37,43 +44,87 @@ const Edit = ( {
 	isSelected,
 } ) => {
 	const settings = __experimentalGetSettings();
-	const [ isEditing, setIsEditing ] = useState( false );
+
+	const classNames = [ textColor.class, backgroundColor.class ];
 	const style = {
 		color: textColor.color,
 		backgroundColor: backgroundColor.color,
 	};
-	const classNames = [
-		textColor.class,
-		backgroundColor.class,
-	];
+	const imgStyle = {
+		backgroundImage:
+			attributes.eventImageURL && `url(${ attributes.eventImageURL })`,
+		backgroundPosition:
+			attributes.focalPoint &&
+			`${ attributes.focalPoint.x * 100 }% ${ attributes.focalPoint.y *
+				100 }%`,
+		backgroundSize: 'cover',
+	};
+
+	const onSelectImage = ( media ) => {
+		setAttributes( {
+			eventImageId: media.id,
+			eventImageURL: media.url,
+			eventImageAlt: media.alt,
+		} );
+	};
+	const onSelectImageURL = ( eventImageURL ) => {
+		setAttributes( { eventImageURL } );
+	};
 
 	return (
 		<>
 			<BlockControls>
-				{ attributes.eventImage && (
-					<Toolbar>
-						<IconButton
-							label={ __( 'Edit image' ) }
-							icon={ <EditImageIcon /> }
-							onClick={ () => setIsEditing( true ) }
-						/>
-					</Toolbar>
-				) }
+				<MediaReplaceFlow
+					mediaId={ attributes.eventImageId }
+					mediaURL={ attributes.eventImageURL }
+					allowedTypes={ ALLOWED_MEDIA_TYPES }
+					accept={ ACCEPT_MEDIA_TYPES }
+					onSelect={ onSelectImage }
+					onSelectURL={ onSelectImageURL }
+				/>
 			</BlockControls>
 			<InspectorControls>
+				{ attributes.eventImageURL && (
+					<PanelBody title={ __( 'Media settings', 'event' ) }>
+						<FocalPointPicker
+							label={ __( 'Focal point picker', 'event' ) }
+							url={ attributes.eventImageURL }
+							value={ attributes.focalPoint }
+							onChange={ ( focalPoint ) =>
+								setAttributes( { focalPoint } )
+							}
+						/>
+						<PanelRow>
+							<Button
+								isSecondary
+								isSmall
+								onClick={ () =>
+									setAttributes( {
+										eventImageURL: undefined,
+										eventImageId: undefined,
+										eventImageAlt: undefined,
+										focalPoint: undefined,
+									} )
+								}
+							>
+								{ __( 'Clear Media', 'event' ) }
+							</Button>
+						</PanelRow>
+					</PanelBody>
+				) }
 				<PanelColorSettings
-					title={ __( 'Color Settings' ) }
+					title={ __( 'Color Settings', 'event' ) }
 					initialOpen
 					colorSettings={ [
 						{
 							value: backgroundColor.color,
 							onChange: setBackgroundColor,
-							label: __( 'Background Color' ),
+							label: __( 'Background Color', 'event' ),
 						},
 						{
 							value: textColor.color,
 							onChange: setTextColor,
-							label: __( 'Text Color' ),
+							label: __( 'Text Color', 'event' ),
 						},
 					] }
 				>
@@ -84,14 +135,13 @@ const Edit = ( {
 				</PanelColorSettings>
 			</InspectorControls>
 			<div
-				className={ classnames( 'wp-block-jetpack-event', classNames ) }
+				className={ classnames( 'wp-block-a8c-event', classNames ) }
 				style={ style }
 			>
 				<div
-					className={ classnames(
-						'event__details',
-						{ 'has-custom-color': textColor.color }
-					) }
+					className={ classnames( 'event__details', {
+						'has-custom-color': textColor.color,
+					} ) }
 				>
 					<div className="event__datebox">
 						<span>{ dateI18n( 'M', attributes.eventStart ) }</span>
@@ -102,78 +152,77 @@ const Edit = ( {
 						className="event__title"
 						value={ attributes.eventTitle }
 						keepPlaceholderOnFocus
-						onChange={ ( eventTitle ) => setAttributes( { eventTitle } ) }
-						placeholder={ __( 'Event Title' ) }
+						onChange={ ( eventTitle ) =>
+							setAttributes( { eventTitle } )
+						}
+						placeholder={ __( 'Event Title', 'event' ) }
 					/>
 					<div className="event__time">
-						<span className="event__label">{ __( 'When:' ) }</span>
+						<span className="event__label">
+							{ __( 'When:', 'event' ) }
+						</span>
 						{ attributes.eventStart && ! isSelected ? (
 							<DateSelect.Content
 								className="event__date-select"
-								dateFormat={ settings.formats.datetimeAbbreviated }
+								dateFormat={
+									settings.formats.datetimeAbbreviated
+								}
 								value={ attributes.eventStart }
 							/>
 						) : (
 							<DateSelect
 								className="event__date-select"
-								dateFormat={ settings.formats.datetimeAbbreviated }
+								dateFormat={
+									settings.formats.datetimeAbbreviated
+								}
 								value={ attributes.eventStart }
-								onChange={ ( eventStart ) => setAttributes( { eventStart } ) }
-								placeholder={ __( 'Choose a Date' ) }
+								onChange={ ( eventStart ) =>
+									setAttributes( { eventStart } )
+								}
+								placeholder={ __( 'Choose a Date', 'event' ) }
 							/>
 						) }
 					</div>
 					<div className="event__location">
-						<span className="event__label">{ __( 'Where:' ) }</span>
+						<span className="event__label">
+							{ __( 'Where:', 'event' ) }
+						</span>
 						<RichText
 							value={ attributes.eventLocation }
 							multiline="false"
 							keepPlaceholderOnFocus
-							onChange={ ( eventLocation ) => setAttributes( { eventLocation } ) }
-							placeholder={ __( 'Event Location' ) }
+							onChange={ ( eventLocation ) =>
+								setAttributes( { eventLocation } )
+							}
+							placeholder={ __( 'Event Location', 'event' ) }
 						/>
 					</div>
 					<div className="event__description">
 						<InnerBlocks
 							template={ [
-								[ 'core/paragraph', { placeholder: 'Event Description' } ],
+								[
+									'core/paragraph',
+									{ placeholder: 'Event Description' },
+								],
 							] }
 						/>
 					</div>
 				</div>
-				{ attributes.eventImage && ! isEditing ? (
-					<div className="event__image event__image--save">
-						<img
-							src={ attributes.eventImage }
-							alt={ attributes.eventImageAlt }
-						/>
-					</div>
+				{ attributes.eventImageURL ? (
+					<div
+						role="img"
+						aria-label={ attributes.eventImageAlt }
+						className="event__image event__image--save"
+						style={ imgStyle }
+					/>
 				) : (
 					<div className="event__image">
 						<MediaPlaceholder
-							labels={ { title: __( 'Event Image' ) } }
-							allowedTypes={ [ 'image' ] }
-							multiple={ false }
-							mediaPreview={ isEditing && (
-								<img
-									src={ attributes.eventImage }
-									alt={ attributes.eventImageAlt }
-								/>
-							) }
-							onSelect={ ( { url, alt } ) => {
-								setAttributes( {
-									eventImage: url,
-									eventImageAlt: alt,
-								} );
-								setIsEditing( false );
-							} }
-							onSelectURL={ ( eventImage ) => {
-								setAttributes( { eventImage } );
-								setIsEditing( false );
-							} }
-							onCancel={ attributes.eventImage && ( () => {
-								setIsEditing( false );
-							} ) }
+							labels={ { title: __( 'Event Image', 'event' ) } }
+							allowedTypes={ ALLOWED_MEDIA_TYPES }
+							accept={ ACCEPT_MEDIA_TYPES }
+							onSelect={ onSelectImage }
+							onSelectURL={ onSelectImageURL }
 						/>
 					</div>
 				) }

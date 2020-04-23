@@ -1,19 +1,21 @@
 /* Editor styles */
-.wp-block-jetpack-event {
+.wp-block-a8c-event {
 	.event__date-select {
 		display: inline;
 	}
 
-	// Rich text color gets applied directly in the editor,
-	// so it only needs to be overridden here
-	.has-custom-color .rich-text {
-		color: inherit;
-	}
-}
+	// Fixes for overriding editor styles
+	.editor-styles-wrapper & {
+		text-align: left;
 
-// Fix so datetime picker doesn't have horizontal scrollbar.
-// This is a global fix, unscoped, and not very nice.
-// @todo: It won't be necessary once https://github.com/WordPress/gutenberg/pull/18235/files gets merged. 
-.components-datetime {
-	padding: 8px;
+		p {
+			font-family: inherit;
+		}
+
+		.event__title {
+			margin: 0 0 18px;
+			font-weight: 800;
+			line-height: 40px;
+		}
+	}
 }

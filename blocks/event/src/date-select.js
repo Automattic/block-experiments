@@ -4,7 +4,13 @@
 import { Button, DateTimePicker, Dropdown } from '@wordpress/components';
 import { dateI18n } from '@wordpress/date';
 
-const DateSelect = ( { placeholder, value, dateFormat, onChange, className } ) => (
+const DateSelect = ( {
+	placeholder,
+	value,
+	dateFormat,
+	onChange,
+	className,
+} ) => (
 	<Dropdown
 		className={ className }
 		position="bottom left"
@@ -19,18 +25,16 @@ const DateSelect = ( { placeholder, value, dateFormat, onChange, className } ) =
 			</Button>
 		) }
 		renderContent={ () => (
-			<DateTimePicker
-				currentDate={ value }
-				onChange={ onChange }
-			/>
+			<DateTimePicker currentDate={ value } onChange={ onChange } />
 		) }
 	/>
 );
 
-DateSelect.Content = ( { value, dateFormat, className } ) => value && (
-	<span className={ className }>
-		{ dateI18n( dateFormat, value ) }
-	</span>
-);
+DateSelect.Content = ( { value, dateFormat, className } ) =>
+	value && (
+		<time className={ className } dateTime={ dateI18n( 'c', value ) }>
+			{ dateI18n( dateFormat, value ) }
+		</time>
+	);
 
 export default DateSelect;

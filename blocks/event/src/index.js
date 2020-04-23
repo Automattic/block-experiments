@@ -16,12 +16,31 @@ import Edit from './edit';
 import Save from './save';
 
 export function registerBlock() {
-	registerBlockType( 'jetpack/event', {
-		title: __( 'Event' ),
-		description: __( 'Show the time and location of an event.' ),
+	registerBlockType( 'a8c/event', {
+		title: __( 'Event', 'event' ),
+		description: __( 'Show the time and location of an event.', 'event' ),
 		icon: <Icon />,
 		category: 'widgets',
-		example: {},
+		supports: {
+			align: [ 'center', 'wide' ],
+		},
+		example: {
+			attributes: {
+				eventTitle: 'Digging for Treasure',
+				eventLocation: 'Treasure Island',
+				eventStart: '1783-11-14T12:00:00',
+				eventImageId: 1,
+				eventImageURL:
+					'https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/TI-treasure.jpg/366px-TI-treasure.jpg',
+				eventImageAlt: 'Treasure',
+				focalPoint: {
+					x: '0.30',
+					y: '0.40',
+				},
+				customBackgroundColor: '#d4c5af',
+				align: 'wide',
+			},
+		},
 		attributes: {
 			eventTitle: {
 				type: 'string',
@@ -32,12 +51,18 @@ export function registerBlock() {
 			eventStart: {
 				type: 'string',
 			},
-			eventImage: {
+			eventImageId: {
+				type: 'number',
+			},
+			eventImageURL: {
 				type: 'string',
 			},
 			eventImageAlt: {
 				type: 'string',
 				default: '',
+			},
+			focalPoint: {
+				type: 'object',
 			},
 			backgroundColor: {
 				type: 'string',
