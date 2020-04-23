@@ -60,12 +60,15 @@ const Edit = ( {
 		backgroundSize: 'cover',
 	};
 
-	const onSelectMedia = ( media ) => {
+	const onSelectImage = ( media ) => {
 		setAttributes( {
 			eventImageId: media.id,
 			eventImageURL: media.url,
 			eventImageAlt: media.alt,
 		} );
+	};
+	const onSelectImageURL = ( eventImageURL ) => {
+		setAttributes( { eventImageURL } );
 	};
 
 	return (
@@ -76,7 +79,8 @@ const Edit = ( {
 					mediaURL={ attributes.eventImageURL }
 					allowedTypes={ ALLOWED_MEDIA_TYPES }
 					accept={ ACCEPT_MEDIA_TYPES }
-					onSelect={ onSelectMedia }
+					onSelect={ onSelectImage }
+					onSelectURL={ onSelectImageURL }
 				/>
 			</BlockControls>
 			<InspectorControls>
@@ -217,10 +221,8 @@ const Edit = ( {
 							labels={ { title: __( 'Event Image', 'event' ) } }
 							allowedTypes={ ALLOWED_MEDIA_TYPES }
 							accept={ ACCEPT_MEDIA_TYPES }
-							onSelect={ onSelectMedia }
-							onSelectURL={ ( eventImageURL ) => {
-								setAttributes( { eventImageURL } );
-							} }
+							onSelect={ onSelectImage }
+							onSelectURL={ onSelectImageURL }
 						/>
 					</div>
 				) }
