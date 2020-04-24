@@ -328,9 +328,8 @@ class Edit extends Component {
 								<Button
 									aria-expanded={ isOpen }
 									onClick={ onToggle }
-								>
-									{ getLayouts().find( ( layout ) => layout.value === selectedDevice ).label }
-								</Button>
+									icon={ getLayouts().find( ( layout ) => layout.value === selectedDevice ).icon }
+								/>
 							</ToolbarGroup>
 						) }
 						renderContent={ ( { onClose } ) => (
@@ -340,6 +339,7 @@ class Edit extends Component {
 										key={ layout.value }
 										isSelected={ layout.value === selectedDevice }
 										onClick={ () => this.setState( { selectedDevice: layout.value } ) }
+										icon={ layout.icon }
 									>
 										{ layout.label }
 									</MenuItem>

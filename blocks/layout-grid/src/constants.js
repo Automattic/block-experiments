@@ -3,6 +3,7 @@
  */
 
 import { __ } from '@wordpress/i18n';
+import { mobile, tablet, desktop } from '@wordpress/icons';
 
 function getSpacingValues() {
 	return [
@@ -45,9 +46,9 @@ export const DEVICE_TABLET = 'Tablet';
 export const DEVICE_MOBILE = 'Mobile';
 
 export const getLayouts = () => ( [
-	{ value: DEVICE_DESKTOP, label: __( 'Desktop', 'layout-grid' ) },
-	{ value: DEVICE_TABLET, label: __( 'Tablet', 'layout-grid' ) },
-	{ value: DEVICE_MOBILE, label: __( 'Mobile', 'layout-grid' ) },
+	{ value: DEVICE_DESKTOP, label: __( 'Desktop', 'layout-grid' ), icon: desktop },
+	{ value: DEVICE_TABLET, label: __( 'Tablet', 'layout-grid' ), icon: tablet  },
+	{ value: DEVICE_MOBILE, label: __( 'Mobile', 'layout-grid' ), icon: mobile },
 ] );
 
 export const MAX_COLUMNS = 4;
