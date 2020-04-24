@@ -56,9 +56,6 @@
 	display: flex;
 	flex-direction: column;
 
-	touch-action: none;
-	user-select: none;
-
 	@for $i from 1 through 12 {
 		@for $x from 1 through 4 {
 			&.column#{ $x }-grid__start-#{ $i } > .wpcom-resize-grid > .wp-block:nth-child(#{ $x }),
