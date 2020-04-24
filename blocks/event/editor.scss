@@ -2,6 +2,11 @@
 .wp-block-a8c-event {
 	.event__date-select {
 		display: inline;
+
+		.components-button {
+			height: auto;
+			background: white;
+		}
 	}
 
 	// Fixes for overriding editor styles
