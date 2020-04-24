@@ -16,7 +16,7 @@ add_action( 'init', function() {
 	wp_set_script_translations( 'jetpack/layout-grid', 'layout-grid' );
 } );
 
-add_action( 'wp_head', function() {
+add_action( 'wp_enqueue_scripts', function() {
 	wp_enqueue_style(
 		'wpcom-layout-grid-front',
 		plugins_url( 'front.css', __FILE__ ),
