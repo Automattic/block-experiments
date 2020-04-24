@@ -1,12 +1,12 @@
 === Event Block ===
 Contributors: automattic, ajlende, jasmussen
 Stable tag: 1.0.0
-Tested up to: 5.3.2
-Requires at least: 5.3
+Tested up to: 5.4
+Requires at least: 5.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Feature an event in your post
+Quickly create simple event cards and invitations
 
 == Description ==
 
@@ -22,5 +22,5 @@ You can follow development, file an issue, suggest features, and view the source
 
 == Changelog ==
 
-= 1.0.0 - 17th February 2020 =
+= 1.0.0 - 24th April 2020 =
 * Initial release
