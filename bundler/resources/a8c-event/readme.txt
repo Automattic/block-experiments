@@ -19,6 +19,7 @@ You can follow development, file an issue, suggest features, and view the source
 == Screenshots ==
 
 1. Event Block
+2. Customizing the Event Block
 
 == Changelog ==
 
