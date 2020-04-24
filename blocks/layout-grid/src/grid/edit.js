@@ -14,6 +14,7 @@ import {
 	InspectorControls,
 } from '@wordpress/block-editor';
 import { Component, createRef } from '@wordpress/element';
+import { BlockControls } from '@wordpress/block-editor';
 import {
 	PanelBody,
 	TextControl,
@@ -25,6 +26,10 @@ import {
 	ToggleControl,
 	SelectControl,
 	Disabled,
+	ToolbarGroup,
+	MenuGroup,
+	MenuItem,
+	Dropdown,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { ENTER, SPACE } from '@wordpress/keycodes';
@@ -153,16 +158,6 @@ class Edit extends Component {
 		return settings;
 	}
 
-	getPreviewText( device ) {
-		if ( device === 'Mobile' ) {
-			return __( 'Showing mobile layout', 'layout-grid' );
-		} else if ( device === 'Tablet' ) {
-			return __( 'Showing tablet layout', 'layout-grid' );
-		}
-
-		return __( 'Showing desktop layout', 'layout-grid' );
-	}
-
 	canResizeBreakpoint( device ) {
 		if ( this.overlayRef && this.overlayRef.current ) {
 			const { width } = this.overlayRef.current.getBoundingClientRect();
@@ -234,97 +229,125 @@ class Edit extends Component {
 		);
 
 		return (
-			<IsolatedEventContainer>
-				<ResizeGrid
-					className={ classes }
-					onResize={ this.onResize }
-					totalColumns={ getGridWidth( selectedDevice ) }
-					layoutGrid={ layoutGrid }
-					isSelected={ isSelected }
-				>
-					<div className="wpcom-overlay-grid" ref={ this.overlayRef }>
-						{ times( getGridWidth( selectedDevice ) ).map( ( item ) => <div className="wpcom-overlay-grid__column" key={ item }></div> ) }
-					</div>
+			<>
+				<IsolatedEventContainer>
+					<ResizeGrid
+						className={ classes }
+						onResize={ this.onResize }
+						totalColumns={ getGridWidth( selectedDevice ) }
+						layoutGrid={ layoutGrid }
+						isSelected={ isSelected }
+					>
+						<div className="wpcom-overlay-grid" ref={ this.overlayRef }>
+							{ times( getGridWidth( selectedDevice ) ).map( ( item ) => <div className="wpcom-overlay-grid__column" key={ item }></div> ) }
+						</div>
 
-					<InnerBlocks
-						template={ null }
-						templateLock="all"
-						allowedBlocks={ ALLOWED_BLOCKS }
-					/>
+						<InnerBlocks
+							template={ null }
+							templateLock="all"
+							allowedBlocks={ ALLOWED_BLOCKS }
+						/>
 
-					<InspectorControls>
-						<PanelBody title={ __( 'Layout', 'layout-grid' ) }>
-							<div className="jetpack-layout-grid-columns block-editor-block-styles">
-								{ getColumns().map( ( column ) => (
-									<div
-										key={ column.value }
-										className={ classnames(
-											'block-editor-block-styles__item', {
-												'is-active': columns === column.value,
-											}
-										) }
-										onClick={ () => this.onChangeLayout( column.value ) }
-										onKeyDown={ ( event ) => {
-											if ( ENTER === event.keyCode || SPACE === event.keyCode ) {
-												event.preventDefault();
-												this.onChangeLayout( column.value );
-											}
-										} }
-										role="button"
-										tabIndex="0"
-										aria-label={ column.label }
-									>
-										<div className="block-editor-block-styles__item-preview">
-											<ColumnIcon columns={ column.value } />
+						<InspectorControls>
+							<PanelBody title={ __( 'Layout', 'layout-grid' ) }>
+								<div className="jetpack-layout-grid-columns block-editor-block-styles">
+									{ getColumns().map( ( column ) => (
+										<div
+											key={ column.value }
+											className={ classnames(
+												'block-editor-block-styles__item', {
+													'is-active': columns === column.value,
+												}
+											) }
+											onClick={ () => this.onChangeLayout( column.value ) }
+											onKeyDown={ ( event ) => {
+												if ( ENTER === event.keyCode || SPACE === event.keyCode ) {
+													event.preventDefault();
+													this.onChangeLayout( column.value );
+												}
+											} }
+											role="button"
+											tabIndex="0"
+											aria-label={ column.label }
+										>
+											<div className="block-editor-block-styles__item-preview">
+												<ColumnIcon columns={ column.value } />
+											</div>
+											<div className="editor-block-styles__item-label block-editor-block-styles__item-label">
+												{ column.label }
+											</div>
 										</div>
-										<div className="editor-block-styles__item-label block-editor-block-styles__item-label">
-											{ column.label }
-										</div>
-									</div>
-								) ) }
-							</div>
+									) ) }
+								</div>
 
-							<p><em>{ __( 'Changing the number of columns will reset your layout and could remove content.', 'layout-grid' ) }</em></p>
-						</PanelBody>
+								<p><em>{ __( 'Changing the number of columns will reset your layout and could remove content.', 'layout-grid' ) }</em></p>
+							</PanelBody>
 
-						<PanelBody title={ __( 'Responsive Breakpoints', 'layout-grid' ) }>
-							<p><em>{ __( "Note that previewing your post will show your browser's breakpoint, not the currently selected one.", 'layout-grid' ) }</em></p>
-							<ButtonGroup>
+							<PanelBody title={ __( 'Responsive Breakpoints', 'layout-grid' ) }>
+								<p><em>{ __( "Note that previewing your post will show your browser's breakpoint, not the currently selected one.", 'layout-grid' ) }</em></p>
+								<ButtonGroup>
+									{ getLayouts().map( ( layout ) => (
+										<Button
+											key={ layout.value }
+											isPrimary={ layout.value === selectedDevice }
+											onClick={ () => this.onChangeDevice( layout.value ) }
+										>
+											{ layout.label }
+										</Button>
+									) ) }
+								</ButtonGroup>
+
+								{ this.renderDeviceSettings( columns, selectedDevice, attributes ) }
+							</PanelBody>
+
+							<PanelBody title={ __( 'Gutter', 'layout-grid' ) }>
+								<p>{ __( 'Gutter size', 'layout-grid' ) }</p>
+
+								<SelectControl
+									value={ gutterSize }
+									onChange={ newValue => setAttributes( { gutterSize: newValue, addGutterEnds: newValue === 'none' ? false : addGutterEnds } ) }
+									options={ getGutterValues() }
+								/>
+
+								{ gutterSize === 'none' ? (
+									<Disabled>
+										{ toggleControl }
+									</Disabled>
+								) : toggleControl }
+
+							</PanelBody>
+						</InspectorControls>
+					</ResizeGrid>
+				</IsolatedEventContainer>
+
+				<BlockControls>
+					<Dropdown
+						renderToggle={ ( { isOpen, onToggle } ) => (
+							<ToolbarGroup>
+								<Button
+									aria-expanded={ isOpen }
+									onClick={ onToggle }
+								>
+									{ getLayouts().find( ( layout ) => layout.value === selectedDevice ).label }
+								</Button>
+							</ToolbarGroup>
+						) }
+						renderContent={ ( { onClose } ) => (
+							<MenuGroup>
 								{ getLayouts().map( ( layout ) => (
-									<Button
+									<MenuItem
 										key={ layout.value }
-										isPrimary={ layout.value === selectedDevice }
-										onClick={ () => this.onChangeDevice( layout.value ) }
+										isSelected={ layout.value === selectedDevice }
+										onClick={ () => this.setState( { selectedDevice: layout.value } ) }
 									>
 										{ layout.label }
-									</Button>
+									</MenuItem>
 								) ) }
-							</ButtonGroup>
-
-							{ this.renderDeviceSettings( columns, selectedDevice, attributes ) }
-						</PanelBody>
-
-						<PanelBody title={ __( 'Gutter', 'layout-grid' ) }>
-							<p>{ __( 'Gutter size', 'layout-grid' ) }</p>
-
-							<SelectControl
-								value={ gutterSize }
-								onChange={ newValue => setAttributes( { gutterSize: newValue, addGutterEnds: newValue === 'none' ? false : addGutterEnds } ) }
-								options={ getGutterValues() }
-							/>
-
-							{ gutterSize === 'none' ? (
-								<Disabled>
-									{ toggleControl }
-								</Disabled>
-							) : toggleControl }
-
-						</PanelBody>
-					</InspectorControls>
-
-					<div className="jetpack-layout-grid-previewing">{ this.getPreviewText( selectedDevice ) }</div>
-				</ResizeGrid>
-			</IsolatedEventContainer>
+							</MenuGroup>
+						) }
+					/>
+				</BlockControls>
+			</>
 		);
 	}
 }
