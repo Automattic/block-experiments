@@ -133,25 +133,6 @@
 	}
 }
 
-.jetpack-layout-grid-previewing {
-	font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
-	font-size: 13px;
-	position: absolute;
-	bottom: -24px;
-	left: 0;
-	padding: 0 8px;
-	height: 24px;
-	background-color: rgba(0,0,0,0.8);
-	color: #fff;
-	display: none;
-}
-
-[data-type="jetpack/layout-grid"].has-child-selected .jetpack-layout-grid-previewing,
-[data-type="jetpack/layout-grid"].is-selected .jetpack-layout-grid-previewing {
-	display: block;
-}
-
-
 /**
  * Redesign resize handles to handle literal edge cases.
  */
