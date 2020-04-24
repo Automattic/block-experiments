@@ -322,7 +322,6 @@ class Edit extends Component {
 
 				<BlockControls>
 					<Dropdown
-						popoverProps={ ( { isAlternate: true } ) }
 						renderToggle={ ( { isOpen, onToggle } ) => (
 							<ToolbarGroup>
 								<Button
