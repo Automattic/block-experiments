@@ -1,8 +1,8 @@
 === Layout Grid Block ===
 Contributors: automattic, jasmussen, johnny5, mkaz
-Stable tag: 1.1
+Stable tag: 1.2
 Tested up to: 5.4
-Requires at least: 5.3
+Requires at least: 5.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -22,6 +22,13 @@ You can follow development, file an issue, suggest features, and view the source
 2. Three column grid with resize handles.
 
 == Changelog ==
+
+= 1.2 - 27th April 2020
+* Move the selected breakpoint to the toolbar and allow it to be toggled
+* Bump minimum WordPress version to 5.4
+* Improve drag handle behaviour
+* Fix multi-select inside grid blocks
+* Fix output of grid front-end CSS
 
 = 1.1 - 10th March 2020 =
 * Add option to disable start and end gutters for full-bleed layout
