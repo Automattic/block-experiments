@@ -29,6 +29,7 @@ You can follow development, file an issue, suggest features, and view the source
 * Improve drag handle behaviour
 * Fix multi-select inside grid blocks
 * Fix output of grid front-end CSS
+* Fix issue with sizing being off when full-wide
 
 = 1.1 - 10th March 2020 =
 * Add option to disable start and end gutters for full-bleed layout
