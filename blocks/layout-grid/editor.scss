@@ -50,6 +50,8 @@
 	flex-direction: column;
 
 	// Fit available space.
+	// @todo: keep an eye on this element. It appears to be commonly refactored.
+	> div,
 	.is-block-content {
 		width: 100%;
 	}
