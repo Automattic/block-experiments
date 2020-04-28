@@ -48,9 +48,10 @@
 	// We use flex to center here, because the margins are already being used.
 	display: flex;
 	flex-direction: column;
-	align-items: center;
 
 	// Fit available space.
+	// @todo: keep an eye on this element. It appears to be commonly refactored.
+	> div,
 	.is-block-content {
 		width: 100%;
 	}
