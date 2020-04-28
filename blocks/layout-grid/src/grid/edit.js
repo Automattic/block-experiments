@@ -398,6 +398,7 @@ export default compose( [
 			const blockCopy = createBlock( ownProps.name, {
 				...ownProps.attributes,
 				...columnValues,
+				className: removeGridClasses( ownProps.attributes.className ),
 			}, innerBlocks );
 
 			replaceBlock( clientId, blockCopy );
