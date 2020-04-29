@@ -79,7 +79,18 @@ const Edit = ( { attributes, setAttributes, className } ) => {
 					data-color3={ attributes.color3 }
 					data-color4={ attributes.color4 }
 				/>
-				<InnerBlocks />
+				<InnerBlocks
+					template={ [
+						[
+							'core/paragraph',
+							{
+								align: 'center',
+								fontSize: 'large',
+								placeholder: __( 'Write title…' ),
+							},
+						],
+					] }
+				/>
 			</div>
 		</>
 	);
