@@ -23,13 +23,14 @@ You can follow development, file an issue, suggest features, and view the source
 
 == Changelog ==
 
-= 1.2 - 27th April 2020
+= 1.2 - 29th April 2020
 * Move the selected breakpoint to the toolbar and allow it to be toggled
 * Bump minimum WordPress version to 5.4
 * Improve drag handle behaviour
 * Fix multi-select inside grid blocks
 * Fix output of grid front-end CSS
 * Fix issue with sizing being off when full-wide
+* Fix old classes being added when column layout changes
 
 = 1.1 - 10th March 2020 =
 * Add option to disable start and end gutters for full-bleed layout
