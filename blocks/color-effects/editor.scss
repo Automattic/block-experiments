@@ -1,0 +1,9 @@
+/* Editor styles */
+
+.wp-block-a8c-color-effects {
+	[data-align='left'] > &,
+	[data-align='right'] > & {
+		max-width: 290px;
+		width: 100%;
+	}
+}
