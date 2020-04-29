@@ -26,6 +26,10 @@
 		}
 	}
 
+	&__inner-container {
+		width: calc( 100% - 70px );
+	}
+
 	// Apply max-width to floated items that have no intrinsic width
 	&.alignleft,
 	&.alignright {

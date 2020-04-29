@@ -9,8 +9,14 @@ import classnames from 'classnames';
 import { InnerBlocks } from '@wordpress/block-editor';
 
 const Save = ( { attributes } ) => {
+	const minHeightWithUnit = attributes.minHeightUnit
+		? `${ attributes.minHeight }${ attributes.minHeightUnit }`
+		: attributes.minHeight;
+	const style = {
+		minHeight: minHeightWithUnit || undefined,
+	};
 	return (
-		<div>
+		<div style={ style }>
 			<canvas
 				data-complexity={ attributes.complexity }
 				data-mouse-speed={ attributes.mouseSpeed }
@@ -20,7 +26,9 @@ const Save = ( { attributes } ) => {
 				data-color3={ attributes.color3 }
 				data-color4={ attributes.color4 }
 			/>
-			<InnerBlocks.Content />
+			<div className="wp-block-a8c-color-effects__inner-container">
+				<InnerBlocks.Content />
+			</div>
 		</div>
 	);
 };

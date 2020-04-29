@@ -44,6 +44,12 @@ export const registerBlock = () => {
 			color4: {
 				type: 'string',
 			},
+			minHeight: {
+				type: 'number',
+			},
+			minHeightUnit: {
+				type: 'string',
+			},
 		},
 		edit: Edit,
 		save: Save,

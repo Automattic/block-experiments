@@ -5,11 +5,129 @@ import {
 	InspectorControls,
 	PanelColorSettings,
 	InnerBlocks,
+	__experimentalUnitControl as UnitControl,
 } from '@wordpress/block-editor';
-import { PanelBody, RangeControl } from '@wordpress/components';
+import {
+	PanelBody,
+	RangeControl,
+	ResizableBox,
+	BaseControl,
+} from '@wordpress/components';
+import { compose, withInstanceId, useInstanceId } from '@wordpress/compose';
+import { withDispatch } from '@wordpress/data';
+import { useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
-const Edit = ( { attributes, setAttributes, className } ) => {
+const MIN_HEIGHT = 50;
+
+const CSS_UNITS = [
+	{ value: 'px', label: 'px', default: 430 },
+	{ value: 'em', label: 'em', default: 20 },
+	{ value: 'rem', label: 'rem', default: 20 },
+	{ value: 'vw', label: 'vw', default: 20 },
+	{ value: 'vh', label: 'vh', default: 50 },
+];
+
+const RESIZABLE_BOX_ENABLE_OPTION = {
+	top: false,
+	right: false,
+	bottom: true,
+	left: false,
+	topRight: false,
+	bottomRight: false,
+	bottomLeft: false,
+	topLeft: false,
+};
+
+function HeightInput( { onChange, onUnitChange, unit = 'px', value = '' } ) {
+	const [ temporaryInput, setTemporaryInput ] = useState( null );
+	const instanceId = useInstanceId( UnitControl );
+	const inputId = `a8c-color-effects-height-input-${ instanceId }`;
+	const isPx = unit === 'px';
+
+	const handleOnChange = ( unprocessedValue ) => {
+		const inputValue =
+			unprocessedValue !== ''
+				? parseInt( unprocessedValue, 10 )
+				: undefined;
+
+		if ( isNaN( inputValue ) && inputValue !== undefined ) {
+			setTemporaryInput( unprocessedValue );
+			return;
+		}
+		setTemporaryInput( null );
+		onChange( inputValue );
+	};
+
+	const handleOnBlur = () => {
+		if ( temporaryInput !== null ) {
+			setTemporaryInput( null );
+		}
+	};
+
+	const inputValue = temporaryInput !== null ? temporaryInput : value;
+	const min = isPx ? MIN_HEIGHT : 0;
+
+	return (
+		<BaseControl label={ __( 'Minimum height of cover' ) } id={ inputId }>
+			<UnitControl
+				id={ inputId }
+				min={ min }
+				onBlur={ handleOnBlur }
+				onChange={ handleOnChange }
+				onUnitChange={ onUnitChange }
+				step="1"
+				style={ { maxWidth: 80 } }
+				unit={ unit }
+				units={ CSS_UNITS }
+				value={ inputValue }
+			/>
+		</BaseControl>
+	);
+}
+
+function ResizableCover( {
+	children,
+	onResizeStart,
+	onResize,
+	onResizeStop,
+	showHandle,
+} ) {
+	return (
+		<ResizableBox
+			enable={ RESIZABLE_BOX_ENABLE_OPTION }
+			onResizeStart={ ( event, direction, elt ) => {
+				onResizeStart( elt.clientHeight );
+				onResize( elt.clientHeight );
+			} }
+			onResize={ ( event, direction, elt ) => {
+				onResize( elt.clientHeight );
+			} }
+			onResizeStop={ ( event, direction, elt ) => {
+				onResizeStop( elt.clientHeight );
+			} }
+			minHeight={ MIN_HEIGHT }
+			showHandle={ showHandle }
+		>
+			{ children }
+		</ResizableBox>
+	);
+}
+
+function Edit( {
+	attributes,
+	className,
+	isSelected,
+	setAttributes,
+	toggleSelection,
+} ) {
+	const [ temporaryMinHeight, setTemporaryMinHeight ] = useState( null );
+	const minHeightWithUnit = attributes.minHeightUnit
+		? `${ attributes.minHeight }${ attributes.minHeightUnit }`
+		: attributes.minHeight;
+	const style = {
+		minHeight: temporaryMinHeight || minHeightWithUnit || undefined,
+	};
 	return (
 		<>
 			<InspectorControls>
@@ -68,32 +186,66 @@ const Edit = ( { attributes, setAttributes, className } ) => {
 						},
 					] }
 				/>
+				<PanelBody title={ __( 'Dimensions' ) }>
+					<HeightInput
+						value={ temporaryMinHeight || attributes.minHeight }
+						unit={ attributes.minHeightUnit }
+						onChange={ ( minHeight ) =>
+							setAttributes( { minHeight } )
+						}
+						onUnitChange={ ( minHeightUnit ) =>
+							setAttributes( { minHeightUnit } )
+						}
+					/>
+				</PanelBody>
 			</InspectorControls>
-			<div className={ className }>
-				<canvas
-					data-complexity={ attributes.complexity }
-					data-mouse-speed={ attributes.mouseSpeed }
-					data-fluid-speed={ attributes.fluidSpeed }
-					data-color1={ attributes.color1 }
-					data-color2={ attributes.color2 }
-					data-color3={ attributes.color3 }
-					data-color4={ attributes.color4 }
-				/>
-				<InnerBlocks
-					template={ [
-						[
-							'core/paragraph',
-							{
-								align: 'center',
-								fontSize: 'large',
-								placeholder: __( 'Write title…' ),
-							},
-						],
-					] }
-				/>
-			</div>
+			<ResizableCover
+				onResizeStart={ () => {
+					setAttributes( { minHeightUnit: 'px' } );
+					toggleSelection( false );
+				} }
+				onResize={ setTemporaryMinHeight }
+				onResizeStop={ ( minHeight ) => {
+					toggleSelection( true );
+					setAttributes( { minHeight } );
+					setTemporaryMinHeight( null );
+				} }
+				showHandle={ isSelected }
+			>
+				<div className={ className } style={ style }>
+					<canvas
+						data-complexity={ attributes.complexity }
+						data-mouse-speed={ attributes.mouseSpeed }
+						data-fluid-speed={ attributes.fluidSpeed }
+						data-color1={ attributes.color1 }
+						data-color2={ attributes.color2 }
+						data-color3={ attributes.color3 }
+						data-color4={ attributes.color4 }
+					/>
+					<div className="wp-block-a8c-color-effects__inner-container">
+						<InnerBlocks
+							template={ [
+								[
+									'core/paragraph',
+									{
+										align: 'center',
+										fontSize: 'large',
+										placeholder: __( 'Write title…' ),
+									},
+								],
+							] }
+						/>
+					</div>
+				</div>
+			</ResizableCover>
 		</>
 	);
-};
+}
 
-export default Edit;
+export default compose( [
+	withDispatch( ( dispatch ) => {
+		const { toggleSelection } = dispatch( 'core/block-editor' );
+		return { toggleSelection };
+	} ),
+	withInstanceId,
+] )( Edit );
