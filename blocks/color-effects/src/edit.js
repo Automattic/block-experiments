@@ -86,34 +86,6 @@ function HeightInput( { onChange, onUnitChange, unit = 'px', value = '' } ) {
 	);
 }
 
-function ResizableCover( {
-	children,
-	onResizeStart,
-	onResize,
-	onResizeStop,
-	showHandle,
-} ) {
-	return (
-		<ResizableBox
-			enable={ RESIZABLE_BOX_ENABLE_OPTION }
-			onResizeStart={ ( event, direction, elt ) => {
-				onResizeStart( elt.clientHeight );
-				onResize( elt.clientHeight );
-			} }
-			onResize={ ( event, direction, elt ) => {
-				onResize( elt.clientHeight );
-			} }
-			onResizeStop={ ( event, direction, elt ) => {
-				onResizeStop( elt.clientHeight );
-			} }
-			minHeight={ MIN_HEIGHT }
-			showHandle={ showHandle }
-		>
-			{ children }
-		</ResizableBox>
-	);
-}
-
 function Edit( {
 	attributes,
 	className,
@@ -199,17 +171,22 @@ function Edit( {
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<ResizableCover
-				onResizeStart={ () => {
+			<ResizableBox
+				enable={ RESIZABLE_BOX_ENABLE_OPTION }
+				onResizeStart={ ( event, direction, elt ) => {
 					setAttributes( { minHeightUnit: 'px' } );
 					toggleSelection( false );
+					setTemporaryMinHeight( elt.clientHeight );
 				} }
-				onResize={ setTemporaryMinHeight }
-				onResizeStop={ ( minHeight ) => {
+				onResize={ ( event, direction, elt ) => {
+					setTemporaryMinHeight( elt.clientHeight );
+				} }
+				onResizeStop={ ( event, direction, elt ) => {
 					toggleSelection( true );
-					setAttributes( { minHeight } );
+					setAttributes( { minHeight: elt.clientHeight } );
 					setTemporaryMinHeight( null );
 				} }
+				minHeight={ MIN_HEIGHT }
 				showHandle={ isSelected }
 			>
 				<div className={ className } style={ style }>
@@ -237,7 +214,7 @@ function Edit( {
 						/>
 					</div>
 				</div>
-			</ResizableCover>
+			</ResizableBox>
 		</>
 	);
 }
