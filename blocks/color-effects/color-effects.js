@@ -1,6 +1,5 @@
 /**
  * Shaders based on fluid effect from {@link http://glslsandbox.com/e#8143.0}
- * Draws multiple blocks on a canvas using a technique from {@link https://webglfundamentals.org/webgl/lessons/webgl-multiple-views.html}
  */
 
 wp.domReady( function() {
