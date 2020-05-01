@@ -13,8 +13,8 @@ import {
 	ResizableBox,
 	BaseControl,
 } from '@wordpress/components';
-import { compose, withInstanceId, useInstanceId } from '@wordpress/compose';
-import { withDispatch } from '@wordpress/data';
+import { useInstanceId } from '@wordpress/compose';
+import { useDispatch } from '@wordpress/data';
 import { useState, useEffect, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
@@ -91,17 +91,12 @@ function HeightInput( { onChange, onUnitChange, unit = 'px', value = '' } ) {
 	);
 }
 
-function Edit( {
-	attributes,
-	className,
-	isSelected,
-	setAttributes,
-	toggleSelection,
-} ) {
+function Edit( { attributes, className, isSelected, setAttributes } ) {
 	const color1OrDefault = attributes.color1 || defaultColors.color1;
 	const color2OrDefault = attributes.color2 || defaultColors.color2;
 	const color3OrDefault = attributes.color3 || defaultColors.color3;
 	const color4OrDefault = attributes.color4 || defaultColors.color4;
+	const { toggleSelection } = useDispatch( 'core/block-editor' );
 	const [ temporaryMinHeight, setTemporaryMinHeight ] = useState( null );
 	const minHeightWithUnit = attributes.minHeightUnit
 		? `${ attributes.minHeight }${ attributes.minHeightUnit }`
@@ -239,10 +234,4 @@ linear-gradient( 315deg, ${ color4OrDefault }, rgba( 0, 0, 0, 0 ) 81.11% ),
 	);
 }
 
-export default compose( [
-	withDispatch( ( dispatch ) => {
-		const { toggleSelection } = dispatch( 'core/block-editor' );
-		return { toggleSelection };
-	} ),
-	withInstanceId,
-] )( Edit );
+export default Edit;
