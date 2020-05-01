@@ -207,10 +207,10 @@
 		 */
 		function renderGradient( dataset, textureInfo ) {
 			const uniforms = {
-				color1: parseColor( dataset.color1 || '#F00' ),
-				color2: parseColor( dataset.color2 || '#0F0' ),
-				color3: parseColor( dataset.color3 || '#000' ),
-				color4: parseColor( dataset.color4 || '#00F' ),
+				color1: parseColor( dataset.color1 ),
+				color2: parseColor( dataset.color2 ),
+				color3: parseColor( dataset.color3 ),
+				color4: parseColor( dataset.color4 ),
 			};
 
 			twgl.bindFramebufferInfo( gl, textureInfo );

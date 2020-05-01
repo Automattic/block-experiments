@@ -18,6 +18,11 @@ import { withDispatch } from '@wordpress/data';
 import { useState, useEffect, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
+/**
+ * Internal dependencies
+ */
+import defaultColors from './default-colors';
+
 const MIN_HEIGHT = 50;
 
 const CSS_UNITS = [
@@ -93,6 +98,10 @@ function Edit( {
 	setAttributes,
 	toggleSelection,
 } ) {
+	const color1OrDefault = attributes.color1 || defaultColors.color1;
+	const color2OrDefault = attributes.color2 || defaultColors.color2;
+	const color3OrDefault = attributes.color3 || defaultColors.color3;
+	const color4OrDefault = attributes.color4 || defaultColors.color4;
 	const [ temporaryMinHeight, setTemporaryMinHeight ] = useState( null );
 	const minHeightWithUnit = attributes.minHeightUnit
 		? `${ attributes.minHeight }${ attributes.minHeightUnit }`
@@ -100,10 +109,10 @@ function Edit( {
 	const style = {
 		minHeight: temporaryMinHeight || minHeightWithUnit || undefined,
 		backgroundBlendMode: 'screen',
-		background: `linear-gradient( 45deg, ${ attributes.color1 }, rgba( 0, 0, 0, 0 ) 81.11% ),
-linear-gradient( 135deg, ${ attributes.color2 }, rgba( 0, 0, 0, 0 ) 81.11% ),
-linear-gradient( 225deg, ${ attributes.color3 }, rgba( 0, 0, 0, 0 ) 81.11% ),
-linear-gradient( 315deg, ${ attributes.color4 }, rgba( 0, 0, 0, 0 ) 81.11% ),
+		background: `linear-gradient( 45deg, ${ color1OrDefault }, rgba( 0, 0, 0, 0 ) 81.11% ),
+linear-gradient( 135deg, ${ color2OrDefault }, rgba( 0, 0, 0, 0 ) 81.11% ),
+linear-gradient( 225deg, ${ color3OrDefault }, rgba( 0, 0, 0, 0 ) 81.11% ),
+linear-gradient( 315deg, ${ color4OrDefault }, rgba( 0, 0, 0, 0 ) 81.11% ),
 #000`,
 	};
 	const canvasRef = useRef();
@@ -148,22 +157,22 @@ linear-gradient( 315deg, ${ attributes.color4 }, rgba( 0, 0, 0, 0 ) 81.11% ),
 					colorSettings={ [
 						{
 							label: __( 'Gradient 1' ),
-							value: attributes.color1,
+							value: color1OrDefault,
 							onChange: ( color1 ) => setAttributes( { color1 } ),
 						},
 						{
 							label: __( 'Gradient 2' ),
-							value: attributes.color2,
+							value: color2OrDefault,
 							onChange: ( color2 ) => setAttributes( { color2 } ),
 						},
 						{
 							label: __( 'Gradient 3' ),
-							value: attributes.color3,
+							value: color3OrDefault,
 							onChange: ( color3 ) => setAttributes( { color3 } ),
 						},
 						{
 							label: __( 'Gradient 4' ),
-							value: attributes.color4,
+							value: color4OrDefault,
 							onChange: ( color4 ) => setAttributes( { color4 } ),
 						},
 					] }
@@ -205,10 +214,10 @@ linear-gradient( 315deg, ${ attributes.color4 }, rgba( 0, 0, 0, 0 ) 81.11% ),
 						data-complexity={ attributes.complexity }
 						data-mouse-speed={ attributes.mouseSpeed }
 						data-fluid-speed={ attributes.fluidSpeed }
-						data-color1={ attributes.color1 }
-						data-color2={ attributes.color2 }
-						data-color3={ attributes.color3 }
-						data-color4={ attributes.color4 }
+						data-color1={ color1OrDefault }
+						data-color2={ color2OrDefault }
+						data-color3={ color3OrDefault }
+						data-color4={ color4OrDefault }
 					/>
 					<div className="wp-block-a8c-color-effects__inner-container">
 						<InnerBlocks
