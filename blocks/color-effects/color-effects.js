@@ -2,7 +2,7 @@
  * Shaders based on fluid effect from {@link http://glslsandbox.com/e#8143.0}
  */
 ( ( factory ) => {
-	const a8cColorEffects = factory( window.twgl, window.lodash );
+	const a8cColorEffects = factory( window.twgl );
 	if ( wp.editor ) {
 		// Export for the editor so it can be run when a block is added.
 		window.a8cColorEffects = a8cColorEffects;
@@ -14,7 +14,7 @@
 				.forEach( a8cColorEffects.run );
 		} );
 	}
-} )( ( twgl, _ ) => ( {
+} )( ( twgl ) => ( {
 	run( canvas ) {
 		const motionPref = window.matchMedia(
 			'(prefers-reduced-motion: reduce)'

@@ -21,7 +21,7 @@ add_action( 'init', function() {
 	wp_register_script(
 		'a8c-color-effects-js',
 		plugins_url( 'color-effects.js', __FILE__ ),
-		[ 'a8c-twgl-js', 'lodash' ],
+		[ 'a8c-twgl-js' ],
 		filemtime( plugin_dir_path( __FILE__ ) . 'color-effects.js' ),
 		true // in footer
 	);
