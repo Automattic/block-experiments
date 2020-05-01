@@ -16,7 +16,9 @@ wp.domReady( function() {
 		'.wp-block-a8c-color-effects canvas'
 	);
 
-	const gl = twgl.getWebGLContext( canvas );
+	const gl = twgl.getWebGLContext( canvas, {
+		failIfMajorPerformanceCaveat: true,
+	} );
 	if ( ! gl ) {
 		console.warn(
 			'WebGL must be enabled to view some content on this page.'
