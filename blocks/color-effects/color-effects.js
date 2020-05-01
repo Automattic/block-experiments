@@ -6,6 +6,12 @@
 wp.domReady( function() {
 	const { twgl, lodash: _ } = window;
 
+	const motionPref = window.matchMedia( '(prefers-reduced-motion: reduce)' );
+	if ( motionPref.matches ) {
+		// User prefers animations disabled
+		return;
+	}
+
 	const canvas = document.querySelector(
 		'.wp-block-a8c-color-effects canvas'
 	);
