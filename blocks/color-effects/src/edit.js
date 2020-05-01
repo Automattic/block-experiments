@@ -15,7 +15,7 @@ import {
 } from '@wordpress/components';
 import { compose, withInstanceId, useInstanceId } from '@wordpress/compose';
 import { withDispatch } from '@wordpress/data';
-import { useState } from '@wordpress/element';
+import { useState, useEffect, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 const MIN_HEIGHT = 50;
@@ -100,6 +100,10 @@ function Edit( {
 	const style = {
 		minHeight: temporaryMinHeight || minHeightWithUnit || undefined,
 	};
+	const canvasRef = useRef();
+	useEffect( () => {
+		return window.a8cColorEffects.run( canvasRef.current );
+	}, [ canvasRef.current ] );
 	return (
 		<>
 			<InspectorControls>
@@ -191,6 +195,7 @@ function Edit( {
 			>
 				<div className={ className } style={ style }>
 					<canvas
+						ref={ canvasRef }
 						data-complexity={ attributes.complexity }
 						data-mouse-speed={ attributes.mouseSpeed }
 						data-fluid-speed={ attributes.fluidSpeed }
