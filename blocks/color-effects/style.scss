@@ -5,8 +5,6 @@
 	background-size: cover;
 	background-position: center center;
 	min-height: 430px;
-	height: 100%;
-	width: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -28,6 +26,7 @@
 
 	&__inner-container {
 		width: calc( 100% - 70px );
+		padding: 2rem 0;
 	}
 
 	// Apply max-width to floated items that have no intrinsic width
