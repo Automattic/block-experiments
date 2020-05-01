@@ -99,10 +99,16 @@ function Edit( {
 		: attributes.minHeight;
 	const style = {
 		minHeight: temporaryMinHeight || minHeightWithUnit || undefined,
+		backgroundBlendMode: 'screen',
+		background: `linear-gradient( 45deg, ${ attributes.color1 }, rgba( 0, 0, 0, 0 ) 81.11% ),
+linear-gradient( 135deg, ${ attributes.color2 }, rgba( 0, 0, 0, 0 ) 81.11% ),
+linear-gradient( 225deg, ${ attributes.color3 }, rgba( 0, 0, 0, 0 ) 81.11% ),
+linear-gradient( 315deg, ${ attributes.color4 }, rgba( 0, 0, 0, 0 ) 81.11% ),
+#000`,
 	};
 	const canvasRef = useRef();
 	useEffect( () => {
-		return window.a8cColorEffects.run( canvasRef.current );
+		// return window.a8cColorEffects.run( canvasRef.current );
 	}, [ canvasRef.current ] );
 	return (
 		<>
