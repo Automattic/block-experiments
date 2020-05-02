@@ -16,13 +16,9 @@
 	}
 } )( ( twgl ) => ( {
 	run( canvas ) {
-		const motionPref = window.matchMedia(
+		const shouldAnimate = ! window.matchMedia(
 			'(prefers-reduced-motion: reduce)'
-		);
-		if ( motionPref.matches ) {
-			// User prefers animations disabled
-			return;
-		}
+		).matches;
 
 		const gl = twgl.getWebGLContext( canvas, {
 			failIfMajorPerformanceCaveat: true,
@@ -243,9 +239,11 @@
 				// Required in the vertex shader to prevent stretching
 				resolution,
 				// Time since beginning of the program in seconds
-				time: globalState.time * 0.001,
+				time: shouldAnimate ? globalState.time * 0.001 : 0,
 				// Mouse position in normalized block coordinates
-				mouse: globalState.mouse.map( ( v, i ) => v / resolution[ i ] ),
+				mouse: shouldAnimate
+					? globalState.mouse.map( ( v, i ) => v / resolution[ i ] )
+					: [ 0, 0 ],
 				// 'Swirly-ness' of the effect
 				complexity,
 				// Makes it more/less jumpy. f(x) from [1, 100] to [50, 1]
