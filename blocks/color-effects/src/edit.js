@@ -118,7 +118,7 @@ linear-gradient( 315deg, ${ color4OrDefault }, rgba( 0, 0, 0, 0 ) 81.11% ),
 	};
 	const canvasRef = useRef();
 	useEffect( () => {
-		// return window.a8cColorEffects.run( canvasRef.current );
+		return window.a8cColorEffects.run( canvasRef.current );
 	}, [ canvasRef.current ] );
 	return (
 		<>
