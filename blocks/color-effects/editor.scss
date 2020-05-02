@@ -8,6 +8,11 @@
 		margin-right: 0;
 	}
 
+	&__resize-container:not( .is-resizing ) {
+		// Important is used to have higher specificity than the inline style set by re-resizable library.
+		height: auto !important;
+	}
+
 	[data-align='left'] > &,
 	[data-align='right'] > & {
 		max-width: 290px;

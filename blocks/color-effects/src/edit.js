@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import classnames from 'classnames';
+
+/**
  * WordPress dependencies
  */
 import {
@@ -98,6 +103,7 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 	const color4OrDefault = attributes.color4 || defaultColors.color4;
 	const { toggleSelection } = useDispatch( 'core/block-editor' );
 	const [ temporaryMinHeight, setTemporaryMinHeight ] = useState( null );
+	const [ isResizing, setIsResizing ] = useState( false );
 	const minHeightWithUnit = attributes.minHeightUnit
 		? `${ attributes.minHeight }${ attributes.minHeightUnit }`
 		: attributes.minHeight;
@@ -186,17 +192,26 @@ linear-gradient( 315deg, ${ color4OrDefault }, rgba( 0, 0, 0, 0 ) 81.11% ),
 				</PanelBody>
 			</InspectorControls>
 			<ResizableBox
+				className={ classnames( `${ className }__resize-container`, {
+					'is-resizing': isResizing,
+				} ) }
 				enable={ RESIZABLE_BOX_ENABLE_OPTION }
 				onResizeStart={ ( event, direction, elt ) => {
-					setAttributes( { minHeightUnit: 'px' } );
 					toggleSelection( false );
+					setAttributes( { minHeightUnit: 'px' } );
 					setTemporaryMinHeight( elt.clientHeight );
 				} }
 				onResize={ ( event, direction, elt ) => {
+					// Setting is-resizing here instead of onResizeStart fixes
+					// an issue with the positioning of the resize bar when
+					// starting a resize after having resized smaller than the
+					// auto height
+					setIsResizing( true );
 					setTemporaryMinHeight( elt.clientHeight );
 				} }
 				onResizeStop={ ( event, direction, elt ) => {
 					toggleSelection( true );
+					setIsResizing( false );
 					setAttributes( { minHeight: elt.clientHeight } );
 					setTemporaryMinHeight( null );
 				} }
@@ -214,7 +229,7 @@ linear-gradient( 315deg, ${ color4OrDefault }, rgba( 0, 0, 0, 0 ) 81.11% ),
 						data-color3={ color3OrDefault }
 						data-color4={ color4OrDefault }
 					/>
-					<div className="wp-block-a8c-color-effects__inner-container">
+					<div className={ `${ className }__inner-container` }>
 						<InnerBlocks
 							template={ [
 								[
