@@ -130,22 +130,22 @@
 		const screenBufferInfo = twgl.createBufferInfoFromArrays( gl, {
 			// prettier-ignore
 			position: [
-			-1, -1, 0,
-			1, -1, 0,
-			-1, 1, 0,
-			-1, 1, 0,
-			1, -1, 0,
-			1, 1, 0,
-		],
+				-1, -1, 0,
+				 1, -1, 0,
+				-1,  1, 0,
+				-1,  1, 0,
+				 1, -1, 0,
+				 1,  1, 0,
+			],
 			// prettier-ignore
 			texcoord: [
-			0, 0,
-			1, 0,
-			0, 1,
-			0, 1,
-			1, 0,
-			1, 1
-		]
+				0, 0,
+				1, 0,
+				0, 1,
+				0, 1,
+				1, 0,
+				1, 1
+			]
 		} );
 
 		const textureInfo = twgl.createFramebufferInfo( gl, null, 512, 512 );
