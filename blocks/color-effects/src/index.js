@@ -15,7 +15,6 @@ export const registerBlock = () => {
 		icon: 'awards',
 		category: 'widgets',
 		supports: {
-			multiple: false,
 			align: true,
 			html: false,
 		},
