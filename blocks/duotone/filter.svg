@@ -1,0 +1,18 @@
+<svg xmlns:xlink="http://www.w3.org/1999/xlink">
+	<defs>
+		<filter id="duotone2">
+			<feColorMatrix
+				type="matrix"
+				values=".2989 .5870 .1140 0 0
+				        .2989 .5870 .1140 0 0
+				        .2989 .5870 .1140 0 0
+						0 0 0 1 0"
+			/>
+			<feComponentTransfer color-interpolation-filters="sRGB">
+				<feFuncR type="table" tableValues=".996078431  .984313725" />
+				<feFuncG type="table" tableValues=".125490196  .941176471" />
+				<feFuncB type="table" tableValues=".552941176  .478431373" />
+			</feComponentTransfer>
+		</filter>
+	</defs>
+</svg>
