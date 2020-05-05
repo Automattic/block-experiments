@@ -48,10 +48,10 @@ add_action( 'init', function() {
 		<filter id="$duotoneId">
 			<feColorMatrix
 				type="matrix"
-				values="0.2989 0.5870 0.1140 0 0
-				        0.2989 0.5870 0.1140 0 0
-				        0.2989 0.5870 0.1140 0 0
-						0      0      0      0 1"
+				values=".33 .33 .33 0 0
+					.33 .33 .33 0 0
+					.33 .33 .33 0 0
+					0 0 0 1 0"
 			/>
 			<feComponentTransfer color-interpolation-filters="sRGB">
 				<feFuncR type="table" tableValues="{$duotoneDark[ 'r' ]} {$duotoneLight[ 'r' ]}" />
