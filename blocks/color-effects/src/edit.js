@@ -157,22 +157,22 @@ linear-gradient( 315deg, ${ color4OrDefault }, rgba( 0, 0, 0, 0 ) 81.11% ),
 					initialOpen
 					colorSettings={ [
 						{
-							label: __( 'Gradient 1' ),
+							label: __( 'Color 1' ),
 							value: color1OrDefault,
 							onChange: ( color1 ) => setAttributes( { color1 } ),
 						},
 						{
-							label: __( 'Gradient 2' ),
+							label: __( 'Color 2' ),
 							value: color2OrDefault,
 							onChange: ( color2 ) => setAttributes( { color2 } ),
 						},
 						{
-							label: __( 'Gradient 3' ),
+							label: __( 'Color 3' ),
 							value: color3OrDefault,
 							onChange: ( color3 ) => setAttributes( { color3 } ),
 						},
 						{
-							label: __( 'Gradient 4' ),
+							label: __( 'Color 4' ),
 							value: color4OrDefault,
 							onChange: ( color4 ) => setAttributes( { color4 } ),
 						},
