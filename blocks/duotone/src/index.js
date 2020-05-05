@@ -111,10 +111,10 @@ const withDuotoneEditorControls = createHigherOrderComponent(
 							<feColorMatrix
 								type="matrix"
 								// prettier-ignore
-								values=".33 .33 .33 0 0
-									.33 .33 .33 0 0
-									.33 .33 .33 0 0
-									0 0 0 1 0"
+								values=".2989 .5870 .1140 0 0
+								        .2989 .5870 .1140 0 0
+								        .2989 .5870 .1140 0 0
+								        0 0 0 1 0"
 							/>
 							<feComponentTransfer colorInterpolationFilters="sRGB">
 								<feFuncR
