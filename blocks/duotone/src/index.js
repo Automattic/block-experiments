@@ -92,11 +92,19 @@ const withDuotoneEditorControls = createHigherOrderComponent(
 					/>
 				</InspectorControls>
 				<svg
-					viewBox="0 0 10 10"
+					viewBox="0 0 0 0"
 					width="0"
 					height="0"
 					xmlnsXlink="http://www.w3.org/1999/xlink"
-					style={ { display: 'none' } }
+					style={ {
+						visibility: 'hidden',
+						position: 'absolute',
+						left: '-9999px',
+						overflow: 'hidden',
+					} }
+					ariaHidden="true"
+					focusable="false"
+					role="none"
 				>
 					<defs>
 						<filter id={ attributes.duotoneId }>

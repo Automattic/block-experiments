@@ -42,8 +42,11 @@ add_action( 'init', function() {
 		$duotone = <<<EOT
 <svg
 	xmlns:xlink="http://www.w3.org/1999/xlink"
-	style="display: none;"
->
+	style="visibility: hidden !important; position: absolute !important; left: -9999px !important; overflow: hidden !important;"
+	aria-hidden="true"
+	focusable="false"
+	role="none"
+	>
 	<defs>
 		<filter id="$duotoneId">
 			<feColorMatrix
