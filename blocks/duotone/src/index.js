@@ -92,6 +92,9 @@ const withDuotoneEditorControls = createHigherOrderComponent(
 					/>
 				</InspectorControls>
 				<svg
+					viewBox="0 0 10 10"
+					width="0"
+					height="0"
 					xmlnsXlink="http://www.w3.org/1999/xlink"
 					style={ { display: 'none' } }
 				>
@@ -100,10 +103,10 @@ const withDuotoneEditorControls = createHigherOrderComponent(
 							<feColorMatrix
 								type="matrix"
 								// prettier-ignore
-								values="0.2989 0.5870 0.1140 0 0
-									        0.2989 0.5870 0.1140 0 0
-									        0.2989 0.5870 0.1140 0 0
-									        0      0      0      0 1"
+								values=".33 .33 .33 0 0
+									.33 .33 .33 0 0
+									.33 .33 .33 0 0
+									0 0 0 1 0"
 							/>
 							<feComponentTransfer colorInterpolationFilters="sRGB">
 								<feFuncR
