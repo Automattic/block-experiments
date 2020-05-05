@@ -19,15 +19,21 @@ import {
 	BaseControl,
 } from '@wordpress/components';
 import { useInstanceId } from '@wordpress/compose';
-import { useDispatch } from '@wordpress/data';
+import { useDispatch, useSelect } from '@wordpress/data';
 import { useState, useEffect, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import defaultColors from './default-colors';
 import { getFallbackStyle } from './shared';
+
+const DEFAULT_COLORS = {
+	color1: '#000',
+	color2: '#555',
+	color3: '#AAA',
+	color4: '#FFF',
+};
 
 const MIN_HEIGHT = 50;
 
@@ -98,15 +104,40 @@ function HeightInput( { onChange, onUnitChange, unit = 'px', value = '' } ) {
 }
 
 function Edit( { attributes, className, isSelected, setAttributes } ) {
-	const colors = {
-		color1: attributes.color1 || defaultColors.color1,
-		color2: attributes.color2 || defaultColors.color2,
-		color3: attributes.color3 || defaultColors.color3,
-		color4: attributes.color4 || defaultColors.color4,
-	};
 	const { toggleSelection } = useDispatch( 'core/block-editor' );
 	const [ temporaryMinHeight, setTemporaryMinHeight ] = useState( null );
 	const [ isResizing, setIsResizing ] = useState( false );
+	const themeColors = useSelect(
+		( select ) => select( 'core/block-editor' ).getSettings().colors,
+		[]
+	);
+	const colors = {
+		color1:
+			attributes.color1 ||
+			themeColors[ 0 ].color ||
+			DEFAULT_COLORS.color1,
+		color2:
+			attributes.color2 ||
+			themeColors[ 1 % themeColors.length ].color ||
+			DEFAULT_COLORS.color2,
+		color3:
+			attributes.color3 ||
+			themeColors[ 2 % themeColors.length ].color ||
+			DEFAULT_COLORS.color3,
+		color4:
+			attributes.color4 ||
+			themeColors[ 3 % themeColors.length ].color ||
+			DEFAULT_COLORS.color4,
+	};
+	useEffect( () => {
+		// Defaults need to be saved in the attributes because they are dynamic
+		// based on theme, and theme settings are not available from save.
+		Object.entries( colors ).forEach( ( [ key, value ] ) => {
+			if ( attributes[ key ] === undefined ) {
+				setAttributes( { [ key ]: value } );
+			}
+		} );
+	}, [] );
 	const minHeightWithUnit = attributes.minHeightUnit
 		? `${ attributes.minHeight }${ attributes.minHeightUnit }`
 		: attributes.minHeight;
