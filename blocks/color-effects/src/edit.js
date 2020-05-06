@@ -107,6 +107,7 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 	const { toggleSelection } = useDispatch( 'core/block-editor' );
 	const [ temporaryMinHeight, setTemporaryMinHeight ] = useState( null );
 	const [ isResizing, setIsResizing ] = useState( false );
+
 	const themeColors = useSelect(
 		( select ) => select( 'core/block-editor' ).getSettings().colors,
 		[]
@@ -129,6 +130,7 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 			themeColors[ 3 % themeColors.length ].color ||
 			DEFAULT_COLORS.color4,
 	};
+
 	useEffect( () => {
 		// Defaults need to be saved in the attributes because they are dynamic
 		// based on theme, and theme settings are not available from save.
@@ -138,6 +140,7 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 			}
 		} );
 	}, [] );
+
 	const minHeightWithUnit = attributes.minHeightUnit
 		? `${ attributes.minHeight }${ attributes.minHeightUnit }`
 		: attributes.minHeight;
@@ -145,6 +148,7 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 		minHeight: temporaryMinHeight || minHeightWithUnit || undefined,
 		...getFallbackStyle( colors ),
 	};
+
 	const canvasRef = useRef();
 	useEffect( () => {
 		return window.a8cColorEffects.run( canvasRef.current );
