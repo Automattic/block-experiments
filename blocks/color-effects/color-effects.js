@@ -150,11 +150,8 @@
 
 		const textureInfo = twgl.createFramebufferInfo( gl, null, 512, 512 );
 
-		const globalState = {
-			time: window.performance.now(),
-			mouse: [ 0, 0 ],
-		};
-
+		const mouse = [ 0, 0 ];
+		let time = window.performance.now();
 		let rafId = 0;
 
 		/**
@@ -235,14 +232,12 @@
 				// Required in the vertex shader to prevent stretching
 				resolution,
 				// Time since beginning of the program in seconds
-				time: shouldAnimate ? globalState.time * 0.001 : 0,
+				time: time * 0.001,
 				// Mouse position in normalized block coordinates
-				mouse: shouldAnimate
-					? [
-							globalState.mouse[ 0 ] / resolution[ 0 ],
-							globalState.mouse[ 1 ] / resolution[ 1 ],
-					  ]
-					: [ 0, 0 ],
+				mouse: [
+					mouse[ 0 ] / resolution[ 0 ],
+					mouse[ 1 ] / resolution[ 1 ],
+				],
 				// 'Swirly-ness' of the effect
 				complexity,
 				// Makes it more/less jumpy. f(x) from [1, 100] to [50, 1]
@@ -275,8 +270,10 @@
 		 * @param {MouseEvent} e Mouse event
 		 */
 		function updateMouse( e ) {
-			globalState.mouse[ 0 ] = e.clientX;
-			globalState.mouse[ 1 ] = gl.canvas.height - e.clientY; // From bottom
+			if ( shouldAnimate ) {
+				mouse[ 0 ] = e.clientX;
+				mouse[ 1 ] = gl.canvas.height - e.clientY; // From bottom
+			}
 		}
 		document.body.addEventListener( 'mousemove', updateMouse );
 
@@ -287,7 +284,9 @@
 		 */
 		function animate( t ) {
 			rafId = window.requestAnimationFrame( animate );
-			globalState.time = t;
+			if ( shouldAnimate ) {
+				time = t;
+			}
 			renderBlock( canvas.dataset );
 		}
 		rafId = window.requestAnimationFrame( animate );
