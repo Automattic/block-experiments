@@ -3,18 +3,13 @@
  */
 import { InnerBlocks } from '@wordpress/block-editor';
 
-/**
- * Internal dependencies
- */
-import { getFallbackStyle } from './shared';
-
 const Save = ( { attributes } ) => {
 	const minHeightWithUnit = attributes.minHeightUnit
 		? `${ attributes.minHeight }${ attributes.minHeightUnit }`
 		: attributes.minHeight;
 	const style = {
 		minHeight: minHeightWithUnit || undefined,
-		...getFallbackStyle( attributes ),
+		backgroundImage: `url( "${ attributes.previewImage }" )`,
 	};
 	return (
 		<div style={ style }>

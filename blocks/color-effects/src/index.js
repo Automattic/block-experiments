@@ -49,6 +49,9 @@ export const registerBlock = () => {
 			minHeightUnit: {
 				type: 'string',
 			},
+			previewImage: {
+				type: 'string',
+			},
 		},
 		edit: Edit,
 		save: Save,

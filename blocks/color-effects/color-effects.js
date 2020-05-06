@@ -166,7 +166,6 @@
 	 * @param {Object} program Collection of program info and buffers
 	 */
 	function renderBlock( gl, state, program ) {
-		twgl.resizeCanvasToDisplaySize( gl.canvas );
 		renderGradient( gl, state, program );
 		renderLiquidEffect( gl, state, program );
 	}
@@ -257,6 +256,24 @@
 	}
 
 	return {
+		renderPreview( dataset ) {
+			const canvas = document.createElement( 'canvas' );
+			canvas.width = canvas.height = '512';
+
+			const gl = twgl.getWebGLContext( canvas );
+
+			const program = init( gl );
+
+			const state = {
+				dataset,
+				mouse: [ 0, 0 ],
+				time: 0,
+			};
+
+			renderBlock( gl, state, program );
+
+			return gl.canvas.toDataURL();
+		},
 		run( canvas ) {
 			const shouldAnimate = ! window.matchMedia(
 				'(prefers-reduced-motion: reduce)'
@@ -305,6 +322,7 @@
 				if ( shouldAnimate ) {
 					state.time = t;
 				}
+				twgl.resizeCanvasToDisplaySize( gl.canvas );
 				renderBlock( gl, state, program );
 			}
 			state.rafId = window.requestAnimationFrame( animate );

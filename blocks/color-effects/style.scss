@@ -10,6 +10,9 @@
 	align-items: center;
 	overflow: hidden;
 
+	// Bottom left is consistent with how the WebGL behaves, so this will be the most similar to what is shown in the editor.
+	background: bottom left / cover no-repeat;
+
 	// Using flexbox without an assigned height property breaks vertical center alignment in IE11.
 	// Appending an empty ::after element tricks IE11 into giving the cover image an implicit height, which sidesteps this issue.
 	&::after {

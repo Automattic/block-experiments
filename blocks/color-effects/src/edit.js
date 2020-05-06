@@ -23,11 +23,6 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { useState, useEffect, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
-/**
- * Internal dependencies
- */
-import { getFallbackStyle } from './shared';
-
 const DEFAULT_COLORS = {
 	color1: '#000',
 	color2: '#555',
@@ -131,6 +126,15 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 			DEFAULT_COLORS.color4,
 	};
 
+	const renderPreview = ( newAttributes = {} ) =>
+		window.a8cColorEffects.renderPreview( {
+			complexity: attributes.complexity,
+			mouseSpeed: 1,
+			fluidSpeed: 1,
+			...colors,
+			...newAttributes,
+		} );
+
 	useEffect( () => {
 		// Defaults need to be saved in the attributes because they are dynamic
 		// based on theme, and theme settings are not available from save.
@@ -139,6 +143,12 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 				setAttributes( { [ key ]: value } );
 			}
 		} );
+
+		// Save the initial preview in the attributes
+		if ( attributes.previewImage === undefined ) {
+			const previewImage = renderPreview();
+			setAttributes( { previewImage } );
+		}
 	}, [] );
 
 	const minHeightWithUnit = attributes.minHeightUnit
@@ -146,13 +156,14 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 		: attributes.minHeight;
 	const style = {
 		minHeight: temporaryMinHeight || minHeightWithUnit || undefined,
-		...getFallbackStyle( colors ),
+		backgroundImage: `url( "${ attributes.previewImage }" )`,
 	};
 
 	const canvasRef = useRef();
 	useEffect( () => {
 		return window.a8cColorEffects.run( canvasRef.current );
 	}, [ canvasRef.current ] );
+
 	return (
 		<>
 			<InspectorControls>
@@ -160,9 +171,12 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 					<RangeControl
 						label={ __( 'Complexity' ) }
 						value={ attributes.complexity }
-						onChange={ ( complexity ) =>
-							setAttributes( { complexity } )
-						}
+						onChange={ ( complexity ) => {
+							const previewImage = renderPreview( {
+								complexity,
+							} );
+							setAttributes( { complexity, previewImage } );
+						} }
 						min={ 2 }
 						max={ 32 }
 					/>
@@ -192,22 +206,42 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 						{
 							label: __( 'Color 1' ),
 							value: colors.color1,
-							onChange: ( color1 ) => setAttributes( { color1 } ),
+							onChange: ( color1 ) => {
+								const previewImage = renderPreview( {
+									color1,
+								} );
+								setAttributes( { color1, previewImage } );
+							},
 						},
 						{
 							label: __( 'Color 2' ),
 							value: colors.color2,
-							onChange: ( color2 ) => setAttributes( { color2 } ),
+							onChange: ( color2 ) => {
+								const previewImage = renderPreview( {
+									color2,
+								} );
+								setAttributes( { color2, previewImage } );
+							},
 						},
 						{
 							label: __( 'Color 3' ),
 							value: colors.color3,
-							onChange: ( color3 ) => setAttributes( { color3 } ),
+							onChange: ( color3 ) => {
+								const previewImage = renderPreview( {
+									color3,
+								} );
+								setAttributes( { color3, previewImage } );
+							},
 						},
 						{
 							label: __( 'Color 4' ),
 							value: colors.color4,
-							onChange: ( color4 ) => setAttributes( { color4 } ),
+							onChange: ( color4 ) => {
+								const previewImage = renderPreview( {
+									color4,
+								} );
+								setAttributes( { color4, previewImage } );
+							},
 						},
 					] }
 				/>
