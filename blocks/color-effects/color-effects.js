@@ -102,6 +102,38 @@
 		}
 	`;
 
+	const init = ( gl ) => ( {
+		programInfoGradient: twgl.createProgramInfo( gl, [
+			vertexShader,
+			fragmentShader,
+		] ),
+		programInfoEffectPass: twgl.createProgramInfo( gl, [
+			vertexShaderEffect,
+			fragmentShaderEffect,
+		] ),
+		screenBufferInfo: twgl.createBufferInfoFromArrays( gl, {
+			// prettier-ignore
+			position: [
+				-1, -1, 0,
+				 1, -1, 0,
+				-1,  1, 0,
+				-1,  1, 0,
+				 1, -1, 0,
+				 1,  1, 0,
+			],
+			// prettier-ignore
+			texcoord: [
+				0, 0,
+				1, 0,
+				0, 1,
+				0, 1,
+				1, 0,
+				1, 1
+			]
+		} ),
+		textureInfo: twgl.createFramebufferInfo( gl, null, 512, 512 ),
+	} );
+
 	return {
 		run( canvas ) {
 			const shouldAnimate = ! window.matchMedia(
@@ -119,42 +151,12 @@
 				return;
 			}
 
-			const programInfoGradient = twgl.createProgramInfo( gl, [
-				vertexShader,
-				fragmentShader,
-			] );
-			const programInfoEffectPass = twgl.createProgramInfo( gl, [
-				vertexShaderEffect,
-				fragmentShaderEffect,
-			] );
-
-			const screenBufferInfo = twgl.createBufferInfoFromArrays( gl, {
-				// prettier-ignore
-				position: [
-				-1, -1, 0,
-				 1, -1, 0,
-				-1,  1, 0,
-				-1,  1, 0,
-				 1, -1, 0,
-				 1,  1, 0,
-			],
-				// prettier-ignore
-				texcoord: [
-				0, 0,
-				1, 0,
-				0, 1,
-				0, 1,
-				1, 0,
-				1, 1
-			]
-			} );
-
-			const textureInfo = twgl.createFramebufferInfo(
-				gl,
-				null,
-				512,
-				512
-			);
+			const {
+				programInfoGradient,
+				programInfoEffectPass,
+				screenBufferInfo,
+				textureInfo,
+			} = init( gl );
 
 			const mouse = [ 0, 0 ];
 			let time = window.performance.now();
