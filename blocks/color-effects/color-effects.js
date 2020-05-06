@@ -1,6 +1,9 @@
 /**
  * Shaders based on fluid effect from {@link http://glslsandbox.com/e#8143.0}
  */
+
+/* global wp */
+
 ( ( factory ) => {
 	const a8cColorEffects = factory( window.twgl );
 	if ( wp.editor ) {
@@ -24,6 +27,7 @@
 			failIfMajorPerformanceCaveat: true,
 		} );
 		if ( ! gl ) {
+			// eslint-disable-next-line no-console
 			console.warn(
 				'WebGL must be enabled to view some content on this page.'
 			);
