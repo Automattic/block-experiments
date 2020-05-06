@@ -242,7 +242,10 @@
 				time: shouldAnimate ? globalState.time * 0.001 : 0,
 				// Mouse position in normalized block coordinates
 				mouse: shouldAnimate
-					? globalState.mouse.map( ( v, i ) => v / resolution[ i ] )
+					? [
+							globalState.mouse[ 0 ] / resolution[ 0 ],
+							globalState.mouse[ 1 ] / resolution[ 1 ],
+					  ]
 					: [ 0, 0 ],
 				// 'Swirly-ness' of the effect
 				complexity,
