@@ -159,13 +159,11 @@
 
 		/**
 		 * Draw an individual block.
-		 *
-		 * @param {Node} block Block's DOM Node
 		 */
-		function renderBlock( dataset ) {
+		function renderBlock() {
 			twgl.resizeCanvasToDisplaySize( gl.canvas );
-			renderGradient( dataset, textureInfo );
-			renderLiquidEffect( dataset, textureInfo );
+			renderGradient();
+			renderLiquidEffect();
 		}
 
 		/**
@@ -193,24 +191,14 @@
 		}
 
 		/**
-		 * @typedef {Object} FramebufferInfo
-		 * @see {@link https://twgljs.org/docs/module-twgl.html#.FramebufferInfo}
-		 * Either a twlg FramebufferInfo or an image texture in the same shape as
-		 * a FramebufferInfo.
-		 */
-
-		/**
 		 * Draw the custom gradient to the framebuffer.
-		 *
-		 * @param {Object} dataset Dataset from block
-		 * @param {FramebufferInfo} textureInfo Framebuffer info from twgl
 		 */
-		function renderGradient( dataset, textureInfo ) {
+		function renderGradient() {
 			const uniforms = {
-				color1: parseColor( dataset.color1 ),
-				color2: parseColor( dataset.color2 ),
-				color3: parseColor( dataset.color3 ),
-				color4: parseColor( dataset.color4 ),
+				color1: parseColor( gl.canvas.dataset.color1 ),
+				color2: parseColor( gl.canvas.dataset.color2 ),
+				color3: parseColor( gl.canvas.dataset.color3 ),
+				color4: parseColor( gl.canvas.dataset.color4 ),
 			};
 
 			twgl.bindFramebufferInfo( gl, textureInfo );
@@ -229,15 +217,19 @@
 
 		/**
 		 * Draw the liquid effect to the canvas.
-		 *
-		 * @param {Object} dataset Dataset from block
-		 * @param {FramebufferInfo} textureInfo Framebuffer info from twgl
 		 */
-		function renderLiquidEffect( dataset, textureInfo ) {
+		function renderLiquidEffect() {
 			const resolution = [ gl.canvas.width, gl.canvas.height ];
-			const complexity = Number.parseInt( dataset.complexity, 10 );
-			const mouseSpeed = Number.parseFloat( dataset.mouseSpeed );
-			const fluidSpeed = Number.parseFloat( dataset.fluidSpeed );
+			const complexity = Number.parseInt(
+				gl.canvas.dataset.complexity,
+				10
+			);
+			const mouseSpeed = Number.parseFloat(
+				gl.canvas.dataset.mouseSpeed
+			);
+			const fluidSpeed = Number.parseFloat(
+				gl.canvas.dataset.fluidSpeed
+			);
 
 			const uniforms = {
 				// Required in the vertex shader to prevent stretching
