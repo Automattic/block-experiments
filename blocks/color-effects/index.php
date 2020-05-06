@@ -6,7 +6,6 @@ add_action( 'init', function() {
 		'style' => 'block-experiments',
 		'editor_style' => 'block-experiments-editor',
 		'render_callback' => function( $attribs, $content ) {
-			wp_enqueue_script( 'a8c-twgl-js' );
 			wp_enqueue_script( 'a8c-color-effects-js' );
 			return $content;
 		}
@@ -25,4 +24,8 @@ add_action( 'init', function() {
 		filemtime( plugin_dir_path( __FILE__ ) . 'color-effects.js' ),
 		true // in footer
 	);
+} );
+
+add_action( 'enqueue_block_editor_assets', function() {
+	wp_enqueue_script( 'a8c-color-effects-js' );
 } );
