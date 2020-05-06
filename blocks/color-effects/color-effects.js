@@ -134,6 +134,128 @@
 		textureInfo: twgl.createFramebufferInfo( gl, null, 512, 512 ),
 	} );
 
+	/**
+	 * Convert a hex color string to a WebGL color vector.
+	 *
+	 * @param {string} color Hex color string (#FFFFFF or #FFF)
+	 * @return {number[]} RGB array for WebGL
+	 */
+	function parseColor( color ) {
+		let r = '0';
+		let g = '0';
+		let b = '0';
+
+		if ( color.length === 7 ) {
+			r = '0x' + color[ 1 ] + color[ 2 ];
+			g = '0x' + color[ 3 ] + color[ 4 ];
+			b = '0x' + color[ 5 ] + color[ 6 ];
+		} else if ( color.length === 4 ) {
+			r = '0x' + color[ 1 ] + color[ 1 ];
+			g = '0x' + color[ 2 ] + color[ 2 ];
+			b = '0x' + color[ 3 ] + color[ 3 ];
+		}
+
+		return [ r / 0xff, g / 0xff, b / 0xff ];
+	}
+
+	/**
+	 * Draw an individual block.
+	 *
+	 * @param {WebGLRenderingContext} gl WebGL rendering context
+	 * @param {Object} state Data state for the rendering frame
+	 * @param {Object} program Collection of program info and buffers
+	 */
+	function renderBlock( gl, state, program ) {
+		twgl.resizeCanvasToDisplaySize( gl.canvas );
+		renderGradient( gl, state, program );
+		renderLiquidEffect( gl, state, program );
+	}
+
+	/**
+	 * Draw the custom gradient to the framebuffer.
+	 *
+	 * @param {WebGLRenderingContext} gl WebGL rendering context
+	 * @param {Object} state Data state for the rendering frame
+	 * @param {Object} program Collection of program info and buffers
+	 */
+	function renderGradient(
+		gl,
+		{ dataset },
+		{ programInfoGradient, screenBufferInfo, textureInfo }
+	) {
+		const uniforms = {
+			color1: parseColor( dataset.color1 ),
+			color2: parseColor( dataset.color2 ),
+			color3: parseColor( dataset.color3 ),
+			color4: parseColor( dataset.color4 ),
+		};
+
+		twgl.bindFramebufferInfo( gl, textureInfo );
+		gl.viewport( 0, 0, textureInfo.width, textureInfo.height );
+		gl.clearColor( 1, 1, 1, 1 );
+		gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT ); // eslint-disable-line no-bitwise
+		gl.useProgram( programInfoGradient.program );
+		twgl.setBuffersAndAttributes(
+			gl,
+			programInfoGradient,
+			screenBufferInfo
+		);
+		twgl.setUniforms( programInfoGradient, uniforms );
+		twgl.drawBufferInfo( gl, screenBufferInfo );
+	}
+
+	/**
+	 * Draw the liquid effect to the canvas.
+	 *
+	 * @param {WebGLRenderingContext} gl WebGL rendering context
+	 * @param {Object} state Data state for the rendering frame
+	 * @param {Object} program Collection of program info and buffers
+	 */
+	function renderLiquidEffect(
+		gl,
+		{ dataset, mouse, time },
+		{ programInfoEffectPass, screenBufferInfo, textureInfo }
+	) {
+		const resolution = [ gl.canvas.width, gl.canvas.height ];
+		const complexity = Number.parseInt( dataset.complexity, 10 );
+		const mouseSpeed = Number.parseFloat( dataset.mouseSpeed );
+		const fluidSpeed = Number.parseFloat( dataset.fluidSpeed );
+
+		const uniforms = {
+			// Required in the vertex shader to prevent stretching
+			resolution,
+			// Time since beginning of the program in seconds
+			time: time * 0.001,
+			// Mouse position in normalized block coordinates
+			mouse: [
+				mouse[ 0 ] / resolution[ 0 ],
+				mouse[ 1 ] / resolution[ 1 ],
+			],
+			// 'Swirly-ness' of the effect
+			complexity,
+			// Makes it more/less jumpy. f(x) from [1, 100] to [50, 1]
+			mouseSpeed:
+				( ( 700 + 4 * mouseSpeed ) / ( 11 * mouseSpeed ) ) * complexity,
+			// Drives speed, higher number will make it slower. f(x) from [1, 100] to [256, 1]
+			fluidSpeed: ( 8500 - 52 * fluidSpeed ) / ( 33 * fluidSpeed ),
+			// Framebuffer texture from the first pass
+			texture: textureInfo.attachments[ 0 ],
+		};
+
+		twgl.bindFramebufferInfo( gl, null ); // Draw to screen
+		gl.viewport( 0, 0, gl.canvas.width, gl.canvas.height );
+		gl.clearColor( 0, 0, 0, 0 );
+		gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT ); // eslint-disable-line no-bitwise
+		gl.useProgram( programInfoEffectPass.program );
+		twgl.setBuffersAndAttributes(
+			gl,
+			programInfoEffectPass,
+			screenBufferInfo
+		);
+		twgl.setUniforms( programInfoEffectPass, uniforms );
+		twgl.drawBufferInfo( gl, screenBufferInfo );
+	}
+
 	return {
 		run( canvas ) {
 			const shouldAnimate = ! window.matchMedia(
@@ -151,127 +273,14 @@
 				return;
 			}
 
-			const {
-				programInfoGradient,
-				programInfoEffectPass,
-				screenBufferInfo,
-				textureInfo,
-			} = init( gl );
+			const program = init( gl );
 
-			const mouse = [ 0, 0 ];
-			let time = window.performance.now();
-			let rafId = 0;
-
-			/**
-			 * Draw an individual block.
-			 */
-			function renderBlock() {
-				twgl.resizeCanvasToDisplaySize( gl.canvas );
-				renderGradient();
-				renderLiquidEffect();
-			}
-
-			/**
-			 * Convert a hex color string to a WebGL color vector.
-			 *
-			 * @param {string} color Hex color string (#FFFFFF or #FFF)
-			 * @return {number[]} RGB array for WebGL
-			 */
-			function parseColor( color ) {
-				let r = '0';
-				let g = '0';
-				let b = '0';
-
-				if ( color.length === 7 ) {
-					r = '0x' + color[ 1 ] + color[ 2 ];
-					g = '0x' + color[ 3 ] + color[ 4 ];
-					b = '0x' + color[ 5 ] + color[ 6 ];
-				} else if ( color.length === 4 ) {
-					r = '0x' + color[ 1 ] + color[ 1 ];
-					g = '0x' + color[ 2 ] + color[ 2 ];
-					b = '0x' + color[ 3 ] + color[ 3 ];
-				}
-
-				return [ r / 0xff, g / 0xff, b / 0xff ];
-			}
-
-			/**
-			 * Draw the custom gradient to the framebuffer.
-			 */
-			function renderGradient() {
-				const uniforms = {
-					color1: parseColor( gl.canvas.dataset.color1 ),
-					color2: parseColor( gl.canvas.dataset.color2 ),
-					color3: parseColor( gl.canvas.dataset.color3 ),
-					color4: parseColor( gl.canvas.dataset.color4 ),
-				};
-
-				twgl.bindFramebufferInfo( gl, textureInfo );
-				gl.viewport( 0, 0, textureInfo.width, textureInfo.height );
-				gl.clearColor( 1, 1, 1, 1 );
-				gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT ); // eslint-disable-line no-bitwise
-				gl.useProgram( programInfoGradient.program );
-				twgl.setBuffersAndAttributes(
-					gl,
-					programInfoGradient,
-					screenBufferInfo
-				);
-				twgl.setUniforms( programInfoGradient, uniforms );
-				twgl.drawBufferInfo( gl, screenBufferInfo );
-			}
-
-			/**
-			 * Draw the liquid effect to the canvas.
-			 */
-			function renderLiquidEffect() {
-				const resolution = [ gl.canvas.width, gl.canvas.height ];
-				const complexity = Number.parseInt(
-					gl.canvas.dataset.complexity,
-					10
-				);
-				const mouseSpeed = Number.parseFloat(
-					gl.canvas.dataset.mouseSpeed
-				);
-				const fluidSpeed = Number.parseFloat(
-					gl.canvas.dataset.fluidSpeed
-				);
-
-				const uniforms = {
-					// Required in the vertex shader to prevent stretching
-					resolution,
-					// Time since beginning of the program in seconds
-					time: time * 0.001,
-					// Mouse position in normalized block coordinates
-					mouse: [
-						mouse[ 0 ] / resolution[ 0 ],
-						mouse[ 1 ] / resolution[ 1 ],
-					],
-					// 'Swirly-ness' of the effect
-					complexity,
-					// Makes it more/less jumpy. f(x) from [1, 100] to [50, 1]
-					mouseSpeed:
-						( ( 700 + 4 * mouseSpeed ) / ( 11 * mouseSpeed ) ) *
-						complexity,
-					// Drives speed, higher number will make it slower. f(x) from [1, 100] to [256, 1]
-					fluidSpeed:
-						( 8500 - 52 * fluidSpeed ) / ( 33 * fluidSpeed ),
-					// Framebuffer texture from the first pass
-					texture: textureInfo.attachments[ 0 ],
-				};
-
-				twgl.bindFramebufferInfo( gl, null ); // Draw to screen
-				gl.viewport( 0, 0, gl.canvas.width, gl.canvas.height );
-				gl.clearColor( 0, 0, 0, 0 );
-				gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT ); // eslint-disable-line no-bitwise
-				gl.useProgram( programInfoEffectPass.program );
-				twgl.setBuffersAndAttributes(
-					gl,
-					programInfoEffectPass,
-					screenBufferInfo
-				);
-				twgl.setUniforms( programInfoEffectPass, uniforms );
-				twgl.drawBufferInfo( gl, screenBufferInfo );
-			}
+			const state = {
+				dataset: canvas.dataset,
+				mouse: [ 0, 0 ],
+				time: window.performance.now(),
+				rafId: 0,
+			};
 
 			/**
 			 * Update mouse globals.
@@ -280,8 +289,8 @@
 			 */
 			function updateMouse( e ) {
 				if ( shouldAnimate ) {
-					mouse[ 0 ] = e.clientX;
-					mouse[ 1 ] = gl.canvas.height - e.clientY; // From bottom
+					state.mouse[ 0 ] = e.clientX;
+					state.mouse[ 1 ] = gl.canvas.height - e.clientY; // From bottom
 				}
 			}
 			document.body.addEventListener( 'mousemove', updateMouse );
@@ -292,20 +301,20 @@
 			 * @param {DOMHighResTimeStamp} t Point in time when function begins to be called in milliseconds
 			 */
 			function animate( t ) {
-				rafId = window.requestAnimationFrame( animate );
+				state.rafId = window.requestAnimationFrame( animate );
 				if ( shouldAnimate ) {
-					time = t;
+					state.time = t;
 				}
-				renderBlock( canvas.dataset );
+				renderBlock( gl, state, program );
 			}
-			rafId = window.requestAnimationFrame( animate );
+			state.rafId = window.requestAnimationFrame( animate );
 
 			/**
 			 * Clean up the effects for when a block is unmounted
 			 */
 			return function cleanup() {
 				document.body.removeEventListener( 'mousemove', updateMouse );
-				window.cancelAnimationFrame( rafId );
+				window.cancelAnimationFrame( state.rafId );
 			};
 		},
 	};
