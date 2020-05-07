@@ -10,14 +10,20 @@
 // Unset many of the paddings and margins the block editor sets.
 // This is to make sure resizing the column containers works as expected.
 
-// 1. Reset margins on immediate innerblocks container.
+// 1. Reset margins on block itself, so it doesn't inherit the baseline margin.
+[data-type="jetpack/layout-grid"] {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+// 2. Reset margins on immediate innerblocks container.
 [data-type="jetpack/layout-grid"] > .block-editor-block-list__block-edit > [data-block] {
 	margin-top: 0;
 	margin-bottom: 0;
 }
 
+// 3. Unset margins and paddings for column container.
 [data-type="jetpack/layout-grid-column"].wp-block { // Selector needs specificity to override.
-	// 2. Unset margins and paddings for column container.
 	margin: 0;
 	padding-left: 0;
 	padding-right: 0;

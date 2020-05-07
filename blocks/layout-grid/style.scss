@@ -16,6 +16,9 @@
 	padding-left: 24px;
 	padding-right: 24px;
 
+	// This ensures those paddings work on the frontend.
+	box-sizing: border-box;
+
 	&.wp-block-jetpack-layout-gutter__none {
 		padding-left: $padding-none;
 		padding-right: $padding-none;
