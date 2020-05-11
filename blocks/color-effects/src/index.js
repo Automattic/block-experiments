@@ -21,15 +21,15 @@ export const registerBlock = () => {
 		attributes: {
 			complexity: {
 				type: 'integer',
-				default: 32,
+				default: 16,
 			},
 			mouseSpeed: {
 				type: 'integer',
-				default: 2,
+				default: 25,
 			},
 			fluidSpeed: {
 				type: 'integer',
-				default: 4,
+				default: 25,
 			},
 			color1: {
 				type: 'string',
