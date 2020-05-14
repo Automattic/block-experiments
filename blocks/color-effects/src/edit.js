@@ -177,8 +177,8 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 							} );
 							setAttributes( { complexity, previewImage } );
 						} }
-						min={ 2 }
-						max={ 32 }
+						min={ 1 }
+						max={ 10 }
 					/>
 					<RangeControl
 						label={ __( 'Mouse Speed' ) }
