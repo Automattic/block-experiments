@@ -1,0 +1,9 @@
+{
+	"blocks": [
+		"color-effects"
+	],
+	"version": "1.0.0",
+	"name": "Color Effects",
+	"description": "Colour My World",
+	"resource": "a8c-color-effects"
+}
