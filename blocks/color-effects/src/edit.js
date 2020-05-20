@@ -114,15 +114,15 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 			DEFAULT_COLORS.color1,
 		color2:
 			attributes.color2 ||
-			themeColors[ 1 % themeColors.length ].color ||
+			themeColors[ 0 ].color ||
 			DEFAULT_COLORS.color2,
 		color3:
 			attributes.color3 ||
-			themeColors[ 2 % themeColors.length ].color ||
+			themeColors[ 1 % themeColors.length ].color ||
 			DEFAULT_COLORS.color3,
 		color4:
 			attributes.color4 ||
-			themeColors[ 3 % themeColors.length ].color ||
+			themeColors[ 2 % themeColors.length ].color ||
 			DEFAULT_COLORS.color4,
 	};
 
