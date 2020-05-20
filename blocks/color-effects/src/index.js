@@ -21,7 +21,7 @@ export const registerBlock = () => {
 		attributes: {
 			complexity: {
 				type: 'integer',
-				default: 5,
+				default: 2,
 			},
 			mouseSpeed: {
 				type: 'integer',
