@@ -231,7 +231,7 @@
 				mouse[ 1 ] / resolution[ 1 ],
 			],
 			// 'Swirly-ness' of the effect
-			complexity: 2 * complexity + 8,
+			complexity: 3 * complexity - 1,
 			// Makes it more/less jumpy. f(x) from [1, 100] to [50, 1]
 			mouseSpeed:
 				( ( 700 + 4 * mouseSpeed ) / ( 11 * mouseSpeed ) ) * complexity,
