@@ -2,6 +2,7 @@
  * WordPress dependencies
  */
 import { registerBlockType } from '@wordpress/blocks';
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -12,7 +13,8 @@ import Save from './save';
 
 export const registerBlock = () => {
 	registerBlockType( 'a8c/waves', {
-		title: 'Waves',
+		title: __( 'Waves' ),
+		description: __( 'Create content with waves in motion.' ),
 		icon: <WavesIcon />,
 		category: 'widgets',
 		supports: {
