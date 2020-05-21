@@ -20,7 +20,7 @@ add_action( 'init', function() {
 	wp_register_script(
 		'a8c-waves-js',
 		plugins_url( 'waves.js', __FILE__ ),
-		[ 'a8c-twgl-js' ],
+		[ 'a8c-twgl-js', 'wp-dom-ready' ],
 		filemtime( plugin_dir_path( __FILE__ ) . 'waves.js' ),
 		true // in footer
 	);
