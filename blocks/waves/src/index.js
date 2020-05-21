@@ -10,8 +10,8 @@ import Edit from './edit';
 import Save from './save';
 
 export const registerBlock = () => {
-	registerBlockType( 'a8c/color-effects', {
-		title: 'Color Effects',
+	registerBlockType( 'a8c/waves', {
+		title: 'Waves',
 		icon: 'awards',
 		category: 'widgets',
 		supports: {

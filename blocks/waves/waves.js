@@ -13,7 +13,7 @@
 		// Run the effect for all blocks on initial page load.
 		wp.domReady( () => {
 			document
-				.querySelectorAll( '.wp-block-a8c-color-effects canvas' )
+				.querySelectorAll( '.wp-block-a8c-waves canvas' )
 				.forEach( a8cColorEffects.run );
 		} );
 	}

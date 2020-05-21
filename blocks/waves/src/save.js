@@ -22,7 +22,7 @@ const Save = ( { attributes } ) => {
 				data-color3={ attributes.color3 }
 				data-color4={ attributes.color4 }
 			/>
-			<div className="wp-block-a8c-color-effects__inner-container">
+			<div className="wp-block-a8c-waves__inner-container">
 				<InnerBlocks.Content />
 			</div>
 		</div>

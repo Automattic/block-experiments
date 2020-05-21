@@ -54,7 +54,7 @@ const RESIZABLE_BOX_ENABLE_OPTION = {
 function HeightInput( { onChange, onUnitChange, unit = 'px', value = '' } ) {
 	const [ temporaryInput, setTemporaryInput ] = useState( null );
 	const instanceId = useInstanceId( UnitControl );
-	const inputId = `a8c-color-effects-height-input-${ instanceId }`;
+	const inputId = `a8c-waves-height-input-${ instanceId }`;
 	const isPx = unit === 'px';
 
 	const handleOnChange = ( unprocessedValue ) => {
