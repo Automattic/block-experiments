@@ -102,6 +102,24 @@
 		}
 	`;
 
+	const mouseFunction = inverse( [ 1, 100 ], [ 50, 1 ] );
+	const fluidFunction = inverse( [ 1, 100 ], [ 250, 1 ] );
+
+	/**
+	 * Get a inverse function mapping from the domain to the range.
+	 *
+	 * @param {number[]} domain Domain to map from
+	 * @param {number[]} range Range to map to
+	 * @return {Function} Inverse function mapping the domain to the range
+	 */
+	function inverse( [ x1, x2 ], [ y1, y2 ] ) {
+		const a = ( x1 * x2 * ( -y1 + y2 ) ) / ( x1 - x2 );
+		const b = ( x1 * y1 - x2 * y2 ) / ( x1 - x2 );
+		return function( x ) {
+			return a / x + b;
+		};
+	}
+
 	const init = ( gl ) => ( {
 		programInfoGradient: twgl.createProgramInfo( gl, [
 			vertexShader,
@@ -232,11 +250,10 @@
 			],
 			// 'Swirly-ness' of the effect
 			complexity: 3 * complexity - 1,
-			// Makes it more/less jumpy. f(x) from [1, 100] to [50, 1]
-			mouseSpeed:
-				( ( 700 + 4 * mouseSpeed ) / ( 11 * mouseSpeed ) ) * complexity,
-			// Drives speed, higher number will make it slower. f(x) from [1, 100] to [256, 1]
-			fluidSpeed: ( 8500 - 52 * fluidSpeed ) / ( 33 * fluidSpeed ),
+			// Makes it more/less jumpy
+			mouseSpeed: mouseFunction( mouseSpeed ) * 3 * complexity,
+			// Drives speed, higher number will make it slower
+			fluidSpeed: fluidFunction( fluidSpeed ),
 			// Framebuffer texture from the first pass
 			texture: textureInfo.attachments[ 0 ],
 		};
