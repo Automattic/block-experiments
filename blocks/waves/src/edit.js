@@ -81,7 +81,10 @@ function HeightInput( { onChange, onUnitChange, unit = 'px', value = '' } ) {
 	const min = isPx ? MIN_HEIGHT : 0;
 
 	return (
-		<BaseControl label={ __( 'Minimum height of cover' ) } id={ inputId }>
+		<BaseControl
+			label={ __( 'Minimum height of cover', 'waves' ) }
+			id={ inputId }
+		>
 			<UnitControl
 				id={ inputId }
 				min={ min }
@@ -167,9 +170,9 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 	return (
 		<>
 			<InspectorControls>
-				<PanelBody title={ __( 'Animation' ) } initialOpen>
+				<PanelBody title={ __( 'Animation', 'waves' ) } initialOpen>
 					<RangeControl
-						label={ __( 'Complexity' ) }
+						label={ __( 'Complexity', 'waves' ) }
 						value={ attributes.complexity }
 						onChange={ ( complexity ) => {
 							const previewImage = renderPreview( {
@@ -181,7 +184,7 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 						max={ 10 }
 					/>
 					<RangeControl
-						label={ __( 'Mouse Speed' ) }
+						label={ __( 'Mouse Speed', 'waves' ) }
 						value={ attributes.mouseSpeed }
 						onChange={ ( mouseSpeed ) =>
 							setAttributes( { mouseSpeed } )
@@ -190,7 +193,7 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 						max={ 100 }
 					/>
 					<RangeControl
-						label={ __( 'Fluid Speed' ) }
+						label={ __( 'Fluid Speed', 'waves' ) }
 						value={ attributes.fluidSpeed }
 						onChange={ ( fluidSpeed ) =>
 							setAttributes( { fluidSpeed } )
@@ -200,11 +203,11 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 					/>
 				</PanelBody>
 				<PanelColorSettings
-					title={ __( 'Color' ) }
+					title={ __( 'Color', 'waves' ) }
 					initialOpen
 					colorSettings={ [
 						{
-							label: __( 'Color 1' ),
+							label: __( 'Color 1', 'waves' ),
 							value: colors.color1,
 							onChange: ( color1 ) => {
 								const previewImage = renderPreview( {
@@ -214,7 +217,7 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 							},
 						},
 						{
-							label: __( 'Color 2' ),
+							label: __( 'Color 2', 'waves' ),
 							value: colors.color2,
 							onChange: ( color2 ) => {
 								const previewImage = renderPreview( {
@@ -224,7 +227,7 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 							},
 						},
 						{
-							label: __( 'Color 3' ),
+							label: __( 'Color 3', 'waves' ),
 							value: colors.color3,
 							onChange: ( color3 ) => {
 								const previewImage = renderPreview( {
@@ -234,7 +237,7 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 							},
 						},
 						{
-							label: __( 'Color 4' ),
+							label: __( 'Color 4', 'waves' ),
 							value: colors.color4,
 							onChange: ( color4 ) => {
 								const previewImage = renderPreview( {
@@ -245,7 +248,7 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 						},
 					] }
 				/>
-				<PanelBody title={ __( 'Dimensions' ) }>
+				<PanelBody title={ __( 'Dimensions', 'waves' ) }>
 					<HeightInput
 						value={ temporaryMinHeight || attributes.minHeight }
 						unit={ attributes.minHeightUnit }
@@ -304,7 +307,10 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 									{
 										align: 'center',
 										fontSize: 'large',
-										placeholder: __( 'Write title…' ),
+										placeholder: __(
+											'Write title…',
+											'waves'
+										),
 									},
 								],
 							] }

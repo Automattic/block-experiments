@@ -13,8 +13,8 @@ import Save from './save';
 
 export const registerBlock = () => {
 	registerBlockType( 'a8c/waves', {
-		title: __( 'Waves' ),
-		description: __( 'Create content with waves in motion.' ),
+		title: __( 'Waves', 'waves' ),
+		description: __( 'Create content with waves in motion.', 'waves' ),
 		icon: <WavesIcon />,
 		category: 'widgets',
 		supports: {
