@@ -1,0 +1,21 @@
+/* Editor styles */
+
+.wp-block-a8c-waves {
+	&__inner-container
+		> .block-editor-inner-blocks
+		> .block-editor-block-list__layout {
+		margin-left: 0;
+		margin-right: 0;
+	}
+
+	&__resize-container:not( .is-resizing ) {
+		// Important is used to have higher specificity than the inline style set by re-resizable library.
+		height: auto !important;
+	}
+
+	[data-align='left'] > &,
+	[data-align='right'] > & {
+		max-width: 290px;
+		width: 100%;
+	}
+}

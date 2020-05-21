@@ -1,0 +1,55 @@
+/* Editor styles */
+
+.wp-block-a8c-waves {
+	position: relative;
+	min-height: 430px;
+	height: 100%;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+
+	// Bottom left is consistent with how the WebGL behaves, so this will be the most similar to what is shown in the editor.
+	background: bottom left / cover no-repeat;
+
+	// Using flexbox without an assigned height property breaks vertical center alignment in IE11.
+	// Appending an empty ::after element tricks IE11 into giving the cover image an implicit height, which sidesteps this issue.
+	&::after {
+		display: block;
+		content: '';
+		font-size: 0;
+		min-height: inherit;
+
+		// IE doesn't support flex so omit that.
+		@supports ( position: sticky ) {
+			content: none;
+		}
+	}
+
+	&__inner-container {
+		width: calc( 100% - 70px );
+		padding: 2rem 0;
+		z-index: 1;
+	}
+
+	// Apply max-width to floated items that have no intrinsic width
+	&.alignleft,
+	&.alignright {
+		max-width: 290px;
+		width: 100%;
+	}
+
+	// Aligned cover blocks should not use our global alignment rules
+	&.aligncenter,
+	&.alignleft,
+	&.alignright {
+		display: flex;
+	}
+
+	canvas {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+	}
+}
