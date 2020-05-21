@@ -25,11 +25,11 @@ export const registerBlock = () => {
 			},
 			mouseSpeed: {
 				type: 'integer',
-				default: 25,
+				default: 20,
 			},
 			fluidSpeed: {
 				type: 'integer',
-				default: 25,
+				default: 20,
 			},
 			color1: {
 				type: 'string',
