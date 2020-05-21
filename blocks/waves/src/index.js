@@ -6,13 +6,14 @@ import { registerBlockType } from '@wordpress/blocks';
 /**
  * Internal dependencies
  */
+import WavesIcon from './icon';
 import Edit from './edit';
 import Save from './save';
 
 export const registerBlock = () => {
 	registerBlockType( 'a8c/waves', {
 		title: 'Waves',
-		icon: 'awards',
+		icon: <WavesIcon />,
 		category: 'widgets',
 		supports: {
 			align: true,
