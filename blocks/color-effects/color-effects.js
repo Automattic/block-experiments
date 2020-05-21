@@ -120,6 +120,11 @@
 		};
 	}
 
+	/**
+	 * Initializes buffers and compiles the WebGL programs.
+	 *
+	 * @param {WebGLRenderingContext} gl WebGL rendering context
+	 */
 	const init = ( gl ) => ( {
 		programInfoGradient: twgl.createProgramInfo( gl, [
 			vertexShader,
