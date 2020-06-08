@@ -63,6 +63,15 @@
 	margin: 28px 0;
 }
 
+// Override and adjust rule inherited from the core project.
+.wp-block:not(.is-selected):not(.has-child-selected) .block-editor-default-block-appender {
+	display: inherit;
+}
+
+[data-type="jetpack/layout-grid"]:not(.is-selected):not(.has-child-selected) .block-editor-default-block-appender {
+	display: none;
+}
+
 
 /**
  * Inspector Controls
