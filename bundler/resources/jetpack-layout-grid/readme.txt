@@ -1,7 +1,7 @@
 === Layout Grid Block ===
 Contributors: automattic, jasmussen, johnny5, mkaz
-Stable tag: 1.2
-Tested up to: 5.4
+Stable tag: 1.2.1
+Tested up to: 5.4.1
 Requires at least: 5.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -22,6 +22,12 @@ You can follow development, file an issue, suggest features, and view the source
 2. Three column grid with resize handles.
 
 == Changelog ==
+
+= 1.2.1 - 10th June 2020 =
+* Fix block inserter to show inside a grid column
+* Fix vertical margin in editor so it better matches the display
+* Fix CSS loading so it is only added when block is used
+* Fix grid lines appearing when inner block is selected
 
 = 1.2 - 29th April 2020
 * Move the selected breakpoint to the toolbar and allow it to be toggled
