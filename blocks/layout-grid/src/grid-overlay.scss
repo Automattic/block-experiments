@@ -12,9 +12,7 @@
 	// By being relative when unselected and absolute when selected, we
 	// constantly "refresh" this hack.
 	position: relative;
-	.is-hovered &,
-	.is-selected &,
-	.has-child-selected & {
+	.is-selected & {
 		position: absolute;
 	}
 
@@ -44,8 +42,6 @@
 		transition: border .4s ease;
 
 		// Default gutter.
-		.has-child-selected &,
-		.is-hovered &,
 		.is-selected & {
 			box-shadow:
 			-($grid-gutter / 2) 0 0 0 currentColor,
@@ -54,8 +50,6 @@
 
 		// No gutter.
 		.wp-block-jetpack-layout-gutter__none & {
-			.has-child-selected &,
-			.is-hovered &,
 			.is-selected & {
 				box-shadow:
 				-1px 0 0 0 currentColor,
@@ -65,8 +59,6 @@
 
 		// Small gutter.
 		.wp-block-jetpack-layout-gutter__small & {
-			.has-child-selected &,
-			.is-hovered &,
 			.is-selected & {
 				box-shadow:
 				-($grid-gutter-small / 2) 0 0 0 currentColor,
@@ -76,8 +68,6 @@
 
 		// Medium gutter.
 		.wp-block-jetpack-layout-gutter__medium & {
-			.has-child-selected &,
-			.is-hovered &,
 			.is-selected & {
 				box-shadow:
 				-($grid-gutter-medium / 2) 0 0 0 currentColor,
@@ -87,8 +77,6 @@
 		
 		// Huge gutter.
 		.wp-block-jetpack-layout-gutter__huge & {
-			.has-child-selected &,
-			.is-hovered &,
 			.is-selected & {
 				box-shadow:
 				-($grid-gutter-huge / 2) 0 0 0 currentColor,
