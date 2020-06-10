@@ -176,7 +176,9 @@ export function removeGridClasses( classes ) {
 		.replace( /column\d-\w*-grid__\w*-\d*/g, '' )
 		.replace( /column\d-grid__\w*-\d*/g, '' )
 		.replace( /\s{2,}/, '' )
-		.replace( /wp-block-jetpack-layout-gutter__\w*/, '' );
+		.replace( /wp-block-jetpack-layout-gutter__\w*/, '' )
+		.replace( /is-vertically-aligned-\w*/, '' )
+		.replace( /are-vertically-aligned-\w*/ );
 }
 
 export function getGutterClasses( { gutterSize, addGutterEnds } ) {
