@@ -214,6 +214,18 @@
  * Individual column alignment for the editor
  */
 .wp-block-jetpack-layout-grid {
+	&.are-vertically-aligned-top [data-type="jetpack/layout-grid-column"].wp-block {
+		align-self: flex-start;
+	}
+
+	&.are-vertically-aligned-center [data-type="jetpack/layout-grid-column"].wp-block {
+		align-self: center;
+	}
+
+	&.are-vertically-aligned-bottom [data-type="jetpack/layout-grid-column"].wp-block {
+		align-self: flex-end;
+	}
+
 	// Note we add the alignment on the parent block as the editor nesting means it's not possible to affect the grid
 	@for $x from 1 through 4 {
 		&.column#{ $x }-grid__valign-top [data-type="jetpack/layout-grid-column"].wp-block:nth-child(#{ $x }) {
