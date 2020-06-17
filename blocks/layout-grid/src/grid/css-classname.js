@@ -8,6 +8,7 @@ import { getDefaultSpan, getGridWidth } from './grid-defaults';
 const getDevicelessSpanClassName = ( column, value ) => `column${ column + 1 }-grid__span-${ value }`;
 const getDevicelessOffsetClassName = ( column, value ) => `column${ column + 1 }-grid__start-${ value }`;
 const getDevicelessRowClassName = ( column, value ) => `column${ column + 1 }-grid__row-${ value }`;
+const getDevicelessAlignmentClassName = ( column, value ) => `column${ column + 1 }-grid__valign-${ value }`;
 
 const getDeviceSpanClassName = ( column, value, device ) => `column${ column + 1 }-${ device.toLowerCase() }-grid__span-${ value }`;
 const getDeviceOffsetClassName = ( column, value, device ) => `column${ column + 1 }-${ device.toLowerCase() }-grid__start-${ value }`;
@@ -92,18 +93,47 @@ function convertClassesToObject( classes, map ) {
 	return cssValues;
 }
 
-/*
+/**
  * These are used in the editor which doesn't rely on CSS media queries, and so the classes need to be device agnostic
+ *
+ * @param {string} device - Device string
+ * @param {number} columns - Number of columns
+ * @param {object} attributes - Grid block attributes
+ * @param {object[]} columnAttributes - Grid column block attributes
  */
-export function getAsDeviceCSS( device, columns, attributes = {} ) {
-	const values = getDeviceColumnClass( device, columns, attributes );
+export function getAsEditorCSS( device, columns, attributes = {}, columnAttributes = [] ) {
+	const values = getDeviceColumnClass(
+		device,
+		columns,
+		attributes
+	);
 	const map = {
 		span: getDevicelessSpanClassName,
 		offset: getDevicelessOffsetClassName,
 		row: getDevicelessRowClassName,
 	};
 
-	return convertClassesToObject( values, map );
+	// Apply column-specific alignment at the global level. This is because of the nested DOM inside the editor
+	const columnAlignments = {};
+	for ( let index = 0; index < columns; index++ ) {
+		// If the column has a vertical alignment and it's not the same as the global one then add a CSS class
+		if (
+			columnAttributes[ index ].verticalAlignment &&
+			columnAttributes[ index ].verticalAlignment !== attributes.verticalAlignment
+		) {
+			columnAlignments[
+				getDevicelessAlignmentClassName(
+					index,
+					columnAttributes[ index ].verticalAlignment
+				)
+			] = true;
+		}
+	}
+
+	return {
+		...convertClassesToObject( values, map ),
+		...columnAlignments,
+	};
 }
 
 /*
@@ -126,6 +156,12 @@ export function getAsCSS( columns, attributes = {} ) {
 
 	if ( ! attributes.addGutterEnds ) {
 		classes[ 'wp-block-jetpack-layout-gutter__nowrap' ] = true;
+	}
+
+	if ( attributes.verticalAlignment && attributes.verticalAlignment !== 'top' ) {
+		classes[
+			`are-vertically-aligned-${ attributes.verticalAlignment }`
+		] = true;
 	}
 
 	return classes;

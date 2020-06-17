@@ -13,10 +13,12 @@ import {
 	InspectorControls,
 	PanelColorSettings,
 	withColors,
+	BlockControls,
+	BlockVerticalAlignmentToolbar,
 } from '@wordpress/block-editor';
 import { Component } from '@wordpress/element';
 import { compose } from '@wordpress/compose';
-import { withSelect } from '@wordpress/data';
+import { withSelect, withDispatch } from '@wordpress/data';
 import { PanelBody, SelectControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
@@ -60,10 +62,9 @@ class Edit extends Component {
 			setBackgroundColor,
 			attributes,
 			setAttributes,
+			updateAlignment,
 		} = this.props;
-		const {
-			padding,
-		} = attributes;
+		const { padding, verticalAlignment } = attributes;
 		const { direction } = this.state;
 		const classes = classnames( className, backgroundColor.class, {
 			[ 'wp-block-jetpack-layout-grid__padding-' + padding ]: true,
@@ -72,6 +73,7 @@ class Edit extends Component {
 			[ backgroundColor.class ]: backgroundColor.class,
 			'wp-blocks-jetpack-layout-grid__showleft': direction === 'right',
 			'wp-blocks-jetpack-layout-grid__showright': direction === 'left',
+			[ `is-vertically-aligned-${ verticalAlignment }` ]: verticalAlignment,
 		} );
 		const style = {
 			backgroundColor: backgroundColor.color,
@@ -83,7 +85,7 @@ class Edit extends Component {
 		return (
 			<div className={ classes } style={ style }>
 				<span className="wp-blocks-jetpack-layout-grid__resize-handles">
-					<div 
+					<div
 						className="components-resizable-box__handle components-resizable-box__side-handle components-resizable-box__handle-right"
 						onMouseDown={ this.onRightIn }
 						data-resize-right
@@ -127,6 +129,13 @@ class Edit extends Component {
 						/>
 					</PanelBody>
 				</InspectorControls>
+
+				<BlockControls>
+					<BlockVerticalAlignmentToolbar
+						onChange={ updateAlignment }
+						value={ verticalAlignment }
+					/>
+				</BlockControls>
 			</div>
 		);
 	}
@@ -142,4 +151,26 @@ export default compose(
 			hasChildBlocks: getBlockOrder( clientId ).length > 0,
 		};
 	} ),
+	withDispatch( ( dispatch, ownProps, registry ) => {
+		return {
+			updateAlignment( verticalAlignment ) {
+				const { clientId, setAttributes } = ownProps;
+				const { updateBlockAttributes } = dispatch(
+					'core/block-editor'
+				);
+				const { getBlockRootClientId } = registry.select(
+					'core/block-editor'
+				);
+
+				// Update own alignment.
+				setAttributes( { verticalAlignment } );
+
+				// Reset Parent Columns Block
+				const rootClientId = getBlockRootClientId( clientId );
+				updateBlockAttributes( rootClientId, {
+					verticalAlignment: null,
+				} );
+			},
+		};
+	} )
 )( Edit );

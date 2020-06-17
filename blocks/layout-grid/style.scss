@@ -148,3 +148,38 @@
 		}
 	}
 }
+
+/**
+ * Parent column alignment
+ */
+.wp-block-jetpack-layout-grid {
+	&.are-vertically-aligned-top {
+		align-items: flex-start;
+	}
+
+	&.are-vertically-aligned-center {
+		align-items: center;
+	}
+
+	&.are-vertically-aligned-bottom {
+		align-items: flex-end;
+	}
+}
+
+/**
+ * Individual column alignment
+ */
+.wp-block-jetpack-layout-grid-column {
+	// These only affect the front end. The editor has specific CSS
+	&.is-vertically-aligned-top {
+		align-self: flex-start;
+	}
+
+	&.is-vertically-aligned-center {
+		align-self: center;
+	}
+
+	&.is-vertically-aligned-bottom {
+		align-self: flex-end;
+	}
+}

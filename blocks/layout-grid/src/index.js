@@ -83,6 +83,9 @@ export function registerBlock() {
 				type: 'boolean',
 				default: true,
 			},
+			verticalAlignment: {
+				type: 'string',
+			},
 			...getColumnAttributes( MAX_COLUMNS, DEVICE_BREAKPOINTS ),
 		},
 		edit: editGrid,
@@ -110,6 +113,9 @@ export function registerBlock() {
 			padding: {
 				type: 'string',
 				default: 'none',
+			},
+			verticalAlignment: {
+				type: 'string',
 			},
 		},
 		edit: editColumn,

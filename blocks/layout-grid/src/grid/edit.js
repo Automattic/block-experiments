@@ -14,7 +14,10 @@ import {
 	InspectorControls,
 } from '@wordpress/block-editor';
 import { Component, createRef } from '@wordpress/element';
-import { BlockControls } from '@wordpress/block-editor';
+import {
+	BlockControls,
+	BlockVerticalAlignmentToolbar,
+} from '@wordpress/block-editor';
 import {
 	PanelBody,
 	TextControl,
@@ -41,7 +44,11 @@ import { createBlock } from '@wordpress/blocks';
  * Internal dependencies
  */
 
-import { getAsDeviceCSS, removeGridClasses, getGutterClasses } from './css-classname';
+import {
+	getAsEditorCSS,
+	removeGridClasses,
+	getGutterClasses,
+} from './css-classname';
 import ColumnIcon from '../icons';
 import { getLayouts, getColumns, DEVICE_BREAKPOINTS, getSpanForDevice, getOffsetForDevice, getGutterValues } from '../constants';
 import { getGridWidth, getDefaultSpan } from './grid-defaults';
@@ -168,11 +175,18 @@ class Edit extends Component {
 			isSelected,
 			columns,
 			setAttributes,
+			updateAlignment,
+			columnAttributes,
 			setDeviceType,
 			deviceType,
 		} = this.props;
-		const extra = getAsDeviceCSS( deviceType, columns, attributes );
-		const { gutterSize, addGutterEnds } = attributes;
+		const extra = getAsEditorCSS(
+			deviceType,
+			columns,
+			attributes,
+			columnAttributes
+		);
+		const { gutterSize, addGutterEnds, verticalAlignment } = attributes;
 		const layoutGrid = new LayoutGrid( attributes, deviceType, columns );
 		const classes = classnames(
 			removeGridClasses( className ),
@@ -184,6 +198,7 @@ class Edit extends Component {
 				'wp-block-jetpack-layout-resizable': this.canResizeBreakpoint(
 					deviceType
 				),
+				[ `are-vertically-aligned-${ verticalAlignment }` ]: verticalAlignment,
 			},
 			getGutterClasses( attributes )
 		);
@@ -317,6 +332,10 @@ class Edit extends Component {
 				</IsolatedEventContainer>
 
 				<BlockControls>
+					<BlockVerticalAlignmentToolbar
+						onChange={ updateAlignment }
+						value={ verticalAlignment }
+					/>
 					<Dropdown
 						renderToggle={ ( { isOpen, onToggle } ) => (
 							<ToolbarGroup>
@@ -382,6 +401,29 @@ function getColumnBlocks( currentBlocks, previous, columns ) {
 
 export default compose( [
 	withDispatch( ( dispatch, ownProps, registry ) => ( {
+		/**
+		 * Update all child Column blocks with a new vertical alignment setting
+		 * based on whatever alignment is passed in. This allows change to parent
+		 * to overide anything set on a individual column basis.
+		 *
+		 * @param {string} verticalAlignment the vertical alignment setting
+		 */
+		updateAlignment( verticalAlignment ) {
+			const { clientId, setAttributes } = ownProps;
+			const { updateBlockAttributes } = dispatch( 'core/block-editor' );
+			const { getBlockOrder } = registry.select( 'core/block-editor' );
+
+			// Update own alignment.
+			setAttributes( { verticalAlignment } );
+
+			// Update all child Column Blocks to match
+			const innerBlockClientIds = getBlockOrder( clientId );
+			innerBlockClientIds.forEach( ( innerBlockClientId ) => {
+				updateBlockAttributes( innerBlockClientId, {
+					verticalAlignment,
+				} );
+			} );
+		},
 		updateColumns( previous, columns, columnValues ) {
 			const { clientId } = ownProps;
 			const { replaceBlock } = dispatch( 'core/block-editor' );
@@ -408,8 +450,15 @@ export default compose( [
 		}
 	} ) ),
 	withSelect( ( select, { clientId } ) => {
+		const { getBlockOrder, getBlockCount, getBlocksByClientId } = select(
+			'core/block-editor'
+		);
+
 		return {
-			columns: select( 'core/block-editor' ).getBlockCount( clientId ),
+			columns: getBlockCount( clientId ),
+			columnAttributes: getBlockOrder( clientId ).map(
+				( innerBlockClientId ) => getBlocksByClientId( innerBlockClientId )[ 0 ].attributes
+			),
 			deviceType: select( 'core/edit-post' ).__experimentalGetPreviewDeviceType(),
 		};
 	} ),

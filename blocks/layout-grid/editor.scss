@@ -209,3 +209,21 @@
 		}
 	}
 }
+
+/**
+ * Individual column alignment for the editor
+ */
+.wp-block-jetpack-layout-grid {
+	// Note we add the alignment on the parent block as the editor nesting means it's not possible to affect the grid
+	@for $x from 1 through 4 {
+		&.column#{ $x }-grid__valign-top [data-type="jetpack/layout-grid-column"].wp-block:nth-child(#{ $x }) {
+			align-self: flex-start;
+		}
+		&.column#{ $x }-grid__valign-center [data-type="jetpack/layout-grid-column"].wp-block:nth-child(#{ $x }) {
+			align-self: center;
+		}
+		&.column#{ $x }-grid__valign-bottom [data-type="jetpack/layout-grid-column"].wp-block:nth-child(#{ $x }) {
+			align-self: flex-end;
+		}
+	}
+}
