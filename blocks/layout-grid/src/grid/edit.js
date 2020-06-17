@@ -56,9 +56,6 @@ class Edit extends Component {
 		super( props );
 
 		this.overlayRef = createRef();
-		this.state = {
-			selectedDevice: getLayouts()[ 0 ].value,
-		};
 	}
 
 	/*
@@ -79,13 +76,9 @@ class Edit extends Component {
 		this.props.updateColumns( this.props.columns, columns, columnValues );
 	}
 
-	onChangeDevice = ( selectedDevice ) => {
-		this.setState( { selectedDevice } );
-	}
-
 	onResize = ( column, adjustment ) => {
 		const { attributes, columns } = this.props;
-		const grid = new LayoutGrid( attributes, this.state.selectedDevice, columns );
+		const grid = new LayoutGrid( attributes, this.props.deviceType, columns );
 		const adjustedGrid = grid.getAdjustedGrid( column, adjustment );
 
 		if ( adjustedGrid ) {
@@ -175,21 +168,24 @@ class Edit extends Component {
 			isSelected,
 			columns,
 			setAttributes,
+			setDeviceType,
+			deviceType,
 		} = this.props;
-		const { selectedDevice } = this.state;
-		const extra = getAsDeviceCSS( selectedDevice, columns, attributes );
+		const extra = getAsDeviceCSS( deviceType, columns, attributes );
 		const { gutterSize, addGutterEnds } = attributes;
-		const layoutGrid = new LayoutGrid( attributes, selectedDevice, columns );
+		const layoutGrid = new LayoutGrid( attributes, deviceType, columns );
 		const classes = classnames(
 			removeGridClasses( className ),
 			extra,
 			{
-				'wp-block-jetpack-layout-tablet': selectedDevice === 'Tablet',
-				'wp-block-jetpack-layout-desktop': selectedDevice === 'Desktop',
-				'wp-block-jetpack-layout-mobile': selectedDevice === 'Mobile',
-				'wp-block-jetpack-layout-resizable': this.canResizeBreakpoint( selectedDevice ),
+				'wp-block-jetpack-layout-tablet': deviceType === 'Tablet',
+				'wp-block-jetpack-layout-desktop': deviceType === 'Desktop',
+				'wp-block-jetpack-layout-mobile': deviceType === 'Mobile',
+				'wp-block-jetpack-layout-resizable': this.canResizeBreakpoint(
+					deviceType
+				),
 			},
-			getGutterClasses( attributes ),
+			getGutterClasses( attributes )
 		);
 
 		if ( columns === 0 ) {
@@ -234,12 +230,12 @@ class Edit extends Component {
 					<ResizeGrid
 						className={ classes }
 						onResize={ this.onResize }
-						totalColumns={ getGridWidth( selectedDevice ) }
+						totalColumns={ getGridWidth( deviceType ) }
 						layoutGrid={ layoutGrid }
 						isSelected={ isSelected }
 					>
 						<div className="wpcom-overlay-grid" ref={ this.overlayRef }>
-							{ times( getGridWidth( selectedDevice ) ).map( ( item ) => <div className="wpcom-overlay-grid__column" key={ item }></div> ) }
+							{ times( getGridWidth( deviceType ) ).map( ( item ) => <div className="wpcom-overlay-grid__column" key={ item }></div> ) }
 						</div>
 
 						<InnerBlocks
@@ -289,15 +285,15 @@ class Edit extends Component {
 									{ getLayouts().map( ( layout ) => (
 										<Button
 											key={ layout.value }
-											isPrimary={ layout.value === selectedDevice }
-											onClick={ () => this.onChangeDevice( layout.value ) }
+											isPrimary={ layout.value === deviceType }
+											onClick={ () => setDeviceType( layout.value ) }
 										>
 											{ layout.label }
 										</Button>
 									) ) }
 								</ButtonGroup>
 
-								{ this.renderDeviceSettings( columns, selectedDevice, attributes ) }
+								{ this.renderDeviceSettings( columns, deviceType, attributes ) }
 							</PanelBody>
 
 							<PanelBody title={ __( 'Gutter', 'layout-grid' ) }>
@@ -327,7 +323,7 @@ class Edit extends Component {
 								<Button
 									aria-expanded={ isOpen }
 									onClick={ onToggle }
-									icon={ getLayouts().find( ( layout ) => layout.value === selectedDevice ).icon }
+									icon={ getLayouts().find( ( layout ) => layout.value === deviceType ).icon }
 								/>
 							</ToolbarGroup>
 						) }
@@ -336,8 +332,8 @@ class Edit extends Component {
 								{ getLayouts().map( ( layout ) => (
 									<MenuItem
 										key={ layout.value }
-										isSelected={ layout.value === selectedDevice }
-										onClick={ () => this.setState( { selectedDevice: layout.value } ) }
+										isSelected={ layout.value === deviceType }
+										onClick={ () => setDeviceType( layout.value ) }
 										icon={ layout.icon }
 									>
 										{ layout.label }
@@ -403,10 +399,18 @@ export default compose( [
 
 			replaceBlock( clientId, blockCopy );
 		},
+		setDeviceType( type ) {
+			const {
+				__experimentalSetPreviewDeviceType,
+			} = dispatch( 'core/edit-post' );
+
+			__experimentalSetPreviewDeviceType( type );
+		}
 	} ) ),
 	withSelect( ( select, { clientId } ) => {
 		return {
 			columns: select( 'core/block-editor' ).getBlockCount( clientId ),
+			deviceType: select( 'core/edit-post' ).__experimentalGetPreviewDeviceType(),
 		};
 	} ),
 ] )( Edit );
