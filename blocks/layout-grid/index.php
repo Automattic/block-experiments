@@ -6,9 +6,10 @@ add_action( 'init', function() {
 		'editor_style' => 'block-experiments-editor',
 		'render_callback' => function( $attribs, $content ) {
 			wp_enqueue_style( 'jetpack-layout-grid' );
+			wp_enqueue_style( 'block-experiments' );
 			wp_enqueue_style( 'wpcom-layout-grid-front' );
 			return $content;
-		}
+		},
 	] );
 
 	register_block_type( 'jetpack/layout-grid-column', [
@@ -16,9 +17,10 @@ add_action( 'init', function() {
 		'editor_style' => 'block-experiments-editor',
 		'render_callback' => function( $attribs, $content ) {
 			wp_enqueue_style( 'jetpack-layout-grid' );
+			wp_enqueue_style( 'block-experiments' );
 			wp_enqueue_style( 'wpcom-layout-grid-front' );
 			return $content;
-		}
+		},
 	] );
 
 	wp_set_script_translations( 'jetpack/layout-grid', 'layout-grid' );

@@ -16,12 +16,14 @@ const save = ( { attributes = {} } ) => {
 		backgroundColor,
 		customBackgroundColor,
 		padding,
+		verticalAlignment,
 	} = attributes;
 	const backgroundClass = getColorClassName( 'background-color', backgroundColor );
 	const classes = classnames( className, {
 		[ 'wp-block-jetpack-layout-grid__padding-' + padding ]: true,
 		'has-background': backgroundColor,
 		[ backgroundClass ]: backgroundClass,
+		[ `is-vertically-aligned-${ verticalAlignment }` ]: verticalAlignment,
 	} );
 	const style = {
 		backgroundColor: backgroundClass ? undefined : customBackgroundColor,
