@@ -1,11 +1,11 @@
 <?php
 
+// Note that 'block-experiments' gets replaced with 'jetpack-layout-grid' when bundling
 add_action( 'init', function() {
 	register_block_type( 'jetpack/layout-grid', [
 		'editor_script' => 'block-experiments',
 		'editor_style' => 'block-experiments-editor',
 		'render_callback' => function( $attribs, $content ) {
-			wp_enqueue_style( 'jetpack-layout-grid' );
 			wp_enqueue_style( 'block-experiments' );
 			wp_enqueue_style( 'wpcom-layout-grid-front' );
 			return $content;
@@ -16,7 +16,6 @@ add_action( 'init', function() {
 		'editor_script' => 'block-experiments',
 		'editor_style' => 'block-experiments-editor',
 		'render_callback' => function( $attribs, $content ) {
-			wp_enqueue_style( 'jetpack-layout-grid' );
 			wp_enqueue_style( 'block-experiments' );
 			wp_enqueue_style( 'wpcom-layout-grid-front' );
 			return $content;

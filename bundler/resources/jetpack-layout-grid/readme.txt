@@ -1,6 +1,6 @@
 === Layout Grid Block ===
 Contributors: automattic, jasmussen, johnny5, mkaz
-Stable tag: 1.2.1
+Stable tag: 1.3
 Tested up to: 5.4.2
 Requires at least: 5.4
 License: GPLv2 or later
@@ -22,6 +22,10 @@ You can follow development, file an issue, suggest features, and view the source
 2. Three column grid with resize handles.
 
 == Changelog ==
+
+= 1.3 - 22nd June 2020 =
+* Add vertical alignment to grid and grid columns
+* Mirror grid device breakpoint with editor preview breakpoint
 
 = 1.2.1 - 10th June 2020 =
 * Fix block inserter to show inside a grid column
