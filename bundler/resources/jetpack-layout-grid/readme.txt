@@ -1,7 +1,7 @@
 === Layout Grid Block ===
 Contributors: automattic, jasmussen, johnny5, mkaz
 Stable tag: 1.2.1
-Tested up to: 5.4.1
+Tested up to: 5.4.2
 Requires at least: 5.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -29,7 +29,7 @@ You can follow development, file an issue, suggest features, and view the source
 * Fix CSS loading so it is only added when block is used
 * Fix grid lines appearing when inner block is selected
 
-= 1.2 - 29th April 2020
+= 1.2 - 29th April 2020 =
 * Move the selected breakpoint to the toolbar and allow it to be toggled
 * Bump minimum WordPress version to 5.4
 * Improve drag handle behaviour
