@@ -26,7 +26,7 @@ add_action( 'init', function() {
 } );
 
 add_action( 'wp_enqueue_scripts', function() {
-	wp_enqueue_style(
+	wp_register_style(
 		'wpcom-layout-grid-front',
 		plugins_url( 'front.css', __FILE__ ),
 		[], // no dependencies
