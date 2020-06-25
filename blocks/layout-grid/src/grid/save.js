@@ -1,10 +1,4 @@
 /**
- * External dependencies
- */
-
-import classnames from 'classnames';
-
-/**
  * WordPress dependencies
  */
 
@@ -14,18 +8,18 @@ import { InnerBlocks } from '@wordpress/block-editor';
  * Internal dependencies
  */
 
-import { getAsCSS, removeGridClasses, getGutterClasses } from './css-classname';
+import {
+	getGridVerticalAlignClasses,
+	getGutterClasses,
+	getGridClasses,
+} from '../grid-css';
 
-const save = ( { attributes, innerBlocks } ) => {
-	const {
-		className,
-	} = attributes;
-	const extra = getAsCSS( innerBlocks.length, attributes );
-	const classes = classnames(
-		removeGridClasses( className ),
-		extra,
-		getGutterClasses( attributes ),
-	);
+export default function save( { attributes } ) {
+	const { className, addGutterEnds, gutterSize, verticalAlignment } = attributes;
+	const classes = getGridClasses( className, {
+		...getGutterClasses( addGutterEnds, gutterSize ),
+		...getGridVerticalAlignClasses( verticalAlignment ),
+	} );
 
 	return (
 		<div className={ classes }>
@@ -33,5 +27,3 @@ const save = ( { attributes, innerBlocks } ) => {
 		</div>
 	);
 };
-
-export default save;

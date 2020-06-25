@@ -1,5 +1,11 @@
-/*
+/**
  * Returns the 0-based column that the mouse is closest to
+ *
+ * @param {Element} parent - Parent node
+ * @param {number} xPos - X position
+ * @param {('left'|'right')} direction - `left` if the left handle is resizing, `right` if the right
+ * @param {number} totalColumns - Number of columns for the selected device
+ * @returns {number}
  */
 export default function findNearest( parent, xPos, direction, totalColumns ) {
 	// Each column is 1/12th the width of the parent
