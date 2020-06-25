@@ -1,10 +1,4 @@
 /**
- * External dependencies
- */
-
-import classnames from 'classnames';
-
-/**
  * WordPress dependencies
  */
 
@@ -15,9 +9,10 @@ import {
 	withColors,
 	BlockControls,
 	BlockVerticalAlignmentToolbar,
+	getColorClassName,
 } from '@wordpress/block-editor';
-import { Component } from '@wordpress/element';
 import { compose } from '@wordpress/compose';
+import { useState } from '@wordpress/element';
 import { withSelect, withDispatch } from '@wordpress/data';
 import { PanelBody, SelectControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
@@ -26,119 +21,100 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import { getPaddingValues } from '../constants';
+import { getGridClasses, getBackgroundClasses, getColumnVerticalAlignClasses, getPaddingClasses } from '../grid-css';
 
-class Edit extends Component {
-	constructor( props ) {
-		super( props );
+function Edit( props ) {
+	const {
+		className,
+		hasChildBlocks,
+		backgroundColor,
+		setBackgroundColor,
+		attributes,
+		setAttributes,
+		updateAlignment,
+	} = props;
+	const { padding, verticalAlignment } = attributes;
+	const [ direction, setDirection ] = useState( null );
+	const backgroundClass = getColorClassName( 'background-color', backgroundColor );
+	const classes = getGridClasses( className, {
+		...getBackgroundClasses( backgroundColor, backgroundClass ),
+		...getColumnVerticalAlignClasses( verticalAlignment ),
+		...getPaddingClasses( padding ),
 
-		this.state = { direction: null };
+		'components-resizable-box__container': true,
+		'wp-blocks-jetpack-layout-grid__showleft': direction === 'right',
+		'wp-blocks-jetpack-layout-grid__showright': direction === 'left',
+	} );
+
+
+	const style = {
+		backgroundColor: backgroundColor.color,
+	};
+
+	function changeDirectionEnd() {
+		setDirection( null );
+
+		document.removeEventListener( 'mouseup', changeDirectionEnd );
 	}
 
-	onLeftIn = () => {
-		this.setState( { direction: 'left' } );
-		document.addEventListener( 'mouseup', this.onLeftOut );
+	function changeDirectionStart( direction ) {
+		setDirection( direction );
+
+		document.addEventListener( 'mouseup', changeDirectionEnd );
 	}
 
-	onLeftOut = () => {
-		this.setState( { direction: null } );
-		document.removeEventListener( 'mouseup', this.onLeftOut );
-	}
+	// Note we wrap the InnerBlock with 'fake' resize handles. These are here so they always match the current column dimensions. Functionally
+	// they do nothing other than disappear when the mouse button is pressed. The real resizing happens in the ResizeGrid component.
+	// We identify the left and right handles by data-resize-left and data-resize-right
+	// TODO: remove this data stuff and the DOM crawling
+	return (
+		<div className={ classes } style={ style }>
+			<span className="wp-blocks-jetpack-layout-grid__resize-handles">
+				<div
+					className="components-resizable-box__handle components-resizable-box__side-handle components-resizable-box__handle-right"
+					onMouseDown={ () => changeDirectionStart( 'right' ) }
+					data-resize-right
+				></div>
+				<div
+					className="components-resizable-box__handle components-resizable-box__side-handle components-resizable-box__handle-left"
+					onMouseDown={ () => changeDirectionStart( 'left' ) }
+					data-resize-left
+				></div>
+			</span>
 
-	onRightIn = () => {
-		this.setState( { direction: 'right' } );
-		document.addEventListener( 'mouseup', this.onRightOut );
-	}
+			<InnerBlocks
+				templateLock={ false }
+				renderAppender={ hasChildBlocks ? undefined : () => <InnerBlocks.ButtonBlockAppender /> }
+			/>
 
-	onRightOut = () => {
-		this.setState( { direction: null } );
-		document.removeEventListener( 'mouseup', this.onRightOut );
-	}
-
-	render() {
-		const {
-			className,
-			hasChildBlocks,
-			backgroundColor,
-			setBackgroundColor,
-			attributes,
-			setAttributes,
-			updateAlignment,
-		} = this.props;
-		const { padding, verticalAlignment } = attributes;
-		const { direction } = this.state;
-		const classes = classnames( className, backgroundColor.class, {
-			[ 'wp-block-jetpack-layout-grid__padding-' + padding ]: true,
-			'has-background': backgroundColor.color,
-			'components-resizable-box__container': true,
-			[ backgroundColor.class ]: backgroundColor.class,
-			'wp-blocks-jetpack-layout-grid__showleft': direction === 'right',
-			'wp-blocks-jetpack-layout-grid__showright': direction === 'left',
-			[ `is-vertically-aligned-${ verticalAlignment }` ]: verticalAlignment,
-		} );
-		const style = {
-			backgroundColor: backgroundColor.color,
-		};
-
-		// Note we wrap the InnerBlock with 'fake' resize handles. These are here so they always match the current column dimensions. Functionally
-		// they do nothing other than disappear when the mouse button is pressed. The real resizing happens in the ResizeGrid component.
-		// We identify the left and right handles by data-resize-left and data-resize-right
-		return (
-			<div className={ classes } style={ style }>
-				<span className="wp-blocks-jetpack-layout-grid__resize-handles">
-					<div
-						className="components-resizable-box__handle components-resizable-box__side-handle components-resizable-box__handle-right"
-						onMouseDown={ this.onRightIn }
-						data-resize-right
-					>
-					</div>
-					<div
-						className="components-resizable-box__handle components-resizable-box__side-handle components-resizable-box__handle-left"
-						onMouseDown={ this.onLeftIn }
-						data-resize-left
-					>
-					</div>
-				</span>
-
-				<InnerBlocks
-					templateLock={ false }
-					renderAppender={ hasChildBlocks
-						? undefined
-						: () => <InnerBlocks.ButtonBlockAppender />
-					}
+			<InspectorControls>
+				<PanelColorSettings
+					title={ __( 'Column Color', 'layout-grid' ) }
+					initialOpen
+					colorSettings={ [
+						{
+							value: backgroundColor.color,
+							onChange: setBackgroundColor,
+							label: __( 'Background', 'layout-grid' ),
+						},
+					] }
 				/>
 
-				<InspectorControls>
-					<PanelColorSettings
-						title={ __( 'Column Color', 'layout-grid' ) }
-						initialOpen
-						colorSettings={ [
-							{
-								value: backgroundColor.color,
-								onChange: setBackgroundColor,
-								label: __( 'Background', 'layout-grid' ),
-							},
-						] }
+				<PanelBody title={ __( 'Column Padding', 'layout-grid' ) }>
+					<p>{ __( 'Choose padding for this column:', 'layout-grid' ) }</p>
+					<SelectControl
+						value={ padding }
+						onChange={ ( newValue ) => setAttributes( { padding: newValue } ) }
+						options={ getPaddingValues() }
 					/>
+				</PanelBody>
+			</InspectorControls>
 
-					<PanelBody title={ __( 'Column Padding', 'layout-grid' ) }>
-						<p>{ __( 'Choose padding for this column:', 'layout-grid' ) }</p>
-						<SelectControl
-							value={ padding }
-							onChange={ newValue => setAttributes( { padding: newValue } ) }
-							options={ getPaddingValues() }
-						/>
-					</PanelBody>
-				</InspectorControls>
-
-				<BlockControls>
-					<BlockVerticalAlignmentToolbar
-						onChange={ updateAlignment }
-						value={ verticalAlignment }
-					/>
-				</BlockControls>
-			</div>
-		);
-	}
+			<BlockControls>
+				<BlockVerticalAlignmentToolbar onChange={ updateAlignment } value={ verticalAlignment } />
+			</BlockControls>
+		</div>
+	);
 }
 
 export default compose(
@@ -155,12 +131,8 @@ export default compose(
 		return {
 			updateAlignment( verticalAlignment ) {
 				const { clientId, setAttributes } = ownProps;
-				const { updateBlockAttributes } = dispatch(
-					'core/block-editor'
-				);
-				const { getBlockRootClientId } = registry.select(
-					'core/block-editor'
-				);
+				const { updateBlockAttributes } = dispatch( 'core/block-editor' );
+				const { getBlockRootClientId } = registry.select( 'core/block-editor' );
 
 				// Update own alignment.
 				setAttributes( { verticalAlignment } );

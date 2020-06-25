@@ -14,20 +14,7 @@ import saveGrid from './grid/save';
 import editColumn from './grid-column/edit';
 import saveColumn from './grid-column/save';
 import { GridIcon, GridColumnIcon } from './icons';
-import { getSpanForDevice, getOffsetForDevice, DEVICE_BREAKPOINTS, MAX_COLUMNS } from './constants';
-
-function getColumnAttributes( total, breakpoints ) {
-	const attributes = {};
-
-	for ( let index = 0; index < total; index++ ) {
-		breakpoints.map( ( breakpoint ) => {
-			attributes[ getSpanForDevice( index, breakpoint ) ] = { type: 'number' };
-			attributes[ getOffsetForDevice( index, breakpoint ) ] = { type: 'number', default: 0 };
-		} );
-	}
-
-	return attributes;
-}
+import { DEVICE_BREAKPOINTS } from './constants';
 
 export function registerBlock() {
 	registerBlockType( 'jetpack/layout-grid', {
@@ -86,7 +73,6 @@ export function registerBlock() {
 			verticalAlignment: {
 				type: 'string',
 			},
-			...getColumnAttributes( MAX_COLUMNS, DEVICE_BREAKPOINTS ),
 		},
 		edit: editGrid,
 		save: saveGrid,
@@ -117,6 +103,21 @@ export function registerBlock() {
 			verticalAlignment: {
 				type: 'string',
 			},
+			...Object.assign.apply(
+				{},
+				DEVICE_BREAKPOINTS.map( ( breakpoint ) => ( {
+					[ `span${ breakpoint }` ]: {
+						type: 'number',
+					},
+					[ `start${ breakpoint }` ]: {
+						type: 'number',
+					},
+					[ `row${ breakpoint }` ]: {
+						type: 'number',
+						default: 0,
+					},
+				} ) )
+			),
 		},
 		edit: editColumn,
 		save: saveColumn,
