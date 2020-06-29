@@ -4,9 +4,9 @@
 add_action( 'init', function() {
 	register_block_type( 'jetpack/layout-grid', [
 		'editor_script' => 'block-experiments',
+		'style' => 'block-experiments',
 		'editor_style' => 'block-experiments-editor',
 		'render_callback' => function( $attribs, $content ) {
-			wp_enqueue_style( 'block-experiments' );
 			wp_enqueue_style( 'wpcom-layout-grid-front' );
 			return $content;
 		},
@@ -14,9 +14,9 @@ add_action( 'init', function() {
 
 	register_block_type( 'jetpack/layout-grid-column', [
 		'editor_script' => 'block-experiments',
+		'style' => 'block-experiments',
 		'editor_style' => 'block-experiments-editor',
 		'render_callback' => function( $attribs, $content ) {
-			wp_enqueue_style( 'block-experiments' );
 			wp_enqueue_style( 'wpcom-layout-grid-front' );
 			return $content;
 		},
