@@ -27,6 +27,12 @@ You can follow development, file an issue, suggest features, and view the source
 * Add vertical alignment to grid and grid columns
 * Mirror grid device breakpoint with editor preview breakpoint
 
+= 1.2.3 - 29th June 2020 =
+* Fix some styles not loading in the editor
+
+= 1.2.2 - 23rd June 2020 =
+* Fix the CSS loading fix from 1.2.1 so it uses wp_register_style
+
 = 1.2.1 - 10th June 2020 =
 * Fix block inserter to show inside a grid column
 * Fix vertical margin in editor so it better matches the display
