@@ -58,11 +58,16 @@ import LayoutGrid from './layout-grid';
 const ALLOWED_BLOCKS = [ 'jetpack/layout-grid-column' ];
 const MINIMUM_RESIZE_SIZE = 50; // Empirically determined to be a good size
 
+// Note this uses __experimentalGetPreviewDeviceType, but has a fallback for older versions of Gutenberg.
+// The fallback will be removed once WordPress contains supports for __experimentalGetPreviewDeviceType
 class Edit extends Component {
 	constructor( props ) {
 		super( props );
 
 		this.overlayRef = createRef();
+		this.state = {
+			selectedDevice: getLayouts()[ 0 ].value,
+		};
 	}
 
 	/*
@@ -81,11 +86,25 @@ class Edit extends Component {
 		}
 
 		this.props.updateColumns( this.props.columns, columns, columnValues );
+	};
+
+	getDeviceType() {
+		return this.props.deviceType
+			? this.props.deviceType
+			: this.state.selectedDevice;
 	}
+
+	setDeviceType = ( deviceType ) => {
+		if ( this.props.deviceType ) {
+			this.props.setDeviceType( deviceType );
+		} else {
+			this.setState( { selectedDevice: deviceType } );
+		}
+	};
 
 	onResize = ( column, adjustment ) => {
 		const { attributes, columns } = this.props;
-		const grid = new LayoutGrid( attributes, this.props.deviceType, columns );
+		const grid = new LayoutGrid( attributes, this.getDeviceType(), columns );
 		const adjustedGrid = grid.getAdjustedGrid( column, adjustment );
 
 		if ( adjustedGrid ) {
@@ -177,9 +196,8 @@ class Edit extends Component {
 			setAttributes,
 			updateAlignment,
 			columnAttributes,
-			setDeviceType,
-			deviceType,
 		} = this.props;
+		const deviceType = this.getDeviceType();
 		const extra = getAsEditorCSS(
 			deviceType,
 			columns,
@@ -301,7 +319,7 @@ class Edit extends Component {
 										<Button
 											key={ layout.value }
 											isPrimary={ layout.value === deviceType }
-											onClick={ () => setDeviceType( layout.value ) }
+											onClick={ () => this.setDeviceType( layout.value ) }
 										>
 											{ layout.label }
 										</Button>
@@ -352,7 +370,7 @@ class Edit extends Component {
 									<MenuItem
 										key={ layout.value }
 										isSelected={ layout.value === deviceType }
-										onClick={ () => setDeviceType( layout.value ) }
+										onClick={ () => this.setDeviceType( layout.value ) }
 										icon={ layout.icon }
 									>
 										{ layout.label }
@@ -453,13 +471,15 @@ export default compose( [
 		const { getBlockOrder, getBlockCount, getBlocksByClientId } = select(
 			'core/block-editor'
 		);
+		const { __experimentalGetPreviewDeviceType = null } = select( 'core/edit-post' );
 
 		return {
 			columns: getBlockCount( clientId ),
 			columnAttributes: getBlockOrder( clientId ).map(
-				( innerBlockClientId ) => getBlocksByClientId( innerBlockClientId )[ 0 ].attributes
+				( innerBlockClientId ) =>
+					getBlocksByClientId( innerBlockClientId )[ 0 ].attributes
 			),
-			deviceType: select( 'core/edit-post' ).__experimentalGetPreviewDeviceType(),
+			deviceType: __experimentalGetPreviewDeviceType ? __experimentalGetPreviewDeviceType() : null,
 		};
 	} ),
 ] )( Edit );
