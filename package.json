@@ -18,7 +18,8 @@
     "clean": "rm -rf ./build ./plugin",
     "lint": "npm run lint-js & npm run lint-php",
     "lint-js": "wp-scripts lint-js blocks",
-    "lint-php": "composer run lint"
+    "lint-php": "composer run lint",
+    "test": "wp-scripts test-unit-js"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.10.1",

@@ -14,15 +14,26 @@ import saveGrid from './grid/save';
 import editColumn from './grid-column/edit';
 import saveColumn from './grid-column/save';
 import { GridIcon, GridColumnIcon } from './icons';
-import { getSpanForDevice, getOffsetForDevice, DEVICE_BREAKPOINTS, MAX_COLUMNS } from './constants';
+import {
+	getSpanForDevice,
+	getOffsetForDevice,
+	DEVICE_BREAKPOINTS,
+	MAX_COLUMNS,
+} from './constants';
+import { getCategoryWithFallbacks } from '../../_helpers';
 
 function getColumnAttributes( total, breakpoints ) {
 	const attributes = {};
 
 	for ( let index = 0; index < total; index++ ) {
 		breakpoints.map( ( breakpoint ) => {
-			attributes[ getSpanForDevice( index, breakpoint ) ] = { type: 'number' };
-			attributes[ getOffsetForDevice( index, breakpoint ) ] = { type: 'number', default: 0 };
+			attributes[ getSpanForDevice( index, breakpoint ) ] = {
+				type: 'number',
+			};
+			attributes[ getOffsetForDevice( index, breakpoint ) ] = {
+				type: 'number',
+				default: 0,
+			};
 		} );
 	}
 
@@ -32,9 +43,12 @@ function getColumnAttributes( total, breakpoints ) {
 export function registerBlock() {
 	registerBlockType( 'jetpack/layout-grid', {
 		title: __( 'Layout Grid', 'layout-grid' ),
-		description: __( 'Align blocks to a global grid, with support for responsive breakpoints.', 'layout-grid' ),
+		description: __(
+			'Align blocks to a global grid, with support for responsive breakpoints.',
+			'layout-grid'
+		),
 		icon: GridIcon,
-		category: 'layout',
+		category: getCategoryWithFallbacks( 'design', 'layout' ),
 		supports: {
 			align: [ 'full' ],
 			html: false,
@@ -51,7 +65,10 @@ export function registerBlock() {
 							name: 'core/paragraph',
 							attributes: {
 								customFontSize: 32,
-								content: __( '<strong>Snow Patrol</strong>', 'layout-grid' ),
+								content: __(
+									'<strong>Snow Patrol</strong>',
+									'layout-grid'
+								),
 								align: 'center',
 							},
 						},
@@ -63,7 +80,8 @@ export function registerBlock() {
 						{
 							name: 'core/image',
 							attributes: {
-								url: 'https://s.w.org/images/core/5.3/Windbuchencom.jpg',
+								url:
+									'https://s.w.org/images/core/5.3/Windbuchencom.jpg',
 							},
 						},
 					],
@@ -93,10 +111,13 @@ export function registerBlock() {
 	} );
 
 	registerBlockType( 'jetpack/layout-grid-column', {
-		description: __( 'A column used inside a Layout Grid block.', 'layout-grid' ),
+		description: __(
+			'A column used inside a Layout Grid block.',
+			'layout-grid'
+		),
 		title: __( 'Column', 'layout-grid' ),
 		icon: GridColumnIcon,
-		category: 'layout',
+		category: getCategoryWithFallbacks( 'design', 'layout' ),
 		parent: [ 'jetpack/layout-grid' ],
 		supports: {
 			inserter: false,
