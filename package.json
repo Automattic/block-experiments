@@ -18,7 +18,9 @@
     "clean": "rm -rf ./build ./plugin",
     "lint": "npm run lint-js & npm run lint-php",
     "lint-js": "wp-scripts lint-js blocks",
-    "lint-php": "composer run lint"
+    "lint-php": "composer run lint",
+    "test-layout-before": "mkdir -p screenshots/before/chrome && mkdir -p screenshots/before/firefox && node ./tests/layout-grid screenshots/before",
+    "test-layout-after": "mkdir -p screenshots/after/chrome && mkdir -p screenshots/after/firefox && node ./tests/layout-grid screenshots/after"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.10.1",
@@ -36,6 +38,7 @@
     "fs-extra": "^9.0.1",
     "node-sass": "^4.14.1",
     "postcss-cli": "^7.1.1",
+    "puppeteer": "^5.1.0",
     "replace-in-file": "^6.1.0",
     "stringcase": "^4.3.1"
   },
