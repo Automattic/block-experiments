@@ -23,7 +23,7 @@
 }
 
 // 3. Unset margins and paddings for column container.
-[data-type="jetpack/layout-grid-column"].wp-block { // Selector needs specificity to override.
+.wp-block-jetpack-layout-grid [data-type="jetpack/layout-grid-column"].wp-block { // Selector needs specificity to override.
 	margin: 0;
 	padding-left: 0;
 	padding-right: 0;
