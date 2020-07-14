@@ -3,18 +3,19 @@ const fs = require( 'fs-extra' );
 const { camelcase, spinalcase } = require( 'stringcase' );
 const replace = require( 'replace-in-file' );
 
-function buildIndexPhp( { blocks, version, name, description, resource } ) {
+function buildIndexPhp( { blocks, version, name, description, resource, locale } ) {
 	let contents = fs.readFileSync( path.join( 'bundler', 'template', 'index.php' ), 'utf-8' );
 
 	contents = contents.replace( /\[VERSION\]/g, version );
 	contents = contents.replace( /\[NAME\]/g, name );
 	contents = contents.replace( /\[DESCRIPTION\]/g, description );
 	contents = contents.replace( /\[RESOURCE\]/g, spinalcase( resource ) );
+	contents = contents.replace( /\[LOCALE\]/g, spinalcase( locale || resource ) );
 	contents += '\n';
 
 	for ( let index = 0; index < blocks.length; index++ ) {
 		contents += "include_once __DIR__ . '/blocks/" + blocks[ index ] + ".php';\n";
-	
+
 		if ( fs.existsSync( path.join( "blocks", blocks[index], "rest-api.php" ) ) ) {
 			contents += "include_once __DIR__ . '/blocks/rest-api.php';\n";
 		}

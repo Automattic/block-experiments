@@ -1,7 +1,7 @@
 === Layout Grid Block ===
 Contributors: automattic, jasmussen, johnny5, mkaz
-Stable tag: 1.2.1
-Tested up to: 5.4.1
+Stable tag: 1.2.4
+Tested up to: 5.4.2
 Requires at least: 5.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -23,9 +23,9 @@ You can follow development, file an issue, suggest features, and view the source
 
 == Changelog ==
 
-= 1.3 - 22nd June 2020 =
-* Add vertical alignment to grid and grid columns
-* Mirror grid device breakpoint with editor preview breakpoint
+= 1.2.4 - 14th July 2020 =
+* Fix some blocks breaking outside of the grid in Firefox
+* Fix editor margins for some themes
 
 = 1.2.3 - 29th June 2020 =
 * Fix some styles not loading in the editor
