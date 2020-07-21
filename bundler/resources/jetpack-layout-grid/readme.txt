@@ -23,9 +23,13 @@ You can follow development, file an issue, suggest features, and view the source
 
 == Changelog ==
 
-= 1.3 - 6th July 2020 =
+= 1.3 - 21st July 2020 =
 * Add vertical alignment to grid and grid columns
 * Mirror grid device breakpoint with editor preview breakpoint (requires WP 5.5 or Gutenberg plugin)
+
+= 1.2.4 - 14th July 2020 =
+* Fix some blocks breaking outside of the grid in Firefox
+* Fix editor margins for some themes
 
 = 1.2.3 - 29th June 2020 =
 * Fix some styles not loading in the editor
