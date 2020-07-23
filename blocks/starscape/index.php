@@ -7,5 +7,5 @@ add_action( 'init', function() {
 		'editor_style' => 'block-experiments-editor',
 	] );
 
-	wp_set_script_translations( 'a8c/starscape', 'starscape' );
+	wp_set_script_translations( 'block-experiments', 'starscape' );
 } );

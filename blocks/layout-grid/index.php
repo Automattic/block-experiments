@@ -22,7 +22,7 @@ add_action( 'init', function() {
 		},
 	] );
 
-	wp_set_script_translations( 'jetpack/layout-grid', 'layout-grid' );
+	wp_set_script_translations( 'block-experiments', 'layout-grid' );
 } );
 
 add_action( 'wp_enqueue_scripts', function() {
