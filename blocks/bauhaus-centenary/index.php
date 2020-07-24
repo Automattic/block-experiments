@@ -16,5 +16,5 @@ add_action( 'init', function() {
 		]
 	);
 
-	wp_set_script_translations( 'a8c/bauhaus-centenary', 'bauhaus-centenary' );
+	wp_set_script_translations( 'block-experiments', 'bauhaus-centenary' );
 } );

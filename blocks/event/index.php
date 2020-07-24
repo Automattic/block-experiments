@@ -7,5 +7,5 @@ add_action( 'init', function() {
 		'editor_style' => 'block-experiments-editor',
 	] );
 
-	wp_set_script_translations( 'a8c/event', 'event' );
+	wp_set_script_translations( 'block-experiments', 'event' );
 } );
