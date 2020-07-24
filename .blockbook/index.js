@@ -7,6 +7,8 @@ import * as eventBlock from '../blocks/event/src';
 import * as motionBackgroundBlock from '../blocks/motion-background/src';
 import * as starscapeBlock from '../blocks/starscape/src';
 import * as wavesBlock from '../blocks/waves/src';
+import '../build/style.css';
+import '../build/editor.css';
 
 bauhausCentenaryBlock.registerBlock();
 eventBlock.registerBlock();

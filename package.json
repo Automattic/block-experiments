@@ -19,8 +19,8 @@
     "lint": "npm run lint-js & npm run lint-php",
     "lint-js": "wp-scripts lint-js blocks",
     "lint-php": "composer run lint",
-    "blockbook:start": "blockbook start",
-    "blockbook:build": "blockbook build"
+    "blockbook:start": "npm run build-css && blockbook start",
+    "blockbook:build": "npm run build-css && blockbook build"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.10.4",
