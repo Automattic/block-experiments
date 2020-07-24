@@ -40,8 +40,6 @@ add_action( 'init', function() {
 		[],
 		filemtime( __DIR__ . '/editor.css' )
 	);
-
-	wp_set_script_translations( '[RESOURCE]', '[LOCALE]' );
 } );
 
 /**
