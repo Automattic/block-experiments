@@ -108,9 +108,11 @@ function packageBundle( { resource, version } ) {
 	const file = spinalcase( resource );
 	const versioned = file;
 	const output = `plugin/${ file }`;
+	const assets = `plugin/assets`;
 	const lines = [
 		'#!/bin/sh',
-		`./node_modules/.bin/wp-scripts build ./build/src --output-path=${ output } --config ./bundler/webpack.config.js`,
+		`./node_modules/.bin/wp-scripts build ./build/src --output-path=${ assets } --config ./bundler/webpack.config.js`,
+		`cp ${ assets }/* ${ output }`,
 		`./node_modules/.bin/node-sass ./build/editor.scss -o ${ output }`,
 		`./node_modules/.bin/node-sass ./build/style.scss -o ${ output }`,
 		`if [ -d ${ resourceDir } ]; then cp -R ${ resourceDir }/* ${ output }; fi;`,
@@ -118,6 +120,7 @@ function packageBundle( { resource, version } ) {
 		`(cd plugin; zip ${ versioned }.zip -r ${ file })`,
 		`mkdir -p bundles`,
 		`mv plugin/${ versioned }.zip bundles/${ versioned }.zip`,
+		`rm -rf ${ assets }`
 	];
 
 	fs.mkdirp( 'build' )
