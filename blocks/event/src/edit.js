@@ -55,8 +55,9 @@ const Edit = ( {
 			attributes.eventImageURL && `url(${ attributes.eventImageURL })`,
 		backgroundPosition:
 			attributes.focalPoint &&
-			`${ attributes.focalPoint.x * 100 }% ${ attributes.focalPoint.y *
-				100 }%`,
+			`${ attributes.focalPoint.x * 100 }% ${
+				attributes.focalPoint.y * 100
+			}%`,
 		backgroundSize: 'cover',
 	};
 
@@ -202,7 +203,12 @@ const Edit = ( {
 							template={ [
 								[
 									'core/paragraph',
-									{ placeholder: 'Event Description' },
+									{
+										placeholder: __(
+											'Event Description',
+											'event'
+										),
+									},
 								],
 							] }
 						/>
