@@ -17,13 +17,20 @@
 				.querySelectorAll( '.wp-block-a8c-waves canvas' )
 				.forEach( ( canvas ) => {
 					const dataset = {
-						color1: parseColor( dataset.color1 ),
-						color2: parseColor( dataset.color2 ),
-						color3: parseColor( dataset.color3 ),
-						color4: parseColor( dataset.color4 ),
-						complexity: Number.parseInt( dataset.complexity, 10 ),
-						mouseSpeed: Number.parseFloat( dataset.mouseSpeed ),
-						fluidSpeed: Number.parseFloat( dataset.fluidSpeed ),
+						color1: parseColor( canvas.dataset.color1 ),
+						color2: parseColor( canvas.dataset.color2 ),
+						color3: parseColor( canvas.dataset.color3 ),
+						color4: parseColor( canvas.dataset.color4 ),
+						complexity: Number.parseInt(
+							canvas.dataset.complexity,
+							10
+						),
+						mouseSpeed: Number.parseFloat(
+							canvas.dataset.mouseSpeed
+						),
+						fluidSpeed: Number.parseFloat(
+							canvas.dataset.fluidSpeed
+						),
 					};
 					run( canvas, dataset );
 				} );
