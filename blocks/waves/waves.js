@@ -10,11 +10,23 @@
 		// Export for the editor so it can be run when a block is added.
 		window.a8cColorEffects = a8cColorEffects;
 	} else {
+		const { parseColor, run } = a8cColorEffects;
 		// Run the effect for all blocks on initial page load.
 		wp.domReady( () => {
 			document
 				.querySelectorAll( '.wp-block-a8c-waves canvas' )
-				.forEach( a8cColorEffects.run );
+				.forEach( ( canvas ) => {
+					const dataset = {
+						color1: parseColor( dataset.color1 ),
+						color2: parseColor( dataset.color2 ),
+						color3: parseColor( dataset.color3 ),
+						color4: parseColor( dataset.color4 ),
+						complexity: Number.parseInt( dataset.complexity, 10 ),
+						mouseSpeed: Number.parseFloat( dataset.mouseSpeed ),
+						fluidSpeed: Number.parseFloat( dataset.fluidSpeed ),
+					};
+					run( canvas, dataset );
+				} );
 		} );
 	}
 } )( ( twgl ) => {
@@ -115,7 +127,7 @@
 	function inverse( [ x1, x2 ], [ y1, y2 ] ) {
 		const a = ( x1 * x2 * ( -y1 + y2 ) ) / ( x1 - x2 );
 		const b = ( x1 * y1 - x2 * y2 ) / ( x1 - x2 );
-		return function( x ) {
+		return function ( x ) {
 			return a / x + b;
 		};
 	}
@@ -158,30 +170,6 @@
 	} );
 
 	/**
-	 * Convert a hex color string to a WebGL color vector.
-	 *
-	 * @param {string} color Hex color string (#FFFFFF or #FFF)
-	 * @return {number[]} RGB array for WebGL
-	 */
-	function parseColor( color ) {
-		let r = '0';
-		let g = '0';
-		let b = '0';
-
-		if ( color.length === 7 ) {
-			r = '0x' + color[ 1 ] + color[ 2 ];
-			g = '0x' + color[ 3 ] + color[ 4 ];
-			b = '0x' + color[ 5 ] + color[ 6 ];
-		} else if ( color.length === 4 ) {
-			r = '0x' + color[ 1 ] + color[ 1 ];
-			g = '0x' + color[ 2 ] + color[ 2 ];
-			b = '0x' + color[ 3 ] + color[ 3 ];
-		}
-
-		return [ r / 0xff, g / 0xff, b / 0xff ];
-	}
-
-	/**
 	 * Draw an individual block.
 	 *
 	 * @param {WebGLRenderingContext} gl WebGL rendering context
@@ -194,11 +182,28 @@
 	}
 
 	/**
+	 * The parsed dataset from the canvas.
+	 *
+	 * @typedef {Object} Dataset
+	 * @property {number[]} color1     First color of the gradient.
+	 * @property {number[]} color2     Second color of the gradient.
+	 * @property {number[]} color3     Third color of the gradient.
+	 * @property {number[]} color4     Fourth color of the gradient.
+	 * @property {number}   complexity Integer complexity of the animation.
+	 * @property {number}   mouseSpeed Float mouse speed of the animation.
+	 * @property {number}   fluidSpeed Float fluid speed of the animation.
+	 */
+
+	/**
 	 * Draw the custom gradient to the framebuffer.
 	 *
 	 * @param {WebGLRenderingContext} gl WebGL rendering context
-	 * @param {Object} state Data state for the rendering frame
-	 * @param {Object} program Collection of program info and buffers
+	 * @param {Object} state State for the rendering frame.
+	 * @param {Dataset} state.dataset Dataset to use for rendering.
+	 * @param {Object} program Collection of program info and buffers.
+	 * @param {Object} program.programInfoGradient Gradient program info.
+	 * @param {Object} program.screenBufferInfo Screen buffer info.
+	 * @param {Object} program.textureInfo Texture info.
 	 */
 	function renderGradient(
 		gl,
@@ -206,10 +211,10 @@
 		{ programInfoGradient, screenBufferInfo, textureInfo }
 	) {
 		const uniforms = {
-			color1: parseColor( dataset.color1 ),
-			color2: parseColor( dataset.color2 ),
-			color3: parseColor( dataset.color3 ),
-			color4: parseColor( dataset.color4 ),
+			color1: dataset.color1,
+			color2: dataset.color2,
+			color3: dataset.color3,
+			color4: dataset.color4,
 		};
 
 		twgl.bindFramebufferInfo( gl, textureInfo );
@@ -229,9 +234,15 @@
 	/**
 	 * Draw the liquid effect to the canvas.
 	 *
-	 * @param {WebGLRenderingContext} gl WebGL rendering context
-	 * @param {Object} state Data state for the rendering frame
-	 * @param {Object} program Collection of program info and buffers
+	 * @param {WebGLRenderingContext} gl WebGL rendering context.
+	 * @param {Object} state Data state for the rendering frame.
+	 * @param {Dataset} state.dataset Dataset to use for rendering.
+	 * @param {number[]} state.mouse Mouse position [ x, y ].
+	 * @param {number} state.time Current program time.
+	 * @param {Object} program Collection of program info and buffers.
+	 * @param {Object} program.programInfoEffectPass Effect pass program info.
+	 * @param {Object} program.screenBufferInfo Screen buffer info.
+	 * @param {Object} program.textureInfo Texture info.
 	 */
 	function renderLiquidEffect(
 		gl,
@@ -239,9 +250,7 @@
 		{ programInfoEffectPass, screenBufferInfo, textureInfo }
 	) {
 		const resolution = [ gl.canvas.width, gl.canvas.height ];
-		const complexity = Number.parseInt( dataset.complexity, 10 );
-		const mouseSpeed = Number.parseFloat( dataset.mouseSpeed );
-		const fluidSpeed = Number.parseFloat( dataset.fluidSpeed );
+		const { complexity, mouseSpeed, fluidSpeed } = dataset;
 
 		const uniforms = {
 			// Required in the vertex shader to prevent stretching
@@ -278,6 +287,36 @@
 	}
 
 	return {
+		/**
+		 * Convert a hex color string to a WebGL color vector.
+		 *
+		 * @param {string} color Hex color string (#FFFFFF or #FFF)
+		 * @return {number[]} RGB array for WebGL
+		 */
+		parseColor( color ) {
+			let r = '0';
+			let g = '0';
+			let b = '0';
+
+			if ( color.length === 7 ) {
+				r = '0x' + color[ 1 ] + color[ 2 ];
+				g = '0x' + color[ 3 ] + color[ 4 ];
+				b = '0x' + color[ 5 ] + color[ 6 ];
+			} else if ( color.length === 4 ) {
+				r = '0x' + color[ 1 ] + color[ 1 ];
+				g = '0x' + color[ 2 ] + color[ 2 ];
+				b = '0x' + color[ 3 ] + color[ 3 ];
+			}
+
+			return [ r / 0xff, g / 0xff, b / 0xff ];
+		},
+
+		/**
+		 * Render a 512x512 px frame of the animation to use as a preview.
+		 *
+		 * @param {Dataset} dataset Dataset to use for rendering.
+		 * @return {string} Data URI of a rendered frame.
+		 */
 		renderPreview( dataset ) {
 			const canvas = document.createElement( 'canvas' );
 			canvas.width = canvas.height = '512';
@@ -296,7 +335,14 @@
 
 			return gl.canvas.toDataURL();
 		},
-		run( canvas ) {
+
+		/**
+		 * Runs the animation.
+		 *
+		 * @param {HTMLCanvasElement} canvas Canvas to draw on.
+		 * @param {Dataset} dataset Reference to a parsed dataset.
+		 */
+		run( canvas, dataset ) {
 			const shouldAnimate = ! window.matchMedia(
 				'(prefers-reduced-motion: reduce)'
 			).matches;
@@ -315,7 +361,7 @@
 			const program = init( gl );
 
 			const state = {
-				dataset: canvas.dataset,
+				dataset,
 				mouse: [ 0, 0 ],
 				time: window.performance.now(),
 				rafId: 0,

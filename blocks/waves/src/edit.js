@@ -23,6 +23,8 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { useState, useEffect, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
+const { run, parseColor, renderPreview } = window.a8cColorEffects;
+
 const DEFAULT_COLORS = {
 	color1: '#000',
 	color2: '#555',
@@ -129,12 +131,15 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 			DEFAULT_COLORS.color4,
 	};
 
-	const renderPreview = ( newAttributes = {} ) =>
-		window.a8cColorEffects.renderPreview( {
+	const updatePreview = ( newAttributes = {} ) =>
+		renderPreview( {
 			complexity: attributes.complexity,
 			mouseSpeed: 1,
 			fluidSpeed: 1,
-			...colors,
+			color1: parseColor( colors.color1 ),
+			color2: parseColor( colors.color2 ),
+			color3: parseColor( colors.color3 ),
+			color4: parseColor( colors.color4 ),
 			...newAttributes,
 		} );
 
@@ -149,7 +154,7 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 
 		// Save the initial preview in the attributes
 		if ( attributes.previewImage === undefined ) {
-			const previewImage = renderPreview();
+			const previewImage = updatePreview();
 			setAttributes( { previewImage } );
 		}
 	}, [] );
@@ -162,10 +167,39 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 		backgroundImage: `url( "${ attributes.previewImage }" )`,
 	};
 
+	// To avoid recompiling shaders every frame uniform variables need to be
+	// mutable so a new reference doesn't have to be passed to run.
+	const dataset = useRef( {
+		complexity: attributes.complexity,
+		mouseSpeed: attributes.mouseSpeed,
+		fluidSpeed: attributes.fluidSpeed,
+		color1: parseColor( colors.color1 ),
+		color2: parseColor( colors.color2 ),
+		color3: parseColor( colors.color3 ),
+		color4: parseColor( colors.color4 ),
+	} );
+	useEffect( () => {
+		dataset.current.complexity = attributes.complexity;
+		dataset.current.mouseSpeed = attributes.mouseSpeed;
+		dataset.current.fluidSpeed = attributes.fluidSpeed;
+		dataset.current.color1 = parseColor( colors.color1 );
+		dataset.current.color2 = parseColor( colors.color2 );
+		dataset.current.color3 = parseColor( colors.color3 );
+		dataset.current.color4 = parseColor( colors.color4 );
+	}, [
+		attributes.complexity,
+		attributes.mouseSpeed,
+		attributes.fluidSpeed,
+		colors.color1,
+		colors.color2,
+		colors.color3,
+		colors.color4,
+	] );
+
 	const canvasRef = useRef();
 	useEffect( () => {
-		return window.a8cColorEffects.run( canvasRef.current );
-	}, [ canvasRef.current ] );
+		return run( canvasRef.current, dataset.current );
+	}, [ canvasRef.current, dataset.current ] );
 
 	return (
 		<>
@@ -175,7 +209,7 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 						label={ __( 'Complexity', 'waves' ) }
 						value={ attributes.complexity }
 						onChange={ ( complexity ) => {
-							const previewImage = renderPreview( {
+							const previewImage = updatePreview( {
 								complexity,
 							} );
 							setAttributes( { complexity, previewImage } );
@@ -210,8 +244,8 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 							label: __( 'Color 1', 'waves' ),
 							value: colors.color1,
 							onChange: ( color1 ) => {
-								const previewImage = renderPreview( {
-									color1,
+								const previewImage = updatePreview( {
+									color1: parseColor( color1 ),
 								} );
 								setAttributes( { color1, previewImage } );
 							},
@@ -220,8 +254,8 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 							label: __( 'Color 2', 'waves' ),
 							value: colors.color2,
 							onChange: ( color2 ) => {
-								const previewImage = renderPreview( {
-									color2,
+								const previewImage = updatePreview( {
+									color2: parseColor( color2 ),
 								} );
 								setAttributes( { color2, previewImage } );
 							},
@@ -230,8 +264,8 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 							label: __( 'Color 3', 'waves' ),
 							value: colors.color3,
 							onChange: ( color3 ) => {
-								const previewImage = renderPreview( {
-									color3,
+								const previewImage = updatePreview( {
+									color3: parseColor( color3 ),
 								} );
 								setAttributes( { color3, previewImage } );
 							},
@@ -240,8 +274,8 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 							label: __( 'Color 4', 'waves' ),
 							value: colors.color4,
 							onChange: ( color4 ) => {
-								const previewImage = renderPreview( {
-									color4,
+								const previewImage = updatePreview( {
+									color4: parseColor( color4 ),
 								} );
 								setAttributes( { color4, previewImage } );
 							},
@@ -289,16 +323,7 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 				showHandle={ isSelected }
 			>
 				<div className={ className } style={ style }>
-					<canvas
-						ref={ canvasRef }
-						data-complexity={ attributes.complexity }
-						data-mouse-speed={ attributes.mouseSpeed }
-						data-fluid-speed={ attributes.fluidSpeed }
-						data-color1={ colors.color1 }
-						data-color2={ colors.color2 }
-						data-color3={ colors.color3 }
-						data-color4={ colors.color4 }
-					/>
+					<canvas ref={ canvasRef } />
 					<div className={ `${ className }__inner-container` }>
 						<InnerBlocks
 							template={ [
