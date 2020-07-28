@@ -243,7 +243,7 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 						{
 							label: __( 'Color 1', 'waves' ),
 							value: colors.color1,
-							onChange: ( color1 ) => {
+							onChange: ( color1 = colors.color1 ) => {
 								const previewImage = updatePreview( {
 									color1: parseColor( color1 ),
 								} );
@@ -253,7 +253,7 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 						{
 							label: __( 'Color 2', 'waves' ),
 							value: colors.color2,
-							onChange: ( color2 ) => {
+							onChange: ( color2 = colors.color2 ) => {
 								const previewImage = updatePreview( {
 									color2: parseColor( color2 ),
 								} );
@@ -263,7 +263,7 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 						{
 							label: __( 'Color 3', 'waves' ),
 							value: colors.color3,
-							onChange: ( color3 ) => {
+							onChange: ( color3 = colors.color3 ) => {
 								const previewImage = updatePreview( {
 									color3: parseColor( color3 ),
 								} );
@@ -273,7 +273,7 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 						{
 							label: __( 'Color 4', 'waves' ),
 							value: colors.color4,
-							onChange: ( color4 ) => {
+							onChange: ( color4 = colors.color4 ) => {
 								const previewImage = updatePreview( {
 									color4: parseColor( color4 ),
 								} );
