@@ -23,8 +23,6 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { useState, useEffect, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
-const { run, parseColor, renderPreview } = window.a8cColorEffects;
-
 const DEFAULT_COLORS = {
 	color1: '#000',
 	color2: '#555',
@@ -104,6 +102,8 @@ function HeightInput( { onChange, onUnitChange, unit = 'px', value = '' } ) {
 }
 
 function Edit( { attributes, className, isSelected, setAttributes } ) {
+	const { run, parseColor, renderPreview } = window.a8cColorEffects;
+
 	const { toggleSelection } = useDispatch( 'core/block-editor' );
 	const [ temporaryMinHeight, setTemporaryMinHeight ] = useState( null );
 	const [ isResizing, setIsResizing ] = useState( false );

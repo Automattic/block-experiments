@@ -1,6 +1,6 @@
 {
 	"blocks": [ "waves" ],
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"name": "Waves Block",
 	"description": "Blocks can now be sinuous and soothing with the Waves Block.",
 	"resource": "a8c-waves"
