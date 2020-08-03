@@ -1,7 +1,7 @@
 === Waves Block ===
 Contributors: automattic, ajlende, pablohoneyhoney
-Stable tag: 1.0.0
-Tested up to: 5.4.1
+Stable tag: 1.0.1
+Tested up to: 5.5
 Requires at least: 5.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -29,6 +29,10 @@ You can follow development, file an issue, suggest features, and view the source
 5. Enjoy the soothing animation.
 
 == Changelog ==
+
+= 1.0.1 - 3rd August 2020 =
+* Fix error when double selecting a color
+* Minor performance improvements
 
 = 1.0.0 - 22nd May 2020 =
 * Initial release
