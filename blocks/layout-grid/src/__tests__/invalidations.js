@@ -1,10 +1,3 @@
-/**
- * External dependencies
- */
-
-import { uniq } from 'lodash';
-import path from 'path';
-import fs from 'fs';
 
 /**
  * WordPress dependencies
@@ -15,29 +8,12 @@ import { parse } from '@wordpress/blocks';
  * Internal dependencies
  */
 import { registerBlock } from '../index';
-
-const FIXTURES_DIR = path.join( __dirname, '..', '..', 'tests', 'fixtures' );
-
-function getFixtures() {
-	return uniq(
-		fs
-			.readdirSync( FIXTURES_DIR )
-			.filter( ( f ) => /(\.html|\.json)$/.test( f ) )
-	);
-}
-
-function readFixture( filename ) {
-	try {
-		return fs.readFileSync( path.join( FIXTURES_DIR, filename ), 'utf8' );
-	} catch ( err ) {
-		return null;
-	}
-}
+import { getFixtures, readFixture } from '../../tests/tools/fixtures';
 
 registerBlock();
 
 describe( 'Layout Grid Invalidations', () => {
-	const fixtures = getFixtures();
+	const fixtures = getFixtures( 'invalidation' );
 
 	it.each( fixtures )(
 		`does not invalidate grid blocks from fixture "%s"`,
