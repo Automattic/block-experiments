@@ -74,3 +74,10 @@ Some blocks may require additional files, such as front end JS or CSS. These can
 2. Build the plugin: `yarn bundle`
 
 The plugin zip file can be found at: `bundles/bundle-name.zip`
+
+## Testing
+
+You can test the Layout Grid with:
+
+- `yarn layout`
+- `yarn jest`
