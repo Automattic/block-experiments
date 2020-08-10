@@ -23,7 +23,7 @@ jobs:
               run: npm install
 
             - name: Build BlockBook
-              run: npm install && npm run build -- --output-public-path=/block-experiments && cp dist/index.html dist/404.html
+              run: npm install && npm run blockbook:build -- --output-public-path=/block-experiments && cp dist/index.html dist/404.html
 
             - name: Deploy
               uses: peaceiris/actions-gh-pages@v3
