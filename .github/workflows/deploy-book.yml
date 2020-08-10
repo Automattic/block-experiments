@@ -20,7 +20,7 @@ jobs:
                   node-version: '12.x'
 
             - name: Install Dependencies
-              run: npm ci
+              run: npm install
 
             - name: Build BlockBook
               run: npm install && npm run build -- --output-public-path=/block-experiments && cp dist/index.html dist/404.html
