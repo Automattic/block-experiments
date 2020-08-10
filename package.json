@@ -18,7 +18,9 @@
     "clean": "rm -rf ./build ./plugin",
     "lint": "npm run lint-js & npm run lint-php",
     "lint-js": "wp-scripts lint-js blocks",
-    "lint-php": "composer run lint"
+    "lint-php": "composer run lint",
+    "blockbook:start": "npm run build-css && blockbook start",
+    "blockbook:build": "npm run build-css && blockbook build"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.10.4",
@@ -30,6 +32,7 @@
     "@wordpress/prettier-config": "^0.3.0",
     "@wordpress/scripts": "^12.1.1",
     "autoprefixer": "^9.8.5",
+    "blockbook-cli": "^0.7.0",
     "eslint": "^7.5.0",
     "eslint-config-wpcalypso": "^6.1.0",
     "eslint-plugin-eslint-comments": "^3.2.0",

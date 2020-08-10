@@ -3,4 +3,5 @@
 /plugin
 /bundles
 /vendor
+/dist
 yarn-error.log
