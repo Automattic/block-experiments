@@ -1,1 +1,124 @@
 /* Front end styles */
+.wp-block-details {
+	&.is-style-flipcard {
+		margin-bottom: 32px;
+
+		// // .card__face {
+		// details {
+		cursor: pointer;
+		transform-style: preserve-3d;
+		perspective: 300px;
+		overflow: hidden;
+
+		// 	// .card__front,
+		// 	// .card__back {
+		summary,
+		:not( summary ) {
+			position: relative;
+			padding: 16px 48px 16px 16px;
+		}
+		// }
+
+		// // .card__front {
+		summary {
+			background: #efefef;
+		}
+
+		// // .card__back {
+		.block-editor-inner-blocks {
+			max-height: 0;
+			padding: 0;
+			overflow: hidden;
+			background: #efefef;
+
+			transition: all 0.4s ease;
+			transform: rotateX( -180deg );
+			transform-origin: top center;
+			-webkit-backface-visibility: hidden;
+			backface-visibility: hidden;
+			opacity: 0;
+		}
+
+		// // &.is-unfolded .card__back {
+		// details[ open ] :not( summary ) {
+		&[open] .block-editor-inner-blocks {
+			max-height: none;
+			overflow: visible;
+			padding: 16px 48px 16px 16px;
+			visibility: visible;
+			transform: rotateX( 0deg );
+			opacity: 1;
+		}
+
+		// .card__expand-icon {
+		// .card__expand-icon {
+		// 	position: absolute;
+		// 	top: 16px;
+		// 	right: 12px;
+
+		// 	svg {
+		// 		fill: currentColor;
+		// 		transition: transform .2s ease;
+		// 	}
+		// }
+
+		// &.is-unfolded .card__expand-icon svg {
+		// 	transform: rotate(180deg);
+		// }
+	}
+
+	&.is-style-modal {
+		summary {
+			width: 10em;
+			text-align: center;
+			font-weight: bold;
+			padding: 1em 2em;
+			background: DEEPPINK;
+			border-radius: 3em;
+			color: white;
+			cursor: pointer;
+		}
+
+		:not( summary ) {
+			width: 20em;
+			border: 2px solid black;
+			padding: 1em 2em;
+			position: fixed;
+			width: 360px;
+			height: 240px;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			margin: auto;
+			background: white;
+			z-index: 3;
+			box-shadow: 10px 10px 10px DIMGRAY;
+		}
+	}
+
+	&[open].is-style-modal {
+		summary::after {
+			content: '×';
+			font-size: 28pt;
+			position: fixed;
+			right: calc( 50vw - 360px / 2 - 2em );
+			top: calc( 50vh - 240px / 2 - 2em );
+			padding: 5pt 10pt;
+			z-index: 9;
+		}
+
+		summary::before {
+			content: '';
+			display: block;
+			width: 100vw;
+			height: 100vh;
+			background: black;
+			position: fixed;
+			top: 0;
+			left: 0;
+			opacity: 0.5;
+			z-index: 1;
+		}
+	}
+}

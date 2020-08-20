@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { registerBlockType } from '@wordpress/blocks'
+import { registerBlockType } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -26,6 +26,21 @@ export const settings = {
 	// details and summary are not translated because they are the HTML tags
 	keywords: [ 'details', 'summary', __( 'faq' ), __( 'spoiler' ) ],
 	attributes,
+	styles: [
+		{
+			name: 'disclosure',
+			label: __( 'Open / Close' ),
+			isDefault: true,
+		},
+		{
+			name: 'flipcard',
+			label: __( 'Flip Card' ),
+		},
+		{
+			name: 'modal',
+			label: __( 'Modal' ),
+		},
+	],
 };
 
 export function registerBlock() {
