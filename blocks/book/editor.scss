@@ -1,0 +1,61 @@
+/**
+ * The following styles get applied inside the editor only.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+// This selector should be revisited if/when we can leverage lightBlockWrapper.
+.wp-block-a8c-book {
+	.wp-block-a8c-book__cover {
+		// Ensure the correct aspect ratio of the cover image, even when the source image is way too big.
+		height: 100% !important; // Needs high specificity to override an inline style. Would be nice if this could be output by the component itself instead.
+
+		// Make the placeholder look like a book.
+		.components-placeholder {
+			box-shadow: none;
+			height: 100%;
+		}
+	}
+
+	.wp-block-a8c-book__cover-placeholder {
+		// Default to 33% width.
+		min-width: 140px;
+		min-height: 230px;
+		width: 33% !important;
+		padding-top: 50%;
+
+		.components-placeholder {
+			position: absolute;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			left: 0;
+		}
+
+		// Hide the resize handles on the placeholder.
+		.components-resizable-box__handle {
+			display: none;
+		}
+	}
+}
+
+.wp-block[data-align='center'] > .wp-block-a8c-book {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.wp-block[data-align='left'] > .wp-block-a8c-book {
+	margin-right: 1em;
+}
+
+.wp-block[data-align='right'] > .wp-block-a8c-book {
+	margin-left: 1em;
+}
+
+.wp-block[data-align='left'],
+.wp-block[data-align='right'] {
+	> .wp-block-a8c-book {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+}
