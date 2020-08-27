@@ -1,3 +1,5 @@
+// Front end and editor styles.
+
 $bgcolor: #efefef; // Be nice if this was customizable via a background color property.
 
 @keyframes open-card {
@@ -11,8 +13,9 @@ $bgcolor: #efefef; // Be nice if this was customizable via a background color pr
 	}
 }
 
-// Front end styles
 .wp-block-a8c-details {
+
+	// 3D flip-card style.
 	&.is-style-flipcard {
 		margin-bottom: 1.5em;
 
@@ -24,22 +27,37 @@ $bgcolor: #efefef; // Be nice if this was customizable via a background color pr
 		// Card front-face.
 		summary {
 			background: $bgcolor; 
+			padding: 1em;
+
+			// Allows a focus style on the summary to be uncropped.
+			position: relative;
 		}
 
-		// Back-face when closed.
+		// Back-face regardless of opened or closed.
 		> *:not(summary) {
 			background: $bgcolor;
 			transform-origin: top center;
 			backface-visibility: hidden;
+
+			// Some baseline left and right padding.
+			padding-left: 1em;
+			padding-right: 1em;
+		}
+
+		// Neutralize the top margin of the first innerblock, add padding.
+		> summary+*, // Frontend
+		> .block-editor-inner-blocks > .block-editor-block-list__layout > * { // Editor
+			margin-top: 0;
+			padding-top: 1em;
 		}
 
 		// Back-face when opened.
 		&[open] > *:not(summary) {
-			animation: open-card .4s ease;
+			animation: open-card .2s ease;
 		}
 	}
 
-
+	// Modal style.
 	&.is-style-modal {
 		summary {
 			width: 10em;
