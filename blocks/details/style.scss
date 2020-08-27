@@ -1,71 +1,44 @@
-/* Front end styles */
+$bgcolor: #efefef; // Be nice if this was customizable via a background color property.
+
+@keyframes open-card {
+	0% {
+		transform: rotateX(-180deg);
+		opacity: 0;
+	}
+	100% {
+		transform: rotateX(0deg);
+		opacity: 1;
+	}
+}
+
+// Front end styles
 .wp-block-a8c-details {
 	&.is-style-flipcard {
-		margin-bottom: 32px;
+		margin-bottom: 1.5em;
 
-		// // .card__face {
-		// details {
-		cursor: pointer;
+		// Enable 3D perspective.
 		transform-style: preserve-3d;
 		perspective: 300px;
-		overflow: hidden;
 
-		// 	// .card__front,
-		// 	// .card__back {
-		summary,
-		:not( summary ) {
-			position: relative;
-			padding: 16px 48px 16px 16px;
-		}
-		// }
 
-		// // .card__front {
+		// Card front-face.
 		summary {
-			background: #efefef;
+			background: $bgcolor; 
 		}
 
-		// // .card__back {
-		.block-editor-inner-blocks {
-			max-height: 0;
-			padding: 0;
-			overflow: hidden;
-			background: #efefef;
-
-			transition: all 0.4s ease;
-			transform: rotateX( -180deg );
+		// Back-face when closed.
+		> *:not(summary) {
+			background: $bgcolor;
 			transform-origin: top center;
-			-webkit-backface-visibility: hidden;
 			backface-visibility: hidden;
-			opacity: 0;
 		}
 
-		// // &.is-unfolded .card__back {
-		// details[ open ] :not( summary ) {
-		&[open] .block-editor-inner-blocks {
-			max-height: none;
-			overflow: visible;
-			padding: 16px 48px 16px 16px;
-			visibility: visible;
-			transform: rotateX( 0deg );
-			opacity: 1;
+		// Back-face when opened.
+		&[open] > *:not(summary) {
+			animation: open-card .4s ease;
 		}
-
-		// .card__expand-icon {
-		// .card__expand-icon {
-		// 	position: absolute;
-		// 	top: 16px;
-		// 	right: 12px;
-
-		// 	svg {
-		// 		fill: currentColor;
-		// 		transition: transform .2s ease;
-		// 	}
-		// }
-
-		// &.is-unfolded .card__expand-icon svg {
-		// 	transform: rotate(180deg);
-		// }
 	}
+
 
 	&.is-style-modal {
 		summary {
