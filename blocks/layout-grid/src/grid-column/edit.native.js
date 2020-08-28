@@ -10,8 +10,7 @@ import classnames from 'classnames';
  */
 
 import {
-	InnerBlocks,
-	InspectorControls,
+	InnerBlocks
 } from '@wordpress/block-editor';
 import { Component, createRef } from '@wordpress/element';
 import {
@@ -55,11 +54,14 @@ class Edit extends Component {
     }
 
     render() {
-      
+	
         return <View>
             <InnerBlocks
 					templateLock={ false }
-					renderAppender={ <InnerBlocks.ButtonBlockAppender /> }
+					renderAppender={ this.props.hasChildBlocks
+						? undefined
+						: () => <InnerBlocks.ButtonBlockAppender />
+					}
 				/>
         </View>;
     }
