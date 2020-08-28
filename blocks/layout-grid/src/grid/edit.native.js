@@ -52,11 +52,6 @@ const ALLOWED_BLOCKS = [ 'jetpack/layout-grid-column' ];
 class Edit extends Component {
 	constructor( props ) {
 		super( props );
-
-		this.overlayRef = createRef();
-		this.state = {
-			selectedDevice: getLayouts()[ 0 ].value,
-		};
     }
 
     render() {
