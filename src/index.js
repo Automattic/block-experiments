@@ -23,6 +23,7 @@ setCategories( [
  * Load all our blocks
  */
 import * as bauhausCentenaryBlock from '../blocks/bauhaus-centenary/src';
+import * as duotoneBlock from '../blocks/duotone/src';
 import * as duotoneFilter from '../blocks/duotone-filter/src';
 import * as eventBlock from '../blocks/event/src';
 import * as layoutGridBlock from '../blocks/layout-grid/src';
@@ -33,6 +34,7 @@ import * as bookBlock from '../blocks/book/src';
 
 // Instantiate the blocks, adding them to our block category
 bauhausCentenaryBlock.registerBlock();
+duotoneBlock.registerBlock();
 duotoneFilter.registerBlock();
 eventBlock.registerBlock();
 layoutGridBlock.registerBlock();
