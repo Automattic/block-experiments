@@ -66,24 +66,26 @@ const withDuotoneEditorControls = createHigherOrderComponent(
 		const duotoneLight = parseColor( attributes.duotoneLight );
 
 		useEffect( () => {
-			setAttributes( { duotoneId: `a8c-duotone-${ instanceId }` } );
+			setAttributes( {
+				duotoneId: `a8c-duotone-filter-${ instanceId }`,
+			} );
 		}, [ instanceId ] );
 
 		return (
 			<>
 				<InspectorControls>
 					<PanelColorSettings
-						title={ __( 'Duotone', 'duotone' ) }
+						title={ __( 'Duotone', 'block-experiments' ) }
 						initialOpen
 						colorSettings={ [
 							{
-								label: __( 'Dark Color', 'duotone' ),
+								label: __( 'Dark Color', 'block-experiments' ),
 								value: attributes.duotoneDark,
 								onChange: ( duotoneDark ) =>
 									setAttributes( { duotoneDark } ),
 							},
 							{
-								label: __( 'Light Color', 'duotone' ),
+								label: __( 'Light Color', 'block-experiments' ),
 								value: attributes.duotoneLight,
 								onChange: ( duotoneLight ) =>
 									setAttributes( { duotoneLight } ),
@@ -151,17 +153,17 @@ function addDuotoneFilterStyle( props, block, attributes ) {
 export function registerBlock() {
 	addFilter(
 		'editor.BlockEdit',
-		'a8c/duotone/with-editor-controls',
+		'a8c/duotone-filter/with-editor-controls',
 		withDuotoneEditorControls
 	);
 	addFilter(
 		'blocks.registerBlockType',
-		'a8c/duotone/add-attributes',
+		'a8c/duotone-filter/add-attributes',
 		withDuotoneAttributes
 	);
 	addFilter(
 		'blocks.getSaveContent.extraProps',
-		'a8c/duotone/add-filter-style',
+		'a8c/duotone-filter/add-filter-style',
 		addDuotoneFilterStyle
 	);
 }
