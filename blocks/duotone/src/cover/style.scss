@@ -1,8 +1,6 @@
 .wp-block-a8c-duotone-cover-image,
 .wp-block-a8c-duotone-cover {
 	position: relative;
-	background-size: cover;
-	background-position: center center;
 	min-height: 430px;
 	height: 100%;
 	width: 100%;
@@ -159,6 +157,8 @@
 	}
 }
 
+// wp-block-a8c-duotone-cover required for specificity to override for image
+.wp-block-a8c-duotone-cover .wp-block-a8c-duotone-cover__image-background,
 .wp-block-a8c-duotone-cover__video-background {
 	position: absolute;
 	top: 50%;

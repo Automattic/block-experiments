@@ -18,7 +18,6 @@ import {
 import {
 	IMAGE_BACKGROUND_TYPE,
 	VIDEO_BACKGROUND_TYPE,
-	backgroundImageStyles,
 	dimRatioToClass,
 	isContentPositionCenter,
 	getPositionClassName,
@@ -51,8 +50,9 @@ export default function save( { attributes } ) {
 	const isImageBackground = IMAGE_BACKGROUND_TYPE === backgroundType;
 	const isVideoBackground = VIDEO_BACKGROUND_TYPE === backgroundType;
 
-	const style = isImageBackground ? backgroundImageStyles( url ) : {};
+	const style = {};
 	const videoStyle = {};
+	const imageStyle = {};
 
 	if ( ! overlayColorClass ) {
 		style.backgroundColor = customOverlayColor;
@@ -70,12 +70,14 @@ export default function save( { attributes } ) {
 			focalPoint.y * 100
 		) }%`;
 
-		if ( isImageBackground && ! hasParallax ) {
-			style.backgroundPosition = positionValue;
+		if ( isImageBackground ) {
+			imageStyle.objectPosition = positionValue;
+			imageStyle.filter = `url( #${ attributes.duotoneId } )`;
 		}
 
 		if ( isVideoBackground ) {
 			videoStyle.objectPosition = positionValue;
+			videoStyle.filter = `url( #${ attributes.duotoneId } )`;
 		}
 	}
 
@@ -108,6 +110,14 @@ export default function save( { attributes } ) {
 							? { background: customGradient }
 							: undefined
 					}
+				/>
+			) }
+			{ isImageBackground && url && (
+				<img
+					className="wp-block-a8c-duotone-cover__image-background"
+					alt=""
+					src={ url }
+					style={ imageStyle }
 				/>
 			) }
 			{ isVideoBackground && url && (

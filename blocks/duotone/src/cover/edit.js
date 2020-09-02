@@ -29,6 +29,7 @@ import {
 	InspectorControls,
 	MediaPlaceholder,
 	MediaReplaceFlow,
+	PanelColorSettings,
 	withColors,
 	ColorPalette,
 	__experimentalBlock as Block,
@@ -50,11 +51,11 @@ import {
 	VIDEO_BACKGROUND_TYPE,
 	COVER_MIN_HEIGHT,
 	CSS_UNITS,
-	backgroundImageStyles,
 	dimRatioToClass,
 	isContentPositionCenter,
 	getPositionClassName,
 } from './shared';
+import Duotone from '../duotone';
 
 /**
  * Module Constants
@@ -256,6 +257,9 @@ function CoverEdit( {
 		minHeightUnit,
 		style: styleAttribute,
 		url,
+		duotoneDark,
+		duotoneLight,
+		duotoneId,
 	} = attributes;
 	const {
 		gradientClass,
@@ -279,6 +283,14 @@ function CoverEdit( {
 		isDarkElement
 	);
 
+	const instanceId = useInstanceId( CoverEdit );
+
+	useEffect( () => {
+		setAttributes( {
+			duotoneId: `a8c-duotone-cover-${ instanceId }`,
+		} );
+	}, [ instanceId ] );
+
 	const isImageBackground = IMAGE_BACKGROUND_TYPE === backgroundType;
 	const isVideoBackground = VIDEO_BACKGROUND_TYPE === backgroundType;
 
@@ -290,8 +302,6 @@ function CoverEdit( {
 		: minHeight;
 
 	const style = {
-		...( isImageBackground ? backgroundImageStyles( url ) : {} ),
-		backgroundColor: overlayColor.color,
 		minHeight: temporaryMinHeight || minHeightWithUnit || undefined,
 	};
 
@@ -303,9 +313,6 @@ function CoverEdit( {
 
 	if ( focalPoint ) {
 		positionValue = `${ focalPoint.x * 100 }% ${ focalPoint.y * 100 }%`;
-		if ( isImageBackground ) {
-			style.backgroundPosition = positionValue;
-		}
 	}
 
 	const hasBackground = !! ( url || overlayColor.color || gradientValue );
@@ -424,6 +431,28 @@ function CoverEdit( {
 								/>
 							) }
 						</PanelColorGradientSettings>
+						<PanelColorSettings
+							title={ __( 'Duotone', 'duotone' ) }
+							initialOpen
+							colorSettings={ [
+								{
+									label: __( 'Dark Color', 'duotone' ),
+									value: duotoneDark,
+									onChange: ( newDuotoneDark ) =>
+										setAttributes( {
+											duotoneDark: newDuotoneDark,
+										} ),
+								},
+								{
+									label: __( 'Light Color', 'duotone' ),
+									value: duotoneLight,
+									onChange: ( newDuotoneLight ) =>
+										setAttributes( {
+											duotoneLight: newDuotoneLight,
+										} ),
+								},
+							] }
+						/>
 					</>
 				) }
 			</InspectorControls>
@@ -508,14 +537,22 @@ function CoverEdit( {
 					} }
 					showHandle={ isSelected }
 				/>
+				{ duotoneDark && duotoneLight && duotoneId ? (
+					<Duotone
+						id={ duotoneId }
+						darkColor={ duotoneDark }
+						lightColor={ duotoneLight }
+					/>
+				) : null }
 				{ isImageBackground && (
-					// Used only to programmatically check if the image is dark or not
 					<img
 						ref={ isDarkElement }
-						aria-hidden
+						className="wp-block-a8c-duotone-cover__image-background"
 						alt=""
 						style={ {
-							display: 'none',
+							backgroundColor: overlayColor.color,
+							filter: `url( #${ duotoneId } )`,
+							objectPosition: positionValue,
 						} }
 						src={ url }
 					/>
@@ -538,7 +575,10 @@ function CoverEdit( {
 						muted
 						loop
 						src={ url }
-						style={ { objectPosition: positionValue } }
+						style={ {
+							objectPosition: positionValue,
+							filter: `url( #${ duotoneId } )`,
+						} }
 					/>
 				) }
 				<InnerBlocks

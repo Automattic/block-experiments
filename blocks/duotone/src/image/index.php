@@ -14,6 +14,17 @@
  * @return string Rendered HTML of the referenced block.
  */
 function render_block_a8c_duotone_image( $attributes, $content ) {
+	if (
+		isset( $attributes['duotoneId'] ) &&
+		isset( $attributes['duotoneDark'] ) &&
+		isset( $attributes['duotoneLight'] )
+	) {
+		ob_start();
+		include __DIR__ . '/../duotone.php';
+		$duotone = ob_get_clean();
+		$content = $duotone . $content;
+	}
+
 	return $content;
 }
 

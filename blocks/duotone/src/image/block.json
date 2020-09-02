@@ -68,6 +68,15 @@
 			"source": "attribute",
 			"selector": "figure > a",
 			"attribute": "target"
+		},
+		"duotoneId": {
+			"type": "string"
+		},
+		"duotoneDark": {
+			"type": "string"
+		},
+		"duotoneLight": {
+			"type": "string"
 		}
 	},
 	"supports": {
