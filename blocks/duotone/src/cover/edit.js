@@ -66,7 +66,7 @@ const INNER_BLOCKS_TEMPLATE = [
 		{
 			align: 'center',
 			fontSize: 'large',
-			placeholder: __( 'Write title…' ),
+			placeholder: __( 'Write title…', 'duotone' ),
 		},
 	],
 ];
@@ -118,7 +118,10 @@ function CoverHeightInput( {
 	const min = isPx ? COVER_MIN_HEIGHT : 0;
 
 	return (
-		<BaseControl label={ __( 'Minimum height of cover' ) } id={ inputId }>
+		<BaseControl
+			label={ __( 'Minimum height of cover', 'duotone' ) }
+			id={ inputId }
+		>
 			<UnitControl
 				id={ inputId }
 				isResetValueOnUnitChange
@@ -232,6 +235,7 @@ function useCoverIsDark( url, dimRatio = 50, overlayColor, elementRef ) {
 }
 
 function CoverEdit( {
+	className,
 	attributes,
 	setAttributes,
 	isSelected,
@@ -314,7 +318,7 @@ function CoverEdit( {
 				{ hasBackground && (
 					<>
 						<BlockAlignmentMatrixToolbar
-							label={ __( 'Change content position' ) }
+							label={ __( 'Change content position', 'duotone' ) }
 							value={ contentPosition }
 							onChange={ ( nextPosition ) =>
 								setAttributes( {
@@ -335,17 +339,17 @@ function CoverEdit( {
 			</BlockControls>
 			<InspectorControls>
 				{ !! url && (
-					<PanelBody title={ __( 'Media settings' ) }>
+					<PanelBody title={ __( 'Media settings', 'duotone' ) }>
 						{ isImageBackground && (
 							<ToggleControl
-								label={ __( 'Fixed background' ) }
+								label={ __( 'Fixed background', 'duotone' ) }
 								checked={ hasParallax }
 								onChange={ toggleParallax }
 							/>
 						) }
 						{ showFocalPointPicker && (
 							<FocalPointPicker
-								label={ __( 'Focal point picker' ) }
+								label={ __( 'Focal point picker', 'duotone' ) }
 								url={ url }
 								value={ focalPoint }
 								onChange={ ( newFocalPoint ) =>
@@ -371,14 +375,14 @@ function CoverEdit( {
 									} )
 								}
 							>
-								{ __( 'Clear Media' ) }
+								{ __( 'Clear Media', 'duotone' ) }
 							</Button>
 						</PanelRow>
 					</PanelBody>
 				) }
 				{ hasBackground && (
 					<>
-						<PanelBody title={ __( 'Dimensions' ) }>
+						<PanelBody title={ __( 'Dimensions', 'duotone' ) }>
 							<CoverHeightInput
 								value={ temporaryMinHeight || minHeight }
 								unit={ minHeightUnit }
@@ -393,7 +397,7 @@ function CoverEdit( {
 							/>
 						</PanelBody>
 						<PanelColorGradientSettings
-							title={ __( 'Overlay' ) }
+							title={ __( 'Overlay', 'duotone' ) }
 							initialOpen={ true }
 							settings={ [
 								{
@@ -401,13 +405,13 @@ function CoverEdit( {
 									gradientValue,
 									onColorChange: setOverlayColor,
 									onGradientChange: setGradient,
-									label: __( 'Color' ),
+									label: __( 'Color', 'duotone' ),
 								},
 							] }
 						>
 							{ !! url && (
 								<RangeControl
-									label={ __( 'Opacity' ) }
+									label={ __( 'Opacity', 'duotone' ) }
 									value={ dimRatio }
 									onChange={ ( newDimRation ) =>
 										setAttributes( {
@@ -428,7 +432,7 @@ function CoverEdit( {
 
 	if ( ! hasBackground ) {
 		const placeholderIcon = <BlockIcon icon={ icon } />;
-		const label = __( 'Cover' );
+		const label = __( 'Cover', 'duotone' );
 
 		return (
 			<>
@@ -451,7 +455,7 @@ function CoverEdit( {
 							createErrorNotice( message );
 						} }
 					>
-						<div className="wp-block-cover__placeholder-background-options">
+						<div className="wp-block-a8c-duotone-cover__placeholder-background-options">
 							<ColorPalette
 								disableCustomColors={ true }
 								value={ overlayColor.color }
@@ -466,6 +470,7 @@ function CoverEdit( {
 	}
 
 	const classes = classnames(
+		className,
 		dimRatioToClass( dimRatio ),
 		{
 			'is-dark-theme': isDark,
@@ -519,7 +524,7 @@ function CoverEdit( {
 					<span
 						aria-hidden="true"
 						className={ classnames(
-							'wp-block-cover__gradient-background',
+							'wp-block-a8c-duotone-cover__gradient-background',
 							gradientClass
 						) }
 						style={ { background: gradientValue } }
@@ -528,7 +533,7 @@ function CoverEdit( {
 				{ isVideoBackground && (
 					<video
 						ref={ isDarkElement }
-						className="wp-block-cover__video-background"
+						className="wp-block-a8c-duotone-cover__video-background"
 						autoPlay
 						muted
 						loop
@@ -539,7 +544,8 @@ function CoverEdit( {
 				<InnerBlocks
 					__experimentalTagName="div"
 					__experimentalPassedProps={ {
-						className: 'wp-block-cover__inner-container',
+						className:
+							'wp-block-a8c-duotone-cover__inner-container',
 					} }
 					template={ INNER_BLOCKS_TEMPLATE }
 				/>

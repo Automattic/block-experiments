@@ -1,4 +1,4 @@
-.wp-block-image {
+.wp-block-a8c-duotone-image {
 	// The image block is in a `figure` element, and many themes zero this out.
 	// This rule explicitly sets it, to ensure at least some bottom-margin in the flow.
 	margin-bottom: 1em;
@@ -77,9 +77,9 @@
 
 	// If a browser supports it, we will switch to using a circular SVG mask.
 	// The stylelint override is necessary to use the SVG inline here.
-	@supports (mask-image: none) or (-webkit-mask-image: none) {
+	@supports ( mask-image: none ) or ( -webkit-mask-image: none ) {
 		/* stylelint-disable */
-		mask-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"/></svg>');
+		mask-image: url( 'data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="50"/></svg>' );
 		/* stylelint-enable */
 		mask-mode: alpha;
 		mask-repeat: no-repeat;

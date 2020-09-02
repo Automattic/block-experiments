@@ -162,7 +162,7 @@ export class ImageEdit extends React.Component {
 			  'Image caption. Empty'
 			: sprintf(
 					/* translators: accessibility text. %s: image caption. */
-					__( 'Image caption. %s' ),
+					__( 'Image caption. %s', 'duotone' ),
 					caption
 			  );
 	}
@@ -346,7 +346,7 @@ export class ImageEdit extends React.Component {
 			<BlockControls>
 				<ToolbarGroup>
 					<ToolbarButton
-						title={ __( 'Edit image' ) }
+						title={ __( 'Edit image', 'duotone' ) }
 						icon={ replace }
 						onClick={ open }
 					/>
@@ -360,12 +360,12 @@ export class ImageEdit extends React.Component {
 
 		const getInspectorControls = () => (
 			<InspectorControls>
-				<PanelBody title={ __( 'Image settings' ) }>
+				<PanelBody title={ __( 'Image settings', 'duotone' ) }>
 					<TextControl
 						icon={ link }
-						label={ __( 'Link To' ) }
+						label={ __( 'Link To', 'duotone' ) }
 						value={ href || '' }
-						valuePlaceholder={ __( 'Add URL' ) }
+						valuePlaceholder={ __( 'Add URL', 'duotone' ) }
 						onChange={ this.onSetLinkDestination }
 						autoCapitalize="none"
 						autoCorrect={ false }
@@ -373,14 +373,14 @@ export class ImageEdit extends React.Component {
 					/>
 					<ToggleControl
 						icon={ external }
-						label={ __( 'Open in new tab' ) }
+						label={ __( 'Open in new tab', 'duotone' ) }
 						checked={ linkTarget === '_blank' }
 						onChange={ this.onSetNewTab }
 					/>
 					{ image && sizeOptionsValid && (
 						<CycleSelectControl
 							icon={ 'editor-expand' }
-							label={ __( 'Size' ) }
+							label={ __( 'Size', 'duotone' ) }
 							value={ sizeSlug || DEFAULT_SIZE_SLUG }
 							onChangeValue={ ( newValue ) =>
 								this.onSetSizeSlug( newValue )
@@ -390,9 +390,9 @@ export class ImageEdit extends React.Component {
 					) }
 					<TextControl
 						icon={ textColor }
-						label={ __( 'Alt Text' ) }
+						label={ __( 'Alt Text', 'duotone' ) }
 						value={ alt || '' }
-						valuePlaceholder={ __( 'None' ) }
+						valuePlaceholder={ __( 'None', 'duotone' ) }
 						onChangeValue={ this.updateAlt }
 					/>
 				</PanelBody>

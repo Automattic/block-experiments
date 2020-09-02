@@ -107,7 +107,7 @@ const transforms = {
 						? anchorElement.className
 						: undefined;
 				const attributes = getBlockAttributes(
-					'core/image',
+					'a8c/duotone-image',
 					node.outerHTML,
 					{
 						align,
@@ -119,7 +119,7 @@ const transforms = {
 						anchor,
 					}
 				);
-				return createBlock( 'core/image', attributes );
+				return createBlock( 'a8c/duotone-image', attributes );
 			},
 		},
 		{
@@ -135,7 +135,7 @@ const transforms = {
 				// We don't need to upload the media directly here
 				// It's already done as part of the `componentDidMount`
 				// int the image block
-				return createBlock( 'core/image', {
+				return createBlock( 'a8c/duotone-image', {
 					url: createBlobURL( file ),
 				} );
 			},

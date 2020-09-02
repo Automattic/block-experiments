@@ -238,8 +238,8 @@ export function ImageEdit( {
 	const src = isExternal ? url : undefined;
 	const mediaPreview = !! url && (
 		<img
-			alt={ __( 'Edit image' ) }
-			title={ __( 'Edit image' ) }
+			alt={ __( 'Edit image', 'duotone' ) }
+			title={ __( 'Edit image', 'duotone' ) }
 			className={ 'edit-image-preview' }
 			src={ url }
 		/>

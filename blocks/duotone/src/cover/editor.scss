@@ -1,4 +1,4 @@
-.wp-block-cover {
+.wp-block-a8c-duotone-cover {
 	position: relative;
 
 	// Override default cover styles
@@ -16,21 +16,21 @@
 		width: 100%;
 	}
 
-	// The .wp-block-cover class is used just to increase selector specificity.
-	.wp-block-cover__inner-container {
+	// The .wp-block-a8c-duotone-cover class is used just to increase selector specificity.
+	.wp-block-a8c-duotone-cover__inner-container {
 		// Avoid text align inherit from cover image align.
 		text-align: left;
 		margin-left: 0;
 		margin-right: 0;
 	}
 
-	.wp-block-cover__placeholder-background-options {
+	.wp-block-a8c-duotone-cover__placeholder-background-options {
 		width: 100%;
 	}
 }
 
-[data-align="left"] > .wp-block-cover,
-[data-align="right"] > .wp-block-cover {
+[data-align='left'] > .wp-block-a8c-duotone-cover,
+[data-align='right'] > .wp-block-a8c-duotone-cover {
 	max-width: $content-width / 2;
 	width: 100%;
 }
@@ -47,7 +47,7 @@
 	bottom: 0;
 }
 
-.block-library-cover__resize-container:not(.is-resizing) {
+.block-library-cover__resize-container:not( .is-resizing ) {
 	// Important is used to have higher specificity than the inline style set by re-resizable library.
 	height: auto !important;
 }

@@ -68,7 +68,7 @@ const INNER_BLOCKS_TEMPLATE = [
 		'core/paragraph',
 		{
 			align: 'center',
-			placeholder: __( 'Write title…' ),
+			placeholder: __( 'Write title…', 'duotone' ),
 		},
 	],
 ];
@@ -244,7 +244,7 @@ const Cover = ( {
 		<BlockControls>
 			<ToolbarGroup>
 				<ToolbarButton
-					title={ __( 'Edit cover media' ) }
+					title={ __( 'Edit cover media', 'duotone' ) }
 					icon={ replace }
 					onClick={ open }
 				/>
@@ -275,7 +275,7 @@ const Cover = ( {
 			{ url ? (
 				<PanelBody>
 					<RangeControl
-						label={ __( 'Opacity' ) }
+						label={ __( 'Opacity', 'duotone' ) }
 						minimumValue={ 0 }
 						maximumValue={ 100 }
 						value={ dimRatio }
@@ -285,9 +285,9 @@ const Cover = ( {
 					/>
 				</PanelBody>
 			) : null }
-			<PanelBody title={ __( 'Dimensions' ) }>
+			<PanelBody title={ __( 'Dimensions', 'duotone' ) }>
 				<RangeControl
-					label={ __( 'Minimum height in pixels' ) }
+					label={ __( 'Minimum height in pixels', 'duotone' ) }
 					minimumValue={ COVER_MIN_HEIGHT }
 					maximumValue={ COVER_MAX_HEIGHT }
 					value={ CONTAINER_HEIGHT }
@@ -297,10 +297,10 @@ const Cover = ( {
 			</PanelBody>
 
 			{ url ? (
-				<PanelBody title={ __( 'Media' ) }>
+				<PanelBody title={ __( 'Media', 'duotone' ) }>
 					<BottomSheet.Cell
 						leftAlign
-						label={ __( 'Clear Media' ) }
+						label={ __( 'Clear Media', 'duotone' ) }
 						labelStyle={ styles.clearMediaButton }
 						onPress={ onClearMedia }
 					/>
@@ -343,7 +343,7 @@ const Cover = ( {
 						isBottomSheetContentScrolling={
 							isBottomSheetContentScrolling
 						}
-						bottomLabelText={ __( 'Select a color' ) }
+						bottomLabelText={ __( 'Select a color', 'duotone' ) }
 					/>
 				) }
 			</BottomSheetConsumer>
@@ -446,7 +446,7 @@ const Cover = ( {
 					}
 					icon={ placeholderIcon }
 					labels={ {
-						title: __( 'Cover' ),
+						title: __( 'Cover', 'duotone' ),
 					} }
 					onSelect={ onSelectMedia }
 					allowedTypes={ ALLOWED_MEDIA_TYPES }
@@ -490,7 +490,7 @@ const Cover = ( {
 								{
 									destructiveButton: true,
 									id: 'clearMedia',
-									label: __( 'Clear Media' ),
+									label: __( 'Clear Media', 'duotone' ),
 									onPress: onClearMedia,
 									separated: true,
 									value: 'clearMedia',

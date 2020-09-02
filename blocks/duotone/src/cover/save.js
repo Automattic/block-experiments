@@ -100,7 +100,7 @@ export default function save( { attributes } ) {
 				<span
 					aria-hidden="true"
 					className={ classnames(
-						'wp-block-cover__gradient-background',
+						'wp-block-a8c-duotone-cover__gradient-background',
 						gradientClass
 					) }
 					style={
@@ -112,7 +112,7 @@ export default function save( { attributes } ) {
 			) }
 			{ isVideoBackground && url && (
 				<video
-					className="wp-block-cover__video-background"
+					className="wp-block-a8c-duotone-cover__video-background"
 					autoPlay
 					muted
 					loop
@@ -121,7 +121,7 @@ export default function save( { attributes } ) {
 					style={ videoStyle }
 				/>
 			) }
-			<div className="wp-block-cover__inner-container">
+			<div className="wp-block-a8c-duotone-cover__inner-container">
 				<InnerBlocks.Content />
 			</div>
 		</div>

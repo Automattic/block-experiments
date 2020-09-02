@@ -75,11 +75,11 @@ function OverlayColorSettings( { attributes, setAttributes } ) {
 
 	return (
 		<PanelColorGradientSettings
-			title={ __( 'Overlay' ) }
+			title={ __( 'Overlay', 'duotone' ) }
 			initialOpen={ false }
 			settings={ [
 				{
-					label: __( 'Color' ),
+					label: __( 'Color', 'duotone' ),
 					onColorChange,
 					colorValue,
 					gradientValue,

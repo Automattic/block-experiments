@@ -214,7 +214,7 @@ export default function Image( {
 				}
 
 				setExternalBlob();
-				createSuccessNotice( __( 'Image uploaded.' ), {
+				createSuccessNotice( __( 'Image uploaded.', 'duotone' ), {
 					type: 'snackbar',
 				} );
 			},
@@ -255,7 +255,7 @@ export default function Image( {
 						<ToolbarButton
 							onClick={ () => setIsEditingImage( true ) }
 							icon={ crop }
-							label={ __( 'Crop' ) }
+							label={ __( 'Crop', 'duotone' ) }
 						/>
 					</ToolbarGroup>
 				) }
@@ -264,7 +264,7 @@ export default function Image( {
 						<ToolbarButton
 							onClick={ uploadExternal }
 							icon={ upload }
-							label={ __( 'Upload external image' ) }
+							label={ __( 'Upload external image', 'duotone' ) }
 						/>
 					</ToolbarGroup>
 				) }
@@ -281,7 +281,7 @@ export default function Image( {
 				) }
 			</BlockControls>
 			<InspectorControls>
-				<PanelBody title={ __( 'Image settings' ) }>
+				<PanelBody title={ __( 'Image settings', 'duotone' ) }>
 					<TextareaControl
 						label={ __( 'Alt text (alternative text)' ) }
 						value={ alt }
@@ -314,7 +314,7 @@ export default function Image( {
 			</InspectorControls>
 			<InspectorAdvancedControls>
 				<TextControl
-					label={ __( 'Title attribute' ) }
+					label={ __( 'Title attribute', 'duotone' ) }
 					value={ title || '' }
 					onChange={ onSetTitle }
 					help={
@@ -342,11 +342,14 @@ export default function Image( {
 	} else if ( filename ) {
 		defaultedAlt = sprintf(
 			/* translators: %s: file name */
-			__( 'This image has an empty alt attribute; its file name is %s' ),
+			__(
+				'This image has an empty alt attribute; its file name is %s',
+				'duotone'
+			),
 			filename
 		);
 	} else {
-		defaultedAlt = __( 'This image has an empty alt attribute' );
+		defaultedAlt = __( 'This image has an empty alt attribute', 'duotone' );
 	}
 
 	let img = (
@@ -487,7 +490,7 @@ export default function Image( {
 			{ ( ! RichText.isEmpty( caption ) || isSelected ) && (
 				<RichText
 					tagName="figcaption"
-					placeholder={ __( 'Write caption…' ) }
+					placeholder={ __( 'Write caption…', 'duotone' ) }
 					value={ caption }
 					unstableOnFocus={ onFocusCaption }
 					onChange={ ( value ) =>

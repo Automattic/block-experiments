@@ -18,7 +18,7 @@ const { name } = metadata;
 export { metadata, name };
 
 export const settings = {
-	title: __( 'Cover' ),
+	title: __( 'Duotone Cover', 'duotone' ),
 	description: __(
 		'Add an image or video with a text overlay — great for headers.'
 	),
@@ -34,7 +34,7 @@ export const settings = {
 				name: 'core/paragraph',
 				attributes: {
 					customFontSize: 48,
-					content: __( '<strong>Snow Patrol</strong>' ),
+					content: __( '<strong>Snow Patrol</strong>', 'duotone' ),
 					align: 'center',
 				},
 			},

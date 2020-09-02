@@ -12,9 +12,9 @@ const transforms = {
 	from: [
 		{
 			type: 'block',
-			blocks: [ 'core/image' ],
+			blocks: [ 'a8c/duotone-image' ],
 			transform: ( { caption, url, align, id, anchor } ) =>
-				createBlock( 'core/cover', {
+				createBlock( 'a8c/duotone-cover', {
 					title: caption,
 					url,
 					align,
@@ -26,7 +26,7 @@ const transforms = {
 			type: 'block',
 			blocks: [ 'core/video' ],
 			transform: ( { caption, src, align, id, anchor } ) =>
-				createBlock( 'core/cover', {
+				createBlock( 'a8c/duotone-cover', {
 					title: caption,
 					url: src,
 					align,
@@ -39,7 +39,7 @@ const transforms = {
 	to: [
 		{
 			type: 'block',
-			blocks: [ 'core/image' ],
+			blocks: [ 'a8c/duotone-image' ],
 			isMatch: ( {
 				backgroundType,
 				url,
@@ -61,7 +61,7 @@ const transforms = {
 				);
 			},
 			transform: ( { title, url, align, id, anchor } ) =>
-				createBlock( 'core/image', {
+				createBlock( 'a8c/duotone-image', {
 					caption: title,
 					url,
 					align,

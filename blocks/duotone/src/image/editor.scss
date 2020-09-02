@@ -1,8 +1,8 @@
-figure.wp-block-image:not(.wp-block) {
+figure.wp-block-a8c-duotone-image:not( .wp-block ) {
 	margin: 0;
 }
 
-.wp-block-image {
+.wp-block-a8c-duotone-image {
 	position: relative;
 
 	.is-applying img,
@@ -25,7 +25,7 @@ figure.wp-block-image:not(.wp-block) {
 }
 
 // This is necessary for the editor resize handles to accurately work on a non-floated, non-resized, small image.
-.wp-block-image .components-resizable-box__container {
+.wp-block-a8c-duotone-image .components-resizable-box__container {
 	display: inline-block;
 	img {
 		display: block;
@@ -34,7 +34,9 @@ figure.wp-block-image:not(.wp-block) {
 	}
 }
 
-.block-editor-block-list__block[data-type="core/image"] .block-editor-block-toolbar .block-editor-url-input__button-modal {
+.block-editor-block-list__block[data-type='a8c/duotone-image']
+	.block-editor-block-toolbar
+	.block-editor-url-input__button-modal {
 	position: absolute;
 	left: 0;
 	right: 0;
@@ -45,40 +47,40 @@ figure.wp-block-image:not(.wp-block) {
 	}
 }
 
-[data-align="wide"] > .wp-block-image,
-[data-align="full"] > .wp-block-image {
+[data-align='wide'] > .wp-block-a8c-duotone-image,
+[data-align='full'] > .wp-block-a8c-duotone-image {
 	img {
 		width: 100%;
 	}
 }
 
-.wp-block[data-align="left"] > .wp-block-image {
+.wp-block[data-align='left'] > .wp-block-a8c-duotone-image {
 	margin-right: 1em;
 	margin-left: 0;
 	margin-top: 0.5em;
 	margin-bottom: 0.5em;
 }
 
-.wp-block[data-align="right"] > .wp-block-image {
+.wp-block[data-align='right'] > .wp-block-a8c-duotone-image {
 	margin-left: 1em;
 	margin-right: 0;
 	margin-top: 0.5em;
 	margin-bottom: 0.5em;
 }
 
-.wp-block[data-align="center"] > .wp-block-image {
+.wp-block[data-align='center'] > .wp-block-a8c-duotone-image {
 	margin-left: auto;
 	margin-right: auto;
 	text-align: center;
 }
 
-.wp-block-image__crop-area {
+.wp-block-a8c-duotone-image__crop-area {
 	position: relative;
 	max-width: 100%;
 	width: 100%;
 }
 
-.wp-block-image__crop-icon {
+.wp-block-a8c-duotone-image__crop-icon {
 	padding: 0 8px;
 	min-width: 48px;
 	display: flex;
@@ -90,7 +92,7 @@ figure.wp-block-image:not(.wp-block) {
 	}
 }
 
-.wp-block-image__zoom {
+.wp-block-a8c-duotone-image__zoom {
 	.components-popover__content {
 		overflow: visible;
 	}
@@ -105,7 +107,7 @@ figure.wp-block-image:not(.wp-block) {
 	}
 }
 
-.wp-block-image__aspect-ratio {
+.wp-block-a8c-duotone-image__aspect-ratio {
 	height: $grid-unit-60 - $border-width - $border-width;
 	margin-bottom: -$grid-unit-10;
 	display: flex;

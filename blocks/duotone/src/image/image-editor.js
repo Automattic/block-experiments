@@ -64,9 +64,9 @@ function AspectMenu( { isDisabled, onClick, value, defaultValue } ) {
 	return (
 		<DropdownMenu
 			icon={ aspectRatioIcon }
-			label={ __( 'Aspect Ratio' ) }
+			label={ __( 'Aspect Ratio', 'duotone' ) }
 			popoverProps={ POPOVER_PROPS }
-			className="wp-block-image__aspect-ratio"
+			className="wp-block-a8c-duotone-image__aspect-ratio"
 		>
 			{ ( { onClose } ) => (
 				<>
@@ -79,17 +79,17 @@ function AspectMenu( { isDisabled, onClick, value, defaultValue } ) {
 						value={ value }
 						aspectRatios={ [
 							{
-								title: __( 'Original' ),
+								title: __( 'Original', 'duotone' ),
 								aspect: defaultValue,
 							},
 							{
-								title: __( 'Square' ),
+								title: __( 'Square', 'duotone' ),
 								aspect: 1,
 							},
 						] }
 					/>
 					<AspectGroup
-						label={ __( 'Landscape' ) }
+						label={ __( 'Landscape', 'duotone' ) }
 						isDisabled={ isDisabled }
 						onClick={ ( aspect ) => {
 							onClick( aspect );
@@ -98,25 +98,25 @@ function AspectMenu( { isDisabled, onClick, value, defaultValue } ) {
 						value={ value }
 						aspectRatios={ [
 							{
-								title: __( '16:10' ),
+								title: __( '16:10', 'duotone' ),
 								aspect: 16 / 10,
 							},
 							{
-								title: __( '16:9' ),
+								title: __( '16:9', 'duotone' ),
 								aspect: 16 / 9,
 							},
 							{
-								title: __( '4:3' ),
+								title: __( '4:3', 'duotone' ),
 								aspect: 4 / 3,
 							},
 							{
-								title: __( '3:2' ),
+								title: __( '3:2', 'duotone' ),
 								aspect: 3 / 2,
 							},
 						] }
 					/>
 					<AspectGroup
-						label={ __( 'Portrait' ) }
+						label={ __( 'Portrait', 'duotone' ) }
 						isDisabled={ isDisabled }
 						onClick={ ( aspect ) => {
 							onClick( aspect );
@@ -125,19 +125,19 @@ function AspectMenu( { isDisabled, onClick, value, defaultValue } ) {
 						value={ value }
 						aspectRatios={ [
 							{
-								title: __( '10:16' ),
+								title: __( '10:16', 'duotone' ),
 								aspect: 10 / 16,
 							},
 							{
-								title: __( '9:16' ),
+								title: __( '9:16', 'duotone' ),
 								aspect: 9 / 16,
 							},
 							{
-								title: __( '3:4' ),
+								title: __( '3:4', 'duotone' ),
 								aspect: 3 / 4,
 							},
 							{
-								title: __( '2:3' ),
+								title: __( '2:3', 'duotone' ),
 								aspect: 2 / 3,
 							},
 						] }
@@ -210,7 +210,7 @@ export default function ImageEditor( {
 				createErrorNotice(
 					sprintf(
 						/* translators: 1. Error message */
-						__( 'Could not edit image. %s' ),
+						__( 'Could not edit image. %s', 'duotone' ),
 						error.message
 					),
 					{
@@ -286,9 +286,12 @@ export default function ImageEditor( {
 	return (
 		<>
 			<div
-				className={ classnames( 'wp-block-image__crop-area', {
-					'is-applying': inProgress,
-				} ) }
+				className={ classnames(
+					'wp-block-a8c-duotone-image__crop-area',
+					{
+						'is-applying': inProgress,
+					}
+				) }
 				style={ {
 					width: editedWidth,
 					height: editedHeight,
@@ -315,12 +318,12 @@ export default function ImageEditor( {
 			<BlockControls>
 				<ToolbarGroup>
 					<Dropdown
-						contentClassName="wp-block-image__zoom"
+						contentClassName="wp-block-a8c-duotone-image__zoom"
 						popoverProps={ POPOVER_PROPS }
 						renderToggle={ ( { isOpen, onToggle } ) => (
 							<ToolbarButton
 								icon={ search }
-								label={ __( 'Zoom' ) }
+								label={ __( 'Zoom', 'duotone' ) }
 								onClick={ onToggle }
 								aria-expanded={ isOpen }
 								disabled={ inProgress }
@@ -350,17 +353,17 @@ export default function ImageEditor( {
 				<ToolbarGroup>
 					<ToolbarButton
 						icon={ rotateRightIcon }
-						label={ __( 'Rotate' ) }
+						label={ __( 'Rotate', 'duotone' ) }
 						onClick={ rotate }
 						disabled={ inProgress }
 					/>
 				</ToolbarGroup>
 				<ToolbarGroup>
 					<ToolbarButton onClick={ apply } disabled={ inProgress }>
-						{ __( 'Apply' ) }
+						{ __( 'Apply', 'duotone' ) }
 					</ToolbarButton>
 					<ToolbarButton onClick={ () => setIsEditingImage( false ) }>
-						{ __( 'Cancel' ) }
+						{ __( 'Cancel', 'duotone' ) }
 					</ToolbarButton>
 				</ToolbarGroup>
 			</BlockControls>

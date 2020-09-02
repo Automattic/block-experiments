@@ -134,7 +134,7 @@ const deprecated = [
 							<span
 								aria-hidden="true"
 								className={ classnames(
-									'wp-block-cover__gradient-background',
+									'wp-block-a8c-duotone-cover__gradient-background',
 									gradientClass
 								) }
 								style={
@@ -146,14 +146,14 @@ const deprecated = [
 						) }
 					{ VIDEO_BACKGROUND_TYPE === backgroundType && url && (
 						<video
-							className="wp-block-cover__video-background"
+							className="wp-block-a8c-duotone-cover__video-background"
 							autoPlay
 							muted
 							loop
 							src={ url }
 						/>
 					) }
-					<div className="wp-block-cover__inner-container">
+					<div className="wp-block-a8c-duotone-cover__inner-container">
 						<InnerBlocks.Content />
 					</div>
 				</div>
@@ -237,7 +237,7 @@ const deprecated = [
 							<span
 								aria-hidden="true"
 								className={ classnames(
-									'wp-block-cover__gradient-background',
+									'wp-block-a8c-duotone-cover__gradient-background',
 									gradientClass
 								) }
 								style={
@@ -249,14 +249,14 @@ const deprecated = [
 						) }
 					{ VIDEO_BACKGROUND_TYPE === backgroundType && url && (
 						<video
-							className="wp-block-cover__video-background"
+							className="wp-block-a8c-duotone-cover__video-background"
 							autoPlay
 							muted
 							loop
 							src={ url }
 						/>
 					) }
-					<div className="wp-block-cover__inner-container">
+					<div className="wp-block-a8c-duotone-cover__inner-container">
 						<InnerBlocks.Content />
 					</div>
 				</div>
@@ -323,7 +323,7 @@ const deprecated = [
 				<div className={ classes } style={ style }>
 					{ VIDEO_BACKGROUND_TYPE === backgroundType && url && (
 						<video
-							className="wp-block-cover__video-background"
+							className="wp-block-a8c-duotone-cover__video-background"
 							autoPlay
 							muted
 							loop
@@ -333,7 +333,7 @@ const deprecated = [
 					{ ! RichText.isEmpty( title ) && (
 						<RichText.Content
 							tagName="p"
-							className="wp-block-cover-text"
+							className="wp-block-a8c-duotone-cover-text"
 							value={ title }
 						/>
 					) }
@@ -348,7 +348,7 @@ const deprecated = [
 						content: attributes.title,
 						align: attributes.contentAlign,
 						fontSize: 'large',
-						placeholder: __( 'Write title…' ),
+						placeholder: __( 'Write title…', 'duotone' ),
 					} ),
 				],
 			];
@@ -394,7 +394,7 @@ const deprecated = [
 			}
 
 			const classes = classnames(
-				'wp-block-cover-image',
+				'wp-block-a8c-duotone-cover-image',
 				dimRatioToClass( dimRatio ),
 				overlayColorClass,
 				{
@@ -411,7 +411,7 @@ const deprecated = [
 					{ ! RichText.isEmpty( title ) && (
 						<RichText.Content
 							tagName="p"
-							className="wp-block-cover-image-text"
+							className="wp-block-a8c-duotone-cover-image-text"
 							value={ title }
 						/>
 					) }
@@ -426,7 +426,7 @@ const deprecated = [
 						content: attributes.title,
 						align: attributes.contentAlign,
 						fontSize: 'large',
-						placeholder: __( 'Write title…' ),
+						placeholder: __( 'Write title…', 'duotone' ),
 					} ),
 				],
 			];
@@ -455,7 +455,7 @@ const deprecated = [
 			const { url, title, hasParallax, dimRatio, align } = attributes;
 			const style = backgroundImageStyles( url );
 			const classes = classnames(
-				'wp-block-cover-image',
+				'wp-block-a8c-duotone-cover-image',
 				dimRatioToClass( dimRatio ),
 				{
 					'has-background-dim': dimRatio !== 0,
@@ -478,7 +478,7 @@ const deprecated = [
 						content: attributes.title,
 						align: attributes.contentAlign,
 						fontSize: 'large',
-						placeholder: __( 'Write title…' ),
+						placeholder: __( 'Write title…', 'duotone' ),
 					} ),
 				],
 			];
