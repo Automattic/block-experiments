@@ -1,10 +1,11 @@
 === Layout Grid Block ===
 Contributors: automattic, jasmussen, johnny5, mkaz
 Stable tag: 1.3
-Tested up to: 5.4.2
-Requires at least: 5.4
+Tested up to: 5.5
+Requires at least: 5.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Tags: blocks, layout, grid, design
 
 A Gutenberg container block to let you align items consistently across a global grid.
 
@@ -26,6 +27,7 @@ You can follow development, file an issue, suggest features, and view the source
 = 1.3 - 21st July 2020 =
 * Add vertical alignment to grid and grid columns
 * Mirror grid device breakpoint with editor preview breakpoint (requires WP 5.5 or Gutenberg plugin)
+* Bump minimum WordPress version to 5.5
 
 = 1.2.4 - 14th July 2020 =
 * Fix some blocks breaking outside of the grid in Firefox

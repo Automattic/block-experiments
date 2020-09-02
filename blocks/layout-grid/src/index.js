@@ -34,7 +34,7 @@ export function registerBlock() {
 		title: __( 'Layout Grid', 'layout-grid' ),
 		description: __( 'Align blocks to a global grid, with support for responsive breakpoints.', 'layout-grid' ),
 		icon: GridIcon,
-		category: 'layout',
+		category: 'design',
 		supports: {
 			align: [ 'full' ],
 			html: false,
@@ -96,7 +96,7 @@ export function registerBlock() {
 		description: __( 'A column used inside a Layout Grid block.', 'layout-grid' ),
 		title: __( 'Column', 'layout-grid' ),
 		icon: GridColumnIcon,
-		category: 'layout',
+		category: 'design',
 		parent: [ 'jetpack/layout-grid' ],
 		supports: {
 			inserter: false,
