@@ -70,6 +70,9 @@ export default function Image( {
 		height,
 		linkTarget,
 		sizeSlug,
+		duotoneId,
+		duotoneDark,
+		duotoneLight,
 	},
 	setAttributes,
 	isSelected,
@@ -360,6 +363,12 @@ export default function Image( {
 			<img
 				src={ url }
 				alt={ defaultedAlt }
+				style={ {
+					filter:
+						duotoneDark && duotoneLight && duotoneId
+							? `url( #${ duotoneId } )`
+							: undefined,
+				} }
 				onClick={ onImageClick }
 				onError={ () => onImageError() }
 				onLoad={ ( event ) => {

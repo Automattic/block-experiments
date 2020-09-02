@@ -551,7 +551,10 @@ function CoverEdit( {
 						alt=""
 						style={ {
 							backgroundColor: overlayColor.color,
-							filter: `url( #${ duotoneId } )`,
+							filter:
+								duotoneDark && duotoneLight && duotoneId
+									? `url( #${ duotoneId } )`
+									: undefined,
 							objectPosition: positionValue,
 						} }
 						src={ url }
@@ -577,7 +580,10 @@ function CoverEdit( {
 						src={ url }
 						style={ {
 							objectPosition: positionValue,
-							filter: `url( #${ duotoneId } )`,
+							filter:
+								duotoneDark && duotoneLight && duotoneId
+									? `url( #${ duotoneId } )`
+									: undefined,
 						} }
 					/>
 				) }

@@ -24,6 +24,7 @@ export default function save( { attributes } ) {
 		linkTarget,
 		sizeSlug,
 		title,
+		duotoneId,
 	} = attributes;
 
 	const newRel = isEmpty( rel ) ? undefined : rel;
@@ -39,6 +40,7 @@ export default function save( { attributes } ) {
 			src={ url }
 			alt={ alt }
 			className={ id ? `wp-image-${ id }` : null }
+			style={ { filter: `url( #${ duotoneId } )` } }
 			width={ width }
 			height={ height }
 			title={ title }

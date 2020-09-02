@@ -9,12 +9,15 @@ import { get, omit, pick } from 'lodash';
  */
 import { getBlobByURL, isBlobURL, revokeBlobURL } from '@wordpress/blob';
 import { withNotices } from '@wordpress/components';
+import { useInstanceId } from '@wordpress/compose';
 import { useSelect } from '@wordpress/data';
 import {
 	BlockAlignmentToolbar,
 	BlockControls,
 	BlockIcon,
+	InspectorControls,
 	MediaPlaceholder,
+	PanelColorSettings,
 	__experimentalBlock as Block,
 } from '@wordpress/block-editor';
 import { useEffect, useRef } from '@wordpress/element';
@@ -35,6 +38,7 @@ import {
 	ALLOWED_MEDIA_TYPES,
 	DEFAULT_SIZE_SLUG,
 } from './constants';
+import Duotone from '../duotone';
 
 export const pickRelevantMediaFiles = ( image ) => {
 	const imageProps = pick( image, [ 'alt', 'id', 'link', 'caption' ] );
@@ -87,6 +91,9 @@ export function ImageEdit( {
 		width,
 		height,
 		sizeSlug,
+		duotoneDark,
+		duotoneLight,
+		duotoneId,
 	} = attributes;
 
 	const altRef = useRef();
@@ -226,6 +233,14 @@ export function ImageEdit( {
 		};
 	}, [ isTemp ] );
 
+	const instanceId = useInstanceId( ImageEdit );
+
+	useEffect( () => {
+		setAttributes( {
+			duotoneId: `a8c-duotone-image-${ instanceId }`,
+		} );
+	}, [ instanceId ] );
+
 	const isExternal = isExternalImage( id, url );
 	const controls = (
 		<BlockControls>
@@ -234,6 +249,32 @@ export function ImageEdit( {
 				onChange={ updateAlignment }
 			/>
 		</BlockControls>
+	);
+	const inspectorControls = (
+		<InspectorControls>
+			<PanelColorSettings
+				title={ __( 'Duotone', 'duotone' ) }
+				initialOpen
+				colorSettings={ [
+					{
+						label: __( 'Dark Color', 'duotone' ),
+						value: duotoneDark,
+						onChange: ( newDuotoneDark ) =>
+							setAttributes( {
+								duotoneDark: newDuotoneDark,
+							} ),
+					},
+					{
+						label: __( 'Light Color', 'duotone' ),
+						value: duotoneLight,
+						onChange: ( newDuotoneLight ) =>
+							setAttributes( {
+								duotoneLight: newDuotoneLight,
+							} ),
+					},
+				] }
+			/>
+		</InspectorControls>
 	);
 	const src = isExternal ? url : undefined;
 	const mediaPreview = !! url && (
@@ -274,6 +315,14 @@ export function ImageEdit( {
 	return (
 		<>
 			{ controls }
+			{ inspectorControls }
+			{ duotoneDark && duotoneLight && duotoneId ? (
+				<Duotone
+					id={ duotoneId }
+					darkColor={ duotoneDark }
+					lightColor={ duotoneLight }
+				/>
+			) : null }
 			<Block.figure ref={ ref } className={ classes } key={ key }>
 				{ url && (
 					<Image
