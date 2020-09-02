@@ -32,9 +32,12 @@ function render_block_a8c_duotone_image( $attributes, $content ) {
  * Registers the `a8c/duotone-image` block.
  */
 function register_block_a8c_duotone_image() {
-	register_block_type_from_metadata(
-		__DIR__ . '/image',
+	register_block_type(
+		'a8c/duotone-image',
 		array(
+			'editor_script' => 'block-experiments',
+			'style' => 'block-experiments',
+			'editor_style' => 'block-experiments-editor',
 			'render_callback' => 'render_block_a8c_duotone_image',
 		)
 	);
