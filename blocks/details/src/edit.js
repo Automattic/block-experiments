@@ -85,7 +85,9 @@ export default function DetalsEdit( {
 					keepPlaceholderOnFocus
 					aria-label={ __( 'Summary text' ) }
 				/>
-				<InnerBlocks />
+				<div className="wp-block-a8c-details__content">
+					<InnerBlocks />
+				</div>
 			</details>
 		</>
 	);

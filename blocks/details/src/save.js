@@ -10,7 +10,9 @@ export default ( { attributes } ) => {
 				tagName="summary"
 				value={ attributes.summaryContent }
 			/>
-			<InnerBlocks.Content />
+			<div className="wp-block-a8c-details__content">
+				<InnerBlocks.Content />
+			</div>
 		</details>
 	);
 };

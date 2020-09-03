@@ -26,7 +26,7 @@ $bgcolor: #efefef; // Be nice if this was customizable via a background color pr
 
 		// Card front-face.
 		summary {
-			background: $bgcolor; 
+			background: $bgcolor;
 			padding: 1em;
 
 			// Allows a focus style on the summary to be uncropped.
@@ -68,12 +68,19 @@ $bgcolor: #efefef; // Be nice if this was customizable via a background color pr
 			border-radius: 3em;
 			color: white;
 			cursor: pointer;
+			list-style: none;
 		}
 
-		:not( summary ) {
+		// This does the same as list-style: none; in Chrome
+		summary::-webkit-details-marker {
+			display: none;
+		}
+
+		.wp-block-a8c-details__content {
 			width: 20em;
 			border: 2px solid black;
 			padding: 1em 2em;
+			// TODO: The fixed height (and probably width) breaks with longer blocks
 			position: fixed;
 			width: 360px;
 			height: 240px;
@@ -89,6 +96,7 @@ $bgcolor: #efefef; // Be nice if this was customizable via a background color pr
 	}
 
 	&[open].is-style-modal {
+		// TODO figure out how to get the X placed to the right of the non-fixed modal
 		summary::after {
 			content: '×';
 			font-size: 28pt;
@@ -111,5 +119,6 @@ $bgcolor: #efefef; // Be nice if this was customizable via a background color pr
 			opacity: 0.5;
 			z-index: 1;
 		}
+
 	}
 }
