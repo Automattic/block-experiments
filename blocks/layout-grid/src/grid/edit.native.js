@@ -2,12 +2,18 @@
  * External dependencies
  */
 import { View } from 'react-native';
+import { delay, flatMap } from 'lodash';
 
 /**
  * WordPress dependencies
  */
-import { InnerBlocks } from '@wordpress/block-editor';
-import { Component } from '@wordpress/element';
+import { InnerBlocks, BlockVariationPicker } from '@wordpress/block-editor';
+
+import { useEffect, useState } from '@wordpress/element';
+/**
+ * Internal dependencies
+ */
+import variations from './variations';
 
 const ALLOWED_BLOCKS = [ 'jetpack/layout-grid-column' ];
 
@@ -16,20 +22,34 @@ const TEMPLATE = [
 	[ 'jetpack/layout-grid-column', {}, [] ],
 ];
 
-class Edit extends Component {
-	constructor( props ) {
-		super( props );
-	}
+const Edit = ( props ) => {
+	const { clientId, isSelected } = props;
+	const [ isVisible, setIsVisible ] = useState( false );
+	const isDefaultColumns = true;
 
-	render() {
-		return <View>
+	useEffect( () => {
+		if ( isSelected && isDefaultColumns ) {
+			delay( () => setIsVisible( true ), 100 );
+		}
+	}, [] );
+
+	return (
+		<>
+			<View>
 				<InnerBlocks
 					template={ TEMPLATE }
 					templateLock="all"
 					allowedBlocks={ ALLOWED_BLOCKS }
 				/>
-		</View>;
-	}
-}
+			</View>
+			<BlockVariationPicker
+				variations={ variations }
+				onClose={ () => setIsVisible( false ) }
+				clientId={ clientId }
+				isVisible={ isVisible }
+			/>
+		</>
+	);
+};
 
 export default Edit;
