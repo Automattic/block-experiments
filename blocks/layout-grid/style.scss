@@ -113,6 +113,9 @@
 
 		&.has-background {
 			padding: $padding-none ($padding-none + $grid-gutter__background-offset);
+
+			// Needs a max-width in order to constrain contents.
+			max-width: calc( 100% + #{ ($padding-none + $grid-gutter__background-offset) * 2 } );
 		}
 	}
 
@@ -121,6 +124,9 @@
 
 		&.has-background {
 			padding: $padding-small ($padding-small + $grid-gutter__background-offset);
+
+			// Needs a max-width in order to constrain contents.
+			max-width: calc( 100% + #{ ($padding-small + $grid-gutter__background-offset) * 2 } );
 		}
 	}
 
@@ -129,6 +135,9 @@
 
 		&.has-background {
 			padding: $padding-medium ($padding-medium + $grid-gutter__background-offset);
+
+			// Needs a max-width in order to constrain contents.
+			max-width: calc( 100% + #{ ($padding-medium + $grid-gutter__background-offset) * 2 } );
 		}
 	}
 
@@ -137,6 +146,9 @@
 
 		&.has-background {
 			padding: $padding-large ($padding-large + $grid-gutter__background-offset);
+
+			// Needs a max-width in order to constrain contents.
+			max-width: calc( 100% + #{ ($padding-large + $grid-gutter__background-offset) * 2 } );
 		}
 	}
 
@@ -145,6 +157,9 @@
 
 		&.has-background {
 			padding: $padding-huge ($padding-huge + $grid-gutter__background-offset);
+
+			// Needs a max-width in order to constrain contents.
+			max-width: calc( 100% + #{ ($padding-huge + $grid-gutter__background-offset) * 2 } );
 		}
 	}
 }
