@@ -36,7 +36,7 @@ const withDuotoneAttributes = ( settings, blockName ) => {
 
 const withDuotoneEditorControls = createHigherOrderComponent(
 	( BlockEdit ) => ( props ) => {
-		const { name: blockName, attributes, setAttributes } = props;
+		const { name: blockName, attributes, setAttributes, clientId } = props;
 
 		if ( ! isSupportedBlock( blockName ) ) {
 			return <BlockEdit { ...props } />;
@@ -75,43 +75,19 @@ const withDuotoneEditorControls = createHigherOrderComponent(
 				{ attributes.duotoneDark &&
 				attributes.duotoneLight &&
 				attributes.duotoneId ? (
-					<>
-						<Duotone
-							id={ attributes.duotoneId }
-							darkColor={ attributes.duotoneDark }
-							lightColor={ attributes.duotoneLight }
-						/>
-						<div
-							style={ {
-								filter: `url( #${ attributes.duotoneId } )`,
-							} }
-						>
-							<BlockEdit { ...props } />
-						</div>
-					</>
-				) : (
-					<BlockEdit { ...props } />
-				) }
+					<Duotone
+						selector={ `#block-${ clientId } img` }
+						id={ attributes.duotoneId }
+						darkColor={ attributes.duotoneDark }
+						lightColor={ attributes.duotoneLight }
+					/>
+				) : null }
+				<BlockEdit { ...props } />
 			</>
 		);
 	},
 	'withDuotoneEditorControls'
 );
-
-function addDuotoneFilterStyle( props, block, attributes ) {
-	if (
-		! isSupportedBlock( block.name ) ||
-		! attributes.duotoneDark ||
-		! attributes.duotoneLight ||
-		! attributes.duotoneId
-	) {
-		return props;
-	}
-
-	const { style = {} } = props;
-
-	return { style: { ...style, filter: `url( #${ attributes.duotoneId } )` } };
-}
 
 export function registerBlock() {
 	addFilter(
@@ -123,10 +99,5 @@ export function registerBlock() {
 		'blocks.registerBlockType',
 		'a8c/duotone-filter/add-attributes',
 		withDuotoneAttributes
-	);
-	addFilter(
-		'blocks.getSaveContent.extraProps',
-		'a8c/duotone-filter/add-filter-style',
-		addDuotoneFilterStyle
 	);
 }

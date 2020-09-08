@@ -23,12 +23,19 @@ if ( ! function_exists( 'hex2rgb' ) ) {
 }
 
 // phpcs:disable
+$duotone_selector = 'img.wp-image-' . $block['attrs']['id'];
 $duotone_id = $block['attrs']['duotoneId'];
 $duotone_dark = hex2rgb( $block['attrs']['duotoneDark'] );
 $duotone_light = hex2rgb( $block['attrs']['duotoneLight'] );
 // phpcs:enable
 
 ?>
+
+<style>
+	<?php echo $duotone_selector; ?> {
+		filter: url( <?php echo '#' . $duotone_id; ?> );
+	}
+</style>
 
 <svg
 	xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -37,7 +44,7 @@ $duotone_light = hex2rgb( $block['attrs']['duotoneLight'] );
 	height="0"
 	focusable="false"
 	role="none"
-	style="visibility: hidden !important; position: absolute !important; left: -9999px !important; overflow: hidden !important;"
+	style="visibility: hidden; position: absolute; left: -9999px; overflow: hidden;"
 >
 	<defs>
 		<filter id="<?php echo $duotone_id; ?>">

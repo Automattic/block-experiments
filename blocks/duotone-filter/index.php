@@ -15,9 +15,10 @@ add_action( 'init', function() {
 	add_filter( 'render_block', function ( $block_content, $block ) {
 		if (
 			! is_supported_block( $block ) ||
-			! array_key_exists( 'duotoneId', $block['attrs'] ) ||
-			! array_key_exists( 'duotoneDark', $block['attrs'] ) ||
-			! array_key_exists( 'duotoneLight', $block['attrs'] )
+			! isset( $block['attrs']['id'] ) ||
+			! isset( $block['attrs']['duotoneId'] ) ||
+			! isset( $block['attrs']['duotoneDark'] ) ||
+			! isset( $block['attrs']['duotoneLight'] )
 		) {
 			return $block_content;
 		}
