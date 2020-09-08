@@ -8,7 +8,7 @@ add_action( 'init', function() {
 	] );
 
 	function is_supported_block( $block ) {
-		$supported_blocks = [ 'core/image', 'core/cover' ];
+		$supported_blocks = [ 'core/image' ];
 		return in_array( $block['blockName'], $supported_blocks, true );
 	}
 

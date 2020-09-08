@@ -12,7 +12,7 @@ import { __ } from '@wordpress/i18n';
  */
 import Duotone from './duotone';
 
-const SUPPORTED_BLOCKS = [ 'core/image', 'core/cover' ];
+const SUPPORTED_BLOCKS = [ 'core/image' ];
 
 export const isSupportedBlock = ( blockName ) =>
 	SUPPORTED_BLOCKS.includes( blockName );
