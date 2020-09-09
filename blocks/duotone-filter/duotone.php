@@ -25,7 +25,6 @@ if ( ! function_exists( 'hex2rgb' ) ) {
 // phpcs:disable
 $duotone_id = $block['attrs']['duotoneId'];
 $duotone_selector = '.wp-block-image.' . $duotone_id . ' > img';
-$duotone_url = '#' . $duotone_id;
 $duotone_dark = hex2rgb( $block['attrs']['duotoneDark'] );
 $duotone_light = hex2rgb( $block['attrs']['duotoneLight'] );
 // phpcs:enable
@@ -34,7 +33,7 @@ $duotone_light = hex2rgb( $block['attrs']['duotoneLight'] );
 
 <style>
 	<?php echo $duotone_selector; ?> {
-		filter: url( <?php echo $duotone_url; ?> );
+		filter: url( <?php echo '#' . $duotone_id; ?> );
 	}
 </style>
 
