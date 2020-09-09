@@ -4,7 +4,7 @@
 
 import { Path, SVG } from '@wordpress/components';
 
-export const GridIcon = ( props = null ) => (
+export const GridIcon = ( props ) => (
 	<SVG xmlns="http://www.w3.org/2000/svg"
 		width="24" height="24"
 		viewBox="0 0 24 24"
@@ -14,7 +14,7 @@ export const GridIcon = ( props = null ) => (
 	</SVG>
 );
 
-export const GridColumnIcon = ( props = null ) => (
+export const GridColumnIcon = ( props ) => (
 	<SVG xmlns="http://www.w3.org/2000/svg"
 		width="24" height="24"
 		viewBox="0 0 24 24"
