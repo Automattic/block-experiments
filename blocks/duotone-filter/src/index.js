@@ -1,4 +1,9 @@
 /**
+ * External dependencies
+ */
+import classnames from 'classnames';
+
+/**
  * WordPress dependencies
  */
 import { InspectorControls, PanelColorSettings } from '@wordpress/block-editor';
@@ -89,6 +94,19 @@ const withDuotoneEditorControls = createHigherOrderComponent(
 	'withDuotoneEditorControls'
 );
 
+function addDuotoneFilterStyle( props, block, attributes ) {
+	if (
+		! isSupportedBlock( block.name ) ||
+		! attributes.duotoneDark ||
+		! attributes.duotoneLight ||
+		! attributes.duotoneId
+	) {
+		return props;
+	}
+
+	return { className: classnames( props.className, attributes.duotoneId ) };
+}
+
 export function registerBlock() {
 	addFilter(
 		'editor.BlockEdit',
@@ -99,5 +117,10 @@ export function registerBlock() {
 		'blocks.registerBlockType',
 		'a8c/duotone-filter/add-attributes',
 		withDuotoneAttributes
+	);
+	addFilter(
+		'blocks.getSaveContent.extraProps',
+		'a8c/duotone-filter/add-filter-style',
+		addDuotoneFilterStyle
 	);
 }
