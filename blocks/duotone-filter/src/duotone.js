@@ -59,9 +59,9 @@ ${ selector } {
 							type="matrix"
 							// prettier-ignore
 							values=".2989 .5870 .1140 0 0
-						        .2989 .5870 .1140 0 0
-						        .2989 .5870 .1140 0 0
-						        0 0 0 1 0"
+							        .2989 .5870 .1140 0 0
+							        .2989 .5870 .1140 0 0
+							        0 0 0 1 0"
 						/>
 						<feComponentTransfer colorInterpolationFilters="sRGB">
 							<feFuncR
