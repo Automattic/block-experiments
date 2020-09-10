@@ -64,7 +64,7 @@ const toLuminance = ( color ) => {
 		b = '0x' + color[ 3 ] + color[ 3 ];
 	}
 
-	return r * 0.299 + g * 0.587 + b * 0.114;
+	return r * 0.2989 + g * 0.587 + b * 0.114;
 };
 
 const withDuotoneEditorControls = createHigherOrderComponent(
