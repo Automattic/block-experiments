@@ -18,6 +18,9 @@ import { __ } from '@wordpress/i18n';
  */
 import Duotone from './duotone';
 
+const FALLBACK_DARK_COLOR = '#000';
+const FALLBACK_LIGHT_COLOR = '#fff';
+
 const SUPPORTED_BLOCKS = [ 'core/image' ];
 
 export const isSupportedBlock = ( blockName ) =>
@@ -81,8 +84,8 @@ const withDuotoneEditorControls = createHigherOrderComponent(
 		}, [ instanceId ] );
 
 		const [
-			defaultDarkColor = '#000',
-			defaultLightColor = '#FFF',
+			defaultDarkColor = FALLBACK_DARK_COLOR,
+			defaultLightColor = FALLBACK_LIGHT_COLOR,
 		] = useSelect( ( select ) => {
 			const { colors } = select( 'core/block-editor' ).getSettings();
 			return colors
@@ -119,7 +122,11 @@ const withDuotoneEditorControls = createHigherOrderComponent(
 										! attributes.duotoneLight
 									) {
 										setAttributes( {
-											duotoneLight: defaultLightColor,
+											duotoneLight:
+												duotoneDark !==
+												defaultLightColor
+													? defaultLightColor
+													: FALLBACK_LIGHT_COLOR,
 										} );
 									}
 									setAttributes( { duotoneDark } );
@@ -134,7 +141,11 @@ const withDuotoneEditorControls = createHigherOrderComponent(
 										! attributes.duotoneDark
 									) {
 										setAttributes( {
-											duotoneDark: defaultDarkColor,
+											duotoneDark:
+												duotoneLight ===
+												defaultDarkColor
+													? defaultDarkColor
+													: FALLBACK_DARK_COLOR,
 										} );
 									}
 									setAttributes( { duotoneLight } );
