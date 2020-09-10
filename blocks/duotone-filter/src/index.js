@@ -130,7 +130,7 @@ const withDuotoneEditorControls = createHigherOrderComponent(
 									) {
 										setAttributes( {
 											duotoneDark:
-												duotoneLight ===
+												duotoneLight !==
 												defaultDarkColor
 													? defaultDarkColor
 													: FALLBACK_DARK_COLOR,
