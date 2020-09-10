@@ -45,12 +45,12 @@ const withDuotoneAttributes = ( settings, blockName ) => {
 };
 
 /**
- * Convert a hex color to luminance.
+ * Convert a hex color to perceived brightness.
  *
  * @param {string} color Hex color
- * @return {number} Luminance of the color
+ * @return {number} Perceived brightness of the color
  */
-const toLuminance = ( color ) => {
+const toBrightness = ( color ) => {
 	const { r, g, b } = hex2rgb( color );
 	return r * 0.299 + g * 0.587 + b * 0.114;
 };
@@ -79,14 +79,14 @@ const withDuotoneEditorControls = createHigherOrderComponent(
 			return colors
 				.map( ( { color } ) => ( {
 					color,
-					luminance: toLuminance( color ),
+					brightness: toBrightness( color ),
 				} ) )
 				.reduce( ( [ min, max ], current ) => {
 					return [
-						! min || current.luminance < min.luminance
+						! min || current.brightness < min.brightness
 							? current
 							: min,
-						! max || current.luminance > max.luminance
+						! max || current.brightness > max.brightness
 							? current
 							: max,
 					];
