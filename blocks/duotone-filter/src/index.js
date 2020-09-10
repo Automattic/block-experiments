@@ -9,7 +9,7 @@ import classnames from 'classnames';
 import { InspectorControls, PanelColorSettings } from '@wordpress/block-editor';
 import { createHigherOrderComponent, useInstanceId } from '@wordpress/compose';
 import { useSelect } from '@wordpress/data';
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 import { addFilter } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 
@@ -80,8 +80,6 @@ const withDuotoneEditorControls = createHigherOrderComponent(
 			} );
 		}, [ instanceId ] );
 
-		const [ autoSet, setAutoSet ] = useState( null );
-
 		const [
 			defaultDarkColor = '#000',
 			defaultLightColor = '#FFF',
@@ -120,20 +118,9 @@ const withDuotoneEditorControls = createHigherOrderComponent(
 										duotoneDark &&
 										! attributes.duotoneLight
 									) {
-										setAutoSet( 'light' );
 										setAttributes( {
 											duotoneLight: defaultLightColor,
 										} );
-									} else if (
-										! duotoneDark &&
-										autoSet === 'light'
-									) {
-										setAutoSet( null );
-										setAttributes( {
-											duotoneLight: null,
-										} );
-									} else if ( autoSet === 'dark' ) {
-										setAutoSet( null );
 									}
 									setAttributes( { duotoneDark } );
 								},
@@ -146,20 +133,9 @@ const withDuotoneEditorControls = createHigherOrderComponent(
 										duotoneLight &&
 										! attributes.duotoneDark
 									) {
-										setAutoSet( 'dark' );
 										setAttributes( {
 											duotoneDark: defaultDarkColor,
 										} );
-									} else if (
-										! duotoneLight &&
-										autoSet === 'dark'
-									) {
-										setAutoSet( null );
-										setAttributes( {
-											duotoneDark: null,
-										} );
-									} else if ( autoSet === 'light' ) {
-										setAutoSet( null );
 									}
 									setAttributes( { duotoneLight } );
 								},
