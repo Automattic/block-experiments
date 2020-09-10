@@ -26,6 +26,6 @@ add_action( 'init', function() {
 		include 'duotone.php';
 		$duotone = ob_get_clean();
 
-		return $duotone . $block_content;
+		return $block_content . $duotone;
 	}, 10, 2 );
 } );

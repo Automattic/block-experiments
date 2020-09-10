@@ -77,6 +77,7 @@ const withDuotoneEditorControls = createHigherOrderComponent(
 						] }
 					/>
 				</InspectorControls>
+				<BlockEdit { ...props } />
 				{ attributes.duotoneDark &&
 				attributes.duotoneLight &&
 				attributes.duotoneId ? (
@@ -87,7 +88,6 @@ const withDuotoneEditorControls = createHigherOrderComponent(
 						lightColor={ attributes.duotoneLight }
 					/>
 				) : null }
-				<BlockEdit { ...props } />
 			</>
 		);
 	},
