@@ -17,6 +17,7 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import Duotone from './duotone';
+import { hex2rgb } from './utils';
 
 const FALLBACK_DARK_COLOR = '#000';
 const FALLBACK_LIGHT_COLOR = '#fff';
@@ -50,20 +51,7 @@ const withDuotoneAttributes = ( settings, blockName ) => {
  * @return {number} Luminance of the color
  */
 const toLuminance = ( color ) => {
-	let r = '0';
-	let g = '0';
-	let b = '0';
-
-	if ( color.length === 7 ) {
-		r = '0x' + color[ 1 ] + color[ 2 ];
-		g = '0x' + color[ 3 ] + color[ 4 ];
-		b = '0x' + color[ 5 ] + color[ 6 ];
-	} else if ( color.length === 4 ) {
-		r = '0x' + color[ 1 ] + color[ 1 ];
-		g = '0x' + color[ 2 ] + color[ 2 ];
-		b = '0x' + color[ 3 ] + color[ 3 ];
-	}
-
+	const { r, g, b } = hex2rgb( color );
 	return r * 0.299 + g * 0.587 + b * 0.114;
 };
 
