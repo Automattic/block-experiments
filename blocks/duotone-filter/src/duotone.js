@@ -58,9 +58,9 @@ ${ selector } {
 						<feColorMatrix
 							type="matrix"
 							// prettier-ignore
-							values=".2989 .5870 .1140 0 0
-							        .2989 .5870 .1140 0 0
-							        .2989 .5870 .1140 0 0
+							values=".299 .587 .114 0 0
+							        .299 .587 .114 0 0
+							        .299 .587 .114 0 0
 							        0 0 0 1 0"
 						/>
 						<feComponentTransfer colorInterpolationFilters="sRGB">
