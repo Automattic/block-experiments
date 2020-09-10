@@ -8,7 +8,8 @@ import classnames from 'classnames';
  */
 import { InspectorControls, PanelColorSettings } from '@wordpress/block-editor';
 import { createHigherOrderComponent, useInstanceId } from '@wordpress/compose';
-import { useEffect } from '@wordpress/element';
+import { useSelect } from '@wordpress/data';
+import { useEffect, useState } from '@wordpress/element';
 import { addFilter } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 
@@ -39,6 +40,30 @@ const withDuotoneAttributes = ( settings, blockName ) => {
 	return settings;
 };
 
+/**
+ * Convert a hex color to luminance.
+ *
+ * @param {string} color Hex color
+ * @return {number} Luminance of the color
+ */
+const toLuminance = ( color ) => {
+	let r = '0';
+	let g = '0';
+	let b = '0';
+
+	if ( color.length === 7 ) {
+		r = '0x' + color[ 1 ] + color[ 2 ];
+		g = '0x' + color[ 3 ] + color[ 4 ];
+		b = '0x' + color[ 5 ] + color[ 6 ];
+	} else if ( color.length === 4 ) {
+		r = '0x' + color[ 1 ] + color[ 1 ];
+		g = '0x' + color[ 2 ] + color[ 2 ];
+		b = '0x' + color[ 3 ] + color[ 3 ];
+	}
+
+	return r * 0.299 + g * 0.587 + b * 0.114;
+};
+
 const withDuotoneEditorControls = createHigherOrderComponent(
 	( BlockEdit ) => ( props ) => {
 		const { name: blockName, attributes, setAttributes, clientId } = props;
@@ -55,6 +80,31 @@ const withDuotoneEditorControls = createHigherOrderComponent(
 			} );
 		}, [ instanceId ] );
 
+		const [ autoSet, setAutoSet ] = useState( null );
+
+		const [
+			defaultDarkColor = '#000',
+			defaultLightColor = '#FFF',
+		] = useSelect( ( select ) => {
+			const { colors } = select( 'core/block-editor' ).getSettings();
+			return colors
+				.map( ( { color } ) => ( {
+					color,
+					luminance: toLuminance( color ),
+				} ) )
+				.reduce( ( [ min, max ], current ) => {
+					return [
+						! min || current.luminance < min.luminance
+							? current
+							: min,
+						! max || current.luminance > max.luminance
+							? current
+							: max,
+					];
+				}, [] )
+				.map( ( { color } ) => color );
+		}, [] );
+
 		return (
 			<>
 				<InspectorControls>
@@ -65,14 +115,54 @@ const withDuotoneEditorControls = createHigherOrderComponent(
 							{
 								label: __( 'Dark Color', 'block-experiments' ),
 								value: attributes.duotoneDark,
-								onChange: ( duotoneDark ) =>
-									setAttributes( { duotoneDark } ),
+								onChange: ( duotoneDark ) => {
+									if (
+										duotoneDark &&
+										! attributes.duotoneLight
+									) {
+										setAutoSet( 'light' );
+										setAttributes( {
+											duotoneLight: defaultLightColor,
+										} );
+									} else if (
+										! duotoneDark &&
+										autoSet === 'light'
+									) {
+										setAutoSet( null );
+										setAttributes( {
+											duotoneLight: null,
+										} );
+									} else if ( autoSet === 'dark' ) {
+										setAutoSet( null );
+									}
+									setAttributes( { duotoneDark } );
+								},
 							},
 							{
 								label: __( 'Light Color', 'block-experiments' ),
 								value: attributes.duotoneLight,
-								onChange: ( duotoneLight ) =>
-									setAttributes( { duotoneLight } ),
+								onChange: ( duotoneLight ) => {
+									if (
+										duotoneLight &&
+										! attributes.duotoneDark
+									) {
+										setAutoSet( 'dark' );
+										setAttributes( {
+											duotoneDark: defaultDarkColor,
+										} );
+									} else if (
+										! duotoneLight &&
+										autoSet === 'dark'
+									) {
+										setAutoSet( null );
+										setAttributes( {
+											duotoneDark: null,
+										} );
+									} else if ( autoSet === 'light' ) {
+										setAutoSet( null );
+									}
+									setAttributes( { duotoneLight } );
+								},
 							},
 						] }
 					/>
