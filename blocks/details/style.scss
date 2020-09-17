@@ -37,6 +37,7 @@ $bgcolor: #efefef; // Be nice if this was customizable via a background color pr
 		> *:not(summary) {
 			background: $bgcolor;
 			transform-origin: top center;
+			-webkit-backface-visibility: hidden;
 			backface-visibility: hidden;
 
 			// Some baseline left and right padding.
@@ -55,70 +56,5 @@ $bgcolor: #efefef; // Be nice if this was customizable via a background color pr
 		&[open] > *:not(summary) {
 			animation: open-card .2s ease;
 		}
-	}
-
-	// Modal style.
-	&.is-style-modal {
-		summary {
-			width: 10em;
-			text-align: center;
-			font-weight: bold;
-			padding: 1em 2em;
-			background: DEEPPINK;
-			border-radius: 3em;
-			color: white;
-			cursor: pointer;
-			list-style: none;
-		}
-
-		// This does the same as list-style: none; in Chrome
-		summary::-webkit-details-marker {
-			display: none;
-		}
-
-		.wp-block-a8c-details__content {
-			width: 20em;
-			border: 2px solid black;
-			padding: 1em 2em;
-			// TODO: The fixed height (and probably width) breaks with longer blocks
-			position: fixed;
-			width: 360px;
-			height: 240px;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			margin: auto;
-			background: white;
-			z-index: 3;
-			box-shadow: 10px 10px 10px DIMGRAY;
-		}
-	}
-
-	&[open].is-style-modal {
-		// TODO figure out how to get the X placed to the right of the non-fixed modal
-		summary::after {
-			content: '×';
-			font-size: 28pt;
-			position: fixed;
-			right: calc( 50vw - 360px / 2 - 2em );
-			top: calc( 50vh - 240px / 2 - 2em );
-			padding: 5pt 10pt;
-			z-index: 9;
-		}
-
-		summary::before {
-			content: '';
-			display: block;
-			width: 100vw;
-			height: 100vh;
-			background: black;
-			position: fixed;
-			top: 0;
-			left: 0;
-			opacity: 0.5;
-			z-index: 1;
-		}
-
 	}
 }

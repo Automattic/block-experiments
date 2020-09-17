@@ -36,10 +36,6 @@ export const settings = {
 			name: 'flipcard',
 			label: __( 'Flip Card' ),
 		},
-		{
-			name: 'modal',
-			label: __( 'Modal' ),
-		},
 	],
 };
 

@@ -3,39 +3,4 @@
 	summary .rich-text {
 		display: inline;
 	}
-
-	&.is-style-modal {
-		.wp-block-a8c-details__content {
-			width: auto;
-			height: auto;
-			position: static;
-			// // width: 20em;
-			// // border: 2px solid black;
-			// // padding: 1em 2em;
-			// position: static;
-			// width: 360px;
-			// height: 240px;
-			// top: 0;
-			// left: 0;
-			// right: 0;
-			// bottom: 0;
-			// // margin: auto;
-			// background: white;
-			// z-index: 3;
-			// // box-shadow: 10px 10px 10px DIMGRAY;
-
-		}
-	}
-
-	&[open].is-style-modal {
-		// No X in the editor
-		summary::after {
-			display: none;
-		}
-
-		// Don't blur
-		summary::before {
-			display: none;
-		}
-	}
 }
