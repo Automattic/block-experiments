@@ -8,16 +8,16 @@ add_action( 'init', function() {
 	] );
 
 	function is_supported_block( $block ) {
-		$supported_blocks = [ 'core/image', 'core/cover' ];
+		$supported_blocks = [ 'core/image' ];
 		return in_array( $block['blockName'], $supported_blocks, true );
 	}
 
 	add_filter( 'render_block', function ( $block_content, $block ) {
 		if (
 			! is_supported_block( $block ) ||
-			! array_key_exists( 'duotoneId', $block['attrs'] ) ||
-			! array_key_exists( 'duotoneDark', $block['attrs'] ) ||
-			! array_key_exists( 'duotoneLight', $block['attrs'] )
+			! isset( $block['attrs']['duotoneId'] ) ||
+			! isset( $block['attrs']['duotoneDark'] ) ||
+			! isset( $block['attrs']['duotoneLight'] )
 		) {
 			return $block_content;
 		}
@@ -26,6 +26,6 @@ add_action( 'init', function() {
 		include 'duotone.php';
 		$duotone = ob_get_clean();
 
-		return $duotone . $block_content;
+		return $block_content . $duotone;
 	}, 10, 2 );
 } );
