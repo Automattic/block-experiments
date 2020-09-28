@@ -14,11 +14,7 @@ import {
 	withColors,
 	__experimentalPanelColorGradientSettings as PanelColorGradientSettings,
 } from '@wordpress/block-editor';
-import {
-	BaseControl,
-	PanelBody,
-	RangeControl,
-} from '@wordpress/components';
+import { BaseControl, PanelBody, RangeControl } from '@wordpress/components';
 import { compose, withInstanceId } from '@wordpress/compose';
 import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
@@ -50,37 +46,51 @@ const Edit = ( {
 				/>
 			</BlockControls>
 			<InspectorControls>
-				<PanelBody title={ __( 'Stars', 'starscape' ) } initialOpen={ false }>
+				<PanelBody
+					title={ __( 'Stars', 'starscape' ) }
+					initialOpen={ false }
+				>
 					<RangeControl
 						label={ __( 'Density', 'starscape' ) }
 						value={ attributes.density }
-						onChange={ ( density ) => setAttributes( {
-							density,
-							starStyles: genStars( { ...attributes, density } ),
-						} ) }
+						onChange={ ( density ) =>
+							setAttributes( {
+								density,
+								starStyles: genStars( {
+									...attributes,
+									density,
+								} ),
+							} )
+						}
 						min={ 1 }
 						max={ 100 }
 					/>
 					<RangeControl
 						label={ __( 'Speed', 'starscape' ) }
 						value={ attributes.speed }
-						onChange={ ( speed ) => setAttributes( {
-							speed,
-							animationStyles: genAnimations( { speed } ),
-						} ) }
+						onChange={ ( speed ) =>
+							setAttributes( {
+								speed,
+								animationStyles: genAnimations( { speed } ),
+							} )
+						}
 						min={ 1 }
 						max={ 100 }
 					/>
 				</PanelBody>
 				<PanelColorGradientSettings
 					title={ __( 'Color', 'starscape' ) }
-					colors={ [ ...themeColors, ...colorGradientOptions.colors ] }
+					colors={ [
+						...themeColors,
+						...colorGradientOptions.colors,
+					] }
 					gradients={ colorGradientOptions.gradients }
 					settings={ [
 						{
 							label: __( 'Background', 'starscape' ),
 							gradientValue: attributes.background,
-							onGradientChange: ( background ) => setAttributes( { background } ),
+							onGradientChange: ( background ) =>
+								setAttributes( { background } ),
 						},
 						{
 							label: __( 'Text', 'starscape' ),
@@ -89,8 +99,16 @@ const Edit = ( {
 						},
 					] }
 				/>
-				<PanelBody title={ __( 'Dimensions', 'starscape' ) } initialOpen={ false }>
-					<p>{ __( 'Control the area of stars you want. Smaller values have better performance, but blocks larger than the area specified will not be completely covered.', 'starscape' ) }</p>
+				<PanelBody
+					title={ __( 'Dimensions', 'starscape' ) }
+					initialOpen={ false }
+				>
+					<p>
+						{ __(
+							'Control the area of stars you want. Smaller values have better performance, but blocks larger than the area specified will not be completely covered.',
+							'starscape'
+						) }
+					</p>
 					<BaseControl
 						className="wp-block-a8c-starscape-resolution-control"
 						id={ `wp-block-a8c-starscape-width-control-${ instanceId }` }
@@ -102,10 +120,16 @@ const Edit = ( {
 							min="0"
 							value={ attributes.maxWidth }
 							onChange={ ( ev ) => {
-								const maxWidth = parseInt( ev.target.value, 10 );
+								const maxWidth = parseInt(
+									ev.target.value,
+									10
+								);
 								setAttributes( {
 									maxWidth,
-									starStyles: genStars( { ...attributes, maxWidth } ),
+									starStyles: genStars( {
+										...attributes,
+										maxWidth,
+									} ),
 								} );
 							} }
 						/>
@@ -121,10 +145,16 @@ const Edit = ( {
 							min="0"
 							value={ attributes.maxHeight }
 							onChange={ ( ev ) => {
-								const maxHeight = parseInt( ev.target.value, 10 );
+								const maxHeight = parseInt(
+									ev.target.value,
+									10
+								);
 								setAttributes( {
 									maxHeight,
-									starStyles: genStars( { ...attributes, maxHeight } ),
+									starStyles: genStars( {
+										...attributes,
+										maxHeight,
+									} ),
 								} );
 							} }
 						/>
@@ -142,7 +172,8 @@ const Edit = ( {
 					className={ classnames(
 						'wp-block-a8c-starscape__heading',
 						textColor.class,
-						attributes.textAlign && `has-text-align-${ attributes.textAlign }`
+						attributes.textAlign &&
+							`has-text-align-${ attributes.textAlign }`
 					) }
 					style={ { color: textColor.color } }
 					value={ attributes.heading }
@@ -154,7 +185,4 @@ const Edit = ( {
 	);
 };
 
-export default compose( [
-	withInstanceId,
-	withColors( 'textColor' ),
-] )( Edit );
+export default compose( [ withInstanceId, withColors( 'textColor' ) ] )( Edit );

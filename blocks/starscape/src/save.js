@@ -28,10 +28,16 @@ const Save = ( { attributes, className } ) => {
 				className={ classnames(
 					'wp-block-a8c-starscape__heading',
 					{ [ `align${ attributes.align }` ]: attributes.align },
-					{ [ `has-text-align-${ attributes.textAlign }` ]: attributes.textAlign },
+					{
+						[ `has-text-align-${ attributes.textAlign }` ]: attributes.textAlign,
+					},
 					textColorClass
 				) }
-				style={ { color: textColorClass ? undefined : attributes.customTextColor } }
+				style={ {
+					color: textColorClass
+						? undefined
+						: attributes.customTextColor,
+				} }
 				value={ attributes.heading }
 			/>
 		</Starscape>

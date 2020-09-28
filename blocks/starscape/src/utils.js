@@ -33,7 +33,7 @@ const starBoxShadow = ( { color, density, maxWidth, maxHeight } ) => {
 	// any there.
 	const base = maxWidth / 2;
 	const height = maxHeight;
-	const radius = Math.sqrt( ( base * base ) + ( height * height ) );
+	const radius = Math.sqrt( base * base + height * height );
 
 	// Star count calculation based on how dense the stars should be distributed
 	// within our minimal circle
@@ -59,7 +59,13 @@ const starBoxShadow = ( { color, density, maxWidth, maxHeight } ) => {
  *
  * @return {Object} CSS style object to add to a component
  */
-const starBoxStyle = ( { starSize, color, density, maxWidth, maxHeight } ) => ( {
+const starBoxStyle = ( {
+	starSize,
+	color,
+	density,
+	maxWidth,
+	maxHeight,
+} ) => ( {
 	boxShadow: starBoxShadow( { color, density, maxWidth, maxHeight } ),
 	width: `${ starSize }px`,
 	height: `${ starSize }px`,
@@ -83,28 +89,33 @@ const starBoxAnimation = ( { animation, duration } ) => ( {
  *
  * @param {Object} options Options
  * @param {number} options.density Range slider value between 1 and 100
+ * @param {number} options.maxWidth Width in pixels that stars should be generated within
+ * @param {number} options.maxHeight Height in pixels that stars should be generated within
  *
  * @return {Object[]} CSS style objects for each layer of stars
  */
-export const genStars = ( { density, maxWidth, maxHeight } ) => [
-	{
-		starSize: 1,
-		density: ( 4 * density ) + 10,
-	},
-	{
-		starSize: 2,
-		density: ( 2 * density ) + 10,
-	},
-	{
-		starSize: 3,
-		density: ( 1 * density ) + 10,
-	},
-].map( ( variation ) => starBoxStyle( {
-	color: 'hsla(0, 100%, 100%, 0.8)',
-	maxWidth,
-	maxHeight,
-	...variation,
-} ) );
+export const genStars = ( { density, maxWidth, maxHeight } ) =>
+	[
+		{
+			starSize: 1,
+			density: 4 * density + 10,
+		},
+		{
+			starSize: 2,
+			density: 2 * density + 10,
+		},
+		{
+			starSize: 3,
+			density: 1 * density + 10,
+		},
+	].map( ( variation ) =>
+		starBoxStyle( {
+			color: 'hsla(0, 100%, 100%, 0.8)',
+			maxWidth,
+			maxHeight,
+			...variation,
+		} )
+	);
 
 /**
  * Calculate all three sizes of stars for saving in the attributes.
@@ -114,9 +125,10 @@ export const genStars = ( { density, maxWidth, maxHeight } ) => [
  *
  * @return {Object[]} CSS style objects for each layer of stars
  */
-export const genAnimations = ( { speed } ) => [ 50000, 100000, 200000 ].map(
-	( duration ) => starBoxAnimation( {
-		animation: 'rotate',
-		duration: duration / ( speed * speed ),
-	} )
-);
+export const genAnimations = ( { speed } ) =>
+	[ 50000, 100000, 200000 ].map( ( duration ) =>
+		starBoxAnimation( {
+			animation: 'rotate',
+			duration: duration / ( speed * speed ),
+		} )
+	);

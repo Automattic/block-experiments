@@ -14,7 +14,7 @@
 		position: absolute;
 		top: 100%;
 		left: 50%;
-		transform: translateZ(0);
+		transform: translateZ( 0 );
 	}
 
 	&__heading {
@@ -27,9 +27,9 @@
 
 @keyframes wp-block-a8c-starscape-animation-rotate {
 	from {
-		transform: rotateZ(0deg);
+		transform: rotateZ( 0deg );
 	}
 	to {
-		transform: rotateZ(360deg);
+		transform: rotateZ( 360deg );
 	}
 }
