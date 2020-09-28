@@ -11,6 +11,7 @@ import {
 	PanelColorSettings,
 	InnerBlocks,
 	__experimentalUnitControl as UnitControl,
+	__experimentalUseEditorFeature as useEditorFeature,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
@@ -19,16 +20,11 @@ import {
 	BaseControl,
 } from '@wordpress/components';
 import { useInstanceId } from '@wordpress/compose';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { useDispatch } from '@wordpress/data';
 import { useState, useEffect, useRef } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
-const DEFAULT_COLORS = {
-	color1: '#000',
-	color2: '#555',
-	color3: '#AAA',
-	color4: '#FFF',
-};
+const DEFAULT_COLOR_PALETTE = [ { color: '#000' }, { color: '#FFF' } ];
 
 const MIN_HEIGHT = 50;
 
@@ -108,27 +104,19 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 	const [ temporaryMinHeight, setTemporaryMinHeight ] = useState( null );
 	const [ isResizing, setIsResizing ] = useState( false );
 
-	const themeColors = useSelect(
-		( select ) => select( 'core/block-editor' ).getSettings().colors,
-		[]
-	);
+	const colorPalette = useEditorFeature( 'color.palette' );
+
+	const themeColors = colorPalette?.length
+		? colorPalette
+		: DEFAULT_COLOR_PALETTE;
+
 	const colors = {
-		color1:
-			attributes.color1 ||
-			themeColors[ 0 ].color ||
-			DEFAULT_COLORS.color1,
-		color2:
-			attributes.color2 ||
-			themeColors[ 0 ].color ||
-			DEFAULT_COLORS.color2,
+		color1: attributes.color1 || themeColors[ 0 ].color,
+		color2: attributes.color2 || themeColors[ 0 ].color,
 		color3:
-			attributes.color3 ||
-			themeColors[ 1 % themeColors.length ].color ||
-			DEFAULT_COLORS.color3,
+			attributes.color3 || themeColors[ 1 % themeColors.length ].color,
 		color4:
-			attributes.color4 ||
-			themeColors[ 2 % themeColors.length ].color ||
-			DEFAULT_COLORS.color4,
+			attributes.color4 || themeColors[ 2 % themeColors.length ].color,
 	};
 
 	const updatePreview = ( newAttributes = {} ) =>

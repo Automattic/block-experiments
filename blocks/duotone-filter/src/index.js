@@ -6,10 +6,13 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-import { InspectorControls, PanelColorSettings } from '@wordpress/block-editor';
+import {
+	InspectorControls,
+	PanelColorSettings,
+	__experimentalUseEditorFeature as useEditorFeature,
+} from '@wordpress/block-editor';
 import { createHigherOrderComponent, useInstanceId } from '@wordpress/compose';
-import { useSelect } from '@wordpress/data';
-import { useEffect } from '@wordpress/element';
+import { useEffect, useMemo } from '@wordpress/element';
 import { addFilter } from '@wordpress/hooks';
 import { __ } from '@wordpress/i18n';
 
@@ -18,6 +21,8 @@ import { __ } from '@wordpress/i18n';
  */
 import Duotone from './duotone';
 import { hex2rgb } from './utils';
+
+const EMPTY_ARRAY = [];
 
 const FALLBACK_DARK_COLOR = '#000';
 const FALLBACK_LIGHT_COLOR = '#fff';
@@ -71,28 +76,28 @@ const withDuotoneEditorControls = createHigherOrderComponent(
 			} );
 		}, [ instanceId ] );
 
+		const colorPalette = useEditorFeature( 'color.palette' ) || EMPTY_ARRAY;
+
 		const [
 			defaultDarkColor = FALLBACK_DARK_COLOR,
 			defaultLightColor = FALLBACK_LIGHT_COLOR,
-		] = useSelect( ( select ) => {
-			const { colors } = select( 'core/block-editor' ).getSettings();
-			return colors
+		] = useMemo( () => {
+			return colorPalette
 				.map( ( { color } ) => ( {
 					color,
 					brightness: toBrightness( color ),
 				} ) )
-				.reduce( ( [ min, max ], current ) => {
-					return [
-						! min || current.brightness < min.brightness
-							? current
-							: min,
-						! max || current.brightness > max.brightness
-							? current
-							: max,
-					];
-				}, [] )
+				.reduce(
+					( [ min, max ], current ) => {
+						return [
+							current.brightness < min.brightness ? current : min,
+							current.brightness > max.brightness ? current : max,
+						];
+					},
+					[ Number.MAX_VALUE, 0 ]
+				)
 				.map( ( { color } ) => color );
-		}, [] );
+		}, [ colorPalette ] );
 
 		return (
 			<>
