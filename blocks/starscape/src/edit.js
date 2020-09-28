@@ -13,10 +13,10 @@ import {
 	RichText,
 	withColors,
 	__experimentalPanelColorGradientSettings as PanelColorGradientSettings,
+	__experimentalUseEditorFeature as useEditorFeature,
 } from '@wordpress/block-editor';
 import { BaseControl, PanelBody, RangeControl } from '@wordpress/components';
 import { compose, withInstanceId } from '@wordpress/compose';
-import { useSelect } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -34,9 +34,8 @@ const Edit = ( {
 	setAttributes,
 	className,
 } ) => {
-	const themeColors = useSelect(
-		( select ) => select( 'core/block-editor' ).getSettings().colors
-	);
+	const themeColors = useEditorFeature( 'color.palette' ) || [];
+
 	return (
 		<>
 			<BlockControls>
