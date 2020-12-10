@@ -1030,7 +1030,10 @@
             grid-row-start: 4; } }
   .wp-block-jetpack-layout-grid .wp-block-jetpack-layout-grid-column * {
     word-break: break-word;
-    word-wrap: break-word; }
+    word-wrap: break-word;
+    -webkit-hyphens: auto;
+        -ms-hyphens: auto;
+            hyphens: auto; }
   .wp-block-jetpack-layout-grid.wp-block-jetpack-layout-gutter__none {
     grid-gap: 0px; }
   .wp-block-jetpack-layout-grid.wp-block-jetpack-layout-gutter__small {

@@ -106,6 +106,7 @@
 	.wp-block-jetpack-layout-grid-column * {
 		word-break: break-word;
 		word-wrap: break-word;
+		hyphens: auto;
 	}
 
 	&.wp-block-jetpack-layout-gutter__none {
