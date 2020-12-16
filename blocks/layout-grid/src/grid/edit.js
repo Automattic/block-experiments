@@ -58,6 +58,21 @@ import LayoutGrid from './layout-grid';
 const ALLOWED_BLOCKS = [ 'jetpack/layout-grid-column' ];
 const MINIMUM_RESIZE_SIZE = 50; // Empirically determined to be a good size
 
+/** 
+ * get the width of the editor, taking into account preview mode.
+ */
+function getEditorDeviceWidth() {
+	const visualEditorEl = document.querySelector('.edit-post-visual-editor');
+	const width = visualEditorEl ? visualEditorEl.offsetWidth : window.innerWidth;
+	if ( width < 600 ) {
+		return 'Mobile';
+	} else if ( width < 1080 ) {
+		return 'Tablet';
+	} else {
+		return 'Desktop';
+	}
+}
+
 // Note this uses __experimentalGetPreviewDeviceType, but has a fallback for older versions of Gutenberg.
 // The fallback will be removed once WordPress contains supports for __experimentalGetPreviewDeviceType
 class Edit extends Component {
@@ -66,8 +81,10 @@ class Edit extends Component {
 
 		this.overlayRef = createRef();
 		this.state = {
-			selectedDevice: getLayouts()[ 0 ].value,
+			selectedPreviewDeviceType: getLayouts()[ 0 ].value,
+			renderDeviceType: getEditorDeviceWidth(),
 		};
+		window.addEventListener( 'resize', this.onResizeWindow.bind( this ) );
 	}
 
 	/*
@@ -88,23 +105,42 @@ class Edit extends Component {
 		this.props.updateColumns( this.props.columns, columns, columnValues );
 	};
 
-	getDeviceType() {
-		return this.props.deviceType
-			? this.props.deviceType
-			: this.state.selectedDevice;
+	getPreviewDeviceType() {
+		return this.props.previewDeviceType
+			? this.props.previewDeviceType
+			: this.state.selectedPreviewDeviceType;
 	}
 
-	setDeviceType = ( deviceType ) => {
-		if ( this.props.deviceType ) {
-			this.props.setDeviceType( deviceType );
+	setPreviewDeviceType = ( previewDeviceType ) => {
+		if ( this.props.previewDeviceType ) {
+			this.props.setPreviewDeviceType( previewDeviceType );
 		} else {
-			this.setState( { selectedDevice: deviceType } );
+			this.setState( { selectedPreviewDeviceType: previewDeviceType } );
 		}
+	};
+
+	updateRenderDeviceType = () => {
+		const renderDeviceType = getEditorDeviceWidth();
+		this.setState( {
+			renderDeviceType: renderDeviceType
+		} );
+
+	};
+
+	componentDidUpdate = ( prevProps ) => {
+		// After changing the preview mode, recompute the number of columns to render
+		if ( prevProps.previewDeviceType !== this.props.previewDeviceType ) {
+			this.updateRenderDeviceType();
+		}
+	};
+
+	onResizeWindow = () => {
+		this.updateRenderDeviceType();
 	};
 
 	onResize = ( column, adjustment ) => {
 		const { attributes, columns } = this.props;
-		const grid = new LayoutGrid( attributes, this.getDeviceType(), columns );
+		const grid = new LayoutGrid( attributes, this.state.renderDeviceType, columns );
 		const adjustedGrid = grid.getAdjustedGrid( column, adjustment );
 
 		if ( adjustedGrid ) {
@@ -197,24 +233,25 @@ class Edit extends Component {
 			updateAlignment,
 			columnAttributes,
 		} = this.props;
-		const deviceType = this.getDeviceType();
+		const renderDeviceType = this.state.renderDeviceType;
+		const selectedPreviewDevice = this.getPreviewDeviceType();
 		const extra = getAsEditorCSS(
-			deviceType,
+			renderDeviceType,
 			columns,
 			attributes,
 			columnAttributes
 		);
 		const { gutterSize, addGutterEnds, verticalAlignment } = attributes;
-		const layoutGrid = new LayoutGrid( attributes, deviceType, columns );
+		const layoutGrid = new LayoutGrid( attributes, renderDeviceType, columns );
 		const classes = classnames(
 			removeGridClasses( className ),
 			extra,
 			{
-				'wp-block-jetpack-layout-tablet': deviceType === 'Tablet',
-				'wp-block-jetpack-layout-desktop': deviceType === 'Desktop',
-				'wp-block-jetpack-layout-mobile': deviceType === 'Mobile',
+				'wp-block-jetpack-layout-tablet': renderDeviceType === 'Tablet',
+				'wp-block-jetpack-layout-desktop': renderDeviceType === 'Desktop',
+				'wp-block-jetpack-layout-mobile': renderDeviceType === 'Mobile',
 				'wp-block-jetpack-layout-resizable': this.canResizeBreakpoint(
-					deviceType
+					renderDeviceType
 				),
 				[ `are-vertically-aligned-${ verticalAlignment }` ]: verticalAlignment,
 			},
@@ -263,12 +300,12 @@ class Edit extends Component {
 					<ResizeGrid
 						className={ classes }
 						onResize={ this.onResize }
-						totalColumns={ getGridWidth( deviceType ) }
+						totalColumns={ getGridWidth( renderDeviceType ) }
 						layoutGrid={ layoutGrid }
 						isSelected={ isSelected }
 					>
 						<div className="wpcom-overlay-grid" ref={ this.overlayRef }>
-							{ times( getGridWidth( deviceType ) ).map( ( item ) => <div className="wpcom-overlay-grid__column" key={ item }></div> ) }
+							{ times( getGridWidth( renderDeviceType ) ).map( ( item ) => <div className="wpcom-overlay-grid__column" key={ item }></div> ) }
 						</div>
 
 						<InnerBlocks
@@ -318,15 +355,15 @@ class Edit extends Component {
 									{ getLayouts().map( ( layout ) => (
 										<Button
 											key={ layout.value }
-											isPrimary={ layout.value === deviceType }
-											onClick={ () => this.setDeviceType( layout.value ) }
+											isPrimary={ layout.value === selectedPreviewDevice }
+											onClick={ () => this.setPreviewDeviceType( layout.value ) }
 										>
 											{ layout.label }
 										</Button>
 									) ) }
 								</ButtonGroup>
 
-								{ this.renderDeviceSettings( columns, deviceType, attributes ) }
+								{ this.renderDeviceSettings( columns, selectedPreviewDevice, attributes ) }
 							</PanelBody>
 
 							<PanelBody title={ __( 'Gutter', 'layout-grid' ) }>
@@ -360,7 +397,7 @@ class Edit extends Component {
 								<Button
 									aria-expanded={ isOpen }
 									onClick={ onToggle }
-									icon={ getLayouts().find( ( layout ) => layout.value === deviceType ).icon }
+									icon={ getLayouts().find( ( layout ) => layout.value === selectedPreviewDevice ).icon }
 								/>
 							</ToolbarGroup>
 						) }
@@ -369,8 +406,8 @@ class Edit extends Component {
 								{ getLayouts().map( ( layout ) => (
 									<MenuItem
 										key={ layout.value }
-										isSelected={ layout.value === deviceType }
-										onClick={ () => this.setDeviceType( layout.value ) }
+										isSelected={ layout.value === selectedPreviewDevice }
+										onClick={ () => this.setPreviewDeviceType( layout.value ) }
 										icon={ layout.icon }
 									>
 										{ layout.label }
@@ -459,7 +496,7 @@ export default compose( [
 
 			replaceBlock( clientId, blockCopy );
 		},
-		setDeviceType( type ) {
+		setPreviewDeviceType( type ) {
 			const {
 				__experimentalSetPreviewDeviceType,
 			} = dispatch( 'core/edit-post' );
@@ -479,7 +516,7 @@ export default compose( [
 				( innerBlockClientId ) =>
 					getBlocksByClientId( innerBlockClientId )[ 0 ].attributes
 			),
-			deviceType: __experimentalGetPreviewDeviceType ? __experimentalGetPreviewDeviceType() : null,
+			previewDeviceType: __experimentalGetPreviewDeviceType ? __experimentalGetPreviewDeviceType() : null,
 		};
 	} ),
 ] )( Edit );
