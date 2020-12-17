@@ -62,7 +62,7 @@ const MINIMUM_RESIZE_SIZE = 50; // Empirically determined to be a good size
  * get the width of the editor, taking into account preview mode.
  */
 function getEditorDeviceWidth() {
-	const visualEditorEl = document.querySelector('.edit-post-visual-editor');
+	const visualEditorEl = document.querySelector('.editor-styles-wrapper');
 	const width = visualEditorEl ? visualEditorEl.offsetWidth : window.innerWidth;
 	if ( width < 600 ) {
 		return 'Mobile';
