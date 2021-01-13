@@ -20,10 +20,10 @@ jobs:
                   node-version: '12.x'
 
             - name: Install Dependencies
-              run: npm install
+              run: yarn install
 
             - name: Build BlockBook
-              run: npm install && npm run blockbook:build -- --output-public-path=/block-experiments && cp dist/index.html dist/404.html
+              run: yarn install && yarn blockbook:build -- --output-public-path=/block-experiments && cp dist/index.html dist/404.html
 
             - name: Deploy
               uses: peaceiris/actions-gh-pages@v3
