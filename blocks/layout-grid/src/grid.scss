@@ -50,7 +50,7 @@
 }
 
 // Editor grid styles
-.block-editor .wp-block-jetpack-layout-grid {
+.wp-block-jetpack-layout-grid {
 	// These three rules are only necessary for Safari.
 	// Safari interprets percentages in CSS grid differently.
 	// Flex causes children to "stretch", fixing that interpretation.
