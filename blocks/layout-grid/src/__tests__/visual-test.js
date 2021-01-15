@@ -78,6 +78,7 @@ describe( 'Grid Block visual regression', () => {
 				}
 
 				expect( screenshot ).toMatchImageSnapshot( {
+					comparisonMethod: 'ssim',
 					customSnapshotIdentifier: getSnapshotFilename(
 						fixture + '-' + name
 					),
