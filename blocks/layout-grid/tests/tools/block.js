@@ -81,3 +81,13 @@ export function Theme( props ) {
 export function dumpHTML( filename ) {
 	fs.writeFileSync( filename, document.documentElement.outerHTML );
 }
+
+export function isValid( block ) {
+	return (
+		block.isValid &&
+		( block.innerBlocks
+			? block.innerBlocks.filter( ( filt ) => ! filt.isValid ).length ===
+			  0
+			: true )
+	);
+}

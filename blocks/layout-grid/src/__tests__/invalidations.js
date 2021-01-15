@@ -1,4 +1,3 @@
-
 /**
  * WordPress dependencies
  */
@@ -9,6 +8,7 @@ import { parse } from '@wordpress/blocks';
  */
 import { registerBlock } from '../index';
 import { getFixtures, readFixture } from '../../tests/tools/fixtures';
+import { isValid } from '../../tests/tools/block';
 
 registerBlock();
 
@@ -28,7 +28,7 @@ describe( 'Layout Grid Invalidations', () => {
 			expect( parsed.length ).toBe( 1 );
 
 			// No validation issues
-			expect( parsed[ 0 ].validationIssues.length ).toBe( 0 );
+			expect( isValid( parsed[ 0 ] ) ).toBe( true );
 
 			// It's a layout grid
 			expect( parsed[ 0 ].name ).toBe( 'jetpack/layout-grid' );
