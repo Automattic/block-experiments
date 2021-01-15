@@ -1,6 +1,6 @@
 === Layout Grid Block ===
 Contributors: automattic, jasmussen, johnny5, mkaz
-Stable tag: 1.3.1
+Stable tag: 1.4
 Tested up to: 5.6
 Requires at least: 5.5
 License: GPLv2 or later
@@ -24,8 +24,10 @@ You can follow development, file an issue, suggest features, and view the source
 
 == Changelog ==
 
-= 1.3.1 - 6th October 2020 =
-* Fix has-background class not added when a custom color is selected
+= 1.4 - 15th January 2021 =
+* Use hyphenation for text inside a grid column
+* Add missing `has-background` for columns with a custom background colour
+* Fix CSS for use in full site editor
 
 = 1.3 - 21st July 2020 =
 * Add vertical alignment to grid and grid columns
