@@ -58,7 +58,7 @@ import LayoutGrid from './layout-grid';
 const ALLOWED_BLOCKS = [ 'jetpack/layout-grid-column' ];
 const MINIMUM_RESIZE_SIZE = 50; // Empirically determined to be a good size
 
-/** 
+/**
  * get the width of the editor, taking into account preview mode.
  */
 function getEditorDeviceWidth() {
@@ -73,17 +73,15 @@ function getEditorDeviceWidth() {
 	}
 }
 
-// Note this uses __experimentalGetPreviewDeviceType, but has a fallback for older versions of Gutenberg.
-// The fallback will be removed once WordPress contains supports for __experimentalGetPreviewDeviceType
 class Edit extends Component {
 	constructor( props ) {
 		super( props );
 
 		this.overlayRef = createRef();
 		this.state = {
-			selectedPreviewDeviceType: getLayouts()[ 0 ].value,
 			renderDeviceType: getEditorDeviceWidth(),
 		};
+
 		window.addEventListener( 'resize', this.onResizeWindow.bind( this ) );
 	}
 
@@ -105,26 +103,12 @@ class Edit extends Component {
 		this.props.updateColumns( this.props.columns, columns, columnValues );
 	};
 
-	getPreviewDeviceType() {
-		return this.props.previewDeviceType
-			? this.props.previewDeviceType
-			: this.state.selectedPreviewDeviceType;
-	}
-
-	setPreviewDeviceType = ( previewDeviceType ) => {
-		if ( this.props.previewDeviceType ) {
-			this.props.setPreviewDeviceType( previewDeviceType );
-		} else {
-			this.setState( { selectedPreviewDeviceType: previewDeviceType } );
-		}
-	};
-
 	updateRenderDeviceType = () => {
 		const renderDeviceType = getEditorDeviceWidth();
-		this.setState( {
-			renderDeviceType: renderDeviceType
-		} );
 
+		this.setState( {
+			renderDeviceType,
+		} );
 	};
 
 	componentDidUpdate = ( prevProps ) => {
@@ -234,7 +218,7 @@ class Edit extends Component {
 			columnAttributes,
 		} = this.props;
 		const renderDeviceType = this.state.renderDeviceType;
-		const selectedPreviewDevice = this.getPreviewDeviceType();
+		const selectedPreviewDevice = this.props.previewDeviceType;
 		const extra = getAsEditorCSS(
 			renderDeviceType,
 			columns,
@@ -516,7 +500,7 @@ export default compose( [
 				( innerBlockClientId ) =>
 					getBlocksByClientId( innerBlockClientId )[ 0 ].attributes
 			),
-			previewDeviceType: __experimentalGetPreviewDeviceType ? __experimentalGetPreviewDeviceType() : null,
+			previewDeviceType: __experimentalGetPreviewDeviceType(),
 		};
 	} ),
 ] )( Edit );
