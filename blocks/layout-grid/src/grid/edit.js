@@ -27,10 +27,6 @@ import {
 	ToggleControl,
 	SelectControl,
 	Disabled,
-	ToolbarGroup,
-	MenuGroup,
-	MenuItem,
-	Dropdown,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { ENTER, SPACE } from '@wordpress/keycodes';
@@ -59,26 +55,10 @@ import {
 import { getGridWidth, getDefaultSpan } from './grid-defaults';
 import ResizeGrid from './resize-grid';
 import LayoutGrid from './layout-grid';
+import PreviewDevice from './preview-device';
 
 const ALLOWED_BLOCKS = [ 'jetpack/layout-grid-column' ];
 const MINIMUM_RESIZE_SIZE = 50; // Empirically determined to be a good size
-
-/**
- * get the width of the editor, taking into account preview mode.
- */
-function getEditorDeviceWidth() {
-	const visualEditorEl = document.querySelector( '.editor-styles-wrapper' );
-	const width = visualEditorEl
-		? visualEditorEl.offsetWidth
-		: window.innerWidth;
-	if ( width < 600 ) {
-		return 'Mobile';
-	} else if ( width < 1080 ) {
-		return 'Tablet';
-	} else {
-		return 'Desktop';
-	}
-}
 
 class Edit extends Component {
 	constructor( props ) {
@@ -86,10 +66,9 @@ class Edit extends Component {
 
 		this.overlayRef = createRef();
 		this.state = {
-			renderDeviceType: getEditorDeviceWidth(),
+			inspectorDeviceType: 'Desktop',
+			viewPort: 'Desktop',
 		};
-
-		window.addEventListener( 'resize', this.onResizeWindow.bind( this ) );
 	}
 
 	/*
@@ -122,30 +101,11 @@ class Edit extends Component {
 		this.props.updateColumns( this.props.columns, columns, columnValues );
 	};
 
-	updateRenderDeviceType = () => {
-		const renderDeviceType = getEditorDeviceWidth();
-
-		this.setState( {
-			renderDeviceType,
-		} );
-	};
-
-	componentDidUpdate = ( prevProps ) => {
-		// After changing the preview mode, recompute the number of columns to render
-		if ( prevProps.previewDeviceType !== this.props.previewDeviceType ) {
-			this.updateRenderDeviceType();
-		}
-	};
-
-	onResizeWindow = () => {
-		this.updateRenderDeviceType();
-	};
-
 	onResize = ( column, adjustment ) => {
 		const { attributes, columns } = this.props;
 		const grid = new LayoutGrid(
 			attributes,
-			this.state.renderDeviceType,
+			this.getPreviewMode(),
 			columns
 		);
 		const adjustedGrid = grid.getAdjustedGrid( column, adjustment );
@@ -242,6 +202,37 @@ class Edit extends Component {
 		return false;
 	}
 
+	updateInspectorDevice( device ) {
+		this.setState( { inspectorDeviceType: device } );
+
+		// Only update if on desktop
+		if ( this.state.viewPort === 'Desktop' ) {
+			this.props.setPreviewDeviceType( device );
+		}
+	}
+
+	getPreviewMode() {
+		// If we're on desktop, or the preview is set to mobile, then return the preview mode
+		if (
+			this.state.viewPort === 'Desktop' ||
+			this.props.previewDeviceType === 'Mobile'
+		) {
+			return this.props.previewDeviceType;
+		}
+
+		// Return something appropriate for the viewport (mobile or tablet)
+		return this.state.viewPort;
+	}
+
+	getInspectorMode() {
+		if ( this.state.viewPort === 'Desktop' ) {
+			return this.props.previewDeviceType;
+		}
+
+		// Return something appropriate for the viewport (mobile or tablet)
+		return this.state.inspectorDeviceType;
+	}
+
 	render() {
 		const {
 			className,
@@ -251,31 +242,28 @@ class Edit extends Component {
 			setAttributes,
 			updateAlignment,
 			columnAttributes,
+			previewDeviceType,
 		} = this.props;
-		const renderDeviceType = this.state.renderDeviceType;
-		const selectedPreviewDevice = this.props.previewDeviceType;
+		const { viewPort } = this.state;
+		const previewMode = this.getPreviewMode();
+		const inspectorDeviceType = this.getInspectorMode();
 		const extra = getAsEditorCSS(
-			renderDeviceType,
+			previewMode,
 			columns,
 			attributes,
 			columnAttributes
 		);
 		const { gutterSize, addGutterEnds, verticalAlignment } = attributes;
-		const layoutGrid = new LayoutGrid(
-			attributes,
-			renderDeviceType,
-			columns
-		);
+		const layoutGrid = new LayoutGrid( attributes, previewMode, columns );
 		const classes = classnames(
 			removeGridClasses( className ),
 			extra,
 			{
-				'wp-block-jetpack-layout-tablet': renderDeviceType === 'Tablet',
-				'wp-block-jetpack-layout-desktop':
-					renderDeviceType === 'Desktop',
-				'wp-block-jetpack-layout-mobile': renderDeviceType === 'Mobile',
+				'wp-block-jetpack-layout-tablet': previewMode === 'Tablet',
+				'wp-block-jetpack-layout-desktop': previewMode === 'Desktop',
+				'wp-block-jetpack-layout-mobile': previewMode === 'Mobile',
 				'wp-block-jetpack-layout-resizable': this.canResizeBreakpoint(
-					renderDeviceType
+					previewMode
 				),
 				[ `are-vertically-aligned-${ verticalAlignment }` ]: verticalAlignment,
 			},
@@ -337,11 +325,21 @@ class Edit extends Component {
 
 		return (
 			<>
+				<PreviewDevice
+					currentViewport={ viewPort }
+					updateViewport={ ( newPort ) =>
+						this.setState( {
+							viewPort: newPort,
+							inspectorDeviceType: previewDeviceType,
+						} )
+					}
+				/>
+
 				<IsolatedEventContainer>
 					<ResizeGrid
 						className={ classes }
 						onResize={ this.onResize }
-						totalColumns={ getGridWidth( renderDeviceType ) }
+						totalColumns={ getGridWidth( previewMode ) }
 						layoutGrid={ layoutGrid }
 						isSelected={ isSelected }
 					>
@@ -349,7 +347,7 @@ class Edit extends Component {
 							className="wpcom-overlay-grid"
 							ref={ this.overlayRef }
 						>
-							{ times( getGridWidth( renderDeviceType ) ).map(
+							{ times( getGridWidth( previewMode ) ).map(
 								( item ) => (
 									<div
 										className="wpcom-overlay-grid__column"
@@ -441,10 +439,10 @@ class Edit extends Component {
 											key={ layout.value }
 											isPrimary={
 												layout.value ===
-												selectedPreviewDevice
+												inspectorDeviceType
 											}
 											onClick={ () =>
-												this.setPreviewDeviceType(
+												this.updateInspectorDevice(
 													layout.value
 												)
 											}
@@ -456,7 +454,7 @@ class Edit extends Component {
 
 								{ this.renderDeviceSettings(
 									columns,
-									selectedPreviewDevice,
+									previewDeviceType,
 									attributes
 								) }
 							</PanelBody>
@@ -492,44 +490,6 @@ class Edit extends Component {
 					<BlockVerticalAlignmentToolbar
 						onChange={ updateAlignment }
 						value={ verticalAlignment }
-					/>
-					<Dropdown
-						renderToggle={ ( { isOpen, onToggle } ) => (
-							<ToolbarGroup>
-								<Button
-									aria-expanded={ isOpen }
-									onClick={ onToggle }
-									icon={
-										getLayouts().find(
-											( layout ) =>
-												layout.value ===
-												selectedPreviewDevice
-										).icon
-									}
-								/>
-							</ToolbarGroup>
-						) }
-						renderContent={ ( { onClose } ) => (
-							<MenuGroup>
-								{ getLayouts().map( ( layout ) => (
-									<MenuItem
-										key={ layout.value }
-										isSelected={
-											layout.value ===
-											selectedPreviewDevice
-										}
-										onClick={ () =>
-											this.setPreviewDeviceType(
-												layout.value
-											)
-										}
-										icon={ layout.icon }
-									>
-										{ layout.label }
-									</MenuItem>
-								) ) }
-							</MenuGroup>
-						) }
 					/>
 				</BlockControls>
 			</>
