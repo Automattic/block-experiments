@@ -9,12 +9,13 @@ import classnames from 'classnames';
  * WordPress dependencies
  */
 
-import { InnerBlocks, InspectorControls } from '@wordpress/block-editor';
-import { Component, createRef } from '@wordpress/element';
 import {
+	InnerBlocks,
+	InspectorControls,
 	BlockControls,
 	BlockVerticalAlignmentToolbar,
 } from '@wordpress/block-editor';
+import { Component, createRef } from '@wordpress/element';
 import {
 	PanelBody,
 	TextControl,
