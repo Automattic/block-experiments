@@ -14,15 +14,17 @@ function getSpacingValues() {
 	];
 }
 
-export const getPaddingValues = () => (	[
-	{ value: 'none', label: __( 'No padding', 'layout-grid' ) },
-].concat( getSpacingValues() ) );
+export const getPaddingValues = () =>
+	[ { value: 'none', label: __( 'No padding', 'layout-grid' ) } ].concat(
+		getSpacingValues()
+	);
 
-export const getGutterValues = () => ( [
-	{ value: 'none', label: __( 'No gutter', 'layout-grid' ) },
-].concat( getSpacingValues() ) );
+export const getGutterValues = () =>
+	[ { value: 'none', label: __( 'No gutter', 'layout-grid' ) } ].concat(
+		getSpacingValues()
+	);
 
-export const getColumns = () => ( [
+export const getColumns = () => [
 	{
 		label: __( '1 column', 'layout-grid' ),
 		value: 1,
@@ -39,17 +41,29 @@ export const getColumns = () => ( [
 		label: __( '4 columns', 'layout-grid' ),
 		value: 4,
 	},
-] );
+];
 
 export const DEVICE_DESKTOP = 'Desktop';
 export const DEVICE_TABLET = 'Tablet';
 export const DEVICE_MOBILE = 'Mobile';
 
-export const getLayouts = () => ( [
-	{ value: DEVICE_DESKTOP, label: __( 'Desktop', 'layout-grid' ), icon: desktop },
-	{ value: DEVICE_TABLET, label: __( 'Tablet', 'layout-grid' ), icon: tablet  },
-	{ value: DEVICE_MOBILE, label: __( 'Mobile', 'layout-grid' ), icon: mobile },
-] );
+export const getLayouts = () => [
+	{
+		value: DEVICE_DESKTOP,
+		label: __( 'Desktop', 'layout-grid' ),
+		icon: desktop,
+	},
+	{
+		value: DEVICE_TABLET,
+		label: __( 'Tablet', 'layout-grid' ),
+		icon: tablet,
+	},
+	{
+		value: DEVICE_MOBILE,
+		label: __( 'Mobile', 'layout-grid' ),
+		icon: mobile,
+	},
+];
 
 export const MAX_COLUMNS = 4;
 

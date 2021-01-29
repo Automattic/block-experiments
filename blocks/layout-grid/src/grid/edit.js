@@ -9,10 +9,7 @@ import classnames from 'classnames';
  * WordPress dependencies
  */
 
-import {
-	InnerBlocks,
-	InspectorControls,
-} from '@wordpress/block-editor';
+import { InnerBlocks, InspectorControls } from '@wordpress/block-editor';
 import { Component, createRef } from '@wordpress/element';
 import {
 	BlockControls,
@@ -50,7 +47,14 @@ import {
 	getGutterClasses,
 } from './css-classname';
 import ColumnIcon from '../icons';
-import { getLayouts, getColumns, DEVICE_BREAKPOINTS, getSpanForDevice, getOffsetForDevice, getGutterValues } from '../constants';
+import {
+	getLayouts,
+	getColumns,
+	DEVICE_BREAKPOINTS,
+	getSpanForDevice,
+	getOffsetForDevice,
+	getGutterValues,
+} from '../constants';
 import { getGridWidth, getDefaultSpan } from './grid-defaults';
 import ResizeGrid from './resize-grid';
 import LayoutGrid from './layout-grid';
@@ -62,8 +66,10 @@ const MINIMUM_RESIZE_SIZE = 50; // Empirically determined to be a good size
  * get the width of the editor, taking into account preview mode.
  */
 function getEditorDeviceWidth() {
-	const visualEditorEl = document.querySelector('.editor-styles-wrapper');
-	const width = visualEditorEl ? visualEditorEl.offsetWidth : window.innerWidth;
+	const visualEditorEl = document.querySelector( '.editor-styles-wrapper' );
+	const width = visualEditorEl
+		? visualEditorEl.offsetWidth
+		: window.innerWidth;
 	if ( width < 600 ) {
 		return 'Mobile';
 	} else if ( width < 1080 ) {
@@ -92,11 +98,23 @@ class Edit extends Component {
 		const columnValues = {};
 
 		for ( let pos = 0; pos < columns; pos++ ) {
-			for ( let device = 0; device < DEVICE_BREAKPOINTS.length; device++ ) {
-				const defaultSpan = getDefaultSpan( DEVICE_BREAKPOINTS[ device ], columns, pos );
+			for (
+				let device = 0;
+				device < DEVICE_BREAKPOINTS.length;
+				device++
+			) {
+				const defaultSpan = getDefaultSpan(
+					DEVICE_BREAKPOINTS[ device ],
+					columns,
+					pos
+				);
 
-				columnValues[ getSpanForDevice( pos, DEVICE_BREAKPOINTS[ device ] ) ] = defaultSpan;
-				columnValues[ getOffsetForDevice( pos, DEVICE_BREAKPOINTS[ device ] ) ] = 0;
+				columnValues[
+					getSpanForDevice( pos, DEVICE_BREAKPOINTS[ device ] )
+				] = defaultSpan;
+				columnValues[
+					getOffsetForDevice( pos, DEVICE_BREAKPOINTS[ device ] )
+				] = 0;
 			}
 		}
 
@@ -124,33 +142,41 @@ class Edit extends Component {
 
 	onResize = ( column, adjustment ) => {
 		const { attributes, columns } = this.props;
-		const grid = new LayoutGrid( attributes, this.state.renderDeviceType, columns );
+		const grid = new LayoutGrid(
+			attributes,
+			this.state.renderDeviceType,
+			columns
+		);
 		const adjustedGrid = grid.getAdjustedGrid( column, adjustment );
 
 		if ( adjustedGrid ) {
 			this.adjustGrid( adjustedGrid );
 		}
-	}
+	};
 
 	onChangeSpan = ( column, device, value ) => {
 		const { attributes, columns } = this.props;
 		const grid = new LayoutGrid( attributes, device, columns );
-		const adjustedGrid = grid.getAdjustedGrid( column, { span: parseInt( value, 10 ) } );
+		const adjustedGrid = grid.getAdjustedGrid( column, {
+			span: parseInt( value, 10 ),
+		} );
 
 		if ( adjustedGrid ) {
 			this.adjustGrid( adjustedGrid );
 		}
-	}
+	};
 
 	onChangeOffset = ( column, device, value ) => {
 		const { attributes, columns } = this.props;
 		const grid = new LayoutGrid( attributes, device, columns );
-		const adjustedGrid = grid.getAdjustedGrid( column, { start: grid.convertOffsetToStart( column, parseInt( value, 10 ) ) } );
+		const adjustedGrid = grid.getAdjustedGrid( column, {
+			start: grid.convertOffsetToStart( column, parseInt( value, 10 ) ),
+		} );
 
 		if ( adjustedGrid ) {
 			this.adjustGrid( adjustedGrid );
 		}
-	}
+	};
 
 	adjustGrid( grid ) {
 		const { setAttributes, attributes } = this.props;
@@ -166,12 +192,16 @@ class Edit extends Component {
 		const settings = [];
 
 		for ( let column = 0; column < columns; column++ ) {
-			const span = grid.getSpan( column ) || getDefaultSpan( device, columns, column );
+			const span =
+				grid.getSpan( column ) ||
+				getDefaultSpan( device, columns, column );
 			const offset = grid.getOffset( column ) || 0;
 
-			settings.push( (
+			settings.push(
 				<div className="jetpack-layout-grid-settings" key={ column }>
-					<strong>{ __( 'Column', 'layout-grid' ) } { column + 1 }</strong>
+					<strong>
+						{ __( 'Column', 'layout-grid' ) } { column + 1 }
+					</strong>
 					<div className="jetpack-layout-grid-settings__group">
 						<TextControl
 							type="number"
@@ -179,7 +209,9 @@ class Edit extends Component {
 							value={ offset || 0 }
 							min={ 0 }
 							max={ getGridWidth( device ) - 1 }
-							onChange={ ( value ) => this.onChangeOffset( column, device, value ) }
+							onChange={ ( value ) =>
+								this.onChangeOffset( column, device, value )
+							}
 						/>
 						<TextControl
 							type="number"
@@ -187,11 +219,13 @@ class Edit extends Component {
 							value={ span }
 							min={ 1 }
 							max={ getGridWidth( device ) }
-							onChange={ ( value ) => this.onChangeSpan( column, device, value ) }
+							onChange={ ( value ) =>
+								this.onChangeSpan( column, device, value )
+							}
 						/>
 					</div>
 				</div>
-			) );
+			);
 		}
 
 		return settings;
@@ -226,13 +260,18 @@ class Edit extends Component {
 			columnAttributes
 		);
 		const { gutterSize, addGutterEnds, verticalAlignment } = attributes;
-		const layoutGrid = new LayoutGrid( attributes, renderDeviceType, columns );
+		const layoutGrid = new LayoutGrid(
+			attributes,
+			renderDeviceType,
+			columns
+		);
 		const classes = classnames(
 			removeGridClasses( className ),
 			extra,
 			{
 				'wp-block-jetpack-layout-tablet': renderDeviceType === 'Tablet',
-				'wp-block-jetpack-layout-desktop': renderDeviceType === 'Desktop',
+				'wp-block-jetpack-layout-desktop':
+					renderDeviceType === 'Desktop',
 				'wp-block-jetpack-layout-mobile': renderDeviceType === 'Mobile',
 				'wp-block-jetpack-layout-resizable': this.canResizeBreakpoint(
 					renderDeviceType
@@ -247,7 +286,10 @@ class Edit extends Component {
 				<Placeholder
 					icon="layout"
 					label={ __( 'Choose Layout', 'layout-grid' ) }
-					instructions={ __( 'Select a layout to start with:', 'layout-grid' ) }
+					instructions={ __(
+						'Select a layout to start with:',
+						'layout-grid'
+					) }
 					className={ classes }
 				>
 					<ul className="block-editor-inner-blocks__template-picker-options">
@@ -255,8 +297,12 @@ class Edit extends Component {
 							<li key={ column.value }>
 								<IconButton
 									isSecondary
-									icon={ <ColumnIcon columns={ column.value } /> }
-									onClick={ () => this.onChangeLayout( column.value ) }
+									icon={
+										<ColumnIcon columns={ column.value } />
+									}
+									onClick={ () =>
+										this.onChangeLayout( column.value )
+									}
 									className="block-editor-inner-blocks__template-picker-option"
 									label={ column.label }
 								/>
@@ -271,10 +317,20 @@ class Edit extends Component {
 			<ToggleControl
 				label={ __( 'Add end gutters', 'layout-grid' ) }
 				help={
-					addGutterEnds ? __( 'Toggle off to remove the spacing left and right of the grid.', 'layout-grid' ) : __( 'Toggle on to add space left and right of the layout grid. ', 'layout-grid' )
+					addGutterEnds
+						? __(
+								'Toggle off to remove the spacing left and right of the grid.',
+								'layout-grid'
+						  )
+						: __(
+								'Toggle on to add space left and right of the layout grid. ',
+								'layout-grid'
+						  )
 				}
 				checked={ addGutterEnds }
-				onChange={ newValue => setAttributes( { addGutterEnds: newValue } )  }
+				onChange={ ( newValue ) =>
+					setAttributes( { addGutterEnds: newValue } )
+				}
 			/>
 		);
 
@@ -288,8 +344,18 @@ class Edit extends Component {
 						layoutGrid={ layoutGrid }
 						isSelected={ isSelected }
 					>
-						<div className="wpcom-overlay-grid" ref={ this.overlayRef }>
-							{ times( getGridWidth( renderDeviceType ) ).map( ( item ) => <div className="wpcom-overlay-grid__column" key={ item }></div> ) }
+						<div
+							className="wpcom-overlay-grid"
+							ref={ this.overlayRef }
+						>
+							{ times( getGridWidth( renderDeviceType ) ).map(
+								( item ) => (
+									<div
+										className="wpcom-overlay-grid__column"
+										key={ item }
+									></div>
+								)
+							) }
 						</div>
 
 						<InnerBlocks
@@ -305,15 +371,27 @@ class Edit extends Component {
 										<div
 											key={ column.value }
 											className={ classnames(
-												'block-editor-block-styles__item', {
-													'is-active': columns === column.value,
+												'block-editor-block-styles__item',
+												{
+													'is-active':
+														columns ===
+														column.value,
 												}
 											) }
-											onClick={ () => this.onChangeLayout( column.value ) }
+											onClick={ () =>
+												this.onChangeLayout(
+													column.value
+												)
+											}
 											onKeyDown={ ( event ) => {
-												if ( ENTER === event.keyCode || SPACE === event.keyCode ) {
+												if (
+													ENTER === event.keyCode ||
+													SPACE === event.keyCode
+												) {
 													event.preventDefault();
-													this.onChangeLayout( column.value );
+													this.onChangeLayout(
+														column.value
+													);
 												}
 											} }
 											role="button"
@@ -321,7 +399,9 @@ class Edit extends Component {
 											aria-label={ column.label }
 										>
 											<div className="block-editor-block-styles__item-preview">
-												<ColumnIcon columns={ column.value } />
+												<ColumnIcon
+													columns={ column.value }
+												/>
 											</div>
 											<div className="editor-block-styles__item-label block-editor-block-styles__item-label">
 												{ column.label }
@@ -330,24 +410,54 @@ class Edit extends Component {
 									) ) }
 								</div>
 
-								<p><em>{ __( 'Changing the number of columns will reset your layout and could remove content.', 'layout-grid' ) }</em></p>
+								<p>
+									<em>
+										{ __(
+											'Changing the number of columns will reset your layout and could remove content.',
+											'layout-grid'
+										) }
+									</em>
+								</p>
 							</PanelBody>
 
-							<PanelBody title={ __( 'Responsive Breakpoints', 'layout-grid' ) }>
-								<p><em>{ __( "Note that previewing your post will show your browser's breakpoint, not the currently selected one.", 'layout-grid' ) }</em></p>
+							<PanelBody
+								title={ __(
+									'Responsive Breakpoints',
+									'layout-grid'
+								) }
+							>
+								<p>
+									<em>
+										{ __(
+											"Note that previewing your post will show your browser's breakpoint, not the currently selected one.",
+											'layout-grid'
+										) }
+									</em>
+								</p>
 								<ButtonGroup>
 									{ getLayouts().map( ( layout ) => (
 										<Button
 											key={ layout.value }
-											isPrimary={ layout.value === selectedPreviewDevice }
-											onClick={ () => this.setPreviewDeviceType( layout.value ) }
+											isPrimary={
+												layout.value ===
+												selectedPreviewDevice
+											}
+											onClick={ () =>
+												this.setPreviewDeviceType(
+													layout.value
+												)
+											}
 										>
 											{ layout.label }
 										</Button>
 									) ) }
 								</ButtonGroup>
 
-								{ this.renderDeviceSettings( columns, selectedPreviewDevice, attributes ) }
+								{ this.renderDeviceSettings(
+									columns,
+									selectedPreviewDevice,
+									attributes
+								) }
 							</PanelBody>
 
 							<PanelBody title={ __( 'Gutter', 'layout-grid' ) }>
@@ -355,16 +465,23 @@ class Edit extends Component {
 
 								<SelectControl
 									value={ gutterSize }
-									onChange={ newValue => setAttributes( { gutterSize: newValue, addGutterEnds: newValue === 'none' ? false : addGutterEnds } ) }
+									onChange={ ( newValue ) =>
+										setAttributes( {
+											gutterSize: newValue,
+											addGutterEnds:
+												newValue === 'none'
+													? false
+													: addGutterEnds,
+										} )
+									}
 									options={ getGutterValues() }
 								/>
 
 								{ gutterSize === 'none' ? (
-									<Disabled>
-										{ toggleControl }
-									</Disabled>
-								) : toggleControl }
-
+									<Disabled>{ toggleControl }</Disabled>
+								) : (
+									toggleControl
+								) }
 							</PanelBody>
 						</InspectorControls>
 					</ResizeGrid>
@@ -381,7 +498,13 @@ class Edit extends Component {
 								<Button
 									aria-expanded={ isOpen }
 									onClick={ onToggle }
-									icon={ getLayouts().find( ( layout ) => layout.value === selectedPreviewDevice ).icon }
+									icon={
+										getLayouts().find(
+											( layout ) =>
+												layout.value ===
+												selectedPreviewDevice
+										).icon
+									}
 								/>
 							</ToolbarGroup>
 						) }
@@ -390,8 +513,15 @@ class Edit extends Component {
 								{ getLayouts().map( ( layout ) => (
 									<MenuItem
 										key={ layout.value }
-										isSelected={ layout.value === selectedPreviewDevice }
-										onClick={ () => this.setPreviewDeviceType( layout.value ) }
+										isSelected={
+											layout.value ===
+											selectedPreviewDevice
+										}
+										onClick={ () =>
+											this.setPreviewDeviceType(
+												layout.value
+											)
+										}
 										icon={ layout.icon }
 									>
 										{ layout.label }
@@ -411,7 +541,9 @@ function getColumnBlocks( currentBlocks, previous, columns ) {
 		// Add new blocks to the end
 		return [
 			...currentBlocks,
-			...times( columns - previous, () => createBlock( 'jetpack/layout-grid-column' ) ),
+			...times( columns - previous, () =>
+				createBlock( 'jetpack/layout-grid-column' )
+			),
 		];
 	}
 
@@ -424,7 +556,10 @@ function getColumnBlocks( currentBlocks, previous, columns ) {
 
 	// Remove empty blocks
 	cleanedBlocks = cleanedBlocks.filter( ( block ) => {
-		if ( totalRemoved < previous - columns && block.innerBlocks.length === 0 ) {
+		if (
+			totalRemoved < previous - columns &&
+			block.innerBlocks.length === 0
+		) {
 			totalRemoved++;
 			return false;
 		}
@@ -467,32 +602,44 @@ export default compose( [
 			const { clientId } = ownProps;
 			const { replaceBlock } = dispatch( 'core/block-editor' );
 			const { getBlocks } = registry.select( 'core/block-editor' );
-			const innerBlocks = getColumnBlocks( getBlocks( clientId ), previous, columns );
+			const innerBlocks = getColumnBlocks(
+				getBlocks( clientId ),
+				previous,
+				columns
+			);
 
 			// Replace the whole block with a new one so that our changes to both the attributes and innerBlocks are atomic
 			// This ensures that the undo history has a single entry, preventing traversing to a 'half way' point where innerBlocks are changed
 			// but the column attributes arent
-			const blockCopy = createBlock( ownProps.name, {
-				...ownProps.attributes,
-				...columnValues,
-				className: removeGridClasses( ownProps.attributes.className ),
-			}, innerBlocks );
+			const blockCopy = createBlock(
+				ownProps.name,
+				{
+					...ownProps.attributes,
+					...columnValues,
+					className: removeGridClasses(
+						ownProps.attributes.className
+					),
+				},
+				innerBlocks
+			);
 
 			replaceBlock( clientId, blockCopy );
 		},
 		setPreviewDeviceType( type ) {
-			const {
-				__experimentalSetPreviewDeviceType,
-			} = dispatch( 'core/edit-post' );
+			const { __experimentalSetPreviewDeviceType } = dispatch(
+				'core/edit-post'
+			);
 
 			__experimentalSetPreviewDeviceType( type );
-		}
+		},
 	} ) ),
 	withSelect( ( select, { clientId } ) => {
 		const { getBlockOrder, getBlockCount, getBlocksByClientId } = select(
 			'core/block-editor'
 		);
-		const { __experimentalGetPreviewDeviceType = null } = select( 'core/edit-post' );
+		const { __experimentalGetPreviewDeviceType = null } = select(
+			'core/edit-post'
+		);
 
 		return {
 			columns: getBlockCount( clientId ),
