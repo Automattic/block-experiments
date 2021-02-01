@@ -56,6 +56,7 @@ import { getGridWidth, getDefaultSpan } from './grid-defaults';
 import ResizeGrid from './resize-grid';
 import LayoutGrid from './layout-grid';
 import PreviewDevice from './preview-device';
+import { desktop, grid, mobile } from '@wordpress/icons/build-types';
 
 const ALLOWED_BLOCKS = [ 'jetpack/layout-grid-column' ];
 const MINIMUM_RESIZE_SIZE = 50; // Empirically determined to be a good size
@@ -205,8 +206,8 @@ class Edit extends Component {
 	updateInspectorDevice( device ) {
 		this.setState( { inspectorDeviceType: device } );
 
-		// Only update if on desktop
-		if ( this.state.viewPort === 'Desktop' ) {
+		// Only update if not on mobile
+		if ( this.state.viewPort !== 'Mobile' ) {
 			this.props.setPreviewDeviceType( device );
 		}
 	}

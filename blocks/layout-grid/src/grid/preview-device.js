@@ -100,5 +100,4 @@ function PreviewDevice( props ) {
 	);
 }
 
-//MyMobileComponent = ifViewportMatches( '< small' )( MyMobileComponent );
 export default PreviewDevice;

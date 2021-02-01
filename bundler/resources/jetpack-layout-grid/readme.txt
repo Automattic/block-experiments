@@ -1,8 +1,8 @@
 === Layout Grid Block ===
 Contributors: automattic, jasmussen, johnny5, mkaz
-Stable tag: 1.4
+Stable tag: trunk
 Tested up to: 5.6
-Requires at least: 5.5
+Requires at least: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Tags: blocks, layout, grid, design
@@ -23,6 +23,9 @@ You can follow development, file an issue, suggest features, and view the source
 2. Three column grid with resize handles.
 
 == Changelog ==
+
+= 1.5 - 5th February 2021 =
+* Improve editor responsive behaviour on smaller devices
 
 = 1.4 - 15th January 2021 =
 * Use hyphenation for text inside a grid column
