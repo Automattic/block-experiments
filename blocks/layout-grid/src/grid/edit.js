@@ -56,7 +56,6 @@ import { getGridWidth, getDefaultSpan } from './grid-defaults';
 import ResizeGrid from './resize-grid';
 import LayoutGrid from './layout-grid';
 import PreviewDevice from './preview-device';
-import { desktop, grid, mobile } from '@wordpress/icons/build-types';
 
 const ALLOWED_BLOCKS = [ 'jetpack/layout-grid-column' ];
 const MINIMUM_RESIZE_SIZE = 50; // Empirically determined to be a good size
