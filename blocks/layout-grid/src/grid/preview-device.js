@@ -9,7 +9,7 @@ import {
 	Button,
 	ToolbarGroup,
 	MenuGroup,
-	MenuItem,
+	MenuItemsChoice,
 	Dropdown,
 } from '@wordpress/components';
 import { BlockControls } from '@wordpress/block-editor';
@@ -77,20 +77,13 @@ function PreviewDevice( props ) {
 						) }
 						renderContent={ () => (
 							<MenuGroup>
-								{ getLayouts().map( ( layout ) => (
-									<MenuItem
-										key={ layout.value }
-										isSelected={
-											layout.value === previewDevice
-										}
-										onClick={ () =>
-											setPreviewDevice( layout.value )
-										}
-										icon={ layout.icon }
-									>
-										{ layout.label }
-									</MenuItem>
-								) ) }
+								<MenuItemsChoice
+									value={ previewDevice }
+									onSelect={ ( mode ) =>
+										setPreviewDevice( mode )
+									}
+									choices={ getLayouts() }
+								/>
 							</MenuGroup>
 						) }
 					/>
