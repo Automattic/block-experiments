@@ -1,7 +1,7 @@
 === Layout Grid Block ===
 Contributors: automattic, jasmussen, johnny5, mkaz
 Stable tag: trunk
-Tested up to: 5.6
+Tested up to: 5.6.1
 Requires at least: 5.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -24,8 +24,9 @@ You can follow development, file an issue, suggest features, and view the source
 
 == Changelog ==
 
-= 1.5 - 5th February 2021 =
+= 1.5 - 8th February 2021 =
 * Improve editor responsive behaviour on smaller devices
+* Bump minimum WordPress version to 5.6
 
 = 1.4 - 15th January 2021 =
 * Use hyphenation for text inside a grid column
