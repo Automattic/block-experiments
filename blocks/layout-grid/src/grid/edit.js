@@ -330,7 +330,7 @@ class Edit extends Component {
 					updateViewport={ ( newPort ) =>
 						this.setState( {
 							viewPort: newPort,
-							inspectorDeviceType: previewDeviceType,
+							inspectorDeviceType: newPort,
 						} )
 					}
 				/>
@@ -454,7 +454,7 @@ class Edit extends Component {
 
 								{ this.renderDeviceSettings(
 									columns,
-									previewDeviceType,
+									inspectorDeviceType,
 									attributes
 								) }
 							</PanelBody>
