@@ -1043,9 +1043,5 @@
   .wp-block-jetpack-layout-grid.wp-block-jetpack-layout-gutter__huge {
     grid-gap: 48px; }
 
-@-moz-document url-prefix() {
-  .wp-block-jetpack-layout-grid .wp-block-cover {
-    max-height: 0; } }
-
 .wp-block-jetpack-layout-grid-column {
   max-width: 100%; }
