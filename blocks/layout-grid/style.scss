@@ -197,3 +197,128 @@
 		align-self: flex-end;
 	}
 }
+
+
+/**
+ * Responsive Grid Options. Exclude these from the editor.
+ */
+
+/* autoprefixer grid: no-autoplace */
+.wp-block-jetpack-layout-grid {
+	display: grid;
+	grid-gap: $grid-gutter;
+	grid-template-columns: $grid-mobile;
+
+	// Grid rules.
+	// Mobile first.
+	@for $i from 1 through 12 {
+		@for $x from 1 through 4 {
+			&.column#{ $x }-mobile-grid__start-#{ $i } > .wp-block-jetpack-layout-grid-column:nth-child(#{ $x }) {
+				grid-column-start: $i;
+			}
+		}
+	}
+
+	@for $i from 1 through 12 {
+		@for $x from 1 through 4 {
+			&.column#{ $x }-mobile-grid__span-#{ $i } > .wp-block-jetpack-layout-grid-column:nth-child(#{ $x }) {
+				grid-column-end: span $i; // Set it to span $i columns, regardless of starting position.
+			}
+		}
+	}
+
+	@for $i from 1 through 4 {
+		@for $x from 1 through 4 {
+			&.column#{ $x }-mobile-grid__row-#{ $i } > .wp-block-jetpack-layout-grid-column:nth-child(#{ $x }) {
+				grid-row-start: $i;
+			}
+		}
+	}
+
+	// Tablet grid rules.
+	@media (min-width: #{ ($break-small) }) {
+
+		grid-template-columns: $grid-tablet;
+
+		@for $i from 1 through 12 {
+			@for $x from 1 through 4 {
+				&.column#{ $x }-tablet-grid__start-#{ $i } > .wp-block-jetpack-layout-grid-column:nth-child(#{ $x }) {
+					grid-column-start: $i;
+				}
+			}
+		}
+
+		@for $i from 1 through 12 {
+			@for $x from 1 through 4 {
+				&.column#{ $x }-tablet-grid__span-#{ $i } > .wp-block-jetpack-layout-grid-column:nth-child(#{ $x }) {
+					grid-column-end: span $i; // Set it to span $i columns, regardless of starting position.
+				}
+			}
+		}
+
+		@for $i from 1 through 4 {
+			@for $x from 1 through 4 {
+				&.column#{ $x }-tablet-grid__row-#{ $i } > .wp-block-jetpack-layout-grid-column:nth-child(#{ $x }) {
+					grid-row-start: $i;
+				}
+			}
+		}
+	}
+
+
+	// Desktop grid rules.
+	@media (min-width: #{ ($break-xlarge) }) {
+		grid-template-columns: $grid-desktop;
+
+		@for $i from 1 through 12 {
+			@for $x from 1 through 4 {
+				&.column#{ $x }-desktop-grid__start-#{ $i } > .wp-block-jetpack-layout-grid-column:nth-child(#{ $x }) {
+					grid-column-start: $i;
+				}
+			}
+		}
+
+		@for $i from 1 through 12 {
+			@for $x from 1 through 4 {
+				&.column#{ $x }-desktop-grid__span-#{ $i } > .wp-block-jetpack-layout-grid-column:nth-child(#{ $x }) {
+					grid-column-end: span $i; // Set it to span $i columns, regardless of starting position.
+				}
+			}
+		}
+
+		@for $i from 1 through 4 {
+			@for $x from 1 through 4 {
+				&.column#{ $x }-desktop-grid__row-#{ $i } > .wp-block-jetpack-layout-grid-column:nth-child(#{ $x }) {
+					grid-row-start: $i;
+				}
+			}
+		}
+	}
+
+	// Ensure long lines wrap in themes that don't already enforce this
+	.wp-block-jetpack-layout-grid-column * {
+		word-break: break-word;
+		word-wrap: break-word;
+	}
+
+	&.wp-block-jetpack-layout-gutter__none {
+		grid-gap: $grid-gutter-none;
+	}
+
+	&.wp-block-jetpack-layout-gutter__small {
+		grid-gap: $grid-gutter-small;
+	}
+
+	&.wp-block-jetpack-layout-gutter__medium {
+		grid-gap: $grid-gutter-medium;
+	}
+
+	&.wp-block-jetpack-layout-gutter__huge {
+		grid-gap: $grid-gutter-huge;
+	}
+}
+
+// Ensure inner blocks with deliberate overflows are still constrained to column.
+.wp-block-jetpack-layout-grid-column {
+	max-width: 100%;
+}
