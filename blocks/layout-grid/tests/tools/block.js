@@ -7,7 +7,6 @@ import fs from 'fs';
 /**
  * Internal dependencies
  */
-import '../../front.css';
 import './style.css';
 
 // TODO: it would be better if we could generate scss => css directly here

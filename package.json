@@ -10,7 +10,6 @@
 		"start": "yarn build-css && wp-scripts start & node-sass --watch editor.scss -o build & node-sass --watch style.scss -o build",
 		"build": "wp-scripts build && yarn build-css",
 		"build-css": "node-sass ./editor.scss -o build | postcss build/editor.css -u autoprefixer -b 'last 2 versions' -r --no-map && node-sass ./style.scss -o build | postcss build/style.css -u autoprefixer -b 'last 2 versions' -r --no-map",
-		"layout": "node-sass ./blocks/layout-grid/front.scss -o ./blocks/layout-grid | postcss ./blocks/layout-grid/front.css -u autoprefixer -b 'last 2 versions' -r --no-map && node-sass ./blocks/layout-grid/style.scss -o ./blocks/layout-grid/tests/tools/",
 		"plugin": "yarn clean && node ./bundler/build",
 		"everything": "./bundler/build/everything.sh",
 		"bundle": "./build/bundle.sh",
