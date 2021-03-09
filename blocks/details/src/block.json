@@ -1,0 +1,13 @@
+{
+	"name": "a8c/details",
+	"category": "layout",
+	"attributes": {
+		"initialOpen": {
+			"type": "boolean",
+			"default": false
+		},
+		"summaryContent": {
+			"type": "string"
+		}
+	}
+}

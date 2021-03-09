@@ -1,0 +1,60 @@
+// Front end and editor styles.
+
+$bgcolor: #efefef; // Be nice if this was customizable via a background color property.
+
+@keyframes open-card {
+	0% {
+		transform: rotateX(-180deg);
+		opacity: 0;
+	}
+	100% {
+		transform: rotateX(0deg);
+		opacity: 1;
+	}
+}
+
+.wp-block-a8c-details {
+
+	// 3D flip-card style.
+	&.is-style-flipcard {
+		margin-bottom: 1.5em;
+
+		// Enable 3D perspective.
+		transform-style: preserve-3d;
+		perspective: 300px;
+
+
+		// Card front-face.
+		summary {
+			background: $bgcolor;
+			padding: 1em;
+
+			// Allows a focus style on the summary to be uncropped.
+			position: relative;
+		}
+
+		// Back-face regardless of opened or closed.
+		> *:not(summary) {
+			background: $bgcolor;
+			transform-origin: top center;
+			-webkit-backface-visibility: hidden;
+			backface-visibility: hidden;
+
+			// Some baseline left and right padding.
+			padding-left: 1em;
+			padding-right: 1em;
+		}
+
+		// Neutralize the top margin of the first innerblock, add padding.
+		> summary+*, // Frontend
+		> .block-editor-inner-blocks > .block-editor-block-list__layout > * { // Editor
+			margin-top: 0;
+			padding-top: 1em;
+		}
+
+		// Back-face when opened.
+		&[open] > *:not(summary) {
+			animation: open-card .2s ease;
+		}
+	}
+}
