@@ -4,7 +4,7 @@
  * Resize grid overlay
  */
 
-.wp-block-jetpack-layout-grid .wpcom-resize-grid {
+.wp-block-jetpack-layout-grid-editor .wpcom-resize-grid {
 	user-select: none;
 	position: absolute;
 	top: 0;
@@ -19,19 +19,19 @@
 	}
 }
 
-.wp-block-jetpack-layout-grid.wp-block-jetpack-layout-gutter__none .wpcom-resize-grid:not(.wpcom-resize-grid__resizing) {
+.wp-block-jetpack-layout-grid-editor.wp-block-jetpack-layout-gutter__none .wpcom-resize-grid:not(.wpcom-resize-grid__resizing) {
 	grid-gap: $grid-gutter-none;
 }
 
-.wp-block-jetpack-layout-grid.wp-block-jetpack-layout-gutter__small .wpcom-resize-grid:not(.wpcom-resize-grid__resizing) {
+.wp-block-jetpack-layout-grid-editor.wp-block-jetpack-layout-gutter__small .wpcom-resize-grid:not(.wpcom-resize-grid__resizing) {
 	grid-gap: $grid-gutter-small;
 }
 
-.wp-block-jetpack-layout-grid.wp-block-jetpack-layout-gutter__medium .wpcom-resize-grid:not(.wpcom-resize-grid__resizing) {
+.wp-block-jetpack-layout-grid-editor.wp-block-jetpack-layout-gutter__medium .wpcom-resize-grid:not(.wpcom-resize-grid__resizing) {
 	grid-gap: $grid-gutter-medium;
 }
 
-.wp-block-jetpack-layout-grid.wp-block-jetpack-layout-gutter__huge .wpcom-resize-grid:not(.wpcom-resize-grid__resizing) {
+.wp-block-jetpack-layout-grid-editor.wp-block-jetpack-layout-gutter__huge .wpcom-resize-grid:not(.wpcom-resize-grid__resizing) {
 	grid-gap: $grid-gutter-huge;
 }
 

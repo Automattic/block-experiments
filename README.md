@@ -81,3 +81,7 @@ You can test the Layout Grid with:
 
 - `yarn layout`
 - `yarn jest`
+
+You can update the visual snapshots with:
+
+- `yarn jest -u`

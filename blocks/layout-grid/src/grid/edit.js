@@ -242,7 +242,6 @@ class Edit extends Component {
 			setAttributes,
 			updateAlignment,
 			columnAttributes,
-			previewDeviceType,
 		} = this.props;
 		const { viewPort } = this.state;
 		const previewMode = this.getPreviewMode();
@@ -256,7 +255,11 @@ class Edit extends Component {
 		const { gutterSize, addGutterEnds, verticalAlignment } = attributes;
 		const layoutGrid = new LayoutGrid( attributes, previewMode, columns );
 		const classes = classnames(
-			removeGridClasses( className ),
+			removeGridClasses( className ).replace(
+				'layout-grid',
+				'layout-grid-editor'
+			),
+			'wp-block-jetpack-editor',
 			extra,
 			{
 				'wp-block-jetpack-layout-tablet': previewMode === 'Tablet',

@@ -5,7 +5,7 @@
  */
 
 // Output editor specific styles.
-.wp-block-jetpack-layout-grid > .block-editor-inner-blocks > .block-editor-block-list__layout {
+.wp-block-jetpack-layout-grid-editor > .block-editor-inner-blocks > .block-editor-block-list__layout {
 	display: grid;
 	grid-gap: 24px;
 	grid-template-columns: $grid-desktop;
@@ -32,24 +32,24 @@
 	overflow-wrap: break-word; // New standard.
 }
 
-.wp-block-jetpack-layout-grid.wp-block-jetpack-layout-gutter__none > .block-editor-inner-blocks > .block-editor-block-list__layout {
+.wp-block-jetpack-layout-grid-editor.wp-block-jetpack-layout-gutter__none > .block-editor-inner-blocks > .block-editor-block-list__layout {
 	grid-gap: $grid-gutter-none;
 }
 
-.wp-block-jetpack-layout-grid.wp-block-jetpack-layout-gutter__small > .block-editor-inner-blocks > .block-editor-block-list__layout {
+.wp-block-jetpack-layout-grid-editor.wp-block-jetpack-layout-gutter__small > .block-editor-inner-blocks > .block-editor-block-list__layout {
 	grid-gap: $grid-gutter-small;
 }
 
-.wp-block-jetpack-layout-grid.wp-block-jetpack-layout-gutter__medium > .block-editor-inner-blocks > .block-editor-block-list__layout {
+.wp-block-jetpack-layout-grid-editor.wp-block-jetpack-layout-gutter__medium > .block-editor-inner-blocks > .block-editor-block-list__layout {
 	grid-gap: $grid-gutter-medium;
 }
 
-.wp-block-jetpack-layout-grid.wp-block-jetpack-layout-gutter__huge > .block-editor-inner-blocks > .block-editor-block-list__layout {
+.wp-block-jetpack-layout-grid-editor.wp-block-jetpack-layout-gutter__huge > .block-editor-inner-blocks > .block-editor-block-list__layout {
 	grid-gap: $grid-gutter-huge;
 }
 
 // Editor grid styles
-.wp-block-jetpack-layout-grid {
+.wp-block-jetpack-layout-grid-editor {
 	// These three rules are only necessary for Safari.
 	// Safari interprets percentages in CSS grid differently.
 	// Flex causes children to "stretch", fixing that interpretation.
@@ -92,7 +92,7 @@
  * Presets for tablet and mobile - switch the number of columns and layout
  */
 
-.wp-block-jetpack-layout-grid.wp-block-jetpack-layout-tablet {
+.wp-block-jetpack-layout-grid-editor.wp-block-jetpack-layout-tablet {
 	.wpcom-overlay-grid,
 	.wpcom-resize-grid,
 	> .block-editor-inner-blocks > .block-editor-block-list__layout {
@@ -100,7 +100,7 @@
 	}
 }
 
-.wp-block-jetpack-layout-grid.wp-block-jetpack-layout-mobile {
+.wp-block-jetpack-layout-grid-editor.wp-block-jetpack-layout-mobile {
 	.wpcom-overlay-grid,
 	.wpcom-resize-grid,
 	> .block-editor-inner-blocks > .block-editor-block-list__layout {
