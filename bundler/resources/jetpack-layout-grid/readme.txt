@@ -24,6 +24,12 @@ You can follow development, file an issue, suggest features, and view the source
 
 == Changelog ==
 
+= 1.6 - 26th March 2021 =
+* Remove deprecated Gutenberg functions
+* Restore hyphenation behaviour to 1.3 - it caused too many issues
+* Remove Firefox fix in 1.2.4 which no longer seems to be needed and causes other issues
+* Merge front.css into style.css
+
 = 1.5 - 8th February 2021 =
 * Improve editor responsive behaviour on smaller devices
 * Bump minimum WordPress version to 5.6
