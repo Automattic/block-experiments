@@ -14,19 +14,27 @@ import {
  } from '@wordpress/block-editor';
  import {
 	PanelBody,
-	SelectControl,
 	ToggleControl,
 	FooterMessageControl,
 	Disabled,
+	BottomSheetSelectControl,
 } from '@wordpress/components';
 import { useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
+import {
+	createBlocksFromInnerBlocksTemplate,
+	store as blockEditorStore,
+} from '@wordpress/blocks';
+import { useDispatch } from '@wordpress/data';
+import { compose } from '@wordpress/compose';
 /**
  * Internal dependencies
  */
 import variations from './variations';
 import { getGutterValues } from './../constants';
-
+import styles from './edit.scss';
+import BottomSheetVariationControl from './bottom-sheet-variation-control';
+import BottomSheetResponsiveBreakpointsControl from './bottom-sheet-responsive-breakpoints-control';
 
 const ALLOWED_BLOCKS = [ 'jetpack/layout-grid-column' ];
 
@@ -36,11 +44,12 @@ const TEMPLATE = [
 ];
 
 const Edit = ( props ) => {
+	
 	const { clientId, isSelected, setAttributes, attributes = {} } = props;
 	const [ isVisible, setIsVisible ] = useState( false );
 	const isDefaultColumns = true;
 
-	const { gutterSize, addGutterEnds, verticalAlignment } = attributes;
+	const { gutterSize, addGutterEnds } = attributes;
 
 	useEffect( () => {
 		if ( isSelected && isDefaultColumns ) {
@@ -58,7 +67,7 @@ const Edit = ( props ) => {
 			onChange={ newValue => setAttributes( { addGutterEnds: newValue } )  }
 		/>
 	);
-	
+
 	return (
 		<>
 			<View>
@@ -69,26 +78,50 @@ const Edit = ( props ) => {
 				/>
 			</View>
 			<InspectorControls>
-				<PanelBody title={ __( 'Layout grid settings' ) }>
-				<SelectControl
-					label={ __( 'Gutters' ) }
-					value={ gutterSize }
-					// `undefined` is required for the preload attribute to be unset.
-					onChange={  newValue => setAttributes( { gutterSize: newValue, addGutterEnds: newValue === 'none' ? false : addGutterEnds } ) }
-					options={ getGutterValues() }
-				/>
-				{ gutterSize === 'none' ? (
-					<Disabled>
-						{ toggleControl }
-					</Disabled>
-				) : toggleControl }
-				</PanelBody>
-				<PanelBody>
-					<FooterMessageControl
-						label={ __(
-							'Note: Column layout may vary between themes and screen sizes'
-						) }
+				<PanelBody title={ __( 'Layouts' ) }>
+					<BottomSheetVariationControl
+						label={ __( 'Columns' ) }
+						value={ 'three-columns' } /* Supply the correct Value */
+						// `undefined` is required for the preload attribute to be unset.
+						onChange={ ( newValue ) => {
+								// @Todo change the number of columns
+								console.log( 'howdy', newValue );
+							}
+							
+						}
+						options={ variations }
 					/>
+					<BottomSheetResponsiveBreakpointsControl
+						label={ __( 'Responsive Breakpoints' ) }
+						value={ 'Edit' } /* Supply the correct Value */
+						// `undefined` is required for the preload attribute to be unset.
+						onChange={ ( newValue ) => {
+								// @Todo change the number of columns
+								console.log( 'howdy', newValue );
+							}
+						}
+						options={ variations }
+					/>
+				</PanelBody>
+				<PanelBody title={ __( 'Layout grid settings' ) }>
+					<BottomSheetSelectControl
+						label={ __( 'Gutters' ) }
+						value={ gutterSize }
+						// `undefined` is required for the preload attribute to be unset.
+						onChange={ ( newValue ) =>
+							setAttributes( {
+								gutterSize: newValue,
+								addGutterEnds:
+									newValue === 'none' ? false : addGutterEnds,
+							} )
+						}
+						options={ getGutterValues() }
+					/>
+					{ gutterSize === 'none' ? (
+						<Disabled>{ toggleControl }</Disabled>
+					) : (
+						toggleControl
+					) }
 				</PanelBody>
 			</InspectorControls>
 			<BlockVariationPicker
