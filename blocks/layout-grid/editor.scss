@@ -167,6 +167,10 @@
 			top: 50%;
 			transform: translateY(-50%);
 			right: calc(50% - 4px);
+
+			// Explicitly set the background color.
+			background: #007cba;
+			background: var(--wp-admin-theme-color);
 		}
 
 		// Adjust the vertical separator.
