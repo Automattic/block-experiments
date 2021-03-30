@@ -211,6 +211,11 @@ class Edit extends Component {
 	}
 
 	getPreviewMode() {
+		// If we're rendering within a pattern preview, use the desktop layout for the preview.
+		if ( this.props.isBlockOrPatternPreview ) {
+			return 'Desktop';
+		}
+
 		// If we're on desktop, or the preview is set to mobile, then return the preview mode
 		if (
 			this.state.viewPort === 'Desktop' ||
@@ -527,6 +532,18 @@ function getColumnBlocks( currentBlocks, previous, columns ) {
 		.reverse();
 }
 
+function MaybeDisabledEdit( props ) {
+	return (
+		<Disabled.Consumer>
+			{ ( isDisabled ) => {
+				return (
+					<Edit { ...props } isBlockOrPatternPreview={ isDisabled } />
+				);
+			} }
+		</Disabled.Consumer>
+	);
+}
+
 export default compose( [
 	withDispatch( ( dispatch, ownProps, registry ) => ( {
 		/**
@@ -604,4 +621,4 @@ export default compose( [
 			previewDeviceType: __experimentalGetPreviewDeviceType(),
 		};
 	} ),
-] )( Edit );
+] )( MaybeDisabledEdit );
