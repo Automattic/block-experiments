@@ -8,9 +8,10 @@ import { ScrollView } from 'react-native';
  */
 import { useNavigation } from '@react-navigation/native';
 import { useState } from '@wordpress/element';
-import { Icon, chevronRight, check } from '@wordpress/icons';
+import { Icon, chevronRight } from '@wordpress/icons';
 import { __, sprintf } from '@wordpress/i18n';
 import { BottomSheet, InserterButton } from '@wordpress/components';
+
 /**
  * Internal dependencies
  */
@@ -33,7 +34,7 @@ const BottomSheetVariationControl = ( {
 	};
 
 	const selectedOption = items.find(
-		( option ) => option.name === selectedValue
+		( option ) => option.innerBlocks.length === selectedValue
 	);
 
 	const goBack = () => {
@@ -59,9 +60,10 @@ const BottomSheetVariationControl = ( {
 					accessibilityHint={ sprintf(
 						// translators: %s: Select control button label e.g. "Button width"
 						__( 'Navigates to select %s' ),
-						selectedOption.label
+						selectedOption.title
 					) }
 				>
+					<Icon icon={ selectedOption.icon }></Icon>
 					<Icon icon={ chevronRight }></Icon>
 				</BottomSheet.Cell>
 			}
@@ -79,7 +81,6 @@ const BottomSheetVariationControl = ( {
 					style={ styles.containerStyle }
 				>
 					{ items.map( ( variation ) => {
-                        console.log( 'variation', variation );
 						return (
 							<InserterButton
 								item={ variation }
