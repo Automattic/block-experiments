@@ -34,9 +34,9 @@ class Edit extends Component {
 				<InnerBlocks
 					templateLock={ false }
 					renderAppender={
-						hasChildBlocks && isSelected
-							? undefined
-							: () => <InnerBlocks.ButtonBlockAppender />
+						! hasChildBlocks || isSelected
+							? () => <InnerBlocks.ButtonBlockAppender />
+							: undefined
 					}
 				/>
 				<InspectorControls>
