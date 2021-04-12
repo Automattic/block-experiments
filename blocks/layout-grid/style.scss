@@ -10,7 +10,7 @@
  */
 
 /* autoprefixer grid: no-autoplace */
-
+.wp-block-jetpack-layout-grid-editor,
 .wp-block-jetpack-layout-grid {
 	// This padding adds end gutters.
 	padding-left: 24px;
@@ -92,6 +92,7 @@
  * Individual Column Options
  */
 
+.wp-block-jetpack-layout-grid-editor .wp-block-jetpack-layout-grid-column,
 .wp-block-jetpack-layout-grid .wp-block-jetpack-layout-grid-column {
 	// When a column has a background color, we add negative margins to enable
 	// some of the gutter to work as default padding.
