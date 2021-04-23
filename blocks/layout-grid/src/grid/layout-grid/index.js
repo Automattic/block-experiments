@@ -229,7 +229,7 @@ class LayoutGrid {
 			return start;
 		}
 
-		const currentStart = this.getStart( column );  // This is the current start
+		const currentStart = this.getStart( column ); // This is the current start
 		const diff = start - currentStart;
 
 		return this.getOffset( column ) + diff;
