@@ -16,15 +16,15 @@ class Edit extends Component {
 
 	render() {
 		return (
-		<View>
-			<InnerBlocks
-				templateLock={ false }
-				renderAppender={ this.props.hasChildBlocks
-					? undefined
-					: () => <InnerBlocks.ButtonBlockAppender />
-				}
-			/>
-		</View>
+			<View>
+				<InnerBlocks
+					templateLock={ false }
+					renderAppender={ this.props.hasChildBlocks
+						? undefined
+						: () => <InnerBlocks.ButtonBlockAppender />
+					}
+				/>
+			</View>
 		);
 	}
 }
