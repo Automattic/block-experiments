@@ -6,6 +6,8 @@ import {
 	InnerBlocks,
 	InspectorControls,
 	BlockControls,
+	PanelColorSettings,
+	withColors,
 	BlockVerticalAlignmentToolbar,
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
@@ -25,10 +27,11 @@ class Edit extends Component {
 			attributes,
 			isSelected,
 			setAttributes,
+			backgroundColor,
+			setBackgroundColor,
 			updateAlignment,
 		} = this.props;
 		const { padding, verticalAlignment } = attributes;
-
 		return (
 			<>
 				<InnerBlocks
@@ -40,7 +43,18 @@ class Edit extends Component {
 					}
 				/>
 				<InspectorControls>
-					<PanelBody>
+					<PanelColorSettings
+						title={ __( 'Column Color', 'layout-grid' ) }
+						initialOpen
+						colorSettings={ [
+							{
+								value: backgroundColor.color,
+								onChange: setBackgroundColor,
+								label: __( 'Background', 'layout-grid' ),
+							},
+						] }
+					/>
+					<PanelBody title={ __( 'Column Padding', 'layout-grid' ) }>
 						<BottomSheetSelectControl
 							label={ __( 'Column Padding', 'layout-grid' ) }
 							value={ padding }
@@ -64,6 +78,7 @@ class Edit extends Component {
 }
 
 export default compose(
+	withColors( 'backgroundColor' ),
 	withSelect( ( select, ownProps ) => {
 		const { clientId } = ownProps;
 		const { getBlockOrder } = select( 'core/block-editor' );
