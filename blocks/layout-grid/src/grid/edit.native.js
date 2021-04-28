@@ -47,7 +47,6 @@ const DEFAULT_TEMPLATE = [
 ];
 
 class Edit extends Component {
-
 	constructor( props ) {
 		super( props );
 

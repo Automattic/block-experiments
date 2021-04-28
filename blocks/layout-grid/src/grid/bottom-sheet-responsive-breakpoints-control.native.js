@@ -127,6 +127,7 @@ const BottomSheetResponsiveBreakpointsControl = ( {
 
 	return (
 		<BottomSheet.SubSheet
+			isFullScreen={ true }
 			navigationButton={
 				<BottomSheet.Cell
 					label={ label }
