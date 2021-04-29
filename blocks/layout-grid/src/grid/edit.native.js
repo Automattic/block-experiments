@@ -5,21 +5,14 @@ import { View } from 'react-native';
 /**
  * WordPress dependencies
  */
-import { 
+import {
 	InnerBlocks,
 	InspectorControls,
-	BlockVariationPicker,
 	BlockControls,
 	BlockVerticalAlignmentToolbar,
- } from '@wordpress/block-editor';
- import {
-	PanelBody,
-	ToggleControl,
-	Disabled,
-	BottomSheetSelectControl,
-} from '@wordpress/components';
-import { Component, createRef, useEffect, useState } from '@wordpress/element';
-import { __ } from '@wordpress/i18n';
+} from '@wordpress/block-editor';
+
+import { Component, createRef } from '@wordpress/element';
 import { withSelect, withDispatch } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
 import { createBlock } from '@wordpress/blocks';
@@ -29,16 +22,13 @@ import { createBlock } from '@wordpress/blocks';
  */
 import variations from './variations';
 import { removeGridClasses } from './css-classname';
-import BottomSheetVariationControl from './bottom-sheet-variation-control';
-import BottomSheetResponsiveBreakpointsControl from './bottom-sheet-responsive-breakpoints-control';
+import VariationControl from './variation-control';
 import {
 	DEVICE_BREAKPOINTS,
 	getSpanForDevice,
 	getOffsetForDevice,
-	getGutterValues,
 } from './../constants';
 import { getDefaultSpan } from './grid-defaults';
-
 const ALLOWED_BLOCKS = [ 'jetpack/layout-grid-column' ];
 
 const DEFAULT_TEMPLATE = [
@@ -94,36 +84,9 @@ class Edit extends Component {
 	}
 
 	render() {
-		const {
-			clientId,
-			setAttributes,
-			columns,
-			attributes = {},
-			updateAlignment,
-		} = this.props;
+		const { clientId, attributes = {}, updateAlignment } = this.props;
 
-		const { gutterSize, addGutterEnds, verticalAlignment } = attributes;
-
-		const toggleControl = (
-			<ToggleControl
-				label={ __( 'Add end gutters', 'layout-grid' ) }
-				help={
-					addGutterEnds
-						? __(
-								'Toggle off to remove the spacing left and right of the grid.',
-								'layout-grid'
-						  )
-						: __(
-								'Toggle on to add space left and right of the layout grid. ',
-								'layout-grid'
-						  )
-				}
-				checked={ addGutterEnds }
-				onChange={ ( newValue ) =>
-					setAttributes( { addGutterEnds: newValue } )
-				}
-			/>
-		);
+		const { verticalAlignment } = attributes;
 
 		return (
 			<>
@@ -139,52 +102,14 @@ class Edit extends Component {
 					/>
 				</View>
 				<InspectorControls>
-					<PanelBody title={ __( 'Layouts', 'layout-grid' ) }>
-						<BottomSheetVariationControl
-							label={ __( 'Columns', 'layout-grid' ) }
-							value={ columns }
-							onChange={ this.onChangeLayout }
-							options={ variations }
-						/>
-						<BottomSheetResponsiveBreakpointsControl
-							label={ __(
-								'Responsive breakpoints',
-								'layout-grid'
-							) }
-							value={ __( 'Edit', 'layout-grid' ) }
-							onChange={ ( key, newValue ) => {
-								const data = {};
-								data[ key ] = newValue;
-								setAttributes( data );
-							} }
-							columns={ columns }
-							options={ attributes }
-						/>
-					</PanelBody>
-					<PanelBody
-						title={ __( 'Layout grid settings', 'layout-grid' ) }
-					>
-						<BottomSheetSelectControl
-							label={ __( 'Gutters', 'layout-grid' ) }
-							value={ gutterSize }
-							// `undefined` is required for the preload attribute to be unset.
-							onChange={ ( newValue ) =>
-								setAttributes( {
-									gutterSize: newValue,
-									addGutterEnds:
-										newValue === 'none'
-											? false
-											: addGutterEnds,
-								} )
-							}
-							options={ getGutterValues() }
-						/>
-						{ gutterSize === 'none' ? (
-							<Disabled>{ toggleControl }</Disabled>
-						) : (
-							toggleControl
-						) }
-					</PanelBody>
+					<VariationControl
+						variations={ variations }
+						clientId={ clientId }
+						onClose={ () => {} }
+						isVisible={ true }
+						hasLeftButton={ false }
+						onChange={ this.onChangeLayout }
+					/>
 				</InspectorControls>
 				<BlockControls>
 					<BlockVerticalAlignmentToolbar
@@ -192,10 +117,12 @@ class Edit extends Component {
 						value={ verticalAlignment }
 					/>
 				</BlockControls>
-				<BlockVariationPicker
+				<VariationControl
 					variations={ variations }
 					onClose={ this.setNotDefaultColumns }
 					clientId={ clientId }
+					onChange={ this.onChangeLayout }
+					hasLeftButton={ true }
 					isVisible={ this.state.isDefaultColumns }
 				/>
 			</>

@@ -1,0 +1,27 @@
+.vatiation-control {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.vatiation-control__cancel-button {
+    color: $blue-wordpress;
+	font-size: 16px;
+}
+.vatiation-control__cancel-button-dark {
+    color: $blue-30;
+}
+
+.vatiation-control__close-icon {
+	color: $gray;
+}
+
+.vatiation-control__scrollview-container {
+	flex-direction: row;
+	padding-bottom: $grid-unit-15;
+	padding-left: $grid-unit-20 / 2;
+	padding-right: $grid-unit-20 / 2;
+}
+
+.vatiation-control__scrollview {
+	padding-top: $grid-unit-15;
+}
