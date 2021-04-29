@@ -39,7 +39,7 @@ class Edit extends Component {
 					}
 				/>
 				<InspectorControls>
-					<PanelBody title={ __( 'Column Padding', 'layout-grid' ) }>
+					<PanelBody>
 						<BottomSheetSelectControl
 							label={ __( 'Column Padding', 'layout-grid' ) }
 							value={ padding }
