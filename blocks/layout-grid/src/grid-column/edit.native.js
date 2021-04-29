@@ -18,48 +18,45 @@ import { compose } from '@wordpress/compose';
  */
 import { getPaddingValues } from '../constants';
 
-class Edit extends Component {
-	render() {
-		const {
-			hasChildBlocks,
-			attributes,
-			isSelected,
-			setAttributes,
-			updateAlignment,
-		} = this.props;
-		const { padding, verticalAlignment } = attributes;
-		return (
-			<>
-				<InnerBlocks
-					templateLock={ false }
-					renderAppender={
-						! hasChildBlocks || isSelected
-							? () => <InnerBlocks.ButtonBlockAppender />
-							: undefined
-					}
-				/>
-				<InspectorControls>
-					<PanelBody>
-						<BottomSheetSelectControl
-							label={ __( 'Column Padding', 'layout-grid' ) }
-							value={ padding }
-							onChange={ ( newValue ) =>
-								setAttributes( { padding: newValue } )
-							}
-							options={ getPaddingValues() }
-						/>
-					</PanelBody>
-				</InspectorControls>
-
-				<BlockControls>
-					<BlockVerticalAlignmentToolbar
-						onChange={ updateAlignment }
-						value={ verticalAlignment }
+function ColumnsEdit( {
+	hasChildBlocks,
+	attributes,
+	isSelected,
+	setAttributes,
+	updateAlignment,
+} ) {
+	const { padding, verticalAlignment } = attributes;
+	return (
+		<>
+			<InnerBlocks
+				templateLock={ false }
+				renderAppender={
+					! hasChildBlocks || isSelected
+						? () => <InnerBlocks.ButtonBlockAppender />
+						: undefined
+				}
+			/>
+			<InspectorControls>
+				<PanelBody>
+					<BottomSheetSelectControl
+						label={ __( 'Column Padding', 'layout-grid' ) }
+						value={ padding }
+						onChange={ ( newValue ) =>
+							setAttributes( { padding: newValue } )
+						}
+						options={ getPaddingValues() }
 					/>
-				</BlockControls>
-			</>
-		);
-	}
+				</PanelBody>
+			</InspectorControls>
+
+			<BlockControls>
+				<BlockVerticalAlignmentToolbar
+					onChange={ updateAlignment }
+					value={ verticalAlignment }
+				/>
+			</BlockControls>
+		</>
+	);
 }
 
 export default compose(
@@ -94,4 +91,4 @@ export default compose(
 			},
 		};
 	} )
-)( Edit );
+)( ColumnsEdit );
