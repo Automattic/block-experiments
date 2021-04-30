@@ -39,10 +39,10 @@ function ColumnsEdit( {
 				style={ [
 					! isParentSelected &&
 						usePreferredColorSchemeStyle(
-							styles['column__placeholder'],
-							styles['column__placeholder-dark']
+							styles[ 'column__placeholder' ],
+							styles[ 'column__placeholder-dark' ]
 						),
-					styles['column__placeholder-not-selected'],
+					styles[ 'column__placeholder-not-selected' ],
 				] }
 			/>
 		);
@@ -50,14 +50,16 @@ function ColumnsEdit( {
 
 	return (
 		<>
-			<InnerBlocks
-				templateLock={ false }
-				renderAppender={
-					! hasChildren || isSelected
-						? () => <InnerBlocks.ButtonBlockAppender />
-						: undefined
-				}
-			/>
+			<View style={ styles[ 'column__padding-' + padding ] }>
+				<InnerBlocks
+					templateLock={ false }
+					renderAppender={
+						! hasChildren || isSelected
+							? () => <InnerBlocks.ButtonBlockAppender />
+							: undefined
+					}
+				/>
+			</View>
 			<InspectorControls>
 				<PanelBody>
 					<BottomSheetSelectControl

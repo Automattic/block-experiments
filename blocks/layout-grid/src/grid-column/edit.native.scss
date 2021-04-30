@@ -24,3 +24,19 @@
 	margin-left: $grid-unit-10;
 	margin-right: $grid-unit-10;
 }
+
+.column__padding-none {
+	padding: 0;
+}
+.column__padding-small {
+	padding: 8px;
+}
+.column__padding-medium {
+	padding: 16px;
+}
+.column__padding-large {
+	padding: 24px;
+}
+.column__padding-huge {
+	padding: 48px;
+}
