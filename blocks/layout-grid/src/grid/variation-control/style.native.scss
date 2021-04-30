@@ -25,3 +25,23 @@
 .vatiation-control__scrollview {
 	padding-top: $grid-unit-15;
 }
+
+.vatiation-control-inner__header {
+	flex-direction: row;
+	align-items: center;
+	padding-right: $grid-unit-20;
+	padding-left: $grid-unit-20;
+	min-height: 44px;
+}
+
+.vatiation-control-inner__header-text {
+	color: $light-primary;
+	text-align: center;
+	font-weight: 600;
+	font-size: 16px;
+	flex: 2;
+}
+
+.vatiation-control-inner__header-text-dark {
+	color: $dark-primary;
+}

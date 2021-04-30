@@ -12,9 +12,7 @@
 /**
  * WordPress dependencies
  */
-import { withSelect } from '@wordpress/data';
-import { compose, usePreferredColorSchemeStyle } from '@wordpress/compose';
-import { store as blocksStore } from '@wordpress/blocks';
+import { usePreferredColorSchemeStyle } from '@wordpress/compose';
 import { __ } from '@wordpress/i18n';
 import { BottomSheet, InserterButton } from '@wordpress/components';
 import { Icon, close } from '@wordpress/icons';
@@ -25,14 +23,63 @@ import { useMemo } from '@wordpress/element';
  */
 import styles from './style.native.scss';
 
-const hitSlop = { top: 22, bottom: 22, left: 22, right: 22 };
+function VariationControlInner( { variations, onChange, hasHeader = true } ) {
 
-function VariationControl( { isVisible, onClose, variations, onChange, hasLeftButton } ) {
+	const bottomSheetHeaderTitleStyle = usePreferredColorSchemeStyle(
+		styles[ 'vatiation-control-inner__header-text' ],
+		styles[ 'vatiation-control-inner__header-text-dark' ]
+	);
+
+	return useMemo(
+		() => (
+			<>
+				{ hasHeader && (
+					<View style={ styles[ 'vatiation-control-inner__header' ] }>
+						<Text
+							style={ bottomSheetHeaderTitleStyle }
+							maxFontSizeMultiplier={ 3 }
+						>
+							{ __( 'Select a layout' ) }
+						</Text>
+					</View>
+				) }
+				<ScrollView
+					horizontal
+					showsHorizontalScrollIndicator={ false }
+					contentContainerStyle={
+						styles[ 'vatiation-control__scrollview-container' ]
+					}
+					style={ styles[ 'vatiation-control__scrollview' ] }
+				>
+					{ variations.map( ( variation ) => {
+						return (
+							<InserterButton
+								item={ variation }
+								key={ variation.name }
+								onSelect={ () => onChange( variation ) }
+							/>
+						);
+					} ) }
+				</ScrollView>
+			</>
+		),
+		[ variations, onChange, hasHeader ]
+	);
+}
+
+const hitSlop = { top: 22, bottom: 22, left: 22, right: 22 };
+function VariationControl( {
+	isVisible,
+	onClose,
+	variations,
+	onChange,
+	hasLeftButton,
+} ) {
 	const isIOS = Platform.OS === 'ios';
 
 	const cancelButtonStyle = usePreferredColorSchemeStyle(
-		styles['vatiation-control__cancel-button'],
-		styles['vatiation-control__cancel-button-dark']
+		styles[ 'vatiation-control__cancel-button' ],
+		styles[ 'vatiation-control__cancel-button-dark' ]
 	);
 
 	const leftButton = useMemo(
@@ -50,7 +97,7 @@ function VariationControl( { isVisible, onClose, variations, onChange, hasLeftBu
 						<Icon
 							icon={ close }
 							size={ 24 }
-							style={styles['vatiation-control__close-icon'] }
+							style={ styles[ 'vatiation-control__close-icon' ] }
 						/>
 					) }
 				</View>
@@ -60,8 +107,8 @@ function VariationControl( { isVisible, onClose, variations, onChange, hasLeftBu
 	);
 
 	const onVariationSelect = ( variation ) => {
-        onChange( variation );
-		onClose && onClose();
+		onChange( variation );
+		onClose();
 	};
 
 	return useMemo(
@@ -69,30 +116,21 @@ function VariationControl( { isVisible, onClose, variations, onChange, hasLeftBu
 			<BottomSheet
 				isVisible={ isVisible }
 				onClose={ onClose }
-				title={ __( 'Select a layout' ) }
-				contentStyle={ styles['vatiation-control'] }
+				title={ __( 'Select a layout', 'layout-grid' ) }
+				contentStyle={ styles[ 'vatiation-control' ] }
 				leftButton={ hasLeftButton && leftButton }
 			>
-				<ScrollView
-					horizontal
-					showsHorizontalScrollIndicator={ false }
-					contentContainerStyle={ styles['vatiation-control__scrollview-container'] }
-					style={ styles['vatiation-control__scrollview'] }
-				>
-					{ variations.map( ( v ) => {
-						return (
-							<InserterButton
-								item={ v }
-								key={ v.name }
-								onSelect={ () => onVariationSelect( v ) }
-							/>
-						);
-					} ) }
-				</ScrollView>
+				<VariationControlInner
+					variations={ variations }
+					onChange={ onVariationSelect }
+					hasHeader={ false }
+				/>
 			</BottomSheet>
 		),
 		[ variations, isVisible, onClose ]
 	);
 }
+
+VariationControl.Inner = VariationControlInner;
 
 export default VariationControl;
