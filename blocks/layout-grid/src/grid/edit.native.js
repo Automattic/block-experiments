@@ -12,17 +12,17 @@ import {
 	BlockVerticalAlignmentToolbar,
 } from '@wordpress/block-editor';
 
-import { Component, createRef } from '@wordpress/element';
 import { withSelect, withDispatch } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
 import { createBlock } from '@wordpress/blocks';
+import { useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import variations from './variations';
 import { removeGridClasses } from './css-classname';
-import VariationControl from './variation-control';
+import VariationControl from './variation-control/index.native.js';
 import {
 	DEVICE_BREAKPOINTS,
 	getSpanForDevice,
@@ -36,22 +36,18 @@ const DEFAULT_TEMPLATE = [
 	[ 'jetpack/layout-grid-column', {}, [] ],
 ];
 
-class Edit extends Component {
-	constructor( props ) {
-		super( props );
+function ColumnsEdit( {
+	clientId,
+	attributes = {},
+	columns,
+	updateAlignment,
+	updateColumns,
+} ) {
+	const { verticalAlignment } = attributes;
 
-		this.overlayRef = createRef();
-		this.state = { isDefaultColumns: ! props.columns };
+	const [ isDefaultColumns, setDefaultColumns ] = useState( ! columns );
 
-		this.setNotDefaultColumns = this.setNotDefaultColumns.bind( this );
-		this.onChangeLayout = this.onChangeLayout.bind( this );
-	}
-
-	setNotDefaultColumns() {
-		this.setState( { isDefaultColumns: false } );
-	}
-
-	onChangeLayout( selectedColumn ) {
+	const onChangeLayout = ( selectedColumn ) => {
 		const columnValues = {};
 		const numberOfColumns = selectedColumn.innerBlocks.length;
 		for ( let pos = 0; pos < numberOfColumns; pos++ ) {
@@ -74,60 +70,47 @@ class Edit extends Component {
 				] = 0;
 			}
 		}
-		this.setState( { isDefaultColumns: false } );
+		setDefaultColumns( false );
+		updateColumns( columns, numberOfColumns, columnValues );
+	};
 
-		this.props.updateColumns(
-			this.props.columns,
-			numberOfColumns,
-			columnValues
-		);
-	}
-
-	render() {
-		const { clientId, attributes = {}, updateAlignment } = this.props;
-
-		const { verticalAlignment } = attributes;
-
-		return (
-			<>
-				<View>
-					<InnerBlocks
-						template={
-							this.state.isDefaultColumns
-								? DEFAULT_TEMPLATE
-								: null
-						}
-						templateLock="all"
-						allowedBlocks={ ALLOWED_BLOCKS }
-					/>
-				</View>
-				<InspectorControls>
-					<VariationControl
-						variations={ variations }
-						clientId={ clientId }
-						onClose={ () => {} }
-						isVisible={ true }
-						hasLeftButton={ false }
-						onChange={ this.onChangeLayout }
-					/>
-				</InspectorControls>
-				<BlockControls>
-					<BlockVerticalAlignmentToolbar
-						onChange={ updateAlignment }
-						value={ verticalAlignment }
-					/>
-				</BlockControls>
+	return (
+		<>
+			<View>
+				<InnerBlocks
+					template={ isDefaultColumns ? DEFAULT_TEMPLATE : null }
+					templateLock="all"
+					allowedBlocks={ ALLOWED_BLOCKS }
+				/>
+			</View>
+			<InspectorControls>
 				<VariationControl
 					variations={ variations }
-					onClose={ this.setNotDefaultColumns }
 					clientId={ clientId }
-					onChange={ this.onChangeLayout }
-					hasLeftButton={ true }
-					isVisible={ this.state.isDefaultColumns }
+					onClose={ () => {} }
+					isVisible={ true }
+					hasLeftButton={ false }
+					onChange={ onChangeLayout }
 				/>
-			</>
-		);
-	}
+			</InspectorControls>
+			<BlockControls>
+				<BlockVerticalAlignmentToolbar
+					onChange={ updateAlignment }
+					value={ verticalAlignment }
+				/>
+			</BlockControls>
+			<VariationControl
+				variations={ variations }
+				onClose={ () => {
+					setDefaultColumns( false );
+				} }
+				clientId={ clientId }
+				onChange={ onChangeLayout }
+				hasLeftButton={ true }
+				isVisible={ isDefaultColumns }
+			/>
+		</>
+	);
 }
 
 function getColumnBlocks( currentBlocks, previous, columns ) {
@@ -233,4 +216,4 @@ export default compose( [
 			),
 		};
 	} ),
-] )( Edit );
+] )( ColumnsEdit );
