@@ -84,12 +84,8 @@ function ColumnsEdit( {
 				/>
 			</View>
 			<InspectorControls>
-				<VariationControl
+				<VariationControl.Inner
 					variations={ variations }
-					clientId={ clientId }
-					onClose={ () => {} }
-					isVisible={ true }
-					hasLeftButton={ false }
 					onChange={ onChangeLayout }
 				/>
 			</InspectorControls>
