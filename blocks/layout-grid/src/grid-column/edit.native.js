@@ -1,4 +1,8 @@
 /**
+ * External dependencies
+ */
+import { View } from 'react-native';
+/**
  * WordPress dependencies
  */
 import { PanelBody, BottomSheetSelectControl } from '@wordpress/components';
@@ -7,30 +11,49 @@ import {
 	InspectorControls,
 	BlockControls,
 	BlockVerticalAlignmentToolbar,
+	store as blockEditorStore,
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 import { withSelect, withDispatch } from '@wordpress/data';
-import { compose } from '@wordpress/compose';
+import { compose, usePreferredColorSchemeStyle } from '@wordpress/compose';
 
 /**
  * Internal dependencies
  */
 import { getPaddingValues } from '../constants';
+import styles from './edit.native.scss';
 
 function ColumnsEdit( {
-	hasChildBlocks,
+	hasChildren,
 	attributes,
 	isSelected,
 	setAttributes,
 	updateAlignment,
+	isParentSelected,
 } ) {
 	const { padding, verticalAlignment } = attributes;
+
+	if ( ! isSelected && ! hasChildren ) {
+		return (
+			<View
+				style={ [
+					! isParentSelected &&
+						usePreferredColorSchemeStyle(
+							styles['column__placeholder'],
+							styles['column__placeholder-dark']
+						),
+					styles['column__placeholder-not-selected'],
+				] }
+			/>
+		);
+	}
+
 	return (
 		<>
 			<InnerBlocks
 				templateLock={ false }
 				renderAppender={
-					! hasChildBlocks || isSelected
+					! hasChildren || isSelected
 						? () => <InnerBlocks.ButtonBlockAppender />
 						: undefined
 				}
@@ -59,12 +82,39 @@ function ColumnsEdit( {
 }
 
 export default compose(
-	withSelect( ( select, ownProps ) => {
-		const { clientId } = ownProps;
-		const { getBlockOrder } = select( 'core/block-editor' );
+	withSelect( ( select, { clientId } ) => {
+		const {
+			getBlockCount,
+			getBlockRootClientId,
+			getSelectedBlockClientId,
+			getBlocks,
+			getBlockOrder,
+			getBlockAttributes,
+		} = select( blockEditorStore );
+
+		const selectedBlockClientId = getSelectedBlockClientId();
+		const isSelected = selectedBlockClientId === clientId;
+
+		const parentId = getBlockRootClientId( clientId );
+		const hasChildren = !! getBlockCount( clientId );
+		const isParentSelected =
+			selectedBlockClientId && selectedBlockClientId === parentId;
+
+		const blockOrder = getBlockOrder( parentId );
+
+		const selectedColumnIndex = blockOrder.indexOf( clientId );
+		const columns = getBlocks( parentId );
+
+		const parentAlignment = getBlockAttributes( parentId )
+			?.verticalAlignment;
 
 		return {
-			hasChildBlocks: getBlockOrder( clientId ).length > 0,
+			hasChildren,
+			isParentSelected,
+			isSelected,
+			selectedColumnIndex,
+			columns,
+			parentAlignment,
 		};
 	} ),
 
