@@ -19,7 +19,7 @@ import {
 	ColorPalette,
 	Icon,
 	ToolbarButton,
-	ToolbarGroup,
+	DropdownMenu,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { trash } from '@wordpress/icons';
@@ -44,13 +44,13 @@ const Controls = ( { clear, color, setColor, preset, setPreset } ) => {
 	return (
 		<BlockControls group="block">
 			<>
-				<ToolbarGroup
+				<DropdownMenu
 					isCollapsed={ true }
 					icon={ <Icon icon={ BrushSizeControlIcon } /> }
 					popoverProps={ {
 						className: 'wp-block-a8c-sketch__brush-style-popover',
 					} }
-					label={ __( 'Brush style', 'sketch' ) }
+					label={ __( 'Brush', 'sketch' ) }
 					controls={ brushPresetChoices.map( ( control ) => ( {
 						...control,
 						isActive: control.value === preset,
@@ -60,8 +60,8 @@ const Controls = ( { clear, color, setColor, preset, setPreset } ) => {
 							}
 						},
 					} ) ) }
-				></ToolbarGroup>
-				<ToolbarGroup
+				></DropdownMenu>
+				<DropdownMenu
 					isCollapsed={ true }
 					icon={
 						<Icon icon={ <ColorControlIcon color={ color } /> } />
@@ -77,12 +77,13 @@ const Controls = ( { clear, color, setColor, preset, setPreset } ) => {
 							onChange={ setColor }
 						/>
 					) }
-				</ToolbarGroup>
+				</DropdownMenu>
 				<ToolbarButton
 					className="wp-block-a8c-sketch__temporary-trash-icon"
 					icon={ trash }
 					onClick={ clear }
-				></ToolbarButton>
+					label={ __( 'Clear', 'sketch' ) }
+				/>
 			</>
 		</BlockControls>
 	);
