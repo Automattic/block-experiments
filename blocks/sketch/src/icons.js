@@ -28,7 +28,7 @@ export const ColorControlIcon = ( { color } ) => (
 			r="6"
 			style={ { fill: color, filter: 'brightness(0.8)' } }
 		/>
-		<Circle cx="8" cy="8" r="4.5" style={ { fill: color } } />
+		<Circle cx="8" cy="8" r="5.5" style={ { fill: color } } />
 	</SVG>
 );
 
