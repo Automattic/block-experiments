@@ -39,7 +39,11 @@ function VariationControlInner( { variations, onChange, hasHeader = true } ) {
 							style={ bottomSheetHeaderTitleStyle }
 							maxFontSizeMultiplier={ 3 }
 						>
-							{ __( 'Select a layout' ) } /* This is intentionally without a translation domain. */
+							{
+								__(
+									'Select a layout'
+								) /* This is intentionally without a translation domain. */
+							}
 						</Text>
 					</View>
 				) }
@@ -120,9 +124,11 @@ function VariationControl( {
 			<BottomSheet
 				isVisible={ isVisible }
 				onClose={ onClose }
-				title={ __(
-					'Select a layout'
-				) } /* This is intentionally without a translation domain. */
+				title={
+					__(
+						'Select a layout'
+					) /* This is intentionally without a translation domain. */
+				}
 				contentStyle={ styles[ 'vatiation-control' ] }
 				leftButton={ hasLeftButton && leftButton }
 			>
