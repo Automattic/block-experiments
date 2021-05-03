@@ -13,7 +13,7 @@ const Save = () => {
 
 	return (
 		<figure { ...blockProps }>
-			{ __( 'Sketch drawing', 'p2-blocks' ) }
+			{ __( 'Sketch drawing', 'sketch' ) }
 		</figure>
 	);
 };

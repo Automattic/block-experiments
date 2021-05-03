@@ -50,7 +50,7 @@ const Controls = ( { clear, color, setColor, preset, setPreset } ) => {
 					popoverProps={ {
 						className: 'wp-block-a8c-sketch__brush-style-popover',
 					} }
-					label={ __( 'Brush style' ) }
+					label={ __( 'Brush style', 'sketch' ) }
 					controls={ brushPresetChoices.map( ( control ) => ( {
 						...control,
 						isActive: control.value === preset,
@@ -66,7 +66,7 @@ const Controls = ( { clear, color, setColor, preset, setPreset } ) => {
 					icon={
 						<Icon icon={ <ColorControlIcon color={ color } /> } />
 					}
-					label={ __( 'Color' ) }
+					label={ __( 'Color', 'sketch' ) }
 				>
 					{ () => (
 						<ColorPalette
