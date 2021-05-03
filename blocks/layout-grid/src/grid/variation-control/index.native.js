@@ -39,7 +39,7 @@ function VariationControlInner( { variations, onChange, hasHeader = true } ) {
 							style={ bottomSheetHeaderTitleStyle }
 							maxFontSizeMultiplier={ 3 }
 						>
-							{ __( 'Select a layout' ) }
+							{ __( 'Select a layout' ) } /* This is intentionally without a translation domain. */
 						</Text>
 					</View>
 				) }
@@ -91,7 +91,11 @@ function VariationControl( {
 							style={ cancelButtonStyle }
 							maxFontSizeMultiplier={ 2 }
 						>
-							{ __( 'Cancel' ) }
+							{
+								__(
+									'Cancel'
+								) /* This is intentionally without a translation domain. */
+							}
 						</Text>
 					) : (
 						<Icon
@@ -116,7 +120,9 @@ function VariationControl( {
 			<BottomSheet
 				isVisible={ isVisible }
 				onClose={ onClose }
-				title={ __( 'Select a layout', 'layout-grid' ) }
+				title={ __(
+					'Select a layout'
+				) } /* This is intentionally without a translation domain. */
 				contentStyle={ styles[ 'vatiation-control' ] }
 				leftButton={ hasLeftButton && leftButton }
 			>
