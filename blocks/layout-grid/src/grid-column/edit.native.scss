@@ -1,4 +1,4 @@
-.column__placeholder{
+.column__placeholder {
 	flex: 1;
 	padding: $block-selected-to-content;
 	background-color: $white;
@@ -26,10 +26,15 @@
 }
 
 .column__padding-none {
+	padding: 0;
+}
+/* Add extra space to the bottom of the column block make sure that the there is enough space between column block and the settings cog. */
+.column__padding-none-is-selected {
 	padding: 0 0 10px;
 }
+
 .column__padding-small {
-	padding: 8px 8px 10px;
+	padding: 10px 8px 10px; 
 }
 .column__padding-medium {
 	padding: 16px;

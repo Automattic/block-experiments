@@ -48,9 +48,14 @@ function ColumnsEdit( {
 		);
 	}
 
+	let columnStyles = styles[ 'column__padding-' + padding ];
+	if ( isSelected && 'none' === padding ) {
+		columnStyles = styles[ 'column__padding-none-is-selected' ];
+	}
+
 	return (
 		<>
-			<View style={ styles[ 'column__padding-' + padding ] }>
+			<View style={ columnStyles }>
 				<InnerBlocks
 					templateLock={ false }
 					renderAppender={
