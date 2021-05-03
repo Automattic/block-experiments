@@ -48,7 +48,7 @@ const Controls = ( { clear, color, setColor, preset, setPreset } ) => {
 					isCollapsed={ true }
 					icon={ <Icon icon={ BrushSizeControlIcon } /> }
 					popoverProps={ {
-						className: 'wp-block-p2-sketch__brush-style-popover',
+						className: 'wp-block-a8c-sketch__brush-style-popover',
 					} }
 					label={ __( 'Brush style' ) }
 					controls={ brushPresetChoices.map( ( control ) => ( {
@@ -79,7 +79,7 @@ const Controls = ( { clear, color, setColor, preset, setPreset } ) => {
 					) }
 				</ToolbarGroup>
 				<ToolbarButton
-					className="wp-block-p2-sketch__temporary-trash-icon"
+					className="wp-block-a8c-sketch__temporary-trash-icon"
 					icon={ trash }
 					onClick={ clear }
 				></ToolbarButton>
