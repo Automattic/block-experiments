@@ -18,6 +18,7 @@ const block = {
 	icon,
 	attributes: {
 		strokes: { type: 'array', default: [] },
+		height: { type: 'number', default: 450 },
 	},
 	supports: {
 		align: true,

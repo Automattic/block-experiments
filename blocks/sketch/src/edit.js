@@ -12,11 +12,16 @@ import Controls from './controls';
  */
 import { useState, useRef } from '@wordpress/element';
 import { useBlockProps } from '@wordpress/block-editor';
+import { ResizableBox } from '@wordpress/components';
+
+const MIN_HEIGHT = 200;
+const MAX_HEIGHT = 1000;
 
 const Edit = ( { attributes, isSelected, setAttributes } ) => {
-	const { strokes } = attributes;
+	const { strokes, height } = attributes;
 	const [ currentMark, setCurrentMark ] = useState();
 	const [ preset, setPreset ] = useState( 1 );
+	const [ isResizing, setIsResizing ] = useState( false );
 	const [ color, setColor ] = useState( '#000' );
 	const ref = useRef( null );
 	const blockProps = useBlockProps( {
@@ -64,7 +69,23 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 			setCurrentMark( undefined );
 		}
 	}
-	const clear = () => setAttributes( { strokes: [] } );
+
+	const clear = () => setAttributes( { strokes: [], height: 450 } );
+
+	const handleOnResizeStart = () => {
+		setIsResizing( true );
+	};
+
+	const handleOnResizeStop = ( event, direction, elt, delta ) => {
+		const sketchHeight = Math.min(
+			parseInt( height + delta.height, 10 ),
+			MAX_HEIGHT
+		);
+		setAttributes( {
+			height: sketchHeight,
+		} );
+		setIsResizing( false );
+	};
 
 	const currentStroke = currentMark && {
 		stroke: getStroke( currentMark.points, {
@@ -74,7 +95,31 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 		color,
 	};
 	return (
-		<div { ...blockProps }>
+		<ResizableBox
+			size={ {
+				height,
+			} }
+			minHeight={ MIN_HEIGHT }
+			enable={ {
+				top: false,
+				right: false,
+				bottom: true,
+				left: false,
+				topRight: false,
+				bottomRight: false,
+				bottomLeft: false,
+				topLeft: false,
+			} }
+			onResizeStart={ handleOnResizeStart }
+			onResizeStop={ handleOnResizeStop }
+			showHandle={ isSelected }
+			__experimentalShowTooltip={ true }
+			__experimentalTooltipProps={ {
+				axis: 'y',
+				position: 'bottom',
+				isVisible: isResizing,
+			} }
+		>
 			<Controls
 				clear={ clear }
 				color={ color }
@@ -82,7 +127,7 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 				preset={ preset }
 				setPreset={ setPreset }
 			/>
-			<figure>
+			<figure { ...blockProps }>
 				<Freehand
 					handlePointerDown={ handlePointerDown }
 					handlePointerMove={ handlePointerMove }
@@ -91,7 +136,7 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 					currentStroke={ currentStroke }
 				/>
 			</figure>
-		</div>
+		</ResizableBox>
 	);
 };
 
