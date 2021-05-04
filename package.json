@@ -59,7 +59,7 @@
 		"@wordpress/blocks": "^8.0.0",
 		"classnames": "^2.2.6",
 		"fast-average-color": "^6.3.0",
-		"perfect-freehand": "0.3.5",
+		"perfect-freehand": "0.4.5",
 		"tinycolor2": "^1.4.2"
 	}
 }

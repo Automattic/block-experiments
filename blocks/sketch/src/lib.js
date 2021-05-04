@@ -1,5 +1,11 @@
 export const presets = [
 	{
+		size: 3,
+		thinning: 0.3,
+		smoothing: 0.83,
+		streamline: 0.45,
+	},
+	{
 		size: 14,
 		thinning: 0.75,
 		smoothing: 0.5,
@@ -9,12 +15,6 @@ export const presets = [
 		size: 24,
 		thinning: 0.75,
 		smoothing: 0.5,
-		streamline: 0.5,
-	},
-	{
-		size: 34,
-		thinning: 0.75,
-		smoothing: 0.75,
 		streamline: 0.5,
 	},
 ];
