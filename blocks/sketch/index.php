@@ -1,9 +1,12 @@
 <?php
 namespace Automattic\A8c\Plugins\Blocks\Sketch;
 
+define( __NAMESPACE__ . '\DEFAULT_HEIGHT', 450);
+
 function a8c_sketch_render( $attributes ) {
 	$strokes = $attributes['strokes'] ?? [];
 	$align   = $attributes['align'] ?? '';
+	$height   = $attributes['height'] ?? DEFAULT_HEIGHT;
 	// The class name that affects alignment is called alignwide, alignfull, etc
 	$align = $align ? " align$align" : '';
 
@@ -26,8 +29,11 @@ function a8c_sketch_render( $attributes ) {
 		$strokes
 	);
 
+	$class = sprintf( 'class="wp-block-a8c-sketch%s"', esc_attr( $align ) );
+	$style = sprintf( 'style="height: %dpx"', esc_attr( $height ) );
+
 	$html =
-		'<figure class="wp-block-a8c-sketch' . esc_attr( $align ) . '">' .
+		sprintf( '<figure %s %s>', $class, $style ) .
 			'<svg>' .
 				implode( "\n", $paths ) .
 			'</svg>' .
