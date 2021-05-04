@@ -19,7 +19,6 @@ import {
 	ColorPalette,
 	Icon,
 	ToolbarButton,
-	ToolbarItem,
 	DropdownMenu,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
@@ -44,45 +43,39 @@ const Controls = ( { clear, color, setColor, preset, setPreset } ) => {
 	const colors = useEditorFeature( 'color.palette' ) || [];
 	return (
 		<BlockControls group="block">
-			<ToolbarItem>
+			<DropdownMenu
+				isToolbarButton
+				isCollapsed={ true }
+				icon={ <Icon icon={ BrushSizeControlIcon } /> }
+				label={ __( 'Brush', 'sketch' ) }
+				controls={ brushPresetChoices.map( ( control ) => ( {
+					...control,
+					isActive: control.value === preset,
+					onClick: () => {
+						if ( control.value !== preset ) {
+							setPreset( control.value );
+						}
+					},
+				} ) ) }
+			/>
+			<DropdownMenu
+				isToolbarButton
+				isCollapsed={ true }
+				icon={
+					<Icon icon={ <ColorControlIcon color={ color } /> } />
+				}
+				label={ __( 'Color', 'sketch' ) }
+			>
 				{ () => (
-					<DropdownMenu
-						isCollapsed={ true }
-						icon={ <Icon icon={ BrushSizeControlIcon } /> }
-						label={ __( 'Brush', 'sketch' ) }
-						controls={ brushPresetChoices.map( ( control ) => ( {
-							...control,
-							isActive: control.value === preset,
-							onClick: () => {
-								if ( control.value !== preset ) {
-									setPreset( control.value );
-								}
-							},
-						} ) ) }
+					<ColorPalette
+						clearable={ false }
+						colors={ colors }
+						color={ color }
+						disableCustomColors={ true }
+						onChange={ setColor }
 					/>
 				) }
-			</ToolbarItem>
-			<ToolbarItem>
-				{ () => (
-					<DropdownMenu
-						isCollapsed={ true }
-						icon={
-							<Icon icon={ <ColorControlIcon color={ color } /> } />
-						}
-						label={ __( 'Color', 'sketch' ) }
-					>
-						{ () => (
-							<ColorPalette
-								clearable={ false }
-								colors={ colors }
-								color={ color }
-								disableCustomColors={ true }
-								onChange={ setColor }
-							/>
-						) }
-					</DropdownMenu>
-				) }
-			</ToolbarItem>
+			</DropdownMenu>
 			<ToolbarButton
 				className="wp-block-a8c-sketch__temporary-trash-icon"
 				icon={ trash }
