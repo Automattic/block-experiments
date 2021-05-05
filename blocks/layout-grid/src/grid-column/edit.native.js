@@ -21,6 +21,7 @@ import { compose, usePreferredColorSchemeStyle } from '@wordpress/compose';
  * Internal dependencies
  */
 import { getPaddingValues } from '../constants';
+import { withUpdateAlignment } from './higher-order';
 import styles from './edit.native.scss';
 
 function ColumnsEdit( {
@@ -124,27 +125,5 @@ export default compose(
 			parentAlignment,
 		};
 	} ),
-
-	withDispatch( ( dispatch, ownProps, registry ) => {
-		return {
-			updateAlignment( verticalAlignment ) {
-				const { clientId, setAttributes } = ownProps;
-				const { updateBlockAttributes } = dispatch(
-					'core/block-editor'
-				);
-				const { getBlockRootClientId } = registry.select(
-					'core/block-editor'
-				);
-
-				// Update own alignment.
-				setAttributes( { verticalAlignment } );
-
-				// Reset Parent Columns Block
-				const rootClientId = getBlockRootClientId( clientId );
-				updateBlockAttributes( rootClientId, {
-					verticalAlignment: null,
-				} );
-			},
-		};
-	} )
+	withUpdateAlignment(),
 )( ColumnsEdit );

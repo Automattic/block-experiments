@@ -18,10 +18,11 @@ import {
 } from '@wordpress/block-editor';
 import { Component } from '@wordpress/element';
 import { compose } from '@wordpress/compose';
-import { withSelect, withDispatch } from '@wordpress/data';
+import { withSelect } from '@wordpress/data';
 import { PanelBody, SelectControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
+import { withUpdateAlignment } from './higher-order';
 /**
  * Internal dependencies
  */
@@ -151,26 +152,5 @@ export default compose(
 			hasChildBlocks: getBlockOrder( clientId ).length > 0,
 		};
 	} ),
-	withDispatch( ( dispatch, ownProps, registry ) => {
-		return {
-			updateAlignment( verticalAlignment ) {
-				const { clientId, setAttributes } = ownProps;
-				const { updateBlockAttributes } = dispatch(
-					'core/block-editor'
-				);
-				const { getBlockRootClientId } = registry.select(
-					'core/block-editor'
-				);
-
-				// Update own alignment.
-				setAttributes( { verticalAlignment } );
-
-				// Reset Parent Columns Block
-				const rootClientId = getBlockRootClientId( clientId );
-				updateBlockAttributes( rootClientId, {
-					verticalAlignment: null,
-				} );
-			},
-		};
-	} )
+	withUpdateAlignment(),
 )( Edit );
