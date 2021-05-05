@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
- import {
+import {
 	ScrollView,
 	View,
 	Text,
@@ -14,7 +14,7 @@
  */
 import { usePreferredColorSchemeStyle } from '@wordpress/compose';
 import { __ } from '@wordpress/i18n';
-import { BottomSheet, InserterButton, FooterMessageControl } from '@wordpress/components';
+import { BottomSheet, InserterButton } from '@wordpress/components';
 import { Icon, close } from '@wordpress/icons';
 import { useMemo } from '@wordpress/element';
 
@@ -24,7 +24,6 @@ import { useMemo } from '@wordpress/element';
 import styles from './style.native.scss';
 
 function VariationControlInner( { variations, onChange } ) {
-
 	return useMemo(
 		() => (
 			<>
@@ -32,9 +31,11 @@ function VariationControlInner( { variations, onChange } ) {
 					horizontal
 					showsHorizontalScrollIndicator={ false }
 					contentContainerStyle={
-						styles[ 'vatiation-control-inner__scrollview-container' ]
+						styles[
+							'variation-control-inner__scrollview-container'
+						]
 					}
-					style={ styles[ 'vatiation-control-inner__scrollview' ] }
+					style={ styles[ 'variation-control-inner__scrollview' ] }
 				>
 					{ variations.map( ( variation ) => {
 						return (
@@ -46,7 +47,7 @@ function VariationControlInner( { variations, onChange } ) {
 						);
 					} ) }
 				</ScrollView>
-				<Text style={ styles[ 'vatiation-control-inner__footer' ] }>
+				<Text style={ styles[ 'variation-control-inner__footer' ] }>
 					{ __(
 						'Note: Layout may vary between themes and screen sizes',
 						'layout-grid'
@@ -69,8 +70,8 @@ function VariationControl( {
 	const isIOS = Platform.OS === 'ios';
 
 	const cancelButtonStyle = usePreferredColorSchemeStyle(
-		styles[ 'vatiation-control__cancel-button' ],
-		styles[ 'vatiation-control__cancel-button-dark' ]
+		styles[ 'variation-control__cancel-button' ],
+		styles[ 'variation-control__cancel-button-dark' ]
 	);
 
 	const leftButton = useMemo(
@@ -116,10 +117,10 @@ function VariationControl( {
 						'Select a layout'
 					) /* This is intentionally without a translation domain. */
 				}
-				contentStyle={ styles[ 'vatiation-control' ] }
+				contentStyle={ styles[ 'variation-control' ] }
 				leftButton={ hasLeftButton && leftButton }
 			>
-				<View style={ styles[ 'vatiation-control__inner-shell' ]}>
+				<View style={ styles[ 'variation-control__inner-shell' ]}>
 					<VariationControlInner
 						variations={ variations }
 						onChange={ onVariationSelect }
@@ -127,7 +128,7 @@ function VariationControl( {
 				</View>
 			</BottomSheet>
 		),
-		[ variations, isVisible, onClose ]
+		[ variations, isVisible, onClose, onChange ]
 	);
 }
 

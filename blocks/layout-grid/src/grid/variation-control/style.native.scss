@@ -1,37 +1,37 @@
-.vatiation-control {
+.variation-control {
 	padding-left: 0;
 	padding-right: 0;
 }
 
-.vatiation-control__cancel-button {
+.variation-control__cancel-button {
     color: $blue-wordpress;
 	font-size: 16px;
 }
-.vatiation-control__cancel-button-dark {
+.variation-control__cancel-button-dark {
     color: $blue-30;
 }
 
-.vatiation-control__close-icon {
+.variation-control__close-icon {
 	color: $gray;
 }
 
-.vatiation-control__inner-shell {
+.variation-control__inner-shell {
 	padding: 0 $grid-unit-20;
 }
 
-.vatiation-control-inner__scrollview-container {
+.variation-control-inner__scrollview-container {
 	flex-direction: row;
 	padding-left: 0;
 	padding-right: 0;
 }
 
-.vatiation-control-inner__scrollview {
+.variation-control-inner__scrollview {
 	padding-top: $grid-unit-15;
 	margin-left: -8px;
 	margin-right: -8px;
 }
 
-.vatiation-control-inner__footer {
+.variation-control-inner__footer {
 	padding-top: 21.5px;
 	padding-bottom: 10.5px;
 	font-size: 12px;
