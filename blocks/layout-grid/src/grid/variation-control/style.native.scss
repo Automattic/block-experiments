@@ -15,33 +15,26 @@
 	color: $gray;
 }
 
-.vatiation-control__scrollview-container {
-	flex-direction: row;
-	padding-bottom: $grid-unit-15;
-	padding-left: $grid-unit-20 / 2;
-	padding-right: $grid-unit-20 / 2;
+.vatiation-control__inner-shell {
+	padding: 0 $grid-unit-20;
 }
 
-.vatiation-control__scrollview {
+.vatiation-control-inner__scrollview-container {
+	flex-direction: row;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.vatiation-control-inner__scrollview {
 	padding-top: $grid-unit-15;
+	margin-left: -8px;
+	margin-right: -8px;
 }
 
-.vatiation-control-inner__header {
-	flex-direction: row;
-	align-items: center;
-	padding-right: $grid-unit-20;
-	padding-left: $grid-unit-20;
-	min-height: 44px;
-}
-
-.vatiation-control-inner__header-text {
-	color: $light-primary;
-	text-align: center;
-	font-weight: 600;
-	font-size: 16px;
-	flex: 2;
-}
-
-.vatiation-control-inner__header-text-dark {
-	color: $dark-primary;
+.vatiation-control-inner__footer {
+	padding-top: 21.5px;
+	padding-bottom: 10.5px;
+	font-size: 12px;
+	color: $gray;
+	flex: 1;
 }

@@ -11,7 +11,8 @@ import {
 	BlockControls,
 	BlockVerticalAlignmentToolbar,
 } from '@wordpress/block-editor';
-
+import { PanelBody } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
 import { withSelect, withDispatch } from '@wordpress/data';
 import { compose } from '@wordpress/compose';
 import { createBlock } from '@wordpress/blocks';
@@ -84,10 +85,12 @@ function ColumnsEdit( {
 				/>
 			</View>
 			<InspectorControls>
-				<VariationControl.Inner
-					variations={ variations }
-					onChange={ onChangeLayout }
-				/>
+				<PanelBody title={ __( 'Layout', 'layout-grid' ) }>
+					<VariationControl.Inner
+						variations={ variations }
+						onChange={ onChangeLayout }
+					/>
+				</PanelBody>
 			</InspectorControls>
 			<BlockControls>
 				<BlockVerticalAlignmentToolbar

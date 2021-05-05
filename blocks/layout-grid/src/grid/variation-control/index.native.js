@@ -14,7 +14,7 @@
  */
 import { usePreferredColorSchemeStyle } from '@wordpress/compose';
 import { __ } from '@wordpress/i18n';
-import { BottomSheet, InserterButton } from '@wordpress/components';
+import { BottomSheet, InserterButton, FooterMessageControl } from '@wordpress/components';
 import { Icon, close } from '@wordpress/icons';
 import { useMemo } from '@wordpress/element';
 
@@ -23,37 +23,18 @@ import { useMemo } from '@wordpress/element';
  */
 import styles from './style.native.scss';
 
-function VariationControlInner( { variations, onChange, hasHeader = true } ) {
-
-	const bottomSheetHeaderTitleStyle = usePreferredColorSchemeStyle(
-		styles[ 'vatiation-control-inner__header-text' ],
-		styles[ 'vatiation-control-inner__header-text-dark' ]
-	);
+function VariationControlInner( { variations, onChange } ) {
 
 	return useMemo(
 		() => (
 			<>
-				{ hasHeader && (
-					<View style={ styles[ 'vatiation-control-inner__header' ] }>
-						<Text
-							style={ bottomSheetHeaderTitleStyle }
-							maxFontSizeMultiplier={ 3 }
-						>
-							{
-								__(
-									'Select a layout'
-								) /* This is intentionally without a translation domain. */
-							}
-						</Text>
-					</View>
-				) }
 				<ScrollView
 					horizontal
 					showsHorizontalScrollIndicator={ false }
 					contentContainerStyle={
-						styles[ 'vatiation-control__scrollview-container' ]
+						styles[ 'vatiation-control-inner__scrollview-container' ]
 					}
-					style={ styles[ 'vatiation-control__scrollview' ] }
+					style={ styles[ 'vatiation-control-inner__scrollview' ] }
 				>
 					{ variations.map( ( variation ) => {
 						return (
@@ -65,9 +46,15 @@ function VariationControlInner( { variations, onChange, hasHeader = true } ) {
 						);
 					} ) }
 				</ScrollView>
+				<Text style={ styles[ 'vatiation-control-inner__footer' ] }>
+					{ __(
+						'Note: Layout may vary between themes and screen sizes',
+						'layout-grid'
+					) }
+				</Text>
 			</>
 		),
-		[ variations, onChange, hasHeader ]
+		[ variations, onChange ]
 	);
 }
 
@@ -132,11 +119,12 @@ function VariationControl( {
 				contentStyle={ styles[ 'vatiation-control' ] }
 				leftButton={ hasLeftButton && leftButton }
 			>
-				<VariationControlInner
-					variations={ variations }
-					onChange={ onVariationSelect }
-					hasHeader={ false }
-				/>
+				<View style={ styles[ 'vatiation-control__inner-shell' ]}>
+					<VariationControlInner
+						variations={ variations }
+						onChange={ onVariationSelect }
+					/>
+				</View>
 			</BottomSheet>
 		),
 		[ variations, isVisible, onClose ]

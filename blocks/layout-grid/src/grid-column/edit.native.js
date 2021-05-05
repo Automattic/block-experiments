@@ -66,9 +66,9 @@ function ColumnsEdit( {
 				/>
 			</View>
 			<InspectorControls>
-				<PanelBody>
+				<PanelBody title={ __( 'Column Settings', 'layout-grid' ) }>
 					<BottomSheetSelectControl
-						label={ __( 'Column Padding', 'layout-grid' ) }
+						label={ __( 'Padding', 'layout-grid' ) }
 						value={ padding }
 						onChange={ ( newValue ) =>
 							setAttributes( { padding: newValue } )
