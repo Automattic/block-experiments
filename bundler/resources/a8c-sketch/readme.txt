@@ -1,5 +1,5 @@
 === Sketch Block ===
-Contributors: automattic, ajlende, pablohoneyhoney
+Contributors: automattic, matveb, oskosk, pablohoneyhoney
 Stable tag: 1.0.0
 Tested up to: 5.7
 Requires at least: 5.6
