@@ -1,11 +1,12 @@
 /**
  * External dependencies
  */
-import { View } from 'react-native';
+import { View, Dimensions } from 'react-native';
 /**
  * WordPress dependencies
  */
 import { PanelBody, BottomSheetSelectControl } from '@wordpress/components';
+import { withViewportMatch } from '@wordpress/viewport';
 import {
 	InnerBlocks,
 	InspectorControls,
@@ -16,6 +17,7 @@ import {
 import { __ } from '@wordpress/i18n';
 import { withSelect, withDispatch } from '@wordpress/data';
 import { compose, usePreferredColorSchemeStyle } from '@wordpress/compose';
+import { useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -24,6 +26,53 @@ import { getPaddingValues } from '../constants';
 import { withUpdateAlignment } from './higher-order';
 import styles from './edit.native.scss';
 
+/**
+ * Calculate the column styles.
+ *
+ * @param {int} columns
+ * @param {int} index
+ * @param {int} fullWidth
+ * @param {string} viewport
+ * @returns
+ */
+function getColumnStyles( columns, index, fullWidth, viewport ) {
+	// Default widths for 1 column layout.
+	let widths = {
+		mobile: fullWidth,
+		tablet: fullWidth,
+		desktop: fullWidth,
+	};
+
+	switch ( columns ) {
+		case 2:
+			widths = {
+				mobile: fullWidth,
+				tablet: Math.floor( fullWidth / 2 ) - 44,
+				desktop: Math.floor( fullWidth / 2 ) - 44,
+			};
+			break;
+		case 3:
+			widths = {
+				mobile: fullWidth,
+				tablet: Math.floor( fullWidth / 2 ) - 44,
+				desktop: Math.floor( fullWidth / 3 ) - 52,
+			};
+			if ( index === 2 ) {
+				widths.tablet = fullWidth - 22;
+			}
+			break;
+		case 4:
+			widths = {
+				mobile: fullWidth,
+				tablet: Math.floor( fullWidth / 2 ) - 44,
+				desktop: Math.floor( fullWidth / 4 ) - 54,
+			};
+			break;
+	}
+
+	return { width: widths[ viewport ] };
+}
+
 function ColumnsEdit( {
 	hasChildren,
 	attributes,
@@ -31,8 +80,28 @@ function ColumnsEdit( {
 	setAttributes,
 	updateAlignment,
 	isParentSelected,
+	selectedColumnIndex,
+	parentWidth,
+	isMobile,
+	isTablet,
+	parentColumnCount,
 } ) {
 	const { padding, verticalAlignment } = attributes;
+
+	let viewportSize = 'desktop';
+	if ( isTablet ) {
+		viewportSize = 'tablet';
+	}
+	if ( isMobile ) {
+		viewportSize = 'isMobile';
+	}
+
+	const calculatedColumnStyles = getColumnStyles(
+		parentColumnCount,
+		selectedColumnIndex,
+		parentWidth,
+		viewportSize
+	);
 
 	if ( ! isSelected && ! hasChildren ) {
 		return (
@@ -44,6 +113,7 @@ function ColumnsEdit( {
 							styles[ 'column__placeholder-dark' ]
 						),
 					styles[ 'column__placeholder-not-selected' ],
+					calculatedColumnStyles,
 				] }
 			/>
 		);
@@ -56,14 +126,22 @@ function ColumnsEdit( {
 
 	return (
 		<>
-			<View style={ columnStyles }>
+			<View style={ [ columnStyles, calculatedColumnStyles ] }>
 				<InnerBlocks
 					templateLock={ false }
 					renderAppender={
 						! hasChildren || isSelected
-							? () => <InnerBlocks.ButtonBlockAppender />
+							? () => (
+									<View
+										style={ styles[ 'column__appender' ] }
+									>
+										<InnerBlocks.ButtonBlockAppender />
+									</View>
+							  )
 							: undefined
 					}
+					parentWidth={ calculatedColumnStyles.width }
+					blockWidth={ calculatedColumnStyles.width }
 				/>
 			</View>
 			<InspectorControls>
@@ -116,6 +194,8 @@ export default compose(
 		const parentAlignment = getBlockAttributes( parentId )
 			?.verticalAlignment;
 
+		const parentColumnCount = getBlockCount( parentId );
+
 		return {
 			hasChildren,
 			isParentSelected,
@@ -123,7 +203,9 @@ export default compose(
 			selectedColumnIndex,
 			columns,
 			parentAlignment,
+			parentColumnCount,
 		};
 	} ),
 	withUpdateAlignment(),
+	withViewportMatch( { isMobile: '< small', isTablet: '< large' } )
 )( ColumnsEdit );

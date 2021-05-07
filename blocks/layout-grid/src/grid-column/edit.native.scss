@@ -16,14 +16,9 @@
 }
 
 .column__appender {
-	margin-left: $grid-unit-10;
-	margin-right: $grid-unit-10;
+	width: 100%;
 }
 
-.column__wide-appender {
-	margin-left: $grid-unit-10;
-	margin-right: $grid-unit-10;
-}
 
 .column__padding-none {
 	padding: 0;

@@ -1,7 +1,7 @@
 /**
  * External dependencies
  */
-import { View } from 'react-native';
+import { View, Dimensions } from 'react-native';
 /**
  * WordPress dependencies
  */
@@ -11,10 +11,11 @@ import {
 	BlockControls,
 	BlockVerticalAlignmentToolbar,
 } from '@wordpress/block-editor';
-import { PanelBody } from '@wordpress/components';
+import { PanelBody, alignmentHelpers } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { compose } from '@wordpress/compose';
 import { useState } from '@wordpress/element';
+import { useResizeObserver } from '@wordpress/compose';
 
 /**
  * Internal dependencies
@@ -41,6 +42,8 @@ const DEFAULT_TEMPLATE = [
 	[ 'jetpack/layout-grid-column', {}, [] ],
 ];
 
+const { isFullWidth } = alignmentHelpers;
+
 function ColumnsEdit( {
 	clientId,
 	attributes = {},
@@ -48,44 +51,47 @@ function ColumnsEdit( {
 	updateAlignment,
 	updateColumns,
 } ) {
-	const { verticalAlignment } = attributes;
+	const { verticalAlignment, align } = attributes;
 
 	const [ isDefaultColumns, setDefaultColumns ] = useState( ! columns );
+
+	const [ resizeListener, sizes ] = useResizeObserver();
+	const { width } = sizes || {};
 
 	const onChangeLayout = ( selectedColumn ) => {
 		const columnValues = {};
 		const numberOfColumns = selectedColumn.innerBlocks.length;
-		for ( let pos = 0; pos < numberOfColumns; pos++ ) {
-			for (
-				let device = 0;
-				device < DEVICE_BREAKPOINTS.length;
-				device++
-			) {
+		for ( let position = 0; position < numberOfColumns; position++ ) {
+			DEVICE_BREAKPOINTS.forEach( ( deviceName ) => {
 				const defaultSpan = getDefaultSpan(
-					DEVICE_BREAKPOINTS[ device ],
+					deviceName,
 					numberOfColumns,
-					pos
+					position
 				);
-
 				columnValues[
-					getSpanForDevice( pos, DEVICE_BREAKPOINTS[ device ] )
+					getSpanForDevice( position, deviceName )
 				] = defaultSpan;
-				columnValues[
-					getOffsetForDevice( pos, DEVICE_BREAKPOINTS[ device ] )
-				] = 0;
-			}
+
+				columnValues[ getOffsetForDevice( position, deviceName ) ] = 0;
+			} );
 		}
 		setDefaultColumns( false );
 		updateColumns( columns, numberOfColumns, columnValues );
 	};
 
+	const screenWidth = Math.floor( Dimensions.get( 'window' ).width );
+
 	return (
 		<>
+			{ resizeListener }
 			<View>
 				<InnerBlocks
 					template={ isDefaultColumns ? DEFAULT_TEMPLATE : null }
 					templateLock="all"
 					allowedBlocks={ ALLOWED_BLOCKS }
+					horizontal={ true }
+					parentWidth={ isFullWidth( align ) ? screenWidth - 8 : width - 32 }
+					blockWidth={ isFullWidth( align ) ? screenWidth : width }
 				/>
 			</View>
 			<InspectorControls>
