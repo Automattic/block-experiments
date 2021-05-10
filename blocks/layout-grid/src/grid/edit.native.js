@@ -90,7 +90,8 @@ function ColumnsEdit( {
 					templateLock="all"
 					allowedBlocks={ ALLOWED_BLOCKS }
 					horizontal={ true }
-					parentWidth={ isFullWidth( align ) ? screenWidth - 8 : width - 32 }
+					contentResizeMode="stretch"
+					parentWidth={ isFullWidth( align ) ? screenWidth : width }
 					blockWidth={ isFullWidth( align ) ? screenWidth : width }
 				/>
 			</View>
