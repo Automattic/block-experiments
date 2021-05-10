@@ -17,6 +17,7 @@ import {
 import { __ } from '@wordpress/i18n';
 import { withSelect, withDispatch } from '@wordpress/data';
 import { compose, usePreferredColorSchemeStyle } from '@wordpress/compose';
+import { alignmentHelpers } from '@wordpress/components';
 
 /**
  * Internal dependencies
@@ -83,9 +84,12 @@ function ColumnsEdit( {
 	parentWidth,
 	isMobile,
 	isTablet,
+	parentAlign,
 	parentColumnCount,
 } ) {
 	const { padding, verticalAlignment } = attributes;
+
+	const { isFullWidth } = alignmentHelpers;
 
 	let viewportSize = 'desktop';
 	if ( isTablet ) {
@@ -125,7 +129,7 @@ function ColumnsEdit( {
 
 	let appenderStyle = styles[ 'column__appender' ];
 	if ( hasChildren ) {
-		appenderStyle = styles['column__appender-has-children']
+		appenderStyle = styles[ 'column__appender-has-children' ];
 	}
 
 	return (
@@ -137,7 +141,16 @@ function ColumnsEdit( {
 						! hasChildren || isSelected
 							? () => (
 									<View
-										style={ appenderStyle }
+										style={
+											isFullWidth( parentAlign )
+												? appenderStyle
+												: [
+														appenderStyle,
+														styles[
+															'column__appender-not-full-width'
+														],
+												  ]
+										}
 									>
 										<InnerBlocks.ButtonBlockAppender />
 									</View>
@@ -195,9 +208,7 @@ export default compose(
 		const selectedColumnIndex = blockOrder.indexOf( clientId );
 		const columns = getBlocks( parentId );
 
-		const parentAlignment = getBlockAttributes( parentId )
-			?.verticalAlignment;
-
+		const parentAlign = getBlockAttributes( parentId )?.align;
 		const parentColumnCount = getBlockCount( parentId );
 
 		return {
@@ -206,7 +217,7 @@ export default compose(
 			isSelected,
 			selectedColumnIndex,
 			columns,
-			parentAlignment,
+			parentAlign,
 			parentColumnCount,
 		};
 	} ),
