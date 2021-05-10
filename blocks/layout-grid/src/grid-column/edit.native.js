@@ -17,7 +17,6 @@ import {
 import { __ } from '@wordpress/i18n';
 import { withSelect, withDispatch } from '@wordpress/data';
 import { compose, usePreferredColorSchemeStyle } from '@wordpress/compose';
-import { useEffect } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -119,14 +118,14 @@ function ColumnsEdit( {
 		);
 	}
 
-	let columnStyles = styles[ 'column__padding-' + padding ];
+	let columnPadding = styles[ 'column__padding-' + padding ];
 	if ( isSelected && 'none' === padding ) {
-		columnStyles = styles[ 'column__padding-none-is-selected' ];
+		columnPadding = styles[ 'column__padding-none-is-selected' ];
 	}
 
 	return (
 		<>
-			<View style={ [ columnStyles, calculatedColumnStyles ] }>
+			<View style={ [ columnPadding, calculatedColumnStyles ] }>
 				<InnerBlocks
 					templateLock={ false }
 					renderAppender={
