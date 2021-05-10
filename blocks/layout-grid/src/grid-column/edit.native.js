@@ -1,7 +1,8 @@
 /**
  * External dependencies
  */
-import { View, Dimensions } from 'react-native';
+import { View } from 'react-native';
+
 /**
  * WordPress dependencies
  */
@@ -15,7 +16,7 @@ import {
 	store as blockEditorStore,
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
-import { withSelect, withDispatch } from '@wordpress/data';
+import { withSelect } from '@wordpress/data';
 import { compose, usePreferredColorSchemeStyle } from '@wordpress/compose';
 import { alignmentHelpers } from '@wordpress/components';
 

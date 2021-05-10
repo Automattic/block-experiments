@@ -85,7 +85,7 @@ function ColumnsEdit( {
 	return (
 		<>
 			{ resizeListener }
-			<View style={ styles['grid-columns'] }>
+			<View style={ styles[ 'grid-columns' ] }>
 				<InnerBlocks
 					template={ isDefaultColumns ? DEFAULT_TEMPLATE : null }
 					templateLock="all"
