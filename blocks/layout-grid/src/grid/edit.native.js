@@ -34,6 +34,7 @@ import {
 	withColumns,
 	withColumnAttributes,
 } from './higher-order';
+import styles from './edit.native.scss';
 
 const ALLOWED_BLOCKS = [ 'jetpack/layout-grid-column' ];
 
@@ -84,7 +85,7 @@ function ColumnsEdit( {
 	return (
 		<>
 			{ resizeListener }
-			<View>
+			<View style={ styles['grid-columns'] }>
 				<InnerBlocks
 					template={ isDefaultColumns ? DEFAULT_TEMPLATE : null }
 					templateLock="all"

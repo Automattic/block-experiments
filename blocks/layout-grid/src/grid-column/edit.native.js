@@ -54,7 +54,7 @@ function getColumnStyles( columns, index, fullWidth, viewport ) {
 			widths = {
 				mobile: fullWidth,
 				tablet: Math.floor( fullWidth / 2 ) - 16,
-				desktop: Math.floor( fullWidth / 3 ) - 26,
+				desktop: Math.floor( fullWidth / 3 ) - 21,
 			};
 			if ( index === 2 ) {
 				widths.tablet = fullWidth - 4;
@@ -64,7 +64,7 @@ function getColumnStyles( columns, index, fullWidth, viewport ) {
 			widths = {
 				mobile: fullWidth,
 				tablet: Math.floor( fullWidth / 2 ) - 16,
-				desktop: Math.floor( fullWidth / 4 ) - 26,
+				desktop: Math.floor( fullWidth / 4 ) - 24,
 			};
 			break;
 	}
@@ -123,6 +123,11 @@ function ColumnsEdit( {
 		columnPadding = styles[ 'column__padding-none-is-selected' ];
 	}
 
+	let appenderStyle = styles[ 'column__appender' ];
+	if ( hasChildren ) {
+		appenderStyle = styles['column__appender-has-children']
+	}
+
 	return (
 		<>
 			<View style={ [ columnPadding, calculatedColumnStyles ] }>
@@ -132,7 +137,7 @@ function ColumnsEdit( {
 						! hasChildren || isSelected
 							? () => (
 									<View
-										style={ styles[ 'column__appender' ] }
+										style={ appenderStyle }
 									>
 										<InnerBlocks.ButtonBlockAppender />
 									</View>

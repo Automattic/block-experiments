@@ -18,8 +18,14 @@
 .column__appender {
 	margin-left: 8px;
 	margin-right: 8px;
+	margin-bottom: -10px; 
 }
 
+.column__appender-has-children {
+	margin-left: 16px;
+	margin-right: 16px;
+	margin-bottom: 6px; 
+}
 
 .column__padding-none {
 	padding: 0;
