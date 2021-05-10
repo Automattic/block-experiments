@@ -93,7 +93,7 @@ function ColumnsEdit( {
 		viewportSize = 'tablet';
 	}
 	if ( isMobile ) {
-		viewportSize = 'isMobile';
+		viewportSize = 'mobile';
 	}
 
 	const calculatedColumnStyles = getColumnStyles(
