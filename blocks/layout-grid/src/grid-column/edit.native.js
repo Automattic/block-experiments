@@ -47,25 +47,25 @@ function getColumnStyles( columns, index, fullWidth, viewport ) {
 		case 2:
 			widths = {
 				mobile: fullWidth,
-				tablet: Math.floor( fullWidth / 2 ) - 44,
-				desktop: Math.floor( fullWidth / 2 ) - 44,
+				tablet: Math.floor( fullWidth / 2 ) - 16,
+				desktop: Math.floor( fullWidth / 2 ) - 16,
 			};
 			break;
 		case 3:
 			widths = {
 				mobile: fullWidth,
-				tablet: Math.floor( fullWidth / 2 ) - 44,
-				desktop: Math.floor( fullWidth / 3 ) - 52,
+				tablet: Math.floor( fullWidth / 2 ) - 16,
+				desktop: Math.floor( fullWidth / 3 ) - 26,
 			};
 			if ( index === 2 ) {
-				widths.tablet = fullWidth - 22;
+				widths.tablet = fullWidth - 4;
 			}
 			break;
 		case 4:
 			widths = {
 				mobile: fullWidth,
-				tablet: Math.floor( fullWidth / 2 ) - 44,
-				desktop: Math.floor( fullWidth / 4 ) - 54,
+				tablet: Math.floor( fullWidth / 2 ) - 16,
+				desktop: Math.floor( fullWidth / 4 ) - 26,
 			};
 			break;
 	}
