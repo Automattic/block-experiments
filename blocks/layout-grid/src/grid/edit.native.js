@@ -61,20 +61,26 @@ function ColumnsEdit( {
 	const onChangeLayout = ( selectedColumn ) => {
 		const columnValues = {};
 		const numberOfColumns = selectedColumn.innerBlocks.length;
-		for ( let position = 0; position < numberOfColumns; position++ ) {
-			DEVICE_BREAKPOINTS.forEach( ( deviceName ) => {
-				const defaultSpan = getDefaultSpan(
-					deviceName,
-					numberOfColumns,
-					position
-				);
-				columnValues[
-					getSpanForDevice( position, deviceName )
-				] = defaultSpan;
 
-				columnValues[ getOffsetForDevice( position, deviceName ) ] = 0;
+		Array( numberOfColumns )
+			.keys()
+			.forEach( ( position ) => {
+				DEVICE_BREAKPOINTS.forEach( ( deviceName ) => {
+					const defaultSpan = getDefaultSpan(
+						deviceName,
+						numberOfColumns,
+						position
+					);
+					columnValues[
+						getSpanForDevice( position, deviceName )
+					] = defaultSpan;
+
+					columnValues[
+						getOffsetForDevice( position, deviceName )
+					] = 0;
+				} );
 			} );
-		}
+
 		setDefaultColumns( false );
 		updateColumns( columns, numberOfColumns, columnValues );
 	};
