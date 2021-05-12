@@ -43,30 +43,33 @@ function getColumnStyles( columns, index, fullWidth, viewport ) {
 		tablet: fullWidth,
 		desktop: fullWidth,
 	};
+	const TWO_COLUMN_MARGIN = 16;
+	const THREE_COLUMN_MARGIN = 21;
+	const FOUR_COLUMN_MARGIN = 24;
 
 	switch ( columns ) {
 		case 2:
 			widths = {
 				mobile: fullWidth,
-				tablet: Math.floor( fullWidth / 2 ) - 16,
-				desktop: Math.floor( fullWidth / 2 ) - 16,
+				tablet: Math.floor( fullWidth / 2 ) - TWO_COLUMN_MARGIN,
+				desktop: Math.floor( fullWidth / 2 ) - TWO_COLUMN_MARGIN,
 			};
 			break;
 		case 3:
 			widths = {
 				mobile: fullWidth,
-				tablet: Math.floor( fullWidth / 2 ) - 16,
-				desktop: Math.floor( fullWidth / 3 ) - 21,
+				tablet: Math.floor( fullWidth / 2 ) - TWO_COLUMN_MARGIN,
+				desktop: Math.floor( fullWidth / 3 ) - THREE_COLUMN_MARGIN,
 			};
 			if ( index === 2 ) {
-				widths.tablet = fullWidth - 4;
+				widths.tablet = fullWidth;
 			}
 			break;
 		case 4:
 			widths = {
 				mobile: fullWidth,
-				tablet: Math.floor( fullWidth / 2 ) - 16,
-				desktop: Math.floor( fullWidth / 4 ) - 24,
+				tablet: Math.floor( fullWidth / 2 ) - TWO_COLUMN_MARGIN,
+				desktop: Math.floor( fullWidth / 4 ) - FOUR_COLUMN_MARGIN,
 			};
 			break;
 	}
