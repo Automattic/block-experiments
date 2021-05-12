@@ -6,7 +6,11 @@ import { View } from 'react-native';
 /**
  * WordPress dependencies
  */
-import { PanelBody, BottomSheetSelectControl } from '@wordpress/components';
+import {
+	PanelBody,
+	BottomSheetSelectControl,
+	alignmentHelpers,
+} from '@wordpress/components';
 import { withViewportMatch } from '@wordpress/viewport';
 import {
 	InnerBlocks,
@@ -18,7 +22,6 @@ import {
 import { __ } from '@wordpress/i18n';
 import { withSelect } from '@wordpress/data';
 import { compose, usePreferredColorSchemeStyle } from '@wordpress/compose';
-import { alignmentHelpers } from '@wordpress/components';
 
 /**
  * Internal dependencies
@@ -34,7 +37,7 @@ import styles from './edit.native.scss';
  * @param {int} index
  * @param {int} fullWidth
  * @param {string} viewport
- * @returns
+ * @return {object}
  */
 function getColumnStyles( columns, index, fullWidth, viewport ) {
 	// Default widths for 1 column layout.
@@ -103,6 +106,11 @@ function ColumnsEdit( {
 		viewportSize = 'mobile';
 	}
 
+	const stylePlaceholder = usePreferredColorSchemeStyle(
+		styles.column__placeholder,
+		styles[ 'column__placeholder-dark' ]
+	);
+
 	const calculatedColumnStyles = getColumnStyles(
 		parentColumnCount,
 		selectedColumnIndex,
@@ -114,11 +122,7 @@ function ColumnsEdit( {
 		return (
 			<View
 				style={ [
-					! isParentSelected &&
-						usePreferredColorSchemeStyle(
-							styles[ 'column__placeholder' ],
-							styles[ 'column__placeholder-dark' ]
-						),
+					! isParentSelected && stylePlaceholder,
 					styles[ 'column__placeholder-not-selected' ],
 					calculatedColumnStyles,
 				] }
@@ -126,15 +130,14 @@ function ColumnsEdit( {
 		);
 	}
 
-	let columnPadding = styles[ 'column__padding-' + padding ];
-	if ( isSelected && 'none' === padding ) {
-		columnPadding = styles[ 'column__padding-none-is-selected' ];
-	}
+	const columnPadding =
+		isSelected && 'none' === padding
+			? styles[ 'column__padding-none-is-selected' ]
+			: styles[ 'column__padding-' + padding ];
 
-	let appenderStyle = styles[ 'column__appender' ];
-	if ( hasChildren ) {
-		appenderStyle = styles[ 'column__appender-has-children' ];
-	}
+	const appenderStyle = hasChildren
+		? styles[ 'column__appender-has-children' ]
+		: styles.column__appender;
 
 	return (
 		<>
