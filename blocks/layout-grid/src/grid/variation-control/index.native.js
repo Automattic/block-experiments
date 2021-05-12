@@ -6,6 +6,7 @@ import {
 	View,
 	Text,
 	TouchableWithoutFeedback,
+	TouchableHighlight,
 	Platform,
 } from 'react-native';
 
@@ -15,7 +16,7 @@ import {
 import { usePreferredColorSchemeStyle } from '@wordpress/compose';
 import { __ } from '@wordpress/i18n';
 import { BottomSheet, InserterButton } from '@wordpress/components';
-import { Icon, close } from '@wordpress/icons';
+import { Icon, close, check } from '@wordpress/icons';
 import { useMemo } from '@wordpress/element';
 
 /**
@@ -23,7 +24,65 @@ import { useMemo } from '@wordpress/element';
  */
 import styles from './style.native.scss';
 
-function VariationControlInner( { variations, onChange } ) {
+function VariationControlSelectedButton( { name, icon } ) {
+	const buttonBorder = usePreferredColorSchemeStyle(
+		styles[ 'variation-control-selected-button__item' ],
+		styles[ 'variation-control-selected-button__item-dark' ]
+	);
+
+	const buttonCircle = usePreferredColorSchemeStyle(
+		styles[ 'variation-control-selected-button__circle' ],
+		styles[ 'variation-control-selected-button__circle-dark' ]
+	);
+
+	const labelIconStyle = usePreferredColorSchemeStyle(
+		styles[ 'variation-control-selected-button__label-icon' ],
+		styles[ 'variation-control-selected-button__label-icon-dark' ]
+	);
+
+	const labelStyle = usePreferredColorSchemeStyle(
+		styles[ 'variation-control-selected-button__label' ],
+		styles[ 'variation-control-selected-button__label-dark' ]
+	);
+	return (
+		<TouchableHighlight
+			style={ [
+				InserterButton.Styles.modalItem,
+				styles[ 'variation-control-selected-button' ],
+			] }
+		>
+			<>
+				<View
+					style={ [
+						InserterButton.Styles.modalIconWrapper,
+						buttonBorder,
+					] }
+				>
+					<View style={ buttonCircle } />
+					<Icon
+						icon={ check }
+						size={ 12 }
+						style={
+							styles[
+								'variation-control-selected-button__selected-icon'
+							]
+						}
+					/>
+					<View style={ labelIconStyle }>
+						<Icon
+							icon={ icon }
+							fill={ labelIconStyle.fill }
+							size={ labelIconStyle.width }
+						/>
+					</View>
+				</View>
+				<Text style={ labelStyle }>{ name }</Text>
+			</>
+		</TouchableHighlight>
+	);
+}
+
+function VariationControlInner( { variations, onChange, selected = null } ) {
 	return useMemo(
 		() => (
 			<>
@@ -38,12 +97,27 @@ function VariationControlInner( { variations, onChange } ) {
 					style={ styles[ 'variation-control-inner__scrollview' ] }
 				>
 					{ variations.map( ( variation ) => {
+						const isSelected = variation.name === selected;
 						return (
-							<InserterButton
-								item={ variation }
+							<View
 								key={ variation.name }
-								onSelect={ () => onChange( variation ) }
-							/>
+								style={
+									styles[ 'variation-control-inner__item' ]
+								}
+							>
+								{ isSelected ? (
+									<VariationControlSelectedButton
+										name={ variation.title }
+										icon={ variation.icon }
+									/>
+								) : (
+									<InserterButton
+										item={ variation }
+										key={ variation.name }
+										onSelect={ () => onChange( variation ) }
+									/>
+								) }
+							</View>
 						);
 					} ) }
 				</ScrollView>

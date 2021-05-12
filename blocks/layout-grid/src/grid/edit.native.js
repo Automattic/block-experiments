@@ -80,6 +80,7 @@ function ColumnsEdit( {
 	};
 
 	const screenWidth = Math.floor( Dimensions.get( 'window' ).width );
+	const selectedColumnsName = columns ? variations[ columns - 1 ].name : null;
 
 	return (
 		<>
@@ -100,6 +101,7 @@ function ColumnsEdit( {
 					<VariationControl.Inner
 						variations={ variations }
 						onChange={ onChangeLayout }
+						selected={ selectedColumnsName }
 					/>
 				</PanelBody>
 			</InspectorControls>
