@@ -93,7 +93,7 @@ function VariationControl( {
 						<Icon
 							icon={ close }
 							size={ 24 }
-							style={ styles[ 'vatiation-control__close-icon' ] }
+							style={ styles[ 'variation-control__close-icon' ] }
 						/>
 					) }
 				</View>
@@ -120,7 +120,7 @@ function VariationControl( {
 				contentStyle={ styles[ 'variation-control' ] }
 				leftButton={ hasLeftButton && leftButton }
 			>
-				<View style={ styles[ 'variation-control__inner-shell' ]}>
+				<View style={ styles[ 'variation-control__inner-shell' ] }>
 					<VariationControlInner
 						variations={ variations }
 						onChange={ onVariationSelect }

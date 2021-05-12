@@ -13,9 +13,8 @@ import {
 } from '@wordpress/block-editor';
 import { PanelBody, alignmentHelpers } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { compose } from '@wordpress/compose';
+import { compose, useResizeObserver } from '@wordpress/compose';
 import { useState } from '@wordpress/element';
-import { useResizeObserver } from '@wordpress/compose';
 
 /**
  * Internal dependencies

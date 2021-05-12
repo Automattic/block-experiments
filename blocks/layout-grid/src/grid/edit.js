@@ -62,7 +62,6 @@ import {
 	withPreviewDeviceType,
 } from './higher-order';
 
-
 const ALLOWED_BLOCKS = [ 'jetpack/layout-grid-column' ];
 const MINIMUM_RESIZE_SIZE = 50; // Empirically determined to be a good size
 
