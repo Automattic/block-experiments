@@ -16,12 +16,13 @@ import {
 import { usePreferredColorSchemeStyle } from '@wordpress/compose';
 import { __ } from '@wordpress/i18n';
 import { BottomSheet, InserterButton } from '@wordpress/components';
-import { Icon, close, check } from '@wordpress/icons';
+import { Icon, close } from '@wordpress/icons';
 import { useMemo } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
+import checkmark from './checkmark';
 import styles from './style.native.scss';
 
 function VariationControlSelectedButton( { name, icon } ) {
@@ -60,8 +61,8 @@ function VariationControlSelectedButton( { name, icon } ) {
 				>
 					<View style={ buttonCircle } />
 					<Icon
-						icon={ check }
-						size={ 12 }
+						icon={ checkmark }
+						size={ 16 }
 						style={
 							styles[
 								'variation-control-selected-button__selected-icon'
