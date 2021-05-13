@@ -97,6 +97,9 @@ function ColumnsEdit( {
 					contentResizeMode="stretch"
 					parentWidth={ isFullWidth( align ) ? screenWidth : width }
 					blockWidth={ isFullWidth( align ) ? screenWidth : width }
+					contentStyle={ {
+						width: width ? width : screenWidth,
+					} }
 				/>
 			</View>
 			<InspectorControls>

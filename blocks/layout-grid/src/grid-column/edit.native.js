@@ -88,7 +88,7 @@ function ColumnsEdit( {
 	updateAlignment,
 	isParentSelected,
 	selectedColumnIndex,
-	parentWidth,
+	contentStyle,
 	isMobile,
 	isTablet,
 	parentAlign,
@@ -114,7 +114,7 @@ function ColumnsEdit( {
 	const calculatedColumnStyles = getColumnStyles(
 		parentColumnCount,
 		selectedColumnIndex,
-		parentWidth,
+		contentStyle.width,
 		viewportSize
 	);
 
