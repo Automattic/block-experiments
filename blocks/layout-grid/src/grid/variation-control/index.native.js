@@ -112,6 +112,19 @@ function VariationControlInner( { variations, onChange, selected = null } ) {
 						'layout-grid'
 					) }
 				</Text>
+				{ selected && (
+					<Text
+						style={ [
+							styles[ 'variation-control-inner__footer' ],
+							styles[ 'variation-control-inner__footer-last' ],
+						] }
+					>
+						{ __(
+							'Changing the number of columns will reset your layout and could remove content.',
+							'layout-grid'
+						) }
+					</Text>
+				) }
 			</>
 		),
 		[ variations, onChange ]
