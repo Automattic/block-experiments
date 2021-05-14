@@ -43,27 +43,6 @@
 	width: 120px;
 	height: 64px;
 }
-.variation-control-selected-button__selected-icon {
-	position: absolute;
-	top: 6px;
-	right: 6px;
-	width: 20px;
-	height: 20px;
-	color: $white;
-}
-
-.variation-control-selected-button__circle {
-	position: absolute;
-	top: 4px;
-	right: 4px;
-	width: 20px;
-	height: 20px;
-	border-radius: 10px;
-	background-color: $blue-50;
-}
-.variation-control-selected-button__circle-dark {
-	background-color: $blue-30;
-}
 
 .variation-control-selected-button__item {
 	border-width: $block-selected-border-width;

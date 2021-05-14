@@ -22,18 +22,12 @@ import { useMemo } from '@wordpress/element';
 /**
  * Internal dependencies
  */
-import checkmark from './checkmark';
 import styles from './style.native.scss';
 
 function VariationControlSelectedButton( { name, icon } ) {
 	const buttonBorder = usePreferredColorSchemeStyle(
 		styles[ 'variation-control-selected-button__item' ],
 		styles[ 'variation-control-selected-button__item-dark' ]
-	);
-
-	const buttonCircle = usePreferredColorSchemeStyle(
-		styles[ 'variation-control-selected-button__circle' ],
-		styles[ 'variation-control-selected-button__circle-dark' ]
 	);
 
 	const labelIconStyle = usePreferredColorSchemeStyle(
@@ -59,16 +53,6 @@ function VariationControlSelectedButton( { name, icon } ) {
 						buttonBorder,
 					] }
 				>
-					<View style={ buttonCircle } />
-					<Icon
-						icon={ checkmark }
-						size={ 16 }
-						style={
-							styles[
-								'variation-control-selected-button__selected-icon'
-							]
-						}
-					/>
 					<View style={ labelIconStyle }>
 						<Icon
 							icon={ icon }
