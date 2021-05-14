@@ -98,6 +98,7 @@ function VariationControlInner( { variations, onChange, selected = null } ) {
 								) : (
 									<InserterButton
 										item={ variation }
+										maxWidth={ 112 }
 										key={ variation.name }
 										onSelect={ () => onChange( variation ) }
 									/>
