@@ -27,7 +27,7 @@ import { compose, usePreferredColorSchemeStyle } from '@wordpress/compose';
  * Internal dependencies
  */
 import { getPaddingValues } from '../constants';
-import { withUpdateAlignment } from './higher-order';
+import { withUpdateAlignment } from './hooks/with-update-alignment';
 import styles from './edit.native.scss';
 
 /**

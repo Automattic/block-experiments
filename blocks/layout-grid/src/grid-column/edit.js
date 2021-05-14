@@ -7,7 +7,6 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-
 import {
 	InnerBlocks,
 	InspectorControls,
@@ -22,11 +21,11 @@ import { withSelect } from '@wordpress/data';
 import { PanelBody, SelectControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
-import { withUpdateAlignment } from './higher-order';
 /**
  * Internal dependencies
  */
 import { getPaddingValues } from '../constants';
+import { withUpdateAlignment } from './hooks/with-update-alignment';
 
 class Edit extends Component {
 	constructor( props ) {
