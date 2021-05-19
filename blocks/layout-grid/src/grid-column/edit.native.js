@@ -47,7 +47,7 @@ function getColumnStyles( columns, index, fullWidth, viewport ) {
 		desktop: fullWidth,
 	};
 	const TWO_COLUMN_MARGIN = 16;
-	const THREE_COLUMN_MARGIN = 21;
+	const THREE_COLUMN_MARGIN = 22;
 	const FOUR_COLUMN_MARGIN = 24;
 
 	switch ( columns ) {
