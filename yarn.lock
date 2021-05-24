@@ -924,6 +924,13 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@babel/runtime@^7.13.10":
+  version "7.14.0"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.14.0.tgz#46794bc20b612c5f75e62dd071e24dfd95f1cbe6"
+  integrity sha512-JELkvo/DlpNdJ7dlyw/eY7E0suy5i5GQH+Vlxaq1nsNJ+H7f4Vtv3jMeCEgRhZZQFXTjldYfQgv2qmM6M1v5wA==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/template@^7.12.13", "@babel/template@^7.3.3":
   version "7.12.13"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.12.13.tgz#530265be8a2589dbb37523844c5bcb55947fb327"
@@ -2623,6 +2630,19 @@
     react "^16.13.1"
     react-dom "^16.13.1"
 
+"@wordpress/element@^3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@wordpress/element/-/element-3.1.0.tgz#7fb8bf531d833db127fa00c872ba8066128798dd"
+  integrity sha512-dDCs7zIH4CCa6q+BzDHpn99NLvgKDcM9/p4pAcCppNnR352wipmWK3EK6faWfzv1M6o+VJXhIQuXahxKPLpBsg==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@types/react" "^16.9.0"
+    "@types/react-dom" "^16.9.0"
+    "@wordpress/escape-html" "^2.1.0"
+    lodash "^4.17.21"
+    react "^16.13.1"
+    react-dom "^16.13.1"
+
 "@wordpress/env@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@wordpress/env/-/env-4.0.0.tgz#2bba5daeba3d1955ffe8304a70c23ec513e2b37d"
@@ -2647,6 +2667,13 @@
   integrity sha512-T+HiRDlm3UcPnbV00g3Qclea0SIopHd7d+xSSRfblhEhoiCDC5GTdjUAbrtMGZov46PHhHEl1/iN3oMv+mlWXQ==
   dependencies:
     "@babel/runtime" "^7.12.5"
+
+"@wordpress/escape-html@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@wordpress/escape-html/-/escape-html-2.1.0.tgz#8fbc3aad0568fd29063e2955aafdc6d8470f3b87"
+  integrity sha512-N0EZokyky5O5ib8jyqIyzd7Bg+z0XOxrUmHv6kE8o1FpdVwZYFAVg9ZAhb9YQYfFVqIrfbste+v3Mak0iKrD4A==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
 
 "@wordpress/eslint-plugin@^9.0.1":
   version "9.0.1"
@@ -2726,6 +2753,15 @@
     "@babel/runtime" "^7.12.5"
     "@wordpress/element" "^2.20.0"
     "@wordpress/primitives" "^1.12.0"
+
+"@wordpress/icons@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@wordpress/icons/-/icons-4.0.0.tgz#431e08132ee61c59e43fb47af21f1bb1c98e303e"
+  integrity sha512-WuHEHwuI1NtoK2poJjSE7s14Tv8JZEOaAvK0CFN0NJPOznuLzPmykrL0FtVStDDnsaFqPdnsSzk9JE+nTojeBQ==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@wordpress/element" "^3.1.0"
+    "@wordpress/primitives" "^2.1.0"
 
 "@wordpress/is-shallow-equal@^2.2.0":
   version "2.3.0"
@@ -2856,6 +2892,15 @@
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@wordpress/element" "^2.20.0"
+    classnames "^2.2.5"
+
+"@wordpress/primitives@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@wordpress/primitives/-/primitives-2.1.0.tgz#db4387e54b43c5354375509af6a92cad84c53bcd"
+  integrity sha512-MAWLEN5ZhNBlHBDbjq3HIp78Ny53KAjLzGJ5OHTxspsbyOp+AbWMaxxkZ3k8Cm6sXWVD8UOiTbDElK70U+X/MQ==
+  dependencies:
+    "@babel/runtime" "^7.13.10"
+    "@wordpress/element" "^3.1.0"
     classnames "^2.2.5"
 
 "@wordpress/priority-queue@^1.11.0":

@@ -27,7 +27,7 @@
 		"@types/jest": "^26.0.21",
 		"@types/mocha": "^8.2.2",
 		"@wordpress/env": "^4.0.0",
-		"@wordpress/icons": "^2.10.0",
+		"@wordpress/icons": "^4.0.0",
 		"@wordpress/jest-preset-default": "^7.0.1",
 		"@wordpress/prettier-config": "^1.0.1",
 		"@wordpress/scripts": "^14.0.1",
