@@ -217,7 +217,10 @@
 /**
  * Individual column alignment for the editor
  */
+
 .wp-block-jetpack-layout-grid-editor {
+	position: relative;
+
 	&.are-vertically-aligned-top [data-type="jetpack/layout-grid-column"].wp-block {
 		align-self: flex-start;
 	}

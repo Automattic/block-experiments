@@ -350,14 +350,16 @@ class Edit extends Component {
 					isSelected={ isSelected }
 				>
 					<div className="wpcom-overlay-grid" ref={ this.overlayRef }>
-						{ times( getGridWidth( previewMode ) ).map(
-							( item ) => (
-								<div
-									className="wpcom-overlay-grid__column"
-									key={ item }
-								></div>
-							)
-						) }
+						<div className="wpcom-overlay-grid__inner">
+							{ times( getGridWidth( previewMode ) ).map(
+								( item ) => (
+									<div
+										className="wpcom-overlay-grid__column"
+										key={ item }
+									></div>
+								)
+							) }
+						</div>
 					</div>
 
 					<InnerBlocks
