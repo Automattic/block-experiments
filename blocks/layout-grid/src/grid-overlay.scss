@@ -20,16 +20,24 @@
 	left: 0;
 	bottom: 0;
 	right: 0;
-	display: grid;
-	grid-gap: $grid-gutter;
-	grid-template-columns: $grid-desktop;
 
-	// This padding adds end gutters.
-	padding-left: $grid-gutter;
-	padding-right: $grid-gutter;
+	> .wpcom-overlay-grid__inner {
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		display: grid;
+		grid-gap: $grid-gutter;
+		grid-template-columns: $grid-desktop;
+		height: 100%;
 
-	// Lower the z-index so it's under the block borders.
-	z-index: 0;
+		// This padding adds end gutters.
+		padding-left: $grid-gutter;
+		padding-right: $grid-gutter;
+
+		// Lower the z-index so it's under the block borders.
+		z-index: 0;
+	}
 
 	// Colorize for dark themes also.
 	color: rgba(0,0,0,0.03);
