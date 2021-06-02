@@ -7,7 +7,7 @@
 	"license": "GPL-2.0-or-later",
 	"scripts": {
 		"env": "wp-env",
-		"start": "yarn build-css && wp-scripts start & node-sass --watch editor.scss -o build & node-sass --watch style.scss -o build",
+		"start": "yarn build-css & wp-scripts start & node-sass --watch editor.scss -o build & node-sass --watch style.scss -o build",
 		"build": "wp-scripts build && yarn build-css",
 		"build-css": "node-sass ./editor.scss -o build | postcss build/editor.css -u autoprefixer -b 'last 2 versions' -r --no-map && node-sass ./style.scss -o build | postcss build/style.css -u autoprefixer -b 'last 2 versions' -r --no-map",
 		"plugin": "yarn clean && node ./bundler/build",
