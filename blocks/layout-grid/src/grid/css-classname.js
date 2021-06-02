@@ -178,6 +178,7 @@ export function removeGridClasses( classes ) {
 		.replace( /\s{2,}/, '' )
 		.replace( /wp-block-jetpack-layout-gutter__\w*/, '' )
 		.replace( /is-vertically-aligned-\w*/, '' )
+		.replace( /is-style-[A-Za-z-_]*/, '' )
 		.replace( /are-vertically-aligned-\w*/ );
 }
 
