@@ -24,6 +24,11 @@ You can follow development, file an issue, suggest features, and view the source
 
 == Changelog ==
 
+= 1.7 - 7th June 2021 =
+* Add initial support for WordPress mobile app
+* Fix incorrect behaviour of drag handles in Safari
+* Fix sticky block styles
+
 = 1.6 - 26th March 2021 =
 * Remove deprecated Gutenberg functions
 * Restore hyphenation behaviour to 1.3 - it caused too many issues
