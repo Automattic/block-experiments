@@ -54,6 +54,16 @@ function ColumnsEdit( {
 	const { verticalAlignment, align } = attributes;
 
 	const [ isDefaultColumns, setDefaultColumns ] = useState( ! columns );
+	if ( ! columns ) {
+		// Set the default column on the next tick.
+		// This is done so that the insertion doesn't conflict with removal Modal dismissal
+		// And we end up with a state where the VariationControl is set to be visible
+		// but not dismissible.
+		// eslint-disable-next-line @wordpress/react-no-unsafe-timeout
+		setTimeout( () => {
+			setDefaultColumns( true );
+		}, 0 );
+	}
 
 	const [ resizeListener, sizes ] = useResizeObserver();
 	const { width } = sizes || {};
