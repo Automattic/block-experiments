@@ -53,7 +53,19 @@ function ColumnsEdit( {
 } ) {
 	const { verticalAlignment, align } = attributes;
 
-	const [ isDefaultColumns, setDefaultColumns ] = useState( ! columns );
+	const [ isDefaultColumns, setDefaultColumns ] = useState( false );
+	if ( ! columns ) {
+		// Set the default column on the next tick.
+		// This is done so that the insertion of the Layout Grid Block inside other blocks
+		// such as thr group block or itself doesn't conflict with removal BlockPicker BottomSheet
+		// and the VariationControl BottomSheet.
+		// And we end up with a state where the VariationControl is set to be visible
+		// but not dismissible.
+		// eslint-disable-next-line @wordpress/react-no-unsafe-timeout
+		setTimeout( () => {
+			setDefaultColumns( true );
+		}, 0 );
+	}
 
 	const [ resizeListener, sizes ] = useResizeObserver();
 	const { width } = sizes || {};
