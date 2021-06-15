@@ -29,6 +29,7 @@ import * as motionBackgroundBlock from '../blocks/motion-background/src';
 import * as starscapeBlock from '../blocks/starscape/src';
 import * as wavesBlock from '../blocks/waves/src';
 import * as bookBlock from '../blocks/book/src';
+import * as draftBlock from '../blocks/draft/src';
 
 // Instantiate the blocks, adding them to our block category
 bauhausCentenaryBlock.registerBlock();
@@ -38,3 +39,4 @@ motionBackgroundBlock.registerBlock();
 starscapeBlock.registerBlock();
 wavesBlock.registerBlock();
 bookBlock.registerBlock();
+draftBlock.registerBlock();
