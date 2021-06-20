@@ -11,7 +11,7 @@ import {
 	PanelColorSettings,
 	InnerBlocks,
 	__experimentalUnitControl as UnitControl,
-	__experimentalUseEditorFeature as useEditorFeature,
+	useSetting,
 } from '@wordpress/block-editor';
 import {
 	PanelBody,
@@ -104,7 +104,7 @@ function Edit( { attributes, className, isSelected, setAttributes } ) {
 	const [ temporaryMinHeight, setTemporaryMinHeight ] = useState( null );
 	const [ isResizing, setIsResizing ] = useState( false );
 
-	const colorPalette = useEditorFeature( 'color.palette' );
+	const colorPalette = useSetting( 'color.palette' );
 
 	const themeColors = colorPalette?.length
 		? colorPalette
