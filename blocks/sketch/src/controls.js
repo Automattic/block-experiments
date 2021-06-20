@@ -8,10 +8,7 @@ import { ColorControlIcon, BrushSizeControlIcon, BrushSizeIcon } from './icons';
 {
 	/* eslint-disable @wordpress/no-unsafe-wp-apis */
 }
-import {
-	BlockControls,
-	__experimentalUseEditorFeature as useEditorFeature,
-} from '@wordpress/block-editor';
+import { BlockControls, useSetting } from '@wordpress/block-editor';
 {
 	/* eslint-enable @wordpress/no-unsafe-wp-apis */
 }
@@ -40,7 +37,7 @@ const brushPresetChoices = [
 ];
 
 const Controls = ( { clear, color, setColor, preset, setPreset } ) => {
-	const colors = useEditorFeature( 'color.palette' ) || [];
+	const colors = useSetting( 'color.palette' ) || [];
 	return (
 		<BlockControls group="block">
 			<DropdownMenu
@@ -61,9 +58,7 @@ const Controls = ( { clear, color, setColor, preset, setPreset } ) => {
 			<DropdownMenu
 				isToolbarButton
 				isCollapsed={ true }
-				icon={
-					<Icon icon={ <ColorControlIcon color={ color } /> } />
-				}
+				icon={ <Icon icon={ <ColorControlIcon color={ color } /> } /> }
 				label={ __( 'Color', 'sketch' ) }
 			>
 				{ () => (
