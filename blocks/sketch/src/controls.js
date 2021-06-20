@@ -36,7 +36,7 @@ const brushPresetChoices = [
 	},
 ];
 
-const Controls = ( { clear, color, setColor, preset, setPreset } ) => {
+const Controls = ( { clear, color, setColor, preset, setPreset, isEmpty } ) => {
 	const colors = useSetting( 'color.palette' ) || [];
 	return (
 		<BlockControls group="block">
@@ -74,7 +74,8 @@ const Controls = ( { clear, color, setColor, preset, setPreset } ) => {
 			<ToolbarButton
 				icon={ trash }
 				onClick={ clear }
-				label={ __( 'Clear', 'sketch' ) }
+				label={ __( 'Clear canvas', 'sketch' ) }
+				disabled={ isEmpty }
 			/>
 		</BlockControls>
 	);

@@ -126,6 +126,7 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 				setColor={ setColor }
 				preset={ preset }
 				setPreset={ setPreset }
+				isEmpty={ ! strokes.length }
 			/>
 			<figure { ...blockProps }>
 				<Freehand
