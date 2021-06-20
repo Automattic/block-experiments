@@ -41,13 +41,5 @@ export const BrushSizeControlIcon = () => (
 export const BrushSizeIcon = ( { radius = 8 } ) => (
 	<SVG width="24" height="24" viewBox="0 0 16 16" fill="none">
 		<Circle cx="8" cy="8" r={ radius } />
-		<Circle
-			cx="8"
-			cy="8"
-			r={ radius - 1 }
-			stroke="#00131C"
-			strokeOpacity="0.2"
-			strokeWidth="1.5"
-		/>
 	</SVG>
 );

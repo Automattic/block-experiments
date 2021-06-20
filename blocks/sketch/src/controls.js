@@ -24,15 +24,15 @@ import { trash } from '@wordpress/icons';
 const brushPresetChoices = [
 	{
 		value: 0,
-		icon: <Icon icon={ <BrushSizeIcon radius="4" /> } type="svg" />,
+		icon: <Icon icon={ <BrushSizeIcon radius="2" /> } type="svg" />,
 	},
 	{
 		value: 1,
-		icon: <Icon icon={ <BrushSizeIcon radius="6" /> } type="svg" />,
+		icon: <Icon icon={ <BrushSizeIcon radius="4" /> } type="svg" />,
 	},
 	{
 		value: 2,
-		icon: <Icon icon={ <BrushSizeIcon radius="8" /> } type="svg" />,
+		icon: <Icon icon={ <BrushSizeIcon radius="7" /> } type="svg" />,
 	},
 ];
 
