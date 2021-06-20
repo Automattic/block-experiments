@@ -72,7 +72,6 @@ const Controls = ( { clear, color, setColor, preset, setPreset } ) => {
 				) }
 			</DropdownMenu>
 			<ToolbarButton
-				className="wp-block-a8c-sketch__temporary-trash-icon"
 				icon={ trash }
 				onClick={ clear }
 				label={ __( 'Clear', 'sketch' ) }
