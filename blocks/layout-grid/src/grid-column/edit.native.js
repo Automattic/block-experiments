@@ -11,6 +11,7 @@ import {
 	BottomSheetSelectControl,
 	alignmentHelpers,
 } from '@wordpress/components';
+import { useCallback } from '@wordpress/element';
 import { withViewportMatch } from '@wordpress/viewport';
 import {
 	InnerBlocks,
@@ -118,6 +119,35 @@ function ColumnsEdit( {
 		viewportSize
 	);
 
+	const isFullWidthAppender =
+		calculatedColumnStyles.width === contentStyle.width &&
+		isFullWidth( parentAlign );
+
+	const renderAppender = useCallback( () => {
+		if ( isSelected ) {
+			return (
+				<View
+					style={ [
+						styles[ 'column__appender' ],
+						isFullWidthAppender &&
+							styles[ 'column__appender-full-width' ],
+						isFullWidthAppender &&
+							hasChildren &&
+							styles[
+								'column__appender-full-width-has-children'
+							],
+						! isFullWidthAppender &&
+							hasChildren &&
+							styles[ 'column__appender-not-full-width' ],
+					] }
+				>
+					<InnerBlocks.ButtonBlockAppender />
+				</View>
+			);
+		}
+		return null;
+	}, [ isFullWidthAppender, isSelected, hasChildren ] );
+
 	if ( ! isSelected && ! hasChildren ) {
 		return (
 			<View
@@ -135,35 +165,12 @@ function ColumnsEdit( {
 			? styles[ 'column__padding-none-is-selected' ]
 			: styles[ 'column__padding-' + padding ];
 
-	const appenderStyle = hasChildren
-		? styles[ 'column__appender-has-children' ]
-		: styles.column__appender;
-
 	return (
 		<>
 			<View style={ [ columnPadding, calculatedColumnStyles ] }>
 				<InnerBlocks
 					templateLock={ false }
-					renderAppender={
-						! hasChildren || isSelected
-							? () => (
-									<View
-										style={
-											isFullWidth( parentAlign )
-												? appenderStyle
-												: [
-														appenderStyle,
-														styles[
-															'column__appender-not-full-width'
-														],
-												  ]
-										}
-									>
-										<InnerBlocks.ButtonBlockAppender />
-									</View>
-							  )
-							: undefined
-					}
+					renderAppender={ renderAppender }
 					parentWidth={ calculatedColumnStyles.width }
 					blockWidth={ calculatedColumnStyles.width }
 				/>
