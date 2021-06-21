@@ -16,20 +16,26 @@
 }
 
 .column__appender {
-	margin-left: 8px;
-	margin-right: 8px;
-	margin-bottom: -10px; 
+	margin-left: $grid-unit-10;
+	margin-right: $grid-unit-10;
+	margin-bottom: -10px;
 }
 
-.column__appender-has-children {
-	margin-left: 16px;
-	margin-right: 16px;
-	margin-bottom: 6px; 
+.column__appender-full-width {
+	margin-left: $grid-unit * 2.5;
+	margin-right: $grid-unit * 2.5;
+}
+
+.column__appender-full-width-has-children {
+	margin-left: $grid-unit-15;
+	margin-right: $grid-unit-15;
+	margin-bottom: 5px;
 }
 
 .column__appender-not-full-width {
 	margin-left: 0;
 	margin-right: 0;
+	margin-bottom: 5px;
 }
 
 .column__padding-none {
