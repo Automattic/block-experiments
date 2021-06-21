@@ -26,7 +26,7 @@ const block = {
 	title: __( 'Sketch', 'a8c-sketch' ),
 	category: 'a8c-blocks',
 	description: _x(
-		"“There's nothing more difficult than a line.” — Pablo Picasso",
+		'“Not a day without a line drawn.” — Apelles of Kos',
 		'Block description, based on a quote',
 		'a8c-sketch'
 	),
