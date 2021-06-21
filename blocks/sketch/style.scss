@@ -1,6 +1,5 @@
 .wp-block-a8c-sketch {
 	width: 100%;
-	min-height: 450px;
 	height: 100%;
 	position: relative;
 
@@ -11,26 +10,6 @@
 		width: 100%;
 		height: 100%;
 		touch-action: none;
-	}
-
-	&__temporary-trash-icon svg {
-		fill: none;
-		stroke: currentColor;
-	}
-
-	&__brush-style-popover {
-		.components-dropdown-menu__menu
-			.components-dropdown-menu__menu-item.is-active
-			svg {
-			background: initial;
-			color: initial;
-		}
-
-		/**
-		* Take care of default width for popover content.
-		*/
-		.components-popover__content {
-			min-width: initial;
-		}
+		overflow: hidden;
 	}
 }
