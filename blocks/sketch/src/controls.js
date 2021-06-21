@@ -5,13 +5,7 @@ import { ColorControlIcon, BrushSizeControlIcon, BrushSizeIcon } from './icons';
 /**
  * WordPress dependencies
  */
-{
-	/* eslint-disable @wordpress/no-unsafe-wp-apis */
-}
 import { BlockControls, useSetting } from '@wordpress/block-editor';
-{
-	/* eslint-enable @wordpress/no-unsafe-wp-apis */
-}
 import {
 	ColorPalette,
 	Icon,
@@ -21,7 +15,7 @@ import {
 import { __ } from '@wordpress/i18n';
 import { trash } from '@wordpress/icons';
 
-const brushPresetChoices = [
+const brushes = [
 	{
 		value: 0,
 		icon: <Icon icon={ <BrushSizeIcon radius="2" /> } type="svg" />,
@@ -48,7 +42,7 @@ const Controls = ( { clear, color, setColor, preset, setPreset, isEmpty } ) => {
 				} }
 				icon={ <Icon icon={ BrushSizeControlIcon } /> }
 				label={ __( 'Brush', 'sketch' ) }
-				controls={ brushPresetChoices.map( ( control ) => ( {
+				controls={ brushes.map( ( control ) => ( {
 					...control,
 					isActive: control.value === preset,
 					onClick: () => {
