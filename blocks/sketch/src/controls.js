@@ -38,14 +38,14 @@ const brushPresetChoices = [
 
 const Controls = ( { clear, color, setColor, preset, setPreset, isEmpty } ) => {
 	const colors = useSetting( 'color.palette' ) || [];
-	const popoverProps = {
-		className: 'wp-block-a8c-sketch__brush-style-popover',
-	};
 	return (
 		<BlockControls group="block">
 			<ToolbarDropdownMenu
-				isCollapsed={ true }
-				popoverProps={ popoverProps }
+				isCollapsed
+				popoverProps={ {
+					className: 'wp-block-a8c-sketch__brush-style-popover',
+					isAlternate: true,
+				} }
 				icon={ <Icon icon={ BrushSizeControlIcon } /> }
 				label={ __( 'Brush', 'sketch' ) }
 				controls={ brushPresetChoices.map( ( control ) => ( {
@@ -59,7 +59,8 @@ const Controls = ( { clear, color, setColor, preset, setPreset, isEmpty } ) => {
 				} ) ) }
 			/>
 			<ToolbarDropdownMenu
-				isCollapsed={ true }
+				isCollapsed
+				popoverProps={ { isAlternate: true } }
 				icon={ <Icon icon={ <ColorControlIcon color={ color } /> } /> }
 				label={ __( 'Color', 'sketch' ) }
 			>
