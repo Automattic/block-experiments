@@ -26,5 +26,4 @@ You can follow development, file an issue, suggest features, and view the source
 2. Gradients in motion.
 3. Use the colors from your theme.
 4. Adjust the brush style.
-5. Enjoy the soothing animation.
 
