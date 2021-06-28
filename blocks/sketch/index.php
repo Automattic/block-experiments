@@ -3,6 +3,7 @@ namespace Automattic\A8c\Plugins\Blocks\Sketch;
 
 define( __NAMESPACE__ . '\DEFAULT_HEIGHT', 450);
 
+
 function a8c_sketch_render( $attributes ) {
 	$strokes = $attributes['strokes'] ?? [];
 	$align   = $attributes['align'] ?? '';
@@ -50,9 +51,6 @@ function set_render_callback() {
 	);
 }
 
-add_action( 'init', __NAMESPACE__ . '\set_render_callback' );
-
-
 function get_svg_path_from_stroke( $stroke ) {
 	if ( count( $stroke ) === 0 ) {
 		return '';
@@ -86,3 +84,10 @@ function get_svg_path_from_stroke( $stroke ) {
 
 	return implode( ' ', $d );
 }
+
+add_action( 'init', __NAMESPACE__ . '\set_render_callback' );
+
+add_action( 'enqueue_block_editor_assets', function() {
+	wp_enqueue_script( 'a8c-sketch' );
+} );
+
