@@ -31,7 +31,7 @@ function a8c_sketch_render( $attributes ) {
 	);
 
 	$class = sprintf( 'class="wp-block-a8c-sketch%s"', esc_attr( $align ) );
-	$style = sprintf( 'style="height: %dpx"', esc_attr( $height ) );
+	$style = sprintf( 'style="height: %dpx;"', esc_attr( $height ) );
 
 	$html =
 		sprintf( '<figure %s %s>', $class, $style ) .
