@@ -46,6 +46,9 @@ function set_render_callback() {
 	register_block_type(
 		'a8c/sketch',
 		[
+			'editor_script' => 'a8c-sketch',
+			'style' => 'a8c-sketch',
+			'editor_style' => 'a8c-sketch-editor',
 			'render_callback' => __NAMESPACE__ . '\a8c_sketch_render',
 		]
 	);
@@ -86,8 +89,4 @@ function get_svg_path_from_stroke( $stroke ) {
 }
 
 add_action( 'init', __NAMESPACE__ . '\set_render_callback' );
-
-add_action( 'enqueue_block_editor_assets', function() {
-	wp_enqueue_script( 'a8c-sketch' );
-} );
 
