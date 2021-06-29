@@ -2,15 +2,15 @@
 Contributors: automattic, matveb, oskosk, pablohoneyhoney
 Stable tag: 1.0.0
 Tested up to: 5.7
-Requires at least: 5.6
+Requires at least: 5.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Freehand sketching.
+Freehand sketching
 
 == Description ==
 
-“There's nothing more difficult than a line.” — Pablo Picasso",
+Draw and write freely on a canvas. The block offers color selection, different brush sizes, and with its transparent background can be layered on top of any container block, like groups or covers.
 
 ## Requirements
 
