@@ -23,7 +23,5 @@ You can follow development, file an issue, suggest features, and view the source
 == Screenshots ==
 
 1. Sketch Block by Automattic.
-2. Gradients in motion.
-3. Use the colors from your theme.
-4. Adjust the brush style.
+2. Draw and write freely on a canvas.
 
