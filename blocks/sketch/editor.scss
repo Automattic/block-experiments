@@ -1,0 +1,10 @@
+.wp-block-a8c-sketch {
+	&__brush-style-popover {
+		/**
+		* Take care of default width for popover content.
+		*/
+		.components-popover__content {
+			min-width: initial;
+		}
+	}
+}
