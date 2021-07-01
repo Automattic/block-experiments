@@ -1,6 +1,6 @@
 {
 	"blocks": [ "sketch" ],
-	"version": "1.0.4",
+	"version": "1.0.6",
 	"name": "Sketch",
 	"description": "Draw and write freely on a canvas. The block offers color selection, different brush sizes, and with its transparent background can be layered on top of any container block, like groups or covers.",
 	"resource": "a8c-sketch"

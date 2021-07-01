@@ -1,11 +1,11 @@
 === Sketch Block ===
 Contributors: automattic, matveb, oskosk, pablohoneyhoney
-Stable tag: 1.0.4
+Stable tag: 1.0.6
 Tested up to: 5.7.2
 Requires at least: 5.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
-Tags: blocks, sketch, freehand, drawing
+Tags: block, blocks, sketch, freehand, drawing
 
 Sketch and draw freely on a canvas with brush strokes that feel natural.
 
