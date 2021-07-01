@@ -2,5 +2,8 @@
 	"name": "a8c/waves",
 	"title": "Waves",
 	"description": "Blocks can now be sinuous and soothing with the Waves Block.",
-	"category": "widgets"
+	"category": "widgets",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./editor.css",
+	"style": "file:./style.css"
 }
