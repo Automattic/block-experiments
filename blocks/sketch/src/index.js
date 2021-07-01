@@ -4,6 +4,7 @@
 import edit from './edit';
 import save from './save';
 import { BlockIcon as icon } from './icons';
+import example from './example';
 
 /**
  * WordPress dependencies
@@ -33,6 +34,7 @@ const block = {
 	keywords: [ __( 'Draw', 'a8c-sketch' ) ],
 	edit,
 	save,
+	example,
 };
 export function registerBlock() {
 	registerBlockType( name, block );
