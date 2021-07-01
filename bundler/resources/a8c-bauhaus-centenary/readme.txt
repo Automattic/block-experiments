@@ -1,10 +1,11 @@
 === Bauhaus Centenary Block ===
 Contributors: automattic, ajlende, pablohoneyhoney
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 Tested up to: 5.6
 Requires at least: 5.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Tags: block, blocks, bauhaus
 
 Celebrate the centenary of the design school
 
@@ -15,7 +16,7 @@ Celebrate the centenary of the design school
 ## Requirements
 
 As this is part of a series of block experiments, the latest version of the <a href="https://wordpress.org/plugins/gutenberg/">Gutenberg Plugin</a> is required.
-  
+
 ## Source and Support
 
 You can follow development, file an issue, suggest features, and view the source at the Github repo: <a href="https://github.com/Automattic/block-experiments">https://github.com/Automattic/block-experiments</a>
