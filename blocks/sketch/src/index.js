@@ -25,7 +25,7 @@ const block = {
 		align: true,
 	},
 	title: __( 'Sketch', 'a8c-sketch' ),
-	category: 'a8c-blocks',
+	category: 'widgets',
 	description: _x(
 		'“Not a day without a line drawn.” — Apelles of Kos',
 		'Block description, based on a quote',
