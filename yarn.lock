@@ -11005,10 +11005,10 @@ pend@~1.2.0:
   resolved "https://registry.yarnpkg.com/pend/-/pend-1.2.0.tgz#7a57eb550a6783f9115331fcf4663d5c8e007a50"
   integrity sha1-elfrVQpng/kRUzH89GY9XI4AelA=
 
-perfect-freehand@0.4.91:
-  version "0.4.91"
-  resolved "https://registry.yarnpkg.com/perfect-freehand/-/perfect-freehand-0.4.91.tgz#f2992d33b96bb8337cc9a082ab0841e5c59ffd90"
-  integrity sha512-nWCo3+d0mn20+UiambCz+GEfbYkWAUH4tdH/qVlz/lOBR6AcTuXOUJUvX4Qxj+aBqxJCx7T9nlORB6diO3NyMw==
+perfect-freehand@0.4.9:
+  version "0.4.9"
+  resolved "https://registry.yarnpkg.com/perfect-freehand/-/perfect-freehand-0.4.9.tgz#09e9f5a1057da7eda335367d5f1f2c6fbd369e3e"
+  integrity sha512-mNf9Yd2dxWV3kZs2PPNWjLOt8Yh31+PIu6/zst7I8YJOicYBnRofzXl9us5gxqK4ZfHKO5O7PjttHF0tuHfo0g==
 
 performance-now@^2.1.0:
   version "2.1.0"

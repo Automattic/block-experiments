@@ -1,6 +1,6 @@
 === Sketch Block ===
 Contributors: automattic, matveb, oskosk, pablohoneyhoney
-Stable tag: 1.0.8
+Stable tag: 1.0.7
 Tested up to: 5.7.2
 Requires at least: 5.7
 License: GPLv2 or later
@@ -29,19 +29,4 @@ You can follow development, file an issue, suggest features, and view the source
 
 1. Sketch Block by Automattic.
 2. Draw and write freely on a canvas.
-
-== Changelog ==
-
-= 1.0.8 - 2nd July 2021 =
-* Address crashing issues when the underlying library detects duplicate strokes
-
-= 1.0.7 - 1st July 2021 =
-* Add example for the block inserter preview
-* Categorize the block under widgets
-
-= 1.0.6 - 1st July 2021 =
-* Improve compatibility with block directory
-
-= 1.0.0 - 1st July 2021 =
-* Initial release
 
