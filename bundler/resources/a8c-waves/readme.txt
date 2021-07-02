@@ -31,6 +31,9 @@ You can follow development, file an issue, suggest features, and view the source
 
 == Changelog ==
 
+= 1.0.2 - 1st July 2021 =
+* Improve compatibility with block directory
+
 = 1.0.1 - 3rd August 2020 =
 * Fix error when double selecting a color
 * Minor performance improvements
