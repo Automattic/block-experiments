@@ -23,22 +23,14 @@ export const presets = [
 export function getSvgPathFromStroke( stroke ) {
 	if ( stroke.length === 0 ) return '';
 
-	const d = [];
-
-	let [ p0, p1 ] = stroke;
-
-	d.push( 'M', p0[ 0 ], p0[ 1 ], 'Q' );
-
-	for ( let i = 1; i < stroke.length; i++ ) {
-		d.push(
-			p0[ 0 ],
-			p0[ 1 ],
-			( p0[ 0 ] + p1[ 0 ] ) / 2,
-			( p0[ 1 ] + p1[ 1 ] ) / 2
-		);
-		p0 = p1;
-		p1 = stroke[ i ];
-	}
+	const d = stroke.reduce(
+		( acc, [ x0, y0 ], i, arr ) => {
+			const [ x1, y1 ] = arr[ ( i + 1 ) % arr.length ];
+			acc.push( x0, y0, ( x0 + x1 ) / 2, ( y0 + y1 ) / 2 );
+			return acc;
+		},
+		[ 'M', ...stroke[ 0 ], 'Q' ]
+	);
 
 	d.push( 'Z' );
 
