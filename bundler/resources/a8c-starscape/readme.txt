@@ -30,6 +30,9 @@ You can follow development, file an issue, suggest features, and view the source
 
 == Changelog ==
 
+= 1.0.3 - 1st July 2021 =
+* Improve compatibility with block directory
+
 = 1.0.2 - 6th March 2020 =
 * Fix missing text domains for translations
 
