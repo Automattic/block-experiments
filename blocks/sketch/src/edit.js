@@ -149,6 +149,7 @@ export const Freehand = ( {
 		onPointerMove={ handlePointerMove }
 		onPointerUp={ handlePointerUp }
 		style={ { touchAction: 'none' } }
+		role="img"
 	>
 		{ strokes.map( ( stroke, i ) => (
 			<StrokePath key={ i } stroke={ stroke } />

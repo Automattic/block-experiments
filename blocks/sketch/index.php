@@ -35,7 +35,7 @@ function a8c_sketch_render( $attributes ) {
 
 	$html =
 		sprintf( '<figure %s %s>', $class, $style ) .
-			'<svg>' .
+			'<svg role="img">' .
 				implode( "\n", $paths ) .
 			'</svg>' .
 		'</figure>';
