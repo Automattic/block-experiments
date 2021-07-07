@@ -246,3 +246,13 @@
 		}
 	}
 }
+
+/**
+ * Image alignment for the editor
+ */
+
+.wp-block[data-align=right] {
+    > .wp-block-image {
+        float: right;
+    }
+}
