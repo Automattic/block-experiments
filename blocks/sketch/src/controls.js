@@ -102,11 +102,9 @@ const Controls = ( {
 						onChange={ setTitle }
 						help={
 							<>
-								<ExternalLink href="https://developer.mozilla.org/en-US/docs/Web/SVG/Element/title">
-									{ __(
-										'Short-text description of the sketch drawing'
-									) }
-								</ExternalLink>
+								{ __(
+									"Add a short-text description so it's recognized as the accessible name for the sketch."
+								) }
 							</>
 						}
 					/>
