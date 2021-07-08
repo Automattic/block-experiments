@@ -14,7 +14,7 @@ const MIN_HEIGHT = 200;
 const MAX_HEIGHT = 1000;
 
 const Edit = ( { attributes, isSelected, setAttributes } ) => {
-	const { strokes, height } = attributes;
+	const { strokes, height, title } = attributes;
 	const [ currentMark, setCurrentMark ] = useState();
 	const [ preset, setPreset ] = useState( 1 );
 	const [ isResizing, setIsResizing ] = useState( false );
@@ -72,6 +72,8 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 		setIsResizing( true );
 	};
 
+	const setTitle = ( newTitle ) => setAttributes( { title: newTitle } );
+
 	const handleOnResizeStop = ( event, direction, elt, delta ) => {
 		const sketchHeight = Math.min(
 			parseInt( height + delta.height, 10 ),
@@ -123,6 +125,8 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 				preset={ preset }
 				setPreset={ setPreset }
 				isEmpty={ ! strokes.length }
+				title={ title }
+				setTitle={ setTitle }
 			/>
 			<figure { ...blockProps }>
 				<Freehand
@@ -131,6 +135,7 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 					handlePointerUp={ handlePointerUp }
 					strokes={ strokes }
 					currentStroke={ currentStroke }
+					title={ title }
 				/>
 			</figure>
 		</ResizableBox>
@@ -143,6 +148,7 @@ export const Freehand = ( {
 	handlePointerDown,
 	handlePointerMove,
 	handlePointerUp,
+	title,
 } ) => (
 	<svg
 		onPointerDown={ handlePointerDown }
@@ -151,6 +157,7 @@ export const Freehand = ( {
 		style={ { touchAction: 'none' } }
 		role="img"
 	>
+		{ title && <title>{ title }</title> }
 		{ strokes.map( ( stroke, i ) => (
 			<StrokePath key={ i } stroke={ stroke } />
 		) ) }

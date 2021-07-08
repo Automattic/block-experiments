@@ -7,9 +7,11 @@ define( __NAMESPACE__ . '\DEFAULT_HEIGHT', 450);
 function a8c_sketch_render( $attributes ) {
 	$strokes = $attributes['strokes'] ?? [];
 	$align   = $attributes['align'] ?? '';
+	$title   = $attributes['title'] ?? '';
 	$height   = $attributes['height'] ?? DEFAULT_HEIGHT;
 	// The class name that affects alignment is called alignwide, alignfull, etc
 	$align = $align ? " align$align" : '';
+	$title_tag = $title ? sprintf( '<title>%s</title>', esc_html( $title ) ) : '';
 
 	if ( ! isset( $attributes['strokes'] ) || '' === $attributes['strokes'] ) {
 		return '';
@@ -36,6 +38,7 @@ function a8c_sketch_render( $attributes ) {
 	$html =
 		sprintf( '<figure %s %s>', $class, $style ) .
 			'<svg role="img">' .
+				$title_tag .
 				implode( "\n", $paths ) .
 			'</svg>' .
 		'</figure>';
