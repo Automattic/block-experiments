@@ -1,6 +1,6 @@
 === Sketch Block ===
 Contributors: automattic, matveb, oskosk, pablohoneyhoney
-Stable tag: 1.0.8
+Stable tag: 1.0.9
 Tested up to: 5.7.2
 Requires at least: 5.7
 License: GPLv2 or later
@@ -31,6 +31,9 @@ You can follow development, file an issue, suggest features, and view the source
 2. Draw and write freely on a canvas.
 
 == Changelog ==
+
+= 1.0.9 - 8th July 2021 =
+* Improved accessibility by using title and role on the SVG element
 
 = 1.0.8 - 2nd July 2021 =
 * Address crashing issues when the underlying library detects duplicate strokes
