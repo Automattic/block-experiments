@@ -97,7 +97,7 @@ const Controls = ( {
 			<InspectorControls>
 				<PanelBody title={ __( 'Settings' ) }>
 					<TextareaControl
-						label={ __( 'Title' ) }
+						label={ __( 'Description' ) }
 						value={ title }
 						onChange={ setTitle }
 						help={
