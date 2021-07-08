@@ -20,6 +20,7 @@ const block = {
 	attributes: {
 		strokes: { type: 'array', default: [] },
 		height: { type: 'number', default: 450 },
+		title: { type: 'string', default: '' },
 	},
 	supports: {
 		align: true,
