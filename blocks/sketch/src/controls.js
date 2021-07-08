@@ -95,7 +95,7 @@ const Controls = ( {
 				/>
 			</BlockControls>
 			<InspectorControls>
-				<PanelBody title={ __( 'Sketch settings' ) }>
+				<PanelBody title={ __( 'Settings' ) }>
 					<TextareaControl
 						label={ __( 'Title' ) }
 						value={ title }
