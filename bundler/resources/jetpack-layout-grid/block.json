@@ -1,0 +1,9 @@
+{
+	"name": "jetpack/layout-grid",
+	"title": "Layout Grid",
+	"description": "A Gutenberg container block to let you align items consistently across a global grid.",
+	"category": "design",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./editor.css",
+	"style": "file:./style.css"
+}
