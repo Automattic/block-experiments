@@ -1,6 +1,6 @@
 === Sketch Block ===
 Contributors: automattic, matveb, oskosk, pablohoneyhoney
-Stable tag: 1.0.9
+Stable tag: 1.0.10
 Tested up to: 5.7.2
 Requires at least: 5.7
 License: GPLv2 or later
