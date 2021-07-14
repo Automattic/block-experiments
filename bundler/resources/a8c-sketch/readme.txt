@@ -1,6 +1,6 @@
 === Sketch Block ===
 Contributors: automattic, matveb, oskosk, pablohoneyhoney
-Stable tag: 1.0.9
+Stable tag: 1.0.10
 Tested up to: 5.7.2
 Requires at least: 5.7
 License: GPLv2 or later
@@ -31,6 +31,9 @@ You can follow development, file an issue, suggest features, and view the source
 2. Draw and write freely on a canvas.
 
 == Changelog ==
+
+= 1.0.10 - 14th July 2021 =
+* Prevent default pointer behavior on move, which could cause unintended window scrolling with some devices and browsers.
 
 = 1.0.9 - 8th July 2021 =
 * Improved accessibility by using title and role on the SVG element
