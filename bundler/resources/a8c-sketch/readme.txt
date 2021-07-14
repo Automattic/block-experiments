@@ -32,6 +32,9 @@ You can follow development, file an issue, suggest features, and view the source
 
 == Changelog ==
 
+= 1.0.10 - 14th July 2021 =
+* Prevent default pointer behavior on move, which could cause unintended window scrolling with some devices and browsers.
+
 = 1.0.9 - 8th July 2021 =
 * Improved accessibility by using title and role on the SVG element
 
