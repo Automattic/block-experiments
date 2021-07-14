@@ -39,6 +39,7 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 		const { left: x, top: y } = ref.current.getBoundingClientRect();
 
 		if ( isSelected && currentMark && e.buttons === 1 ) {
+			e.preventDefault();
 			setCurrentMark( {
 				...currentMark,
 				points: [
