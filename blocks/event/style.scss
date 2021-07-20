@@ -7,6 +7,11 @@
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
 	box-shadow: inset 0 0 0 4px rgba(0,0,0,.1);
 
+	&.aligncenter {
+		display: flex;
+		text-align: left;
+	}
+
 	.event__datebox {
 		float: left;
 		width: 40px;

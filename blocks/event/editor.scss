@@ -10,7 +10,9 @@
 	}
 
 	// Fixes for overriding editor styles
-	.editor-styles-wrapper & {
+	.editor-styles-wrapper &,
+	// Additional specificity needed for center aligned blocks
+	.editor-styles-wrapper .wp-block[data-align="center"] > & {
 		text-align: left;
 
 		p {
