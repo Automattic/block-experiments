@@ -21,6 +21,7 @@ add_action( 'init', function() {
 		filemtime( plugin_dir_path( __FILE__ ) . 'waves.js' ),
 		true // in footer
 	);
+	wp_set_script_translations( 'block-experiments', 'waves' );
 } );
 
 add_filter( 'should_load_separate_core_block_assets', '__return_true' );
