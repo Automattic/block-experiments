@@ -2,13 +2,10 @@
 
 add_action( 'init', function() {
 	register_block_type( 'a8c/waves', [
+		'script' => 'a8c-waves-js',
 		'editor_script' => 'block-experiments',
 		'style' => 'block-experiments',
 		'editor_style' => 'block-experiments-editor',
-		'render_callback' => function( $attribs, $content ) {
-			wp_enqueue_script( 'a8c-waves-js' );
-			return $content;
-		},
 	] );
 	wp_register_script(
 		'a8c-twgl-js',
@@ -24,8 +21,7 @@ add_action( 'init', function() {
 		filemtime( plugin_dir_path( __FILE__ ) . 'waves.js' ),
 		true // in footer
 	);
+	wp_set_script_translations( 'block-experiments', 'waves' );
 } );
 
-add_action( 'enqueue_block_editor_assets', function() {
-	wp_enqueue_script( 'a8c-waves-js' );
-} );
+add_filter( 'should_load_separate_core_block_assets', '__return_true' );
