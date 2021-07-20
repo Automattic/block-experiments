@@ -1,7 +1,7 @@
 === Event Block ===
 Contributors: automattic, ajlende, jasmussen
-Stable tag: 1.0.1
-Tested up to: 5.6
+Stable tag: 1.0.2
+Tested up to: 5.8
 Requires at least: 5.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -23,6 +23,10 @@ You can follow development, file an issue, suggest features, and view the source
 2. Customizing the Event Block
 
 == Changelog ==
+
+= 1.0.2 - 22nd July 2021 =
+* Improve compatibility with block directory
+* Fix center aligned styling
 
 = 1.0.1 - 3rd August 2020 =
 * Fix 'Event Description' placeholder internationalization
