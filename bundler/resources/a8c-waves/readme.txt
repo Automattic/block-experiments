@@ -1,7 +1,7 @@
 === Waves Block ===
 Contributors: automattic, ajlende, pablohoneyhoney
-Stable tag: 1.0.2
-Tested up to: 5.6
+Stable tag: 1.0.3
+Tested up to: 5.8
 Requires at least: 5.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -30,6 +30,10 @@ You can follow development, file an issue, suggest features, and view the source
 5. Enjoy the soothing animation.
 
 == Changelog ==
+
+= 1.0.3 - 22nd July 2021 =
+* Use `should_load_separate_core_block_assets` for loading assets
+* Load script translations
 
 = 1.0.2 - 1st July 2021 =
 * Improve compatibility with block directory
