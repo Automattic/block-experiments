@@ -1,0 +1,46 @@
+/**
+ * Editor styles
+ */
+
+.wp-block-a8c-definition__panel-row {
+  display: block;
+  margin-bottom: 20px;
+}
+.wp-block-a8c-definition__search-results-container {
+  background: white;
+  padding: 10px;
+  position: relative;
+}
+.wp-block-a8c-definition__search-control-container {
+	.wp-block-a8c-definition__current-locale,
+	.wp-block-a8c-definition__search-button {
+		padding: 0px 10px;
+		text-decoration: none;
+		height: auto;
+	}
+}
+
+.wp-block-a8c-definition__current-locale {
+	display: flex;
+    align-items: flex-start;
+    justify-content: flex-end;
+	.wp-block-a8c-definition__current-locale-button {
+		margin-left:8px;
+	}
+}
+
+.wp-block-a8c-definition__search-results-title {
+  margin: 0 0 4px 0;
+  color: grey;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+.wp-block-a8c-definition__search-results-item .wp-block-a8c-definition__search-results-item-button {
+  border: 0;
+  white-space: normal;
+  text-align: left;
+  height: auto;
+}
+.wp-block-a8c-definition__error-message {
+  color: crimson;
+}
