@@ -105,7 +105,8 @@ function ColumnsEdit( {
 					template={ isDefaultColumns ? DEFAULT_TEMPLATE : null }
 					templateLock="all"
 					allowedBlocks={ ALLOWED_BLOCKS }
-					horizontal={ true }
+					orientation={ columns !== 1 ? 'horizontal' : undefined }
+					horizontal={ columns !== 1 }
 					contentResizeMode="stretch"
 					parentWidth={ isFullWidth( align ) ? screenWidth : width }
 					blockWidth={ isFullWidth( align ) ? screenWidth : width }
