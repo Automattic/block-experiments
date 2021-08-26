@@ -15,6 +15,9 @@
 
 .variation-control__close-icon {
 	color: $gray;
+	margin-left: $grid-unit-10;
+	padding-left: $grid-unit-20;
+	padding-right: $grid-unit-20;
 }
 
 .variation-control__inner-shell {
