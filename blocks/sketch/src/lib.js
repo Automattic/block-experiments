@@ -1,8 +1,3 @@
-/**
- * External dependencies
- */
-import _getStroke from 'perfect-freehand';
-
 export const presets = [
 	{
 		size: 3,
@@ -40,28 +35,4 @@ export function getSvgPathFromStroke( stroke ) {
 	d.push( 'Z' );
 
 	return d.join( ' ' );
-}
-
-/**
- *
- * Temporary fix for handling most of the crashes in Sfari when the user draws a single dot until we find a better solution
- * or perfect-freehand gets updated. See https://github.com/steveruizok/perfect-freehand/issues/11#issuecomment-873414323
- *
- * @param   {Array}   points
- * @param   {Object}  options
- * @return  {Array}   An arrray of points as returned by getStroke
- */
-export function getStroke( points, options ) {
-	if ( points.length < 3 ) {
-		return _getStroke(
-			[
-				...points,
-				[ points[ 0 ][ 0 ], points[ 0 ][ 1 ] + 1, points[ 0 ][ 2 ] ],
-			],
-			options
-		);
-	}
-	const stroke = _getStroke( points, options );
-
-	return stroke;
 }

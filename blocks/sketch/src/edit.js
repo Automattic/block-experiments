@@ -1,7 +1,12 @@
 /**
+ * External dependencies
+ */
+import getStroke from 'perfect-freehand';
+
+/**
  * Internal dependencies
  */
-import { presets, getStroke, getSvgPathFromStroke } from './lib';
+import { presets, getSvgPathFromStroke } from './lib';
 import Controls from './controls';
 /**
  * WordPress dependencies
