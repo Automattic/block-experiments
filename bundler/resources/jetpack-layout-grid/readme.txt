@@ -24,6 +24,9 @@ You can follow development, file an issue, suggest features, and view the source
 
 == Changelog ==
 
+= 1.7.2 - 19th November 2021 =
+* Prefer site editor viewport settings when changing the preview device type
+
 = 1.7.1 - 11th November 2021 =
 * Show block in excerpts
 
