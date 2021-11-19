@@ -122,9 +122,9 @@ export function withSetPreviewDeviceType() {
 	return withDispatch( ( dispatch ) => {
 		return {
 			setPreviewDeviceType( type ) {
-				const { __experimentalSetPreviewDeviceType } = dispatch(
-					'core/edit-post'
-				);
+				const { __experimentalSetPreviewDeviceType } =
+					dispatch( 'core/edit-site' ) ||
+					dispatch( 'core/edit-post' );
 				__experimentalSetPreviewDeviceType( type );
 			},
 		};
@@ -158,9 +158,8 @@ export function withColumnAttributes() {
 
 export function withPreviewDeviceType() {
 	return withSelect( ( select ) => {
-		const { __experimentalGetPreviewDeviceType = null } = select(
-			'core/edit-post'
-		);
+		const { __experimentalGetPreviewDeviceType = null } =
+			select( 'core/edit-site' ) || select( 'core/edit-post' );
 
 		return {
 			previewDeviceType: __experimentalGetPreviewDeviceType(),
