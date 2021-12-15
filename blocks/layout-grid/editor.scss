@@ -35,6 +35,7 @@
  */
 
 // Make sure each column is full height in the editor, as it is on the frontend.
+[data-type="jetpack/layout-grid-column"],
 [data-type="jetpack/layout-grid-column"] > .block-editor-block-list__block-edit,
 [data-type="jetpack/layout-grid-column"] > .block-editor-block-list__block-edit > [data-block],
 .wp-block-jetpack-layout-grid-column {
