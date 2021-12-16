@@ -34,16 +34,18 @@
  * Visual Glitches
  */
 
-// Make sure each column is full height in the editor, as it is on the frontend.
-[data-type="jetpack/layout-grid-column"] > .block-editor-block-list__block-edit,
-[data-type="jetpack/layout-grid-column"] > .block-editor-block-list__block-edit > [data-block],
+// This prevents collapsing margins, which makes for a more stable experience.
+// It is definitely needed for background colors to work.
 .wp-block-jetpack-layout-grid-column {
-	height: 100%;
-
-	// This prevents collapsing margins, which makes for a more stable experience.
-	// It is definitely needed for background colors to work.
 	border-top: 0.05px solid transparent;
 	border-bottom: 0.05px solid transparent;
+}
+
+// There are extra containers in the editing canvas. They need to be set to grid
+// same as the corresponding containers on the frontend, to match.
+[data-type="jetpack/layout-grid-column"] {
+	display: grid;
+	height: 100%;
 }
 
 // When grid is full-wide, pad the inner blocks so the side UI is available, including resize handles.

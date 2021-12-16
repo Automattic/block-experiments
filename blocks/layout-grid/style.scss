@@ -168,7 +168,8 @@
 /**
  * Parent column alignment
  */
-.wp-block-jetpack-layout-grid {
+
+ .wp-block-jetpack-layout-grid {
 	&.are-vertically-aligned-top {
 		align-items: flex-start;
 	}
@@ -185,9 +186,12 @@
 /**
  * Individual column alignment
  */
-.wp-block-jetpack-layout-grid-column {
+
+ .wp-block-jetpack-layout-grid-column {
+	// Allow top-aligned columns to span the full height.
 	&.is-vertically-aligned-top {
 		align-self: flex-start;
+		height: 100%;
 	}
 
 	&.is-vertically-aligned-center {
