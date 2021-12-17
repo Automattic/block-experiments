@@ -85,14 +85,31 @@
  * Inspector Controls
  */
 
-.jetpack-layout-grid-columns .block-editor-block-styles__item-preview {
-	position: relative;
+.jetpack-layout-grid-columns {
+	display: flex;
+	justify-content: space-between;
+	font-size: 12px;
+	margin-bottom: 12px;
 
-	svg {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
+	.block-editor-block-styles__item-preview {
+		display: flex;
+		justify-content: center;
+
+		svg {
+			fill: currentColor;
+		}
+	}
+
+	.block-editor-block-styles__item {
+		border-radius: 2px;
+		flex: 1;
+		cursor: pointer;
+		text-align: center;
+
+		&.is-active {
+			background-color: #1e1e1e;
+			color: #fff;
+		}
 	}
 }
 
@@ -114,6 +131,13 @@
 		margin-right: 16px;
 	}
 }
+
+.jetpack-layout-grid-help {
+	font-size: 12px;
+	font-style: normal;
+	color: #757575;
+}
+
 
 
 /**
