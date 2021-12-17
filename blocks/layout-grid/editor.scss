@@ -9,11 +9,12 @@
 
 // Unset many of the paddings and margins the block editor sets.
 // This is to make sure resizing the column containers works as expected.
+// These rules exist to support classic themes, and are unnecessary in block themes.
 
 // 1. Reset margins on block itself, so it doesn't inherit the baseline margin.
 [data-type="jetpack/layout-grid"] {
-    margin-top: 0;
-    margin-bottom: 0;
+	margin-top: 0;
+	margin-bottom: 0;
 }
 
 // 2. Reset margins on immediate innerblocks container.
@@ -48,6 +49,7 @@
 	height: 100%;
 }
 
+
 // When grid is full-wide, pad the inner blocks so the side UI is available, including resize handles.
 // To make sure this is smooth, we add some animation.
 // For now this whole bit exists so the side UI, and resize handles, are available even on full-wide blocks.
@@ -63,21 +65,6 @@
 	.is-block-content {
 		width: 100%;
 	}
-}
-
-// Make the columns appender margin match the default block margin.
-// @todo: this margin will possibly be retired in the future. Revisit then.
-.wp-block-jetpack-layout-grid-column > .block-editor-inner-blocks > .block-editor-block-list__layout > .block-list-appender {
-	margin: 28px 0;
-}
-
-// Override and adjust rule inherited from the core project.
-.wp-block:not(.is-selected):not(.has-child-selected) .block-editor-default-block-appender {
-	display: inherit;
-}
-
-[data-type="jetpack/layout-grid"]:not(.is-selected):not(.has-child-selected) .block-editor-default-block-appender {
-	display: none;
 }
 
 
