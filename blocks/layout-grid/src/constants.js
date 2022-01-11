@@ -26,19 +26,19 @@ export const getGutterValues = () =>
 
 export const getColumns = () => [
 	{
-		label: __( '1 column', 'layout-grid' ),
+		label: __( '1 cols', 'layout-grid' ),
 		value: 1,
 	},
 	{
-		label: __( '2 columns', 'layout-grid' ),
+		label: __( '2 cols', 'layout-grid' ),
 		value: 2,
 	},
 	{
-		label: __( '3 columns', 'layout-grid' ),
+		label: __( '3 cols', 'layout-grid' ),
 		value: 3,
 	},
 	{
-		label: __( '4 columns', 'layout-grid' ),
+		label: __( '4 cols', 'layout-grid' ),
 		value: 4,
 	},
 ];

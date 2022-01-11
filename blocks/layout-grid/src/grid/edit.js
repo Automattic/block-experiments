@@ -417,13 +417,11 @@ class Edit extends Component {
 								) ) }
 							</div>
 
-							<p>
-								<em>
-									{ __(
-										'Changing the number of columns will reset your layout and could remove content.',
-										'layout-grid'
-									) }
-								</em>
+							<p className='jetpack-layout-grid-help'>
+								{ __(
+									'Changing the number of columns will reset your layout and could remove content.',
+									'layout-grid'
+								) }
 							</p>
 						</PanelBody>
 
@@ -433,13 +431,11 @@ class Edit extends Component {
 								'layout-grid'
 							) }
 						>
-							<p>
-								<em>
-									{ __(
-										"Note that previewing your post will show your browser's breakpoint, not the currently selected one.",
-										'layout-grid'
-									) }
-								</em>
+							<p className='jetpack-layout-grid-help'>
+								{ __(
+									"Previewing your post will show your browser's breakpoint, not the currently selected one.",
+									'layout-grid'
+								) }
 							</p>
 							<ButtonGroup>
 								{ getLayouts().map( ( layout ) => (

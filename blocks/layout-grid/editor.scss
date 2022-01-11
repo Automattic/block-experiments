@@ -9,11 +9,12 @@
 
 // Unset many of the paddings and margins the block editor sets.
 // This is to make sure resizing the column containers works as expected.
+// These rules exist to support classic themes, and are unnecessary in block themes.
 
 // 1. Reset margins on block itself, so it doesn't inherit the baseline margin.
 [data-type="jetpack/layout-grid"] {
-    margin-top: 0;
-    margin-bottom: 0;
+	margin-top: 0;
+	margin-bottom: 0;
 }
 
 // 2. Reset margins on immediate innerblocks container.
@@ -48,6 +49,7 @@
 	height: 100%;
 }
 
+
 // When grid is full-wide, pad the inner blocks so the side UI is available, including resize handles.
 // To make sure this is smooth, we add some animation.
 // For now this whole bit exists so the side UI, and resize handles, are available even on full-wide blocks.
@@ -65,34 +67,36 @@
 	}
 }
 
-// Make the columns appender margin match the default block margin.
-// @todo: this margin will possibly be retired in the future. Revisit then.
-.wp-block-jetpack-layout-grid-column > .block-editor-inner-blocks > .block-editor-block-list__layout > .block-list-appender {
-	margin: 28px 0;
-}
-
-// Override and adjust rule inherited from the core project.
-.wp-block:not(.is-selected):not(.has-child-selected) .block-editor-default-block-appender {
-	display: inherit;
-}
-
-[data-type="jetpack/layout-grid"]:not(.is-selected):not(.has-child-selected) .block-editor-default-block-appender {
-	display: none;
-}
-
 
 /**
  * Inspector Controls
  */
 
-.jetpack-layout-grid-columns .block-editor-block-styles__item-preview {
-	position: relative;
+.jetpack-layout-grid-columns {
+	display: flex;
+	justify-content: space-between;
+	font-size: 12px;
+	margin-bottom: 12px;
 
-	svg {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
+	.block-editor-block-styles__item-preview {
+		display: flex;
+		justify-content: center;
+
+		svg {
+			fill: currentColor;
+		}
+	}
+
+	.block-editor-block-styles__item {
+		border-radius: 2px;
+		flex: 1;
+		cursor: pointer;
+		text-align: center;
+
+		&.is-active {
+			background-color: #1e1e1e;
+			color: #fff;
+		}
 	}
 }
 
@@ -114,6 +118,13 @@
 		margin-right: 16px;
 	}
 }
+
+.jetpack-layout-grid-help {
+	font-size: 12px;
+	font-style: normal;
+	color: #757575;
+}
+
 
 
 /**
