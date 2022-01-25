@@ -79,8 +79,10 @@
 	margin-bottom: 12px;
 
 	.block-editor-block-styles__item-preview {
+		background: none;
 		display: flex;
 		justify-content: center;
+		min-height: auto;
 
 		svg {
 			fill: currentColor;
