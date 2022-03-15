@@ -85,3 +85,18 @@ You can test the Layout Grid with:
 You can update the visual snapshots with:
 
 - `yarn jest -u`
+
+## Releasing an individual block
+
+If you want to release an individual block then you can follow these steps:
+
+- Update the block `readme.txt` file. For example [bundler/resources/jetpack-layout-grid/readme.txt](bundler/resources/jetpack-layout-grid/readme.txt). Usually this involves adding an entry to the `Changelog` section (with date), and updating `Tested upto` as appropriate.
+- Update the version number in the block JSON file. For example [bundler/bundles/layout-grid.json](bundler/bundles/layout-grid.json).
+- Run `yarn plugin [bundle-name]`. For example `yarn plugin layout-grid`.
+- Run `yarn bundle` to produce the plugin zip file at `bundles/bundle-name.zip`
+
+For the [Layout Grid](https://wordpress.org/plugins/layout-grid/) the plugin files can then be updated in the SVN repository:
+
+https://plugins.svn.wordpress.org/layout-grid/
+
+On WordPress.com the files need updating under `gutenberg-blocks`. Both locations need to be updated.
