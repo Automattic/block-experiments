@@ -89,10 +89,6 @@ export function registerBlock() {
 			],
 		},
 		attributes: {
-			align: {
-				type: 'string',
-				default: 'full',
-			},
 			gutterSize: {
 				type: 'string',
 				default: 'large',
