@@ -24,6 +24,9 @@ You can follow development, file an issue, suggest features, and view the source
 
 == Changelog ==
 
+= 1.8.1 - 18th March 2022 =
+* Change layout grid to not be fullwide by default
+
 = 1.8 - 25th January 2022 =
 * General updates for recent Gutenbergs
 
