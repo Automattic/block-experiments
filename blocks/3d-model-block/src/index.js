@@ -11,7 +11,7 @@ import Edit from './edit';
 import Save from './save';
 
 export const registerBlock = () => {
-	registerBlockType( 'a8c/32-model-block', {
+	registerBlockType( 'a8c/3d-model-block', {
 		title: '3d model viewer',
 		description: __( 'Jazz it up!' ),
 		category: 'widgets',
