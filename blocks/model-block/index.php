@@ -9,13 +9,13 @@ namespace Automattic\A8c\Plugins\Blocks\ModelViewer;
  * Register the blocks.
  */
 function create_block_3d_model_block_block_init() {
-	register_block_type( 'a8c/3d-model-block', [
+	register_block_type( 'a8c/model-block', [
 		'editor_script' => 'block-experiments',
 		'style' => 'block-experiments',
 		'editor_style' => 'block-experiments-editor',
 	] );
 
-	wp_set_script_translations( 'block-experiments', '3d-mopdel-block' );
+	wp_set_script_translations( 'block-experiments', 'model-block' );
 }
 add_action( 'init', '\Automattic\A8c\Plugins\Blocks\ModelViewer\create_block_3d_model_block_block_init' );
 

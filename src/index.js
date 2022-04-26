@@ -30,7 +30,7 @@ import * as sketchBlock from '../blocks/sketch/src';
 import * as starscapeBlock from '../blocks/starscape/src';
 import * as wavesBlock from '../blocks/waves/src';
 import * as bookBlock from '../blocks/book/src';
-import * as threeDModelBlock from '../blocks/3d-model-block/src';
+import * as threeDModelBlock from '../blocks/model-block/src';
 
 // Instantiate the blocks, adding them to our block category
 bauhausCentenaryBlock.registerBlock();
