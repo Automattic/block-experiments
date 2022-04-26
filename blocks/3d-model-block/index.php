@@ -1,6 +1,6 @@
 <?php
 /**
- * Jass it up!
+ * Jazz it up!
  */
 
 /**
