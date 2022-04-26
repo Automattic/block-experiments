@@ -1,3 +1,4 @@
+import '@google/model-viewer';
 /**
  * Retrieves the translation of text.
  *
@@ -23,11 +24,22 @@ import { useBlockProps } from '@wordpress/block-editor';
  */
 export default function Edit() {
 	return (
-		<p { ...useBlockProps() }>
-			{ __(
+		<div { ...useBlockProps() }>
+			<p>{ __(
 				'3D Model Block – hello from the editor!',
 				'3d-model-block'
-			) }
-		</p>
+			) }</p>
+			<model-viewer
+				alt="Neil Armstrong's Spacesuit from the Smithsonian Digitization Programs Office and National Air and Space Museum"
+				src="https://modelviewer.dev/assets/ShopifyModels/Chair.glb"
+				ar
+				ar-modes="webxr scene-viewer quick-look"
+				seamless-poster
+				shadow-intensity="1"
+				camera-controls
+				enable-pan
+			>
+			</model-viewer>
+		</div>
 	);
 }

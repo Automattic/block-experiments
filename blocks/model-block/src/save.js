@@ -24,11 +24,22 @@ import { useBlockProps } from '@wordpress/block-editor';
  */
 export default function save() {
 	return (
-		<p { ...useBlockProps.save() }>
-			{ __(
-				'3D Model Block – hello from the saved content!',
+		<div { ...useBlockProps.save() }>
+			<p>{ __(
+				'3D Model Block – hello from the editor!',
 				'3d-model-block'
-			) }
-		</p>
+			) }</p>
+			<model-viewer
+				alt="Neil Armstrong's Spacesuit from the Smithsonian Digitization Programs Office and National Air and Space Museum"
+				src="https://modelviewer.dev/assets/ShopifyModels/Chair.glb"
+				ar="true"
+				ar-modes="webxr scene-viewer quick-look"
+				seamless-poster="true"
+				shadow-intensity="1"
+				camera-controls="true"
+				enable-pan="true"
+				>
+			</model-viewer>
+		</div>
 	);
 }

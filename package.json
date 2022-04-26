@@ -55,6 +55,7 @@
 		"stringcase": "^4.3.1"
 	},
 	"dependencies": {
+		"@google/model-viewer": "^1.11.1",
 		"@wordpress/block-editor": "^8.0.13",
 		"@wordpress/blocks": "^11.1.5",
 		"classnames": "^2.3.1",
