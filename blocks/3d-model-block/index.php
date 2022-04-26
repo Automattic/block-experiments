@@ -21,6 +21,10 @@
  * @see https://developer.wordpress.org/reference/functions/register_block_type/
  */
 function create_block_3d_model_block_block_init() {
-	register_block_type( __DIR__ . '/build' );
+	register_block_type( 'a8c/3d-model-block', [
+		'editor_script' => 'block-experiments',
+		'style' => 'block-experiments',
+		'editor_style' => 'block-experiments-editor',
+	] );
 }
 add_action( 'init', 'create_block_3d_model_block_block_init' );
