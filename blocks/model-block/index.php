@@ -5,6 +5,7 @@
 
 namespace Automattic\A8c\Plugins\Blocks\ModelViewer;
 
+
 /**
  * Register the blocks.
  */
@@ -22,9 +23,9 @@ add_action( 'init', '\Automattic\A8c\Plugins\Blocks\ModelViewer\create_block_3d_
 
 function allow_media_uploads( array $types ): array {
 	$types['gltf'] = 'model/gltf+json';
-	$types['glb']  = 'model/gtlf+binary';
+	$types['glb']  = 'model/gtlf-binary';
 
 	return $types;
 }
 
-add_filter( 'upload_mimes', '\Automattic\A8c\Plugins\Blocks\ModelViewer\allow_media_uploads', accepted_args: 1, priority: 10 );
+add_filter( 'upload_mimes', '\Automattic\A8c\Plugins\Blocks\ModelViewer\allow_media_uploads', 10, 1 );
