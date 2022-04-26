@@ -1,0 +1,7 @@
+{
+	"blocks": [ "3d-model-block" ],
+	"version": "1.0.0-0-0-0-rc1-beta-tag-0-0-1-0",
+	"name": "3D Model Viewer",
+	"description": "Jazz it up",
+	"resource": "a8c-3d-model"
+}

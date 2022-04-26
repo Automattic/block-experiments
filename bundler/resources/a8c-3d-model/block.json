@@ -1,0 +1,9 @@
+{
+	"name": "a8c/3d-model-block",
+	"title": "3d model viewer",
+	"description": "Jazz it up!",
+	"category": "widgets",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./editor.css",
+	"style": "file:./style.css"
+}
