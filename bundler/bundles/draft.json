@@ -1,0 +1,7 @@
+{
+	"blocks": [ "draft" ],
+	"version": "1.0.0",
+	"name": "Draft block",
+	"description": "A block for drafting post or page content, which can later be converted to individual blocks for more complex formatting.",
+	"resource": "jetpack-draft"
+}
