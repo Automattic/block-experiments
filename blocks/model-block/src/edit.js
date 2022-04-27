@@ -155,9 +155,9 @@ export function Edit( { attributes, setAttributes, isSelected, noticeUI } ) {
 			</InspectorControls>
 			<figure { ...blockProps }>
 				{ /*
-					Disable the video tag if the block is not selected
-					so the user clicking on it won't play the
-					video when the controls are enabled.
+					Disable the model-viewer if the block is not selected
+					so the user clicking on it won't interact with the
+					model-viewer when the controls are enabled.
 				*/ }
 				<Disabled isDisabled={ ! isSelected }>
 					<div { ...useBlockProps() }>
