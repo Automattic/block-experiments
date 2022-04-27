@@ -15,6 +15,30 @@ export const registerBlock = () => {
 		title: '3d model viewer',
 		description: __( 'Jazz it up!' ),
 		category: 'widgets',
+		attributes: {
+			id: {
+				type: 'number',
+			},
+			src: {
+				type: 'string',
+				source: 'attribute',
+				selector: 'model-viewer',
+				attribute: 'src',
+			},
+			alt: {
+				type: 'string',
+				source: 'attribute',
+				selector: 'model-viewer',
+				attribute: 'alt',
+				default: '',
+			},
+			width: {
+				type: 'number',
+			},
+			height: {
+				type: 'number',
+			},
+		},
 		edit: ( props ) => <Edit { ...props } />,
 		save: ( props ) => <Save { ...props } />,
 	} );

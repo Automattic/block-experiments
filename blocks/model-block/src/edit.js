@@ -1,18 +1,26 @@
 import '@google/model-viewer';
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-i18n/
- */
-import { __ } from '@wordpress/i18n';
 
 /**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
+ * WordPress dependencies
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { __ } from '@wordpress/i18n';
+import {
+	PanelBody,
+	TextControl,
+	TextareaControl,
+	ExternalLink,
+	Disabled,
+} from '@wordpress/components';
+import {
+	BlockControls,
+	BlockIcon,
+	InspectorControls,
+	MediaPlaceholder,
+	MediaReplaceFlow,
+	useBlockProps,
+} from '@wordpress/block-editor';
+
+import { icon } from './icon';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -22,24 +30,143 @@ import { useBlockProps } from '@wordpress/block-editor';
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit() {
+export default function Edit( { attributes, isSelected } ) {
+	const { id, src, alt, width, height } = attributes;
+
+	function onSelectModel( media ) {
+		if ( ! media || ! media.url ) {
+			setAttributes( {
+				id: undefined,
+				src: undefined,
+				width: undefined,
+				height: undefined,
+			} );
+			return;
+		}
+
+		setAttributes( {
+			src: media.url,
+			id: media.id,
+		} );
+	}
+
+	function onSelectURL( newSrc ) {
+		if ( newSrc !== src ) {
+			setAttributes( { src: newSrc, id: undefined } );
+		}
+	}
+
+	function onUploadError( message ) {
+		noticeOperations.removeAllNotices();
+		noticeOperations.createErrorNotice( message );
+	}
+
+	function updateAlt( newAlt ) {
+		setAttributes( { alt: newAlt } );
+	}
+
+	function updateDimension( dimension, value ) {
+		setAttributes( { [ dimension ]: value } );
+	}
+
+	const blockProps = useBlockProps();
+
+	if ( ! src ) {
+		return (
+			<div { ...blockProps }>
+				<MediaPlaceholder
+					icon={ <BlockIcon icon={ icon } /> }
+					onSelect={ onSelectModel }
+					onSelectURL={ onSelectURL }
+					accept="model/*"
+					allowedTypes="model"
+					value={ attributes }
+					notices={ noticeUI }
+					onError={ onUploadError }
+				/>
+			</div>
+		);
+	}
+
 	return (
-		<div { ...useBlockProps() }>
-			<p>{ __(
-				'3D Model Block – hello from the editor!',
-				'3d-model-block'
-			) }</p>
-			<model-viewer
-				alt="Neil Armstrong's Spacesuit from the Smithsonian Digitization Programs Office and National Air and Space Museum"
-				src="https://modelviewer.dev/assets/ShopifyModels/Chair.glb"
-				ar
-				ar-modes="webxr scene-viewer quick-look"
-				seamless-poster
-				shadow-intensity="1"
-				camera-controls
-				enable-pan
-			>
-			</model-viewer>
-		</div>
+		<>
+			<BlockControls group="other">
+				<MediaReplaceFlow
+					mediaId={ id }
+					mediaURL={ src }
+					allowedTypes="model"
+					accept={ [ 'model/gltf+json', 'model/gltf-binary' ] }
+					onSelect={ onSelectModel }
+					onSelectURL={ onSelectURL }
+					onError={ onUploadError }
+				/>
+			</BlockControls>
+			<InspectorControls>
+				<PanelBody title={ __( 'Settings' ) }>
+					<div className="block-editor-image-size-control">
+						<div className="block-editor-image-size-control__row">
+							<TextControl
+								type="number"
+								className="block-editor-image-size-control__width"
+								label={ __( 'Width' ) }
+								value={ width }
+								min={ 1 }
+								onChange={ ( value ) =>
+									updateDimension( 'width', value )
+								}
+							/>
+							<TextControl
+								type="number"
+								className="block-editor-image-size-control__height"
+								label={ __( 'Height' ) }
+								value={ height }
+								min={ 1 }
+								onChange={ ( value ) =>
+									updateDimension( 'height', value )
+								}
+							/>
+						</div>
+					</div>
+					<TextareaControl
+						label={ __( 'Alt text (alternative text)' ) }
+						value={ alt }
+						onChange={ updateAlt }
+						help={
+							<>
+								<ExternalLink href="https://www.w3.org/WAI/tutorials/images/decision-tree">
+									{ __(
+										'Describe the purpose of the 3D model.'
+									) }
+								</ExternalLink>
+								{ __(
+									'Leave empty if the image is purely decorative.'
+								) }
+							</>
+						}
+					/>
+				</PanelBody>
+			</InspectorControls>
+			<figure { ...blockProps }>
+				{ /*
+					Disable the video tag if the block is not selected
+					so the user clicking on it won't play the
+					video when the controls are enabled.
+				*/ }
+				<Disabled isDisabled={ ! isSelected }>
+					<div { ...useBlockProps() }>
+						<model-viewer
+							alt={ alt }
+							src={ src }
+							ar
+							ar-modes="webxr scene-viewer quick-look"
+							seamless-poster
+							shadow-intensity="1"
+							camera-controls
+							enable-pan
+						></model-viewer>
+					</div>
+				</Disabled>
+			</figure>
+		</>
 	);
 }
