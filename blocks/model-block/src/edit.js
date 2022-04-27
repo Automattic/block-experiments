@@ -30,7 +30,7 @@ import { icon } from './icon';
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit( { attributes, isSelected } ) {
+export default function Edit( { attributes, setAttributes, isSelected } ) {
 	const { id, src, alt, width, height } = attributes;
 
 	function onSelectModel( media ) {
