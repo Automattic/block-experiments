@@ -160,18 +160,16 @@ export function Edit( { attributes, setAttributes, isSelected, noticeUI } ) {
 					model-viewer when the controls are enabled.
 				*/ }
 				<Disabled isDisabled={ ! isSelected }>
-					<div { ...useBlockProps() }>
-						<model-viewer
-							alt={ alt }
-							src={ src }
-							ar
-							ar-modes="webxr scene-viewer quick-look"
-							seamless-poster
-							shadow-intensity="1"
-							camera-controls
-							enable-pan
-						></model-viewer>
-					</div>
+					<model-viewer
+						alt={ alt }
+						src={ src }
+						ar
+						ar-modes="webxr scene-viewer quick-look"
+						seamless-poster
+						shadow-intensity="1"
+						camera-controls
+						enable-pan
+					></model-viewer>
 				</Disabled>
 			</figure>
 		</>
