@@ -41,6 +41,9 @@ export const registerBlock = () => {
 				type: 'number',
 			},
 		},
+		supports: {
+			align: true,
+		},
 		edit: ( props ) => <Edit { ...props } />,
 		save: ( props ) => <Save { ...props } />,
 	} );
