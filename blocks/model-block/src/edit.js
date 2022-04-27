@@ -146,7 +146,7 @@ export function Edit( { attributes, setAttributes, isSelected, noticeUI } ) {
 									) }
 								</ExternalLink>
 								{ __(
-									'Leave empty if the image is purely decorative.'
+									'Leave empty if the model is purely decorative.'
 								) }
 							</>
 						}
