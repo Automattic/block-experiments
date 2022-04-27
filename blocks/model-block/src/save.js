@@ -22,24 +22,27 @@ import { useBlockProps } from '@wordpress/block-editor';
  *
  * @return {WPElement} Element to render.
  */
-export default function save() {
+export default function save({ attributes }) {
+	const { src } = attributes;
+
 	return (
-		<div { ...useBlockProps.save() }>
-			<p>{ __(
-				'3D Model Block – hello from the editor!',
-				'3d-model-block'
-			) }</p>
+		<div {...useBlockProps.save()}>
+			<p>
+				{__(
+					'3D Model Block – hello from the editor!',
+					'3d-model-block'
+				)}
+			</p>
 			<model-viewer
 				alt="Neil Armstrong's Spacesuit from the Smithsonian Digitization Programs Office and National Air and Space Museum"
-				src="https://modelviewer.dev/assets/ShopifyModels/Chair.glb"
+				src={src}
 				ar="true"
 				ar-modes="webxr scene-viewer quick-look"
 				seamless-poster="true"
 				shadow-intensity="1"
 				camera-controls="true"
 				enable-pan="true"
-				>
-			</model-viewer>
+			></model-viewer>
 		</div>
 	);
 }

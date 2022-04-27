@@ -20,7 +20,13 @@ import {
 	useBlockProps,
 } from '@wordpress/block-editor';
 
-import { icon } from './icon';
+/**
+ * React hook that is used to mark the block wrapper element.
+ * It provides all the necessary props like the class name.
+ *
+ * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
+ */
+import { file as icon } from '@wordpress/icons';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -78,7 +84,7 @@ export default function Edit( { attributes, setAttributes, isSelected } ) {
 					icon={ <BlockIcon icon={ icon } /> }
 					onSelect={ onSelectModel }
 					onSelectURL={ onSelectURL }
-					accept="model/*"
+					accept="application/octet-stream"
 					allowedTypes="model"
 					value={ attributes }
 					notices={ noticeUI }
@@ -95,7 +101,7 @@ export default function Edit( { attributes, setAttributes, isSelected } ) {
 					mediaId={ id }
 					mediaURL={ src }
 					allowedTypes="model"
-					accept={ [ 'model/gltf+json', 'model/gltf-binary' ] }
+					accept={ [ 'application/octet-stream' ] }
 					onSelect={ onSelectModel }
 					onSelectURL={ onSelectURL }
 					onError={ onUploadError }

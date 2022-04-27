@@ -32,8 +32,11 @@ add_action( 'init', '\Automattic\A8c\Plugins\Blocks\ModelViewer\create_block_3d_
 
 
 function allow_media_uploads( array $types ): array {
-	$types['gltf'] = 'model/gltf+json';
-	$types['glb']  = 'model/gtlf-binary';
+	// @todo: figure out why content-type is being changed to
+	// application/octet-stream on upload, instead of remaining as
+	// model/gltf+json and model/gltf-binary.
+	$types['gltf'] = 'application/octet-stream';
+	$types['glb']  = 'application/octet-stream';
 
 	return $types;
 }
