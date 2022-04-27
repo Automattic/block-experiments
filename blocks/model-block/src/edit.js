@@ -5,11 +5,12 @@ import '@google/model-viewer';
  */
 import { __ } from '@wordpress/i18n';
 import {
+	Disabled,
+	ExternalLink,
 	PanelBody,
 	TextControl,
 	TextareaControl,
-	ExternalLink,
-	Disabled,
+	withNotices,
 } from '@wordpress/components';
 import {
 	BlockControls,
@@ -36,7 +37,7 @@ import { file as icon } from '@wordpress/icons';
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit( { attributes, setAttributes, isSelected } ) {
+export function Edit( { attributes, setAttributes, isSelected, noticeUI } ) {
 	const { id, src, alt, width, height } = attributes;
 
 	function onSelectModel( media ) {
@@ -176,3 +177,5 @@ export default function Edit( { attributes, setAttributes, isSelected } ) {
 		</>
 	);
 }
+
+export default withNotices( Edit );
