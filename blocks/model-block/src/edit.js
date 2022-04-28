@@ -203,58 +203,63 @@ export function Edit( {
 			</BlockControls>
 			<InspectorControls>
 				<PanelBody title={ __( 'Settings' ) }>
-
 					<BaseControl>
-					<Flex>
-						<FlexItem>
-							<BaseControl
-								label={ __( 'Width' ) }
-								id={ unitControlWidthInputId }
-							>
-								<UnitControl
+						<Flex>
+							<FlexItem>
+								<BaseControl
+									label={ __( 'Width' ) }
 									id={ unitControlWidthInputId }
-									min={ `${ MIN_WIDTH }${ MIN_WIDTH_UNIT }` }
-									onChange={ ( newWidth ) =>
-										onDimensionChange( 'width', newWidth )
-									}
-									onUnitChange={ ( newUnit ) =>
-										onDimensionUnitChange(
-											'width',
-											PC_WIDTH_DEFAULT,
-											PX_WIDTH_DEFAULT,
-											newUnit
-										)
-									}
-									value={ `${ width }${ widthUnit }` }
-									units={ widthUnits }
-								/>
-							</BaseControl>
-						</FlexItem>
-						<FlexItem>
-							<BaseControl
-								label={ __( 'Height' ) }
-								id={ unitControlHeightInputId }
-							>
-								<UnitControl
+								>
+									<UnitControl
+										id={ unitControlWidthInputId }
+										min={ `${ MIN_WIDTH }${ MIN_WIDTH_UNIT }` }
+										onChange={ ( newWidth ) =>
+											onDimensionChange(
+												'width',
+												newWidth
+											)
+										}
+										onUnitChange={ ( newUnit ) =>
+											onDimensionUnitChange(
+												'width',
+												PC_WIDTH_DEFAULT,
+												PX_WIDTH_DEFAULT,
+												newUnit
+											)
+										}
+										value={ `${ width }${ widthUnit }` }
+										units={ widthUnits }
+									/>
+								</BaseControl>
+							</FlexItem>
+							<FlexItem>
+								<BaseControl
+									label={ __( 'Height' ) }
 									id={ unitControlHeightInputId }
-									min={ `${ MIN_HEIGHT }${ MIN_HEIGHT_UNIT }` }
-									onChange={ ( newHeight ) =>
-										onDimensionChange( 'height', newHeight )
-									}
-									onUnitChange={ ( newUnit ) =>
-										onDimensionUnitChange(
-											'height',
-											PC_HEIGHT_DEFAULT,
-											PX_HEIGHT_DEFAULT,
-											newUnit
-										)
-									}
-									value={ `${ height }${ heightUnit }` }
-									units={ heightUnits }
-								/>
-							</BaseControl>
-						</FlexItem>
-					</Flex>
+								>
+									<UnitControl
+										id={ unitControlHeightInputId }
+										min={ `${ MIN_HEIGHT }${ MIN_HEIGHT_UNIT }` }
+										onChange={ ( newHeight ) =>
+											onDimensionChange(
+												'height',
+												newHeight
+											)
+										}
+										onUnitChange={ ( newUnit ) =>
+											onDimensionUnitChange(
+												'height',
+												PC_HEIGHT_DEFAULT,
+												PX_HEIGHT_DEFAULT,
+												newUnit
+											)
+										}
+										value={ `${ height }${ heightUnit }` }
+										units={ heightUnits }
+									/>
+								</BaseControl>
+							</FlexItem>
+						</Flex>
 					</BaseControl>
 
 					<ToggleControl
@@ -276,14 +281,10 @@ export function Edit( {
 						help={
 							<>
 								<ExternalLink href="https://www.w3.org/WAI/tutorials/images/decision-tree">
-									{ __(
-										'Describe the 3D model.'
-									) }
+									{ __( 'Describe the 3D model.' ) }
 								</ExternalLink>
 								<br />
-								{ __(
-									'Leave empty if decorative.'
-								) }
+								{ __( 'Leave empty if decorative.' ) }
 							</>
 						}
 					/>
