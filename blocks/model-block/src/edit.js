@@ -244,8 +244,7 @@ export function Edit( {
 				<MediaReplaceFlow
 					mediaId={ id }
 					mediaURL={ src }
-					allowedTypes="model"
-					accept={ [ '*' ] }
+					accept={ [ 'application/octet-stream' ] }
 					onSelect={ onSelectModel }
 					onSelectURL={ onSelectURL }
 					onError={ onUploadError }
