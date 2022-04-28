@@ -34,6 +34,10 @@ export const registerBlock = () => {
 				attribute: 'alt',
 				default: '',
 			},
+			autoRotate: {
+				type: 'boolean',
+				default: false,
+			},
 			width: {
 				type: 'number',
 			},

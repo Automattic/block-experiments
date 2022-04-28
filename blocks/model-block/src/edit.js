@@ -10,8 +10,10 @@ import {
 	PanelBody,
 	TextControl,
 	TextareaControl,
+	ToggleControl,
 	withNotices,
 } from '@wordpress/components';
+import { useReducedMotion } from '@wordpress/compose';
 import {
 	BlockControls,
 	BlockIcon,
@@ -38,7 +40,7 @@ import { file as icon } from '@wordpress/icons';
  * @return {WPElement} Element to render.
  */
 export function Edit( { attributes, setAttributes, isSelected, noticeUI } ) {
-	const { id, src, alt, width, height } = attributes;
+	const { id, src, alt, width, height, autoRotate } = attributes;
 
 	function onSelectModel( media ) {
 		if ( ! media || ! media.url ) {
@@ -76,6 +78,12 @@ export function Edit( { attributes, setAttributes, isSelected, noticeUI } ) {
 		setAttributes( { [ dimension ]: value } );
 	}
 
+	function toggleAutoRotate( newAutoRotate ) {
+		setAttributes( { autoRotate: newAutoRotate } );
+	}
+
+	const isReducedMotion = useReducedMotion();
+
 	const blockProps = useBlockProps();
 
 	if ( ! src ) {
@@ -94,6 +102,11 @@ export function Edit( { attributes, setAttributes, isSelected, noticeUI } ) {
 			</div>
 		);
 	}
+
+	// React stringifies custom properties, so use object destructuring to disable auto-rotate.
+	// See https://github.com/facebook/react/issues/9230
+	const autoRotateAttr =
+		autoRotate && ! isReducedMotion ? { 'auto-rotate': true } : {};
 
 	return (
 		<>
@@ -134,6 +147,17 @@ export function Edit( { attributes, setAttributes, isSelected, noticeUI } ) {
 							/>
 						</div>
 					</div>
+					<ToggleControl
+						label={ __( 'Auto rotate' ) }
+						onChange={ toggleAutoRotate }
+						checked={ autoRotate }
+						help={
+							autoRotate &&
+							__(
+								'Rotation will always be disabled for users that prefer reduced motion.'
+							)
+						}
+					/>
 					<TextareaControl
 						label={ __( 'Alt text (alternative text)' ) }
 						value={ alt }
@@ -169,6 +193,7 @@ export function Edit( { attributes, setAttributes, isSelected, noticeUI } ) {
 						shadow-intensity="1"
 						camera-controls
 						enable-pan
+						{ ...autoRotateAttr }
 					></model-viewer>
 				</Disabled>
 			</figure>
