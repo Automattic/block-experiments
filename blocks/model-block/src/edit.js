@@ -171,6 +171,10 @@ export function Edit( {
 					value={ attributes }
 					notices={ noticeUI }
 					onError={ onUploadError }
+					labels={ { 
+						title: __( '3D Model' ),
+						instructions: __( 'Show interactive 3D models. Add .gltf or .glb files.' )
+					} }
 				/>
 			</div>
 		);
