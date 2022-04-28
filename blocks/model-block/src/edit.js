@@ -208,6 +208,7 @@ export function Edit( {
 	}
 
 	let showRightHandle =
+		! align ||
 		align === 'center' ||
 		( isRTL() ? align === 'right' : align === 'left' );
 	let showLeftHandle =
