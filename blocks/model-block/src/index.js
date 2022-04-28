@@ -41,8 +41,14 @@ export const registerBlock = () => {
 			width: {
 				type: 'number',
 			},
+			widthUnit: {
+				type: 'string',
+			},
 			height: {
 				type: 'number',
+			},
+			heightUnit: {
+				type: 'string',
 			},
 		},
 		supports: {

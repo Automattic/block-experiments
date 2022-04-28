@@ -6,17 +6,19 @@ import '@google/model-viewer';
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, isRTL } from '@wordpress/i18n';
 import {
-	Disabled,
+	BaseControl,
 	ExternalLink,
 	PanelBody,
-	TextControl,
+	ResizableBox,
 	TextareaControl,
 	ToggleControl,
 	withNotices,
+	__experimentalUseCustomUnits as useCustomUnits,
+	__experimentalUnitControl as UnitControl,
 } from '@wordpress/components';
-import { useReducedMotion } from '@wordpress/compose';
+import { useReducedMotion, useInstanceId } from '@wordpress/compose';
 import {
 	BlockControls,
 	BlockIcon,
@@ -31,6 +33,16 @@ import { useEffect, useRef } from '@wordpress/element';
  * Internal dependencies
  */
 import { icon } from './icon';
+import {
+	PC_WIDTH_DEFAULT,
+	PX_WIDTH_DEFAULT,
+	PC_HEIGHT_DEFAULT,
+	PX_HEIGHT_DEFAULT,
+	MIN_WIDTH,
+	MIN_WIDTH_UNIT,
+	MIN_HEIGHT,
+	MIN_HEIGHT_UNIT,
+} from './utils.js';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -40,8 +52,24 @@ import { icon } from './icon';
  *
  * @return {WPElement} Element to render.
  */
-export function Edit( { attributes, setAttributes, isSelected, noticeUI } ) {
-	const { id, src, alt, width, height, autoRotate } = attributes;
+export function Edit( {
+	attributes,
+	setAttributes,
+	isSelected,
+	noticeUI,
+	toggleSelection,
+} ) {
+	const {
+		id,
+		src,
+		alt,
+		width,
+		widthUnit,
+		height,
+		heightUnit,
+		autoRotate,
+		align,
+	} = attributes;
 	const modelViewerRef = useRef( null );
 
 	useEffect( () => {
@@ -82,15 +110,61 @@ export function Edit( { attributes, setAttributes, isSelected, noticeUI } ) {
 		setAttributes( { alt: newAlt } );
 	}
 
-	function updateDimension( dimension, value ) {
-		setAttributes( { [ dimension ]: value } );
-	}
-
 	function toggleAutoRotate( newAutoRotate ) {
 		setAttributes( { autoRotate: newAutoRotate } );
 	}
 
+	function onResizeStart( event, direction, elt ) {
+		setAttributes( {
+			width: parseInt( elt.offsetWidth, 10 ),
+			widthUnit: 'px',
+			height: parseInt( elt.offsetHeight, 10 ),
+			heightUnit: 'px',
+		} );
+		toggleSelection( false );
+	}
+
+	function onResizeStop( event, direction, elt, delta ) {
+		setAttributes( {
+			width: parseInt( width + delta.width, 10 ),
+			height: parseInt( height + delta.height, 10 ),
+		} );
+		toggleSelection( true );
+	}
+
+	function onDimensionChange( dimension, value ) {
+		const filteredValue =
+			[ `${ dimension }Unit` ] === '%' && parseInt( value, 10 ) > 100
+				? 100
+				: value;
+
+		setAttributes( {
+			[ dimension ]: parseInt( filteredValue, 10 ),
+		} );
+	}
+
+	function onDimensionUnitChange( dimension, pcDefault, pxDefault, value ) {
+		setAttributes( {
+			[ dimension ]: '%' === value ? pcDefault : pxDefault,
+			[ `${ dimension }Unit` ]: value,
+		} );
+	}
+
 	const isReducedMotion = useReducedMotion();
+
+	const widthUnits = useCustomUnits( {
+		availableUnits: [ '%', 'px' ],
+		defaultValues: { '%': PC_WIDTH_DEFAULT, px: PX_WIDTH_DEFAULT },
+	} );
+	const heightUnits = useCustomUnits( {
+		availableUnits: [ '%', 'px' ],
+		defaultValues: { '%': PC_HEIGHT_DEFAULT, px: PX_HEIGHT_DEFAULT },
+	} );
+
+	const unitControlWidthInstanceId = useInstanceId( UnitControl );
+	const unitControlWidthInputId = `a8c-block-model-viewer-width-${ unitControlWidthInstanceId }`;
+	const unitControlHeightInstanceId = useInstanceId( UnitControl );
+	const unitControlHeightInputId = `a8c-block-model-viewer-height-${ unitControlHeightInstanceId }`;
 
 	const blockProps = useBlockProps();
 
@@ -110,6 +184,13 @@ export function Edit( { attributes, setAttributes, isSelected, noticeUI } ) {
 			</div>
 		);
 	}
+
+	let showRightHandle =
+		align === 'center' ||
+		( isRTL() ? align === 'right' : align === 'left' );
+	let showLeftHandle =
+		align === 'center' ||
+		( isRTL() ? align === 'left' : align === 'right' );
 
 	// React stringifies custom properties, so use object destructuring to disable auto-rotate.
 	// See https://github.com/facebook/react/issues/9230
@@ -131,30 +212,50 @@ export function Edit( { attributes, setAttributes, isSelected, noticeUI } ) {
 			</BlockControls>
 			<InspectorControls>
 				<PanelBody title={ __( 'Settings' ) }>
-					<div className="block-editor-image-size-control">
-						<div className="block-editor-image-size-control__row">
-							<TextControl
-								type="number"
-								className="block-editor-image-size-control__width"
-								label={ __( 'Width' ) }
-								value={ width }
-								min={ 1 }
-								onChange={ ( value ) =>
-									updateDimension( 'width', value )
-								}
-							/>
-							<TextControl
-								type="number"
-								className="block-editor-image-size-control__height"
-								label={ __( 'Height' ) }
-								value={ height }
-								min={ 1 }
-								onChange={ ( value ) =>
-									updateDimension( 'height', value )
-								}
-							/>
-						</div>
-					</div>
+					<BaseControl
+						label={ __( 'Width' ) }
+						id={ unitControlWidthInputId }
+					>
+						<UnitControl
+							id={ unitControlWidthInputId }
+							min={ `${ MIN_WIDTH }${ MIN_WIDTH_UNIT }` }
+							onChange={ ( newWidth ) =>
+								onDimensionChange( 'width', newWidth )
+							}
+							onUnitChange={ ( newUnit ) =>
+								onDimensionUnitChange(
+									'width',
+									PC_WIDTH_DEFAULT,
+									PX_WIDTH_DEFAULT,
+									newUnit
+								)
+							}
+							value={ `${ width }${ widthUnit }` }
+							units={ widthUnits }
+						/>
+					</BaseControl>
+					<BaseControl
+						label={ __( 'Height' ) }
+						id={ unitControlHeightInputId }
+					>
+						<UnitControl
+							id={ unitControlHeightInputId }
+							min={ `${ MIN_HEIGHT }${ MIN_HEIGHT_UNIT }` }
+							onChange={ ( newHeight ) =>
+								onDimensionChange( 'height', newHeight )
+							}
+							onUnitChange={ ( newUnit ) =>
+								onDimensionUnitChange(
+									'height',
+									PC_HEIGHT_DEFAULT,
+									PX_HEIGHT_DEFAULT,
+									newUnit
+								)
+							}
+							value={ `${ height }${ heightUnit }` }
+							units={ heightUnits }
+						/>
+					</BaseControl>
 					<ToggleControl
 						label={ __( 'Auto rotate' ) }
 						onChange={ toggleAutoRotate }
@@ -186,6 +287,22 @@ export function Edit( { attributes, setAttributes, isSelected, noticeUI } ) {
 				</PanelBody>
 			</InspectorControls>
 			<figure { ...blockProps }>
+				<ResizableBox
+					size={ {
+						height: height ?? 'auto',
+						width: width ?? 'auto',
+					} }
+					showHandle={ isSelected }
+					lockAspectRatio
+					enable={ {
+						top: false,
+						right: showRightHandle,
+						bottom: true,
+						left: showLeftHandle,
+					} }
+					onResizeStart={ onResizeStart }
+					onResizeStop={ onResizeStop }
+				>
 					<model-viewer
 						ref={ modelViewerRef }
 						alt={ alt }
@@ -198,6 +315,7 @@ export function Edit( { attributes, setAttributes, isSelected, noticeUI } ) {
 						enable-pan
 						{ ...autoRotateAttr }
 					></model-viewer>
+				</ResizableBox>
 			</figure>
 		</>
 	);
