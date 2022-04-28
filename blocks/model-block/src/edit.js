@@ -186,12 +186,6 @@ export function Edit( { attributes, setAttributes, isSelected, noticeUI } ) {
 				</PanelBody>
 			</InspectorControls>
 			<figure { ...blockProps }>
-				{ /*
-					Disable the model-viewer if the block is not selected
-					so the user clicking on it won't interact with the
-					model-viewer when the controls are enabled.
-				*/ }
-				<Disabled isDisabled={ ! isSelected }>
 					<model-viewer
 						ref={ modelViewerRef }
 						alt={ alt }
@@ -204,7 +198,6 @@ export function Edit( { attributes, setAttributes, isSelected, noticeUI } ) {
 						enable-pan
 						{ ...autoRotateAttr }
 					></model-viewer>
-				</Disabled>
 			</figure>
 		</>
 	);
