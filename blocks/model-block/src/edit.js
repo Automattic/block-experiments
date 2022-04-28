@@ -7,6 +7,7 @@ import {
 	ExternalLink,
 	PanelBody,
 	ResizableBox,
+	TextControl,
 	TextareaControl,
 	ToggleControl,
 	Flex,
@@ -244,7 +245,7 @@ export function Edit( {
 				<MediaReplaceFlow
 					mediaId={ id }
 					mediaURL={ src }
-					accept={ [ 'application/octet-stream' ] }
+					accept={ [ '*' ] }
 					onSelect={ onSelectModel }
 					onSelectURL={ onSelectURL }
 					onError={ onUploadError }
@@ -309,6 +310,10 @@ export function Edit( {
 								</BaseControl>
 							</FlexItem>
 						</Flex>
+					</BaseControl>
+
+					<BaseControl>
+						<TextControl type="text" value={ cameraOrbit } />
 					</BaseControl>
 
 					<ToggleControl
