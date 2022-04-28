@@ -1,3 +1,6 @@
+/**
+ * External dependencies
+ */
 import '@google/model-viewer';
 
 /**
@@ -25,12 +28,9 @@ import {
 import { useEffect, useRef } from '@wordpress/element';
 
 /**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/packages/packages-block-editor/#useBlockProps
+ * Internal dependencies
  */
-import { file as icon } from '@wordpress/icons';
+import { icon } from './icon';
 
 /**
  * The edit function describes the structure of your block in the context of the
