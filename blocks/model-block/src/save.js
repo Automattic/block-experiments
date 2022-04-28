@@ -27,12 +27,6 @@ export default function save({ attributes }) {
 
 	return (
 		<div {...useBlockProps.save()}>
-			<p>
-				{__(
-					'3D Model Block – hello from the editor!',
-					'3d-model-block'
-				)}
-			</p>
 			<model-viewer
 				alt={alt}
 				src={src}
