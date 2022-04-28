@@ -182,7 +182,9 @@ export function Edit( {
 	const unitControlHeightInstanceId = useInstanceId( UnitControl );
 	const unitControlHeightInputId = `wp-block-a8c-model-viewer-height-${ unitControlHeightInstanceId }`;
 
-	const blockProps = useBlockProps();
+	const blockProps = useBlockProps( {
+		className: 'wp-block-a8c-model-viewer',
+	} );
 
 	if ( ! src ) {
 		return (
@@ -322,7 +324,7 @@ export function Edit( {
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<figure { ...blockProps } className="wp-block-a8c-model-viewer">
+			<figure { ...blockProps }>
 				<ResizableBox
 					size={ {
 						height:
