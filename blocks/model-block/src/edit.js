@@ -330,14 +330,13 @@ export function Edit( {
 						height:
 							height && heightUnit
 								? `${ height }${ heightUnit }`
-								: 'auto',
+								: '240px',
 						width:
 							width && widthUnit
 								? `${ width }${ widthUnit }`
-								: 'auto',
+								: '100%',
 					} }
 					showHandle={ isSelected }
-					lockAspectRatio
 					enable={ {
 						top: false,
 						right: showRightHandle,
@@ -348,7 +347,7 @@ export function Edit( {
 					onResizeStop={ onResizeStop }
 				>
 					<model-viewer
-						className="wp-block-a8c-model-viewer-component"
+						class="wp-block-a8c-model-viewer__component"
 						ref={ modelViewerRef }
 						alt={ alt }
 						src={ src }

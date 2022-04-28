@@ -28,7 +28,7 @@ export default function save( { attributes } ) {
 	return (
 		<figure { ...useBlockProps.save() }>
 			<model-viewer
-				className="wp-block-a8c-model-viewer-component"
+				class="wp-block-a8c-model-viewer__component"
 				alt={ alt }
 				src={ src }
 				ar="true"
