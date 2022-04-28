@@ -21,7 +21,7 @@ function create_block_3d_model_block_block_init() {
 	wp_register_script(
 		'google-model-viewer',
 		plugins_url( 'model-viewer.min.js', __FILE__ ),
-		[ 'wp-dom-ready' ], // no dependencies
+		[ 'wp-dom-ready' ],
 		filemtime( plugin_dir_path( __FILE__ ) . 'model-viewer.min.js' ),
 		true,
 	);
