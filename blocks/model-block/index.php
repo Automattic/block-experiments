@@ -58,6 +58,10 @@ function add_script_type_attribute($tag, $handle, $src) {
 	return $dom->saveHTML( $script );
 }
 
-add_filter( 'upload_mimes', '\Automattic\A8c\Plugins\Blocks\ModelViewer\allow_media_uploads', 10, 1 );
+function remove_upload_size_limit() {
+	return 0;
+}
 
 add_filter( 'script_loader_tag', '\Automattic\A8c\Plugins\Blocks\ModelViewer\add_script_type_attribute' , 10, 3 );
+add_filter( 'upload_mimes', '\Automattic\A8c\Plugins\Blocks\ModelViewer\allow_media_uploads', 10, 1 );
+add_filter( 'upload_size_limit', '\Automattic\A8c\Plugins\Blocks\ModelViewer\remove_upload_size_limit', 10, 0 );
