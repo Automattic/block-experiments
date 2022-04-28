@@ -1,9 +1,4 @@
 /**
- * External dependencies
- */
-import '@google/model-viewer';
-
-/**
  * WordPress dependencies
  */
 import { __, isRTL } from '@wordpress/i18n';
