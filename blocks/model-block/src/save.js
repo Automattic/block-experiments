@@ -22,14 +22,15 @@ import { useBlockProps } from '@wordpress/block-editor';
  *
  * @return {WPElement} Element to render.
  */
-export default function save({ attributes }) {
+export default function save( { attributes } ) {
 	const { src, alt } = attributes;
 
 	return (
-		<div {...useBlockProps.save()}>
+		<figure { ...useBlockProps.save() }>
 			<model-viewer
-				alt={alt}
-				src={src}
+				className="wp-block-a8c-model-viewer-component"
+				alt={ alt }
+				src={ src }
 				ar="true"
 				ar-modes="webxr scene-viewer quick-look"
 				seamless-poster="true"
@@ -37,6 +38,6 @@ export default function save({ attributes }) {
 				camera-controls="true"
 				enable-pan="true"
 			></model-viewer>
-		</div>
+		</figure>
 	);
 }

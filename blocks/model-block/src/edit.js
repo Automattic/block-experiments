@@ -325,8 +325,14 @@ export function Edit( {
 			<figure { ...blockProps }>
 				<ResizableBox
 					size={ {
-						height: height ?? 'auto',
-						width: width ?? 'auto',
+						height:
+							height && heightUnit
+								? `${ height }${ heightUnit }`
+								: 'auto',
+						width:
+							width && widthUnit
+								? `${ width }${ widthUnit }`
+								: 'auto',
 					} }
 					showHandle={ isSelected }
 					lockAspectRatio
@@ -340,6 +346,7 @@ export function Edit( {
 					onResizeStop={ onResizeStop }
 				>
 					<model-viewer
+						className="wp-block-a8c-model-viewer-component"
 						ref={ modelViewerRef }
 						alt={ alt }
 						src={ src }
