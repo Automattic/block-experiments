@@ -23,7 +23,7 @@ import { useBlockProps } from '@wordpress/block-editor';
  * @return {WPElement} Element to render.
  */
 export default function save({ attributes }) {
-	const { src } = attributes;
+	const { src, alt } = attributes;
 
 	return (
 		<div {...useBlockProps.save()}>
@@ -34,7 +34,7 @@ export default function save({ attributes }) {
 				)}
 			</p>
 			<model-viewer
-				alt="Neil Armstrong's Spacesuit from the Smithsonian Digitization Programs Office and National Air and Space Museum"
+				alt={alt}
 				src={src}
 				ar="true"
 				ar-modes="webxr scene-viewer quick-look"
