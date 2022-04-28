@@ -22,7 +22,7 @@ registerBlockType( 'a8c/event' );
 registerBlockType( 'a8c/motion-background-container' );
 registerBlockType( 'a8c/starscape' );
 registerBlockType( 'a8c/waves' );
-registerBlockType( 'a8c/3d-model-block' );
+registerBlockType( 'a8c/model-viewer' );
 
 // Regiseter themes
 import twentyNineteenStyle from '!!raw-loader!./themes/twenty-nineteen.css';

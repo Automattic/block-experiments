@@ -1,7 +1,7 @@
 {
-	"blocks": [ "model-block" ],
+	"blocks": [ "model-viewer" ],
 	"version": "1.0.0",
-	"name": "3D Model Viewer",
-	"description": "Jazz it up",
-	"resource": "a8c-model-block"
+	"name": "3D Model",
+	"description": "Show 3D models in an interactive viewer. Add files in .gltf or .glb formats.",
+	"resource": "a8c-model-viewer"
 }

@@ -11,7 +11,7 @@ namespace Automattic\A8c\Plugins\Blocks\ModelViewer;
  */
 function create_block_3d_model_block_block_init() {
 
-	register_block_type( 'a8c/model-block', [
+	register_block_type( 'a8c/model-viewer', [
 		'script' => 'google-model-viewer',
 		'editor_script' => 'block-experiments',
 		'style' => 'block-experiments',
@@ -26,7 +26,7 @@ function create_block_3d_model_block_block_init() {
 		true,
 	);
 
-	wp_set_script_translations( 'block-experiments', 'model-block' );
+	wp_set_script_translations( 'block-experiments', 'model-viewer' );
 }
 add_action( 'init', '\Automattic\A8c\Plugins\Blocks\ModelViewer\create_block_3d_model_block_block_init' );
 

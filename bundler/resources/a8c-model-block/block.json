@@ -1,7 +1,7 @@
 {
-	"name": "a8c/model-block",
-	"title": "3d model viewer",
-	"description": "Jazz it up!",
+	"name": "a8c/model-viewer",
+	"title": "3D Model",
+	"description": "Show 3D models in an interactive viewer. Add files in .gltf or .glb formats.",
 	"category": "widgets",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./editor.css",
