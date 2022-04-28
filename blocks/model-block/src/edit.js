@@ -92,8 +92,6 @@ export function Edit( {
 
 				setCameraOrbitObject( event.currentTarget.getCameraOrbit() );
 
-				console.log( fieldOfView, newFieldOfView );
-
 				setAttributes( {
 					cameraOrbit: cameraOrbitString,
 					fieldOfView: newFieldOfView,
