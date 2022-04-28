@@ -8,6 +8,7 @@ import {
 	PanelBody,
 	ResizableBox,
 	TextareaControl,
+	TextControl,
 	ToggleControl,
 	Flex,
 	FlexItem,
@@ -75,6 +76,7 @@ export function Edit( {
 
 	const [ initialCameraOrbit ] = useState( cameraOrbit );
 	const [ initialFieldOfView ] = useState( fieldOfView );
+	const [ cameraOrbitObject, setCameraOrbitObject ] = useState( {} );
 
 	useEffect( () => {
 		if ( ! modelViewerRef.current ) {
@@ -87,6 +89,10 @@ export function Edit( {
 				const cameraOrbitString = event.currentTarget
 					.getCameraOrbit()
 					.toString();
+
+				setCameraOrbitObject( event.currentTarget.getCameraOrbit() );
+
+				console.log( fieldOfView, newFieldOfView );
 
 				setAttributes( {
 					cameraOrbit: cameraOrbitString,
@@ -205,7 +211,7 @@ export function Edit( {
 					icon={ <BlockIcon icon={ icon } /> }
 					onSelect={ onSelectModel }
 					onSelectURL={ onSelectURL }
-					accept="application/octet-stream"
+					accept="*"
 					allowedTypes="model"
 					value={ attributes }
 					notices={ noticeUI }
@@ -241,7 +247,7 @@ export function Edit( {
 					mediaId={ id }
 					mediaURL={ src }
 					allowedTypes="model"
-					accept={ [ 'application/octet-stream' ] }
+					accept={ [ '*' ] }
 					onSelect={ onSelectModel }
 					onSelectURL={ onSelectURL }
 					onError={ onUploadError }
@@ -308,6 +314,41 @@ export function Edit( {
 						</Flex>
 					</BaseControl>
 
+					<BaseControl
+						label={ __( 'Camera Orbit String' ) }
+						help={ __( 'Camera Orbit String' ) }
+					>
+						<TextControl
+							value={ cameraOrbit }
+							type="text"
+							name="cameraOrbit"
+						/>
+					</BaseControl>
+					<BaseControl label={ __( 'Theta' ) } help={ __( 'Theta' ) }>
+						<TextControl
+							value={ cameraOrbitObject.theta }
+							type="text"
+							name="theta"
+						/>
+					</BaseControl>
+					<BaseControl label={ __( 'Phi' ) } help={ __( 'Phi' ) }>
+						<TextControl
+							value={ cameraOrbitObject.phi }
+							type="text"
+							name="phi"
+						/>
+					</BaseControl>
+					<BaseControl
+						label={ __( 'Radius' ) }
+						help={ __( 'Radius' ) }
+					>
+						<TextControl
+							value={ cameraOrbitObject.radius }
+							type="text"
+							name="radius"
+						/>
+					</BaseControl>
+
 					<ToggleControl
 						label={ __( 'Auto rotate' ) }
 						onChange={ toggleAutoRotate }
@@ -364,7 +405,7 @@ export function Edit( {
 						alt={ alt }
 						src={ src }
 						camera-orbit={ initialCameraOrbit }
-						field-of-view={ initialFieldOfView }
+						field-of-view={ `${ initialFieldOfView }deg` }
 						ar
 						ar-modes="webxr scene-viewer quick-look"
 						seamless-poster
