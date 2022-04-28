@@ -133,20 +133,30 @@ export function Edit( {
 	}
 
 	function onResizeStart( event, direction, elt ) {
-		setAttributes( {
-			width: parseInt( elt.offsetWidth, 10 ),
-			widthUnit: 'px',
-			height: parseInt( elt.offsetHeight, 10 ),
-			heightUnit: 'px',
-		} );
+		if ( direction === 'left' || direction === 'right' ) {
+			setAttributes( {
+				width: parseInt( elt.offsetWidth, 10 ),
+				widthUnit: 'px',
+			} );
+		} else if ( direction === 'top' || direction === 'bottom' ) {
+			setAttributes( {
+				height: parseInt( elt.offsetHeight, 10 ),
+				heightUnit: 'px',
+			} );
+		}
 		toggleSelection( false );
 	}
 
 	function onResizeStop( event, direction, elt, delta ) {
-		setAttributes( {
-			width: parseInt( width + delta.width, 10 ),
-			height: parseInt( height + delta.height, 10 ),
-		} );
+		if ( direction === 'left' || direction === 'right' ) {
+			setAttributes( {
+				width: parseInt( width + delta.width, 10 ),
+			} );
+		} else if ( direction === 'top' || direction === 'bottom' ) {
+			setAttributes( {
+				height: parseInt( height + delta.height, 10 ),
+			} );
+		}
 		toggleSelection( true );
 	}
 
