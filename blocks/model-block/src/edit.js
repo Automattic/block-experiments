@@ -8,7 +8,6 @@ import {
 	PanelBody,
 	ResizableBox,
 	TextareaControl,
-	TextControl,
 	ToggleControl,
 	Flex,
 	FlexItem,

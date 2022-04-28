@@ -4,7 +4,18 @@ import { useBlockProps } from '@wordpress/block-editor';
 import { DEFAULT_HEIGHT, DEFAULT_WIDTH } from './utils.js';
 
 export default function save( { attributes } ) {
-	const { src, alt, width, height, widthUnit, heightUnit } = attributes;
+	const {
+		src,
+		alt,
+		width,
+		height,
+		widthUnit,
+		heightUnit,
+		cameraOrbit,
+		fieldOfView,
+	} = attributes;
+
+	console.log( cameraOrbit, fieldOfView );
 
 	return (
 		<figure { ...useBlockProps.save() }>
@@ -23,6 +34,8 @@ export default function save( { attributes } ) {
 				alt={ alt }
 				src={ src }
 				ar="true"
+				camera-orbit={ cameraOrbit }
+				field-of-view={ fieldOfView }
 				ar-modes="webxr scene-viewer quick-look"
 				seamless-poster="true"
 				shadow-intensity="1"
