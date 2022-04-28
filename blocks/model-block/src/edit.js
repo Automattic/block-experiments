@@ -22,6 +22,7 @@ import {
 	MediaReplaceFlow,
 	useBlockProps,
 } from '@wordpress/block-editor';
+import { useEffect, useRef } from '@wordpress/element';
 
 /**
  * React hook that is used to mark the block wrapper element.
@@ -41,6 +42,13 @@ import { file as icon } from '@wordpress/icons';
  */
 export function Edit( { attributes, setAttributes, isSelected, noticeUI } ) {
 	const { id, src, alt, width, height, autoRotate } = attributes;
+	const modelViewerRef = useRef( null );
+
+	useEffect( () => {
+		modelViewerRef.current.addEventListener( 'load', ( event ) => {
+			console.log( 'model was loaded' );
+		} );
+	}, [ modelViewerRef ] );
 
 	function onSelectModel( media ) {
 		if ( ! media || ! media.url ) {
@@ -185,6 +193,7 @@ export function Edit( { attributes, setAttributes, isSelected, noticeUI } ) {
 				*/ }
 				<Disabled isDisabled={ ! isSelected }>
 					<model-viewer
+						ref={ modelViewerRef }
 						alt={ alt }
 						src={ src }
 						ar
