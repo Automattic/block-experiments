@@ -234,8 +234,9 @@ export function Edit( {
 
 	// React stringifies custom properties, so use object destructuring to disable auto-rotate.
 	// See https://github.com/facebook/react/issues/9230
+	// Gutenberg won't save the value when true is a boolean.
 	const autoRotateAttr =
-		autoRotate && ! isReducedMotion ? { 'auto-rotate': true } : {};
+		autoRotate && ! isReducedMotion ? { 'auto-rotate': 'true' } : {};
 
 	return (
 		<>

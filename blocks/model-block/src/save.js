@@ -13,9 +13,15 @@ export default function save( { attributes } ) {
 		heightUnit,
 		cameraOrbit,
 		fieldOfView,
+		autoRotate,
 	} = attributes;
 
 	console.log( cameraOrbit, fieldOfView );
+
+	// React stringifies custom properties, so use object destructuring to disable auto-rotate.
+	// See https://github.com/facebook/react/issues/9230
+	// Gutenberg won't save the value when true is a boolean.
+	const autoRotateAttr = autoRotate ? { 'auto-rotate': 'true' } : {};
 
 	return (
 		<figure { ...useBlockProps.save() }>
@@ -41,6 +47,7 @@ export default function save( { attributes } ) {
 				shadow-intensity="1"
 				camera-controls="true"
 				enable-pan="true"
+				{ ...autoRotateAttr }
 			></model-viewer>
 		</figure>
 	);
