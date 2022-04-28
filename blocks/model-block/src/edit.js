@@ -39,6 +39,8 @@ import {
 	MIN_WIDTH_UNIT,
 	MIN_HEIGHT,
 	MIN_HEIGHT_UNIT,
+	DEFAULT_HEIGHT,
+	DEFAULT_WIDTH,
 } from './utils.js';
 
 /**
@@ -330,11 +332,11 @@ export function Edit( {
 						height:
 							height && heightUnit
 								? `${ height }${ heightUnit }`
-								: '240px',
+								: DEFAULT_HEIGHT,
 						width:
 							width && widthUnit
 								? `${ width }${ widthUnit }`
-								: '100%',
+								: DEFAULT_WIDTH,
 					} }
 					showHandle={ isSelected }
 					enable={ {
