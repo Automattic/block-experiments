@@ -178,9 +178,9 @@ export function Edit( {
 	} );
 
 	const unitControlWidthInstanceId = useInstanceId( UnitControl );
-	const unitControlWidthInputId = `a8c-block-model-viewer-width-${ unitControlWidthInstanceId }`;
+	const unitControlWidthInputId = `wp-block-a8c-model-viewer-width-${ unitControlWidthInstanceId }`;
 	const unitControlHeightInstanceId = useInstanceId( UnitControl );
-	const unitControlHeightInputId = `a8c-block-model-viewer-height-${ unitControlHeightInstanceId }`;
+	const unitControlHeightInputId = `wp-block-a8c-model-viewer-height-${ unitControlHeightInstanceId }`;
 
 	const blockProps = useBlockProps();
 
