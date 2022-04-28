@@ -69,12 +69,6 @@ export function Edit( {
 	} = attributes;
 	const modelViewerRef = useRef( null );
 
-	useEffect( () => {
-		modelViewerRef.current.addEventListener( 'load', ( event ) => {
-			console.log( 'model was loaded' );
-		} );
-	}, [ modelViewerRef ] );
-
 	function onSelectModel( media ) {
 		if ( ! media || ! media.url ) {
 			setAttributes( {
