@@ -45,9 +45,17 @@ function add_script_type_attribute($tag, $handle, $src) {
 	if ( 'google-model-viewer' !== $handle ) {
 			return $tag;
 	}
-	// add type="module" to script tag, for model-viewer to load correctly
-	$tag = '<script type="module" src="' . esc_url( $src ) . '"></script>';
-	return $tag;
+
+	$dom = new \DOMDocument();
+	$dom->loadHTML( $tag );
+
+	/** @var \DOMElement $script */
+	$script = $dom->getElementsByTagName( 'script' )[0];
+	$script->removeAttribute( 'async' );
+	$script->removeAttribute( 'defer' );
+	$script->setAttribute( 'type', 'module' );
+
+	return $dom->saveHTML( $script );
 }
 
 add_filter( 'upload_mimes', '\Automattic\A8c\Plugins\Blocks\ModelViewer\allow_media_uploads', 10, 1 );
