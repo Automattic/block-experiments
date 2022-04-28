@@ -16,8 +16,6 @@ export default function save( { attributes } ) {
 		autoRotate,
 	} = attributes;
 
-	console.log( cameraOrbit, fieldOfView );
-
 	// React stringifies custom properties, so use object destructuring to disable auto-rotate.
 	// See https://github.com/facebook/react/issues/9230
 	// Gutenberg won't save the value when true is a boolean.
