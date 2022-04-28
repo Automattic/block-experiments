@@ -9,6 +9,8 @@ import {
 	ResizableBox,
 	TextareaControl,
 	ToggleControl,
+	Flex,
+	FlexItem,
 	withNotices,
 	__experimentalUseCustomUnits as useCustomUnits,
 	__experimentalUnitControl as UnitControl,
@@ -207,50 +209,60 @@ export function Edit( {
 			</BlockControls>
 			<InspectorControls>
 				<PanelBody title={ __( 'Settings' ) }>
-					<BaseControl
-						label={ __( 'Width' ) }
-						id={ unitControlWidthInputId }
-					>
-						<UnitControl
-							id={ unitControlWidthInputId }
-							min={ `${ MIN_WIDTH }${ MIN_WIDTH_UNIT }` }
-							onChange={ ( newWidth ) =>
-								onDimensionChange( 'width', newWidth )
-							}
-							onUnitChange={ ( newUnit ) =>
-								onDimensionUnitChange(
-									'width',
-									PC_WIDTH_DEFAULT,
-									PX_WIDTH_DEFAULT,
-									newUnit
-								)
-							}
-							value={ `${ width }${ widthUnit }` }
-							units={ widthUnits }
-						/>
+
+					<BaseControl>
+					<Flex>
+						<FlexItem>
+							<BaseControl
+								label={ __( 'Width' ) }
+								id={ unitControlWidthInputId }
+							>
+								<UnitControl
+									id={ unitControlWidthInputId }
+									min={ `${ MIN_WIDTH }${ MIN_WIDTH_UNIT }` }
+									onChange={ ( newWidth ) =>
+										onDimensionChange( 'width', newWidth )
+									}
+									onUnitChange={ ( newUnit ) =>
+										onDimensionUnitChange(
+											'width',
+											PC_WIDTH_DEFAULT,
+											PX_WIDTH_DEFAULT,
+											newUnit
+										)
+									}
+									value={ `${ width }${ widthUnit }` }
+									units={ widthUnits }
+								/>
+							</BaseControl>
+						</FlexItem>
+						<FlexItem>
+							<BaseControl
+								label={ __( 'Height' ) }
+								id={ unitControlHeightInputId }
+							>
+								<UnitControl
+									id={ unitControlHeightInputId }
+									min={ `${ MIN_HEIGHT }${ MIN_HEIGHT_UNIT }` }
+									onChange={ ( newHeight ) =>
+										onDimensionChange( 'height', newHeight )
+									}
+									onUnitChange={ ( newUnit ) =>
+										onDimensionUnitChange(
+											'height',
+											PC_HEIGHT_DEFAULT,
+											PX_HEIGHT_DEFAULT,
+											newUnit
+										)
+									}
+									value={ `${ height }${ heightUnit }` }
+									units={ heightUnits }
+								/>
+							</BaseControl>
+						</FlexItem>
+					</Flex>
 					</BaseControl>
-					<BaseControl
-						label={ __( 'Height' ) }
-						id={ unitControlHeightInputId }
-					>
-						<UnitControl
-							id={ unitControlHeightInputId }
-							min={ `${ MIN_HEIGHT }${ MIN_HEIGHT_UNIT }` }
-							onChange={ ( newHeight ) =>
-								onDimensionChange( 'height', newHeight )
-							}
-							onUnitChange={ ( newUnit ) =>
-								onDimensionUnitChange(
-									'height',
-									PC_HEIGHT_DEFAULT,
-									PX_HEIGHT_DEFAULT,
-									newUnit
-								)
-							}
-							value={ `${ height }${ heightUnit }` }
-							units={ heightUnits }
-						/>
-					</BaseControl>
+
 					<ToggleControl
 						label={ __( 'Auto rotate' ) }
 						onChange={ toggleAutoRotate }
@@ -262,19 +274,21 @@ export function Edit( {
 							)
 						}
 					/>
+
 					<TextareaControl
-						label={ __( 'Alt text (alternative text)' ) }
+						label={ __( 'Alternative text' ) }
 						value={ alt }
 						onChange={ updateAlt }
 						help={
 							<>
 								<ExternalLink href="https://www.w3.org/WAI/tutorials/images/decision-tree">
 									{ __(
-										'Describe the purpose of the 3D model.'
+										'Describe the 3D model.'
 									) }
 								</ExternalLink>
+								<br />
 								{ __(
-									'Leave empty if the model is purely decorative.'
+									'Leave empty if decorative.'
 								) }
 							</>
 						}

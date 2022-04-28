@@ -13,8 +13,8 @@ import Save from './save';
 
 export const registerBlock = () => {
 	registerBlockType( 'a8c/model-block', {
-		title: '3d model viewer',
-		description: __( 'Jazz it up!' ),
+		title: '3D Model',
+		description: __( 'Show 3D models in an interactive viewer. Add files in .gltf or .glb formats.' ),
 		category: 'widgets',
 		icon,
 		attributes: {
