@@ -43,7 +43,7 @@ function allow_media_uploads( array $types ): array {
 
 function add_script_type_attribute($tag, $handle, $src) {
 	if ( 'google-model-viewer' !== $handle ) {
-			return $tag;
+		return $tag;
 	}
 
 	$dom = new \DOMDocument();
