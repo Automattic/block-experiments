@@ -312,41 +312,6 @@ export function Edit( {
 						</Flex>
 					</BaseControl>
 
-					<BaseControl
-						label={ __( 'Camera Orbit String' ) }
-						help={ __( 'Camera Orbit String' ) }
-					>
-						<TextControl
-							value={ cameraOrbit }
-							type="text"
-							name="cameraOrbit"
-						/>
-					</BaseControl>
-					<BaseControl label={ __( 'Theta' ) } help={ __( 'Theta' ) }>
-						<TextControl
-							value={ cameraOrbitObject.theta }
-							type="text"
-							name="theta"
-						/>
-					</BaseControl>
-					<BaseControl label={ __( 'Phi' ) } help={ __( 'Phi' ) }>
-						<TextControl
-							value={ cameraOrbitObject.phi }
-							type="text"
-							name="phi"
-						/>
-					</BaseControl>
-					<BaseControl
-						label={ __( 'Radius' ) }
-						help={ __( 'Radius' ) }
-					>
-						<TextControl
-							value={ cameraOrbitObject.radius }
-							type="text"
-							name="radius"
-						/>
-					</BaseControl>
-
 					<ToggleControl
 						label={ __( 'Auto rotate' ) }
 						onChange={ toggleAutoRotate }
