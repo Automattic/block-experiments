@@ -322,7 +322,7 @@ export function Edit( {
 					/>
 				</PanelBody>
 			</InspectorControls>
-			<figure { ...blockProps }>
+			<figure { ...blockProps } className="wp-block-a8c-model-viewer">
 				<ResizableBox
 					size={ {
 						height:
