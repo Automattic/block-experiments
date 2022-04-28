@@ -14,7 +14,9 @@ import Save from './save';
 export const registerBlock = () => {
 	registerBlockType( 'a8c/model-block', {
 		title: '3D Model',
-		description: __( 'Show 3D models in an interactive viewer. Add files in .gltf or .glb formats.' ),
+		description: __(
+			'Show 3D models in an interactive viewer. Add files in .gltf or .glb formats.'
+		),
 		category: 'widgets',
 		icon,
 		attributes: {
@@ -49,6 +51,12 @@ export const registerBlock = () => {
 			},
 			heightUnit: {
 				type: 'string',
+			},
+			cameraOrbit: {
+				type: 'string',
+			},
+			fieldOfView: {
+				type: 'number',
 			},
 		},
 		supports: {

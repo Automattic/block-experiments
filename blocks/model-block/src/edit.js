@@ -24,7 +24,7 @@ import {
 	MediaReplaceFlow,
 	useBlockProps,
 } from '@wordpress/block-editor';
-import { useEffect, useRef } from '@wordpress/element';
+import { useEffect, useRef, useState } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -61,13 +61,38 @@ export function Edit( {
 		src,
 		alt,
 		width,
-		widthUnit,
 		height,
-		heightUnit,
 		autoRotate,
+		cameraOrbit,
+		fieldOfView,
+		widthUnit,
+		heightUnit,
 		align,
 	} = attributes;
 	const modelViewerRef = useRef( null );
+
+	const [ initialCameraOrbit ] = useState( cameraOrbit );
+	const [ initialFieldOfView ] = useState( fieldOfView );
+
+	useEffect( () => {
+		if ( ! modelViewerRef.current ) {
+			return;
+		}
+
+		modelViewerRef.current.addEventListener( 'camera-change', ( event ) => {
+			if ( 'user-interaction' === event.detail.source ) {
+				const newFieldOfView = event.currentTarget.getFieldOfView();
+				const cameraOrbitString = event.currentTarget
+					.getCameraOrbit()
+					.toString();
+
+				setAttributes( {
+					cameraOrbit: cameraOrbitString,
+					fieldOfView: newFieldOfView,
+				} );
+			}
+		} );
+	}, [ modelViewerRef ] );
 
 	function onSelectModel( media ) {
 		if ( ! media || ! media.url ) {
@@ -171,9 +196,11 @@ export function Edit( {
 					value={ attributes }
 					notices={ noticeUI }
 					onError={ onUploadError }
-					labels={ { 
+					labels={ {
 						title: __( '3D Model' ),
-						instructions: __( 'Show interactive 3D models. Add .gltf or .glb files.' )
+						instructions: __(
+							'Show interactive 3D models. Add .gltf or .glb files.'
+						),
 					} }
 				/>
 			</div>
@@ -315,6 +342,8 @@ export function Edit( {
 						ref={ modelViewerRef }
 						alt={ alt }
 						src={ src }
+						camera-orbit={ initialCameraOrbit }
+						field-of-view={ initialFieldOfView }
 						ar
 						ar-modes="webxr scene-viewer quick-look"
 						seamless-poster
