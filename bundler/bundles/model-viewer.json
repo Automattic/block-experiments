@@ -1,0 +1,8 @@
+{
+	"blocks": [ "model-viewer" ],
+	"version": "1.0.0",
+	"labs": true,
+	"name": "3D Model Viewer",
+	"description": "Show 3D models in an interactive viewer. Add files in .gltf or .glb formats.",
+	"resource": "a8c-model-viewer"
+}
