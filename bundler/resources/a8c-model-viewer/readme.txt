@@ -1,4 +1,4 @@
-=== 3D Model Viewer Block ===
+=== A8C 3D Model Viewer Block ===
 Contributors: automattic
 Stable tag: 1.0.0
 Tested up to: 6.0
