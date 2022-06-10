@@ -122,10 +122,17 @@ export function withSetPreviewDeviceType() {
 	return withDispatch( ( dispatch ) => {
 		return {
 			setPreviewDeviceType( type ) {
-				const { __experimentalSetPreviewDeviceType } =
-					dispatch( 'core/edit-site' ) ||
-					dispatch( 'core/edit-post' );
-				__experimentalSetPreviewDeviceType( type );
+				const {
+					__experimentalSetPreviewDeviceType: setSiteEditorDeviceType,
+				} = dispatch( 'core/edit-site' );
+
+				if ( setSiteEditorDeviceType ) {
+					setSiteEditorDeviceType( type );
+				} else {
+					dispatch(
+						'core/edit-post'
+					).__experimentalSetPreviewDeviceType( type );
+				}
 			},
 		};
 	} );
@@ -158,11 +165,20 @@ export function withColumnAttributes() {
 
 export function withPreviewDeviceType() {
 	return withSelect( ( select ) => {
-		const { __experimentalGetPreviewDeviceType = null } =
-			select( 'core/edit-site' ) || select( 'core/edit-post' );
+		const {
+			__experimentalGetPreviewDeviceType: siteEditorPreviewType = null,
+		} = select( 'core/edit-site' );
+
+		if ( siteEditorPreviewType ) {
+			return {
+				previewDeviceType: siteEditorPreviewType(),
+			};
+		}
 
 		return {
-			previewDeviceType: __experimentalGetPreviewDeviceType(),
+			previewDeviceType: select(
+				'core/edit-post'
+			)?.__experimentalGetPreviewDeviceType(),
 		};
 	} );
 }
