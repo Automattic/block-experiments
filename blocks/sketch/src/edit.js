@@ -99,31 +99,7 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 		color,
 	};
 	return (
-		<ResizableBox
-			size={ {
-				height,
-			} }
-			minHeight={ MIN_HEIGHT }
-			enable={ {
-				top: false,
-				right: false,
-				bottom: true,
-				left: false,
-				topRight: false,
-				bottomRight: false,
-				bottomLeft: false,
-				topLeft: false,
-			} }
-			onResizeStart={ handleOnResizeStart }
-			onResizeStop={ handleOnResizeStop }
-			showHandle={ isSelected }
-			__experimentalShowTooltip={ true }
-			__experimentalTooltipProps={ {
-				axis: 'y',
-				position: 'bottom',
-				isVisible: isResizing,
-			} }
-		>
+		<>
 			<Controls
 				clear={ clear }
 				color={ color }
@@ -135,6 +111,31 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 				setTitle={ setTitle }
 			/>
 			<figure { ...blockProps }>
+			<ResizableBox
+				size={ {
+					height,
+				} }
+				minHeight={ MIN_HEIGHT }
+				enable={ {
+					top: false,
+					right: false,
+					bottom: true,
+					left: false,
+					topRight: false,
+					bottomRight: false,
+					bottomLeft: false,
+					topLeft: false,
+				} }
+				onResizeStart={ handleOnResizeStart }
+				onResizeStop={ handleOnResizeStop }
+				showHandle={ isSelected }
+				__experimentalShowTooltip={ true }
+				__experimentalTooltipProps={ {
+					axis: 'y',
+					position: 'bottom',
+					isVisible: isResizing,
+				} }
+			>
 				<Freehand
 					handlePointerDown={ handlePointerDown }
 					handlePointerMove={ handlePointerMove }
@@ -143,8 +144,9 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 					currentStroke={ currentStroke }
 					title={ title }
 				/>
+				</ResizableBox>
 			</figure>
-		</ResizableBox>
+		</>
 	);
 };
 
