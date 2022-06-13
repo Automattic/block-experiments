@@ -169,19 +169,18 @@ export function withPreviewDeviceType() {
 	return withSelect( ( select ) => {
 		const isSiteEditor = document.querySelector( '#edit-site-editor' );
 
-		const siteEditorPreviewDeviceType = select( 'core/edit-site' )
-			?.__experimentalGetPreviewDeviceType;
-		const postEditorPreviewDeviceType = select( 'core/edit-post' )
-			?.__experimentalGetPreviewDeviceType;
-
 		if ( isSiteEditor ) {
 			return {
-				previewDeviceType: siteEditorPreviewDeviceType(),
+				previewDeviceType: select(
+					'core/edit-site'
+				)?.__experimentalGetPreviewDeviceType(),
 			};
 		}
 
 		return {
-			previewDeviceType: postEditorPreviewDeviceType(),
+			previewDeviceType: select(
+				'core/edit-post'
+			)?.__experimentalGetPreviewDeviceType(),
 		};
 	} );
 }
