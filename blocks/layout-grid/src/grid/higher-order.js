@@ -50,6 +50,11 @@ function getColumnBlocks( currentBlocks, previous, columns ) {
 		.reverse();
 }
 
+function isSiteEditor() {
+	const siteEditorWrapper = document.querySelector( '#edit-site-editor' );
+	return !! siteEditorWrapper;
+}
+
 export function withUpdateAlignment() {
 	return withDispatch( ( dispatch, ownProps, registry ) => {
 		return {
@@ -122,11 +127,7 @@ export function withSetPreviewDeviceType() {
 	return withDispatch( ( dispatch ) => {
 		return {
 			setPreviewDeviceType( type ) {
-				const isSiteEditor = document.querySelector(
-					'#edit-site-editor'
-				);
-
-				if ( isSiteEditor ) {
+				if ( isSiteEditor() ) {
 					return dispatch(
 						'core/edit-site'
 					)?.__experimentalSetPreviewDeviceType( type );
@@ -167,9 +168,7 @@ export function withColumnAttributes() {
 
 export function withPreviewDeviceType() {
 	return withSelect( ( select ) => {
-		const isSiteEditor = document.querySelector( '#edit-site-editor' );
-
-		if ( isSiteEditor ) {
+		if ( isSiteEditor() ) {
 			return {
 				previewDeviceType: select(
 					'core/edit-site'
