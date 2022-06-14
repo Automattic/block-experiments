@@ -127,7 +127,7 @@ export function withSetPreviewDeviceType() {
 				);
 
 				if ( isSiteEditor ) {
-					dispatch(
+					return dispatch(
 						'core/edit-site'
 					)?.__experimentalSetPreviewDeviceType( type );
 				}
