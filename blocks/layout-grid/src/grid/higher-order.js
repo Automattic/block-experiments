@@ -50,6 +50,11 @@ function getColumnBlocks( currentBlocks, previous, columns ) {
 		.reverse();
 }
 
+function isSiteEditor() {
+	const siteEditorWrapper = document.querySelector( '#edit-site-editor' );
+	return !! siteEditorWrapper;
+}
+
 export function withUpdateAlignment() {
 	return withDispatch( ( dispatch, ownProps, registry ) => {
 		return {
@@ -122,10 +127,15 @@ export function withSetPreviewDeviceType() {
 	return withDispatch( ( dispatch ) => {
 		return {
 			setPreviewDeviceType( type ) {
-				const { __experimentalSetPreviewDeviceType } =
-					dispatch( 'core/edit-site' ) ||
-					dispatch( 'core/edit-post' );
-				__experimentalSetPreviewDeviceType( type );
+				if ( isSiteEditor() ) {
+					return dispatch(
+						'core/edit-site'
+					)?.__experimentalSetPreviewDeviceType( type );
+				}
+
+				dispatch(
+					'core/edit-post'
+				)?.__experimentalSetPreviewDeviceType( type );
 			},
 		};
 	} );
@@ -158,11 +168,18 @@ export function withColumnAttributes() {
 
 export function withPreviewDeviceType() {
 	return withSelect( ( select ) => {
-		const { __experimentalGetPreviewDeviceType = null } =
-			select( 'core/edit-site' ) || select( 'core/edit-post' );
+		if ( isSiteEditor() ) {
+			return {
+				previewDeviceType: select(
+					'core/edit-site'
+				)?.__experimentalGetPreviewDeviceType(),
+			};
+		}
 
 		return {
-			previewDeviceType: __experimentalGetPreviewDeviceType(),
+			previewDeviceType: select(
+				'core/edit-post'
+			)?.__experimentalGetPreviewDeviceType(),
 		};
 	} );
 }
