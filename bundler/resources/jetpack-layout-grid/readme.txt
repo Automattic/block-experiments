@@ -24,6 +24,9 @@ You can follow development, file an issue, suggest features, and view the source
 
 == Changelog ==
 
+= 1.8.2 - 16th June 2022 =
+* Update device preview handling to be more consistent
+
 = 1.8.1 - 18th March 2022 =
 * Change layout grid to not be fullwide by default
 
