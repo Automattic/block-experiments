@@ -1,27 +1,26 @@
 /**
- * Internal dependencies
- */
-import { ColorControlIcon, BrushSizeControlIcon, BrushSizeIcon } from './icons';
-/**
  * WordPress dependencies
  */
-import {
-	BlockControls,
-	InspectorControls,
-	useSetting,
-} from '@wordpress/block-editor';
+import { BlockControls, InspectorControls, useSetting } from '@wordpress/block-editor';
+import { useDispatch } from '@wordpress/data';
 import {
 	ColorPalette,
 	Icon,
 	PanelBody,
 	TextareaControl,
 	ToolbarButton,
-	ToolbarItem,
 	ToolbarDropdownMenu,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { trash } from '@wordpress/icons';
-import { CreateAndUploadDropdown } from './controls-create-and-upload';
+import { trash, upload } from '@wordpress/icons';
+import { store as noticesStore } from '@wordpress/notices';
+
+/**
+ * Internal dependencies
+ */
+import uploadBlobToMediaLibrary from '../../../lib/upload-image';
+import svgDomToBlob from '../../../lib/svg-dom-to-blob';
+import { ColorControlIcon, BrushSizeControlIcon, BrushSizeIcon } from './icons';
 
 const brushes = [
 	{
@@ -48,8 +47,18 @@ const Controls = ( {
 	title,
 	setTitle,
 	blockRef,
+	attributes,
 } ) => {
 	const colors = useSetting( 'color.palette' ) || [];
+	const { createErrorNotice, createInfoNotice } = useDispatch( noticesStore );
+	function getSVGNodeElement() {
+		if ( ! blockRef.current ) {
+			return;
+		}
+
+		return blockRef.current.querySelector( 'svg' );
+	}
+
 	return (
 		<>
 			<BlockControls group="block">
@@ -97,35 +106,37 @@ const Controls = ( {
 				/>
 			</BlockControls>
 			<BlockControls group="other">
-				<ToolbarItem>
-					{ ( toggleProps ) => (
-						<CreateAndUploadDropdown
-							blockRef={ blockRef }
-							toggleProps={ toggleProps }
-							onCreateAndUpload={ ( blob ) => {
-								uploadBlobToMediaLibrary( blob, { caption: value, description: value }, function( err, image ) {
-									if ( err ) {
-										// removeAllNotices();
-										createErrorNotice( err );
-										return;
-									}
+				<ToolbarButton
+					icon={ upload }
+					onClick={ () => {
+						svgDomToBlob( getSVGNodeElement(), function( blob ) {
+							uploadBlobToMediaLibrary( blob, {}, function( err, image ) {
+								if ( err ) {
+									return createErrorNotice( err );
+								}
 
-									createInfoNotice(
-										sprintf(
-											/* translators: %s: Publish state and date of the post. */
-											__( 'Image {%s} created and uploaded to the library', 'a8c-sketch' ),
-											image.id,
-										),
-										{
-											id: `uploaded-image-${ image.id }`,
-											type: 'snackbar',
-										}
-									);
-								} );
-							} }	
-						/>
-					) }
-				</ToolbarItem>
+								createInfoNotice(
+									sprintf(
+										__( 'Image created and added to the library', 'a8c-sketch' ),
+										image.id,
+									),
+									{
+										id: `uploaded-image-${ image.id }`,
+										type: 'snackbar',
+										isDismissible: false,
+										actions: [
+											{
+												url: `/wp-admin/upload.php?item=${ image.id }`, // @ToDo - Get the rute properly
+												label: __( 'View Image', 'a8c-sketch' ),
+											},
+										],
+									}
+								);
+							} );
+						} );
+					} }
+					label={ __( 'Upload', 'a8c-sketch' ) }
+				/>
 			</BlockControls>
 			<InspectorControls>
 				<PanelBody title={ __( 'a8c-sketch' ) }>
