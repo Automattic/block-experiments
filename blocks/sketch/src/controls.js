@@ -107,6 +107,7 @@ const Controls = ( {
 
 				<ToolbarButton
 					icon={ upload }
+					disabled={ isEmpty }
 					onClick={ () => {
 						svgDomToBlob( getSVGNodeElement(), function( blob ) {
 							uploadBlobToMediaLibrary( blob, { description: attributes?.title }, function( err, image ) {
