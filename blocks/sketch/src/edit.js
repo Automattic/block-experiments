@@ -134,6 +134,7 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 				title={ title }
 				setTitle={ setTitle }
 				blockRef={ ref }
+				attributes={ attributes }
 			/>
 			<figure { ...blockProps }>
 				<Freehand

@@ -109,7 +109,7 @@ const Controls = ( {
 					icon={ upload }
 					onClick={ () => {
 						svgDomToBlob( getSVGNodeElement(), function( blob ) {
-							uploadBlobToMediaLibrary( blob, {}, function( err, image ) {
+							uploadBlobToMediaLibrary( blob, { description: attributes?.title }, function( err, image ) {
 								if ( err ) {
 									return createErrorNotice( err );
 								}
