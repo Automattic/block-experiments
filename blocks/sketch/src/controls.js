@@ -104,8 +104,7 @@ const Controls = ( {
 					label={ __( 'Clear canvas', 'a8c-sketch' ) }
 					disabled={ isEmpty }
 				/>
-			</BlockControls>
-			<BlockControls group="other">
+
 				<ToolbarButton
 					icon={ upload }
 					onClick={ () => {
