@@ -105,6 +105,9 @@ const Controls = ( {
 					disabled={ isEmpty }
 				/>
 
+			</BlockControls>
+
+			<BlockControls group="other">
 				<ToolbarButton
 					icon={ upload }
 					disabled={ isEmpty }
