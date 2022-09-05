@@ -109,6 +109,8 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 				isEmpty={ ! strokes.length }
 				title={ title }
 				setTitle={ setTitle }
+				blockRef={ ref }
+				attributes={ attributes }
 			/>
 			<figure { ...blockProps }>
 			<ResizableBox

@@ -1,18 +1,10 @@
 /**
- * Internal dependencies
- */
-import { ColorControlIcon, BrushSizeControlIcon, BrushSizeIcon } from './icons';
-/**
  * WordPress dependencies
  */
-import {
-	BlockControls,
-	InspectorControls,
-	useSetting,
-} from '@wordpress/block-editor';
+import { BlockControls, InspectorControls, useSetting } from '@wordpress/block-editor';
+import { useDispatch } from '@wordpress/data';
 import {
 	ColorPalette,
-	ExternalLink,
 	Icon,
 	PanelBody,
 	TextareaControl,
@@ -20,7 +12,15 @@ import {
 	ToolbarDropdownMenu,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { trash } from '@wordpress/icons';
+import { trash, upload } from '@wordpress/icons';
+import { store as noticesStore } from '@wordpress/notices';
+
+/**
+ * Internal dependencies
+ */
+import uploadBlobToMediaLibrary from '../../../lib/upload-image';
+import svgDomToBlob from '../../../lib/svg-dom-to-blob';
+import { ColorControlIcon, BrushSizeControlIcon, BrushSizeIcon } from './icons';
 
 const brushes = [
 	{
@@ -46,8 +46,19 @@ const Controls = ( {
 	isEmpty,
 	title,
 	setTitle,
+	blockRef,
+	attributes,
 } ) => {
 	const colors = useSetting( 'color.palette' ) || [];
+	const { createErrorNotice, createInfoNotice } = useDispatch( noticesStore );
+	function getSVGNodeElement() {
+		if ( ! blockRef.current ) {
+			return;
+		}
+
+		return blockRef.current.querySelector( 'svg' );
+	}
+
 	return (
 		<>
 			<BlockControls group="block">
@@ -58,7 +69,7 @@ const Controls = ( {
 						isAlternate: true,
 					} }
 					icon={ <Icon icon={ BrushSizeControlIcon } /> }
-					label={ __( 'Brush', 'sketch' ) }
+					label={ __( 'Brush', 'a8c-sketch' ) }
 					controls={ brushes.map( ( control ) => ( {
 						...control,
 						isActive: control.value === preset,
@@ -75,7 +86,7 @@ const Controls = ( {
 					icon={
 						<Icon icon={ <ColorControlIcon color={ color } /> } />
 					}
-					label={ __( 'Color', 'sketch' ) }
+					label={ __( 'Color', 'a8c-sketch' ) }
 				>
 					{ () => (
 						<ColorPalette
@@ -90,20 +101,57 @@ const Controls = ( {
 				<ToolbarButton
 					icon={ trash }
 					onClick={ clear }
-					label={ __( 'Clear canvas', 'sketch' ) }
+					label={ __( 'Clear canvas', 'a8c-sketch' ) }
 					disabled={ isEmpty }
+				/>
+
+			</BlockControls>
+
+			<BlockControls group="other">
+				<ToolbarButton
+					icon={ upload }
+					disabled={ isEmpty }
+					onClick={ () => {
+						svgDomToBlob( getSVGNodeElement(), function( blob ) {
+							uploadBlobToMediaLibrary( blob, { description: attributes?.title }, function( err, image ) {
+								if ( err ) {
+									return createErrorNotice( err );
+								}
+
+								createInfoNotice(
+									sprintf(
+										__( 'Image created and added to the library', 'a8c-sketch' ),
+										image.id,
+									),
+									{
+										id: `uploaded-image-${ image.id }`,
+										type: 'snackbar',
+										isDismissible: false,
+										actions: [
+											{
+												url: `/wp-admin/upload.php?item=${ image.id }`, // @ToDo - Get the rute properly
+												label: __( 'View Image', 'a8c-sketch' ),
+											},
+										],
+									}
+								);
+							} );
+						} );
+					} }
+					label={ __( 'Upload', 'a8c-sketch' ) }
 				/>
 			</BlockControls>
 			<InspectorControls>
-				<PanelBody title={ __( 'Settings' ) }>
+				<PanelBody title={ __( 'a8c-sketch' ) }>
 					<TextareaControl
-						label={ __( 'Description' ) }
+						label={ __( 'a8c-sketch' ) }
 						value={ title }
 						onChange={ setTitle }
 						help={
 							<>
 								{ __(
-									"Add a short-text description so it's recognized as the accessible name for the sketch."
+									"Add a short-text description so it's recognized as the accessible name for the sketch.",
+									'a8c-sketch'
 								) }
 							</>
 						}
@@ -113,4 +161,5 @@ const Controls = ( {
 		</>
 	);
 };
+
 export default Controls;
