@@ -1,7 +1,11 @@
 /**
  * WordPress dependencies
  */
-import { BlockControls, InspectorControls, useSetting } from '@wordpress/block-editor';
+import {
+	BlockControls,
+	InspectorControls,
+	useSetting,
+} from '@wordpress/block-editor';
 import { useDispatch } from '@wordpress/data';
 import {
 	ColorPalette,
@@ -11,6 +15,7 @@ import {
 	ToolbarButton,
 	ToolbarDropdownMenu,
 } from '@wordpress/components';
+import { useCallback } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 import { trash, upload } from '@wordpress/icons';
 import { store as noticesStore } from '@wordpress/notices';
@@ -59,6 +64,46 @@ const Controls = ( {
 		return blockRef.current.querySelector( 'svg' );
 	}
 
+	const uploadImage = useCallback( () => {
+		svgDomToBlob( getSVGNodeElement(), function ( blob ) {
+			uploadBlobToMediaLibrary(
+				blob,
+				{ description: attributes?.title },
+				function ( err, image ) {
+					if ( err ) {
+						return createErrorNotice( err );
+					}
+
+					createInfoNotice(
+						sprintf(
+							__(
+								'Image created and added to the library',
+								'a8c-sketch'
+							),
+							image.id
+						),
+						{
+							id: `uploaded-image-${ image.id }`,
+							type: 'snackbar',
+							isDismissible: false,
+							actions: [
+								{
+									url: `/wp-admin/upload.php?item=${ image.id }`, // @ToDo - Get the rute properly
+									label: __( 'View Image', 'a8c-sketch' ),
+								},
+							],
+						}
+					);
+				}
+			);
+		} );
+	}, [
+		attributes,
+		createErrorNotice,
+		createInfoNotice,
+		getSVGNodeElement,
+		getSVGNodeElement,
+	] );
 	return (
 		<>
 			<BlockControls group="block">
@@ -104,40 +149,13 @@ const Controls = ( {
 					label={ __( 'Clear canvas', 'a8c-sketch' ) }
 					disabled={ isEmpty }
 				/>
-
 			</BlockControls>
 
 			<BlockControls group="other">
 				<ToolbarButton
 					icon={ upload }
 					disabled={ isEmpty }
-					onClick={ () => {
-						svgDomToBlob( getSVGNodeElement(), function( blob ) {
-							uploadBlobToMediaLibrary( blob, { description: attributes?.title }, function( err, image ) {
-								if ( err ) {
-									return createErrorNotice( err );
-								}
-
-								createInfoNotice(
-									sprintf(
-										__( 'Image created and added to the library', 'a8c-sketch' ),
-										image.id,
-									),
-									{
-										id: `uploaded-image-${ image.id }`,
-										type: 'snackbar',
-										isDismissible: false,
-										actions: [
-											{
-												url: `/wp-admin/upload.php?item=${ image.id }`, // @ToDo - Get the rute properly
-												label: __( 'View Image', 'a8c-sketch' ),
-											},
-										],
-									}
-								);
-							} );
-						} );
-					} }
+					onClick={ uploadImage }
 					label={ __( 'Upload', 'a8c-sketch' ) }
 				/>
 			</BlockControls>
