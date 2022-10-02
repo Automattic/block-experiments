@@ -23,6 +23,23 @@ For packaging, each block can be generated as its own stand-alone plugin.
 
 4. Activate Block Experiments plugin, use blocks in Editor.
 
+### Development WordPress environment
+
+By running the following, a docker container is launched.
+
+```sh
+$ npm i -g @wordpress/env
+$ yarn env start
+
+WordPress development site started at http://localhost:8888/
+WordPress test site started at http://localhost:8889/
+MySQL is listening on port 59156
+```
+
+The development site will run at localhost and include a plugin loading all blocks.
+
+See wp-env's [Quick (tl;dr) instructions](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-env/#quick-tldr-instructions) for credentials.
+
 ## Adding a block
 
 Add a directory to `blocks`, ensure your block has:
@@ -100,3 +117,4 @@ For the [Layout Grid](https://wordpress.org/plugins/layout-grid/) the plugin fil
 https://plugins.svn.wordpress.org/layout-grid/
 
 On WordPress.com the files need updating under `gutenberg-blocks`. Both locations need to be updated.
+
