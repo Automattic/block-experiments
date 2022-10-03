@@ -1,6 +1,6 @@
 === Sketch Block ===
 Contributors: automattic, matveb, oskosk, pablohoneyhoney
-Stable tag: 1.0.10
+Stable tag: 1.1.0
 Tested up to: 6.0
 Requires at least: 5.7
 License: GPLv2 or later
@@ -31,6 +31,10 @@ You can follow development, file an issue, suggest features, and view the source
 2. Draw and write freely on a canvas.
 
 == Changelog ==
+
+= 1.1.0 - 2nd October 2022 =
+* Updated to reflect compatibility with WordPess 6.0.
+* Added toolbar control for uploading an image to the media library generated from the sketch drawing.
 
 = 1.0.10 - 14th July 2021 =
 * Prevent default pointer behavior on move, which could cause unintended window scrolling with some devices and browsers.
