@@ -103,7 +103,7 @@ You can update the visual snapshots with:
 
 - `yarn jest -u`
 
-## Releasing an individual block
+## Releasing an individual block plugin
 
 If you want to release an individual block then you can follow these steps:
 
@@ -117,4 +117,31 @@ For the [Layout Grid](https://wordpress.org/plugins/layout-grid/) the plugin fil
 https://plugins.svn.wordpress.org/layout-grid/
 
 On WordPress.com the files need updating under `gutenberg-blocks`. Both locations need to be updated.
+
+### SVN Process
+
+First check out the repo
+
+```sh
+mkdir dist/svn
+cd dist/svn
+svn co https://plugins.svn.wordpress.org/sketch --username oskosk
+```
+
+* Make sure you bump versions in `readme.txt`, and `.json` file . See [#291](https://github.com/Automattic/block-experiments/pull/291) for an example of versions bump.
+
+Build the plugin bundle and copy it over the SVN working copy excluding the `assets` directory.
+```sh
+cd ../.. # back to root of block-experimentes repo
+yarn plugin sketch
+yarn bundle
+rsync -a plugin/a8c-sketch/ dist/svn/sketch/trunk --exclude=assets
+```
+
+Prepare to release
+```sh
+cd dist/svn/sketch
+svn cp trunk tags/1.1.0
+svn ci -m 'Release version 1.1.0'
+```
 
