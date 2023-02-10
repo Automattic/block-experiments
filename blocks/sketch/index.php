@@ -92,4 +92,3 @@ function get_svg_path_from_stroke( $stroke ) {
 }
 
 add_action( 'init', __NAMESPACE__ . '\set_render_callback' );
-
