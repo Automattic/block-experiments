@@ -3,6 +3,7 @@
  */
 import getStroke from 'perfect-freehand';
 import { useCallback } from '@wordpress/element';
+import simplify from 'simplify-js';
 
 /**
  * Internal dependencies
@@ -68,7 +69,7 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 				strokes: [
 					...strokes,
 					{
-						stroke,
+						stroke: simplifyPath( stroke ),
 						color,
 					},
 				],
@@ -190,5 +191,10 @@ export const StrokePath = ( { stroke } ) => {
 	return <path fill={ color } d={ getSvgPathFromStroke( stroke.stroke ) } />;
 };
 
-// export default Edit;
+export const simplifyPath = ( stroke ) => {
+	const mapped = stroke.map( item => ( { x: item[ 0 ], y: item[ 1 ] } ) );
+	const simplified = simplify( mapped ).map( item => ( [ item.x, item.y ] ) );
+	return simplified;
+};
+
 export default Edit;
