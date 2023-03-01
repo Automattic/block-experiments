@@ -160,7 +160,7 @@ const Controls = ( {
 				/>
 			</BlockControls>
 			<InspectorControls>
-				<PanelBody title={ __( 'a8c-sketch' ) }>
+				<PanelBody>
 					<TextareaControl
 						label={ __( 'Alt text (alternative text)' ) }
 						value={ title }
