@@ -46,12 +46,13 @@ function a8c_sketch_render( $attributes ) {
 }
 
 function set_render_callback() {
+	// Note that 'block-experiments' gets replaced with 'a8c-sketch' when bundling
 	register_block_type(
 		'a8c/sketch',
 		[
-			'editor_script' => 'a8c-sketch',
-			'style' => 'a8c-sketch',
-			'editor_style' => 'a8c-sketch-editor',
+			'editor_script' => 'block-experiments',
+			'style' => 'block-experiments',
+			'editor_style' => 'block-experiments-editor',
 			'render_callback' => __NAMESPACE__ . '\a8c_sketch_render',
 		]
 	);
