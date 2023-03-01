@@ -35,37 +35,40 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 		if ( ! isSelected ) {
 			return;
 		}
-		setCurrentMark( {
+		const mark = {
 			type: e.pointerType,
 			points: [ [ e.clientX - x, e.clientY - y, e.pressure ] ],
-		} );
+		};
+		setCurrentMark( mark );
 	}, [ ref, isSelected, setCurrentMark ] );
 
 	const handlePointerMove = useCallback( ( e ) => {
 		const { left: x, top: y } = ref.current.getBoundingClientRect();
 
 		if ( isSelected && currentMark && e.buttons === 1 ) {
-			e.preventDefault();
-			setCurrentMark( {
+			const mark =  {
 				...currentMark,
 				points: [
 					...currentMark.points,
 					[ e.clientX - x, e.clientY - y, e.pressure ],
 				],
-			} );
+			}
+			e.preventDefault();
+			setCurrentMark( mark );
 		}
 	}, [ ref, isSelected, currentMark, setCurrentMark] );
 
 	const handlePointerUp = useCallback ( () => {
 		if ( isSelected && currentMark ) {
+			const stroke = getStroke( currentMark.points, {
+				...presets[ preset ],
+				simulatePressure: currentMark.type !== 'pen',
+			} );
 			setAttributes( {
 				strokes: [
 					...strokes,
 					{
-						stroke: getStroke( currentMark.points, {
-							...presets[ preset ],
-							simulatePressure: currentMark.type !== 'pen',
-						} ),
+						stroke,
 						color,
 					},
 				],
