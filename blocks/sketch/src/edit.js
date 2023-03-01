@@ -2,6 +2,7 @@
  * External dependencies
  */
 import getStroke from 'perfect-freehand';
+import { useCallback } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -29,7 +30,7 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 		className: 'wp-block-a8c-sketch',
 		ref,
 	} );
-	function handlePointerDown( e ) {
+	const handlePointerDown = useCallback( ( e ) => {
 		const { left: x, top: y } = ref.current.getBoundingClientRect();
 		if ( ! isSelected ) {
 			return;
@@ -38,9 +39,9 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 			type: e.pointerType,
 			points: [ [ e.clientX - x, e.clientY - y, e.pressure ] ],
 		} );
-	}
+	}, [ ref, isSelected, setCurrentMark ] );
 
-	function handlePointerMove( e ) {
+	const handlePointerMove = useCallback( ( e ) => {
 		const { left: x, top: y } = ref.current.getBoundingClientRect();
 
 		if ( isSelected && currentMark && e.buttons === 1 ) {
@@ -53,8 +54,9 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 				],
 			} );
 		}
-	}
-	function handlePointerUp() {
+	}, [ ref, isSelected, currentMark, setCurrentMark] );
+
+	const handlePointerUp = useCallback ( () => {
 		if ( isSelected && currentMark ) {
 			setAttributes( {
 				strokes: [
@@ -70,17 +72,20 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 			} );
 			setCurrentMark( undefined );
 		}
-	}
+	}, [ isSelected, currentMark, setCurrentMark, setAttributes, strokes, preset, color ] );
 
-	const clear = () => setAttributes( { strokes: [], height: 450 } );
+	const clear = useCallback(
+		() => setAttributes( { strokes: [], height: 450 } ), [
+		setAttributes
+	] );
 
-	const handleOnResizeStart = () => {
+	const handleOnResizeStart = useCallback( () => {
 		setIsResizing( true );
-	};
+	}, [ setIsResizing ] );
 
-	const setTitle = ( newTitle ) => setAttributes( { title: newTitle } );
+	const setTitle = useCallback( ( newTitle ) => setAttributes( { title: newTitle } ), [ setAttributes ] );
 
-	const handleOnResizeStop = ( event, direction, elt, delta ) => {
+	const handleOnResizeStop = useCallback( ( event, direction, elt, delta ) => {
 		const sketchHeight = Math.min(
 			parseInt( height + delta.height, 10 ),
 			MAX_HEIGHT
@@ -89,7 +94,7 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 			height: sketchHeight,
 		} );
 		setIsResizing( false );
-	};
+	}, [ height, setAttributes, setIsResizing ] );
 
 	const currentStroke = currentMark && {
 		stroke: getStroke( currentMark.points, {
@@ -98,6 +103,7 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 		} ),
 		color,
 	};
+
 	return (
 		<>
 			<Controls
