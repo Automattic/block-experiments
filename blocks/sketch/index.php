@@ -6,12 +6,10 @@ define( __NAMESPACE__ . '\DEFAULT_HEIGHT', 450);
 
 function a8c_sketch_render( $attributes ) {
 	$strokes = $attributes['strokes'] ?? [];
-	$align   = $attributes['align'] ?? '';
 	$title   = $attributes['title'] ?? '';
 	$height   = $attributes['height'] ?? DEFAULT_HEIGHT;
-	// The class name that affects alignment is called alignwide, alignfull, etc
-	$align = $align ? " align$align" : '';
 	$title_tag = $title ? sprintf( '<title>%s</title>', esc_html( $title ) ) : '';
+	$supports_attributes = get_block_wrapper_attributes();
 
 	if ( ! isset( $attributes['strokes'] ) || '' === $attributes['strokes'] ) {
 		return '';
@@ -32,11 +30,10 @@ function a8c_sketch_render( $attributes ) {
 		$strokes
 	);
 
-	$class = sprintf( 'class="wp-block-a8c-sketch%s"', esc_attr( $align ) );
 	$style = sprintf( 'style="height: %dpx;"', esc_attr( $height ) );
 
 	$html =
-		sprintf( '<figure %s %s>', $class, $style ) .
+		sprintf( '<figure %s %s>', $supports_attributes, $style ) .
 			'<svg role="img">' .
 				$title_tag .
 				implode( "\n", $paths ) .
@@ -54,6 +51,9 @@ function set_render_callback() {
 			'style' => 'block-experiments',
 			'editor_style' => 'block-experiments-editor',
 			'render_callback' => __NAMESPACE__ . '\a8c_sketch_render',
+			'supports' => array(
+				'align' => true,
+			)
 		]
 	);
 }
