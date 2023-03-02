@@ -156,7 +156,7 @@ const Controls = ( {
 					icon={ upload }
 					disabled={ isEmpty }
 					onClick={ uploadImage }
-					label={ __( 'Upload', 'a8c-sketch' ) }
+					label={ __( 'Upload as image', 'a8c-sketch' ) }
 				/>
 			</BlockControls>
 			<InspectorControls>
