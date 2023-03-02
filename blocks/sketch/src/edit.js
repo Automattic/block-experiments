@@ -16,7 +16,7 @@ import { useState, useRef } from '@wordpress/element';
 import { useBlockProps } from '@wordpress/block-editor';
 import { ResizableBox } from '@wordpress/components';
 
-const MIN_HEIGHT = 0;
+const MIN_HEIGHT = 1;
 const MAX_HEIGHT = 1000;
 
 const Edit = ( { attributes, isSelected, setAttributes } ) => {
