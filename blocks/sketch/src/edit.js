@@ -21,7 +21,6 @@ const MAX_HEIGHT = 1000;
 
 const Edit = ( { attributes, isSelected, setAttributes } ) => {
 	const { strokes, height, title } = attributes;
-	const [ currentMark, setCurrentMark ] = useState();
 	const [ preset, setPreset ] = useState( 1 );
 	const [ isResizing, setIsResizing ] = useState( false );
 	const [ color, setColor ] = useState( '#000' );
@@ -30,52 +29,18 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 		className: 'wp-block-a8c-sketch',
 		ref,
 	} );
-	const handlePointerDown = useCallback( ( e ) => {
-		const { left: x, top: y } = ref.current.getBoundingClientRect();
-		if ( ! isSelected ) {
-			return;
-		}
-		const mark = {
-			type: e.pointerType,
-			points: [ [ e.clientX - x, e.clientY - y, e.pressure ] ],
-		};
-		setCurrentMark( mark );
-	}, [ ref, isSelected, setCurrentMark ] );
 
-	const handlePointerMove = useCallback( ( e ) => {
-		const { left: x, top: y } = ref.current.getBoundingClientRect();
-
-		if ( isSelected && currentMark && e.buttons === 1 ) {
-			const mark =  {
-				...currentMark,
-				points: [
-					...currentMark.points,
-					[ e.clientX - x, e.clientY - y, e.pressure ],
-				],
-			}
-			e.preventDefault();
-			setCurrentMark( mark );
-		}
-	}, [ ref, isSelected, currentMark, setCurrentMark] );
-
-	const handlePointerUp = useCallback ( () => {
-		if ( isSelected && currentMark ) {
-			const stroke = getStroke( currentMark.points, {
-				...presets[ preset ],
-				simulatePressure: currentMark.type !== 'pen',
-			} );
-			setAttributes( {
-				strokes: [
-					...strokes,
-					{
-						stroke,
-						color,
-					},
-				],
-			} );
-			setCurrentMark( undefined );
-		}
-	}, [ isSelected, currentMark, setCurrentMark, setAttributes, strokes, preset, color ] );
+	const addStroke = useCallback( ( stroke ) => {
+		setAttributes( {
+			strokes: [
+				...strokes,
+				{
+					stroke,
+					color,
+				},
+			],
+		} );
+	}, [ setAttributes, strokes, color ] );
 
 	const clear = useCallback(
 		() => setAttributes( { strokes: [] } ), [
@@ -98,14 +63,6 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 		} );
 		setIsResizing( false );
 	}, [ height, setAttributes, setIsResizing ] );
-
-	const currentStroke = currentMark && {
-		stroke: getStroke( currentMark.points, {
-			...presets[ preset ],
-			simulatePressure: currentMark.type !== 'pen',
-		} ),
-		color,
-	};
 
 	return (
 		<>
@@ -148,11 +105,12 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 				} }
 			>
 				<Freehand
-					handlePointerDown={ handlePointerDown }
-					handlePointerMove={ handlePointerMove }
-					handlePointerUp={ handlePointerUp }
+					onNewStroke={ addStroke }
+					color={ color }
+					containerRef={ ref }
+					editing={ isSelected }
+					preset={ preset }
 					strokes={ strokes }
-					currentStroke={ currentStroke }
 					title={ title }
 				/>
 				</ResizableBox>
@@ -162,28 +120,81 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 };
 
 export const Freehand = ( {
-	currentStroke,
+	color,
+	containerRef,
+	editing,
+	onNewStroke,
+	preset,
 	strokes,
-	handlePointerDown,
-	handlePointerMove,
-	handlePointerUp,
 	title,
-} ) => (
-	<svg
-		onPointerDown={ handlePointerDown }
-		onPointerMove={ handlePointerMove }
-		onPointerUp={ handlePointerUp }
-		style={ { touchAction: 'none' } }
-		role="img"
-	>
-		{ title && <title>{ title }</title> }
-		{ strokes.map( ( stroke, i ) => (
-			<StrokePath key={ i } stroke={ stroke } />
-		) ) }
+} ) => {
+	const [ currentMark, setCurrentMark ] = useState();
 
-		{ currentStroke && <StrokePath stroke={ currentStroke } /> }
-	</svg>
-);
+	const currentStroke = currentMark && {
+		stroke: getStroke( currentMark.points, {
+			...presets[ preset ],
+			simulatePressure: currentMark.type !== 'pen',
+		} ),
+		color,
+	};
+
+	const handlePointerDown = useCallback( ( e ) => {
+
+		const { left: x, top: y } = containerRef.current.getBoundingClientRect();
+		if ( ! editing ) {
+			return;
+		}
+		const mark = {
+			type: e.pointerType,
+			points: [ [ e.clientX - x, e.clientY - y, e.pressure ] ],
+		};
+		setCurrentMark( mark );
+	}, [ containerRef, editing, setCurrentMark ] );
+
+	const handlePointerMove = useCallback( ( e ) => {
+		const { left: x, top: y } = containerRef.current.getBoundingClientRect();
+
+		if ( editing && currentMark && e.buttons === 1 ) {
+			const mark =  {
+				...currentMark,
+				points: [
+					...currentMark.points,
+					[ e.clientX - x, e.clientY - y, e.pressure ],
+				],
+			}
+			e.preventDefault();
+			setCurrentMark( mark );
+		}
+	}, [ containerRef, editing, currentMark, setCurrentMark] );
+
+	const handlePointerUp = useCallback ( () => {
+		if ( editing && currentMark ) {
+			const stroke = getStroke( currentMark.points, {
+				...presets[ preset ],
+				simulatePressure: currentMark.type !== 'pen',
+			} );
+			onNewStroke( stroke );
+			setCurrentMark( undefined );
+		}
+	}, [ currentMark, editing, onNewStroke, setCurrentMark, preset ] );
+
+	return (
+		<svg
+			onPointerDown={ handlePointerDown }
+			onPointerMove={ handlePointerMove }
+			onPointerUp={ handlePointerUp }
+			style={ { touchAction: 'none' } }
+			role="img"
+		>
+			{ title && <title>{ title }</title> }
+			{ strokes.map( ( stroke, i ) => (
+				<StrokePath key={ i } stroke={ stroke } />
+			) ) }
+
+			{ currentStroke && <StrokePath stroke={ currentStroke } /> }
+		</svg>
+	);
+};
 
 export const StrokePath = ( { stroke } ) => {
 	const color = stroke.color ?? '#f00';
