@@ -1,6 +1,6 @@
 === Sketch Block ===
 Contributors: automattic, matveb, oskosk, pablohoneyhoney
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 Tested up to: 6.0
 Requires at least: 5.7
 License: GPLv2 or later
@@ -31,6 +31,14 @@ You can follow development, file an issue, suggest features, and view the source
 2. Draw and write freely on a canvas.
 
 == Changelog ==
+
+= 1.2.0 - 2nd March 2023 =
+* Updated the Clear control to not reset the height of the sketch.
+* Removed minimum height restriction for resizer.
+* Fixed full width block alignment support.
+* Updated Upload control label to "Upload as image".
+* Updated alternative text control copy.
+* Updated dependency on perfect-freehand to its version 1.2.0.
 
 = 1.1.0 - 2nd October 2022 =
 * Updated to reflect compatibility with WordPess 6.0.
