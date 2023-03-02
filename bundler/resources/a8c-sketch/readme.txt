@@ -13,10 +13,6 @@ Sketch and draw freely on a canvas with brush strokes that feel natural.
 
 Sketch and draw freely on a canvas with brush strokes that feel natural. Pick among three different brush sizes and the color palette of the site. The block has a transparent background so it can be layered on top of any container block, like groups or background images to achieve different effects.
 
-## Requirements
-
-This is an initial beta release that requires the <a href="https://wordpress.org/plugins/gutenberg/">Gutenberg Plugin</a> to work.
-
 ## Credits
 
 The block is powered by the awesome <a href="https://www.npmjs.com/package/perfect-freehand">perfect-freehand</a> library.
