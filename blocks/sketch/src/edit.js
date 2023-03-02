@@ -78,7 +78,7 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 	}, [ isSelected, currentMark, setCurrentMark, setAttributes, strokes, preset, color ] );
 
 	const clear = useCallback(
-		() => setAttributes( { strokes: [], height: 450 } ), [
+		() => setAttributes( { strokes: [] } ), [
 		setAttributes
 	] );
 
