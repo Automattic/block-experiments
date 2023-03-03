@@ -1,6 +1,6 @@
 === Sketch Block ===
 Contributors: automattic, matveb, oskosk, pablohoneyhoney
-Stable tag: 1.2.0
+Stable tag: 1.3.0
 Tested up to: 6.1.1
 Requires at least: 5.9
 License: GPLv2 or later
@@ -27,6 +27,10 @@ You can follow development, file an issue, suggest features, and view the source
 2. Draw and write freely on a canvas.
 
 == Changelog ==
+
+= 1.3.0 - 3nd March 2023 =
+* Added default and custom color palettes to Color control.
+* Fixed selected color marked in the Color control
 
 = 1.2.0 - 2nd March 2023 =
 * Updated the Clear control to not reset the height of the sketch.
