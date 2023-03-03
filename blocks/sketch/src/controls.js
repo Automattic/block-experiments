@@ -54,7 +54,15 @@ const Controls = ( {
 	blockRef,
 	attributes,
 } ) => {
-	const colors = useSetting( 'color.palette' ) || [];
+	const themePalette = useSetting( 'color.palette.theme' ) || [];
+	const defaultPalette = useSetting( 'color.palette.default' ) || [];
+	const userPalette = useSetting( 'color.palette.custom' ) || [];
+
+	const colors = [
+		themePalette.length ? { name: __( 'Theme', 'a8c-sketch' ), colors: themePalette } : null,
+		defaultPalette.length ? { name: __( 'Default', 'a8c-sketch' ), colors: defaultPalette } : null,
+		userPalette.length ? { name: __( 'Custom', 'a8c-sketch' ), colors: userPalette } : null,
+	].filter( Boolean );
 	const { createErrorNotice, createInfoNotice } = useDispatch( noticesStore );
 	function getSVGNodeElement() {
 		if ( ! blockRef.current ) {
@@ -139,6 +147,7 @@ const Controls = ( {
 							colors={ colors }
 							color={ color }
 							disableCustomColors={ true }
+							headingLevel="2"
 							onChange={ setColor }
 						/>
 					) }
