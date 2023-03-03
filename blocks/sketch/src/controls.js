@@ -135,7 +135,7 @@ const Controls = ( {
 				/>
 				<ToolbarDropdownMenu
 					isCollapsed
-					popoverProps={ { isAlternate: true } }
+					popoverProps={ { variant: 'toolbar' } }
 					icon={
 						<Icon icon={ <ColorControlIcon color={ color } /> } />
 					}
