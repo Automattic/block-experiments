@@ -135,7 +135,10 @@ const Controls = ( {
 				/>
 				<ToolbarDropdownMenu
 					isCollapsed
-					popoverProps={ { variant: 'toolbar' } }
+					popoverProps={ {
+						className: 'wp-block-a8c-sketch__color-palette-popover',
+						variant: 'toolbar'
+					} }
 					icon={
 						<Icon icon={ <ColorControlIcon color={ color } /> } />
 					}

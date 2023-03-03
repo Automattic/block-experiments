@@ -7,4 +7,12 @@
 			min-width: initial;
 		}
 	}
+	&__color-palette-popover {
+		/**
+		 * Take care of default width for popover content.
+		 */
+		.components-popover__content {
+			padding: 16px;
+		}
+	}
 }
