@@ -27,7 +27,6 @@ const Edit = ( { attributes, isSelected, setAttributes } ) => {
 	const [ color, setColor ] = useState( '#000' );
 	const ref = useRef( null );
 	const blockProps = useBlockProps( {
-		className: 'wp-block-a8c-sketch',
 		ref,
 	} );
 	const handlePointerDown = useCallback( ( e ) => {
