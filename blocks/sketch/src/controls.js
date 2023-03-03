@@ -148,7 +148,7 @@ const Controls = ( {
 						<ColorPalette
 							clearable={ false }
 							colors={ colors }
-							color={ color }
+							value={ color }
 							disableCustomColors={ true }
 							headingLevel="2"
 							onChange={ setColor }
