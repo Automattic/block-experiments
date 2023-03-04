@@ -10,6 +10,11 @@
 		height: 100%;
 		touch-action: none;
 		overflow: hidden;
+
+		path {
+			user-select: none;
+			-webkit-user-select: none;
+		}
 	}
 
 }
