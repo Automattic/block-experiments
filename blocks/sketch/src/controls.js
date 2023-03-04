@@ -152,6 +152,7 @@ const Controls = ( {
 							disableCustomColors={ true }
 							headingLevel="2"
 							onChange={ setColor }
+							__experimentalHasMultipleOrigins={ true }
 						/>
 					) }
 				</ToolbarDropdownMenu>
