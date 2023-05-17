@@ -1,7 +1,7 @@
 === Layout Grid Block ===
 Contributors: automattic, jasmussen, johnny5, mkaz
 Stable tag: trunk
-Tested up to: 5.9
+Tested up to: 6.2
 Requires at least: 5.8
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -23,6 +23,9 @@ You can follow development, file an issue, suggest features, and view the source
 2. Three column grid with resize handles.
 
 == Changelog ==
+
+= 1.8.3 - 16th May 2023 =
+* Fix crash in site editor
 
 = 1.8.2 - 16th June 2022 =
 * Update device preview handling to be more consistent

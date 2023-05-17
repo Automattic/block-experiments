@@ -36,10 +36,10 @@ function PreviewDevice( props ) {
 	const { viewPort, updateViewport } = props;
 	const {
 		__experimentalSetPreviewDeviceType: setPreviewDevice,
-	} = useDispatch( 'core/edit-post' );
+	} = useDispatch( 'core/edit-post' ) || useDispatch( 'core/edit-site' );
 	const previewDevice = useSelect(
 		( select ) =>
-			select( 'core/edit-post' ).__experimentalGetPreviewDeviceType(),
+			( select( 'core/edit-site' ) || select( 'core/edit-post' ) ).__experimentalGetPreviewDeviceType(),
 		[]
 	);
 	const [ resizeListener, sizes ] = useResizeObserver();
