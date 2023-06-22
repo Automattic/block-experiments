@@ -5,7 +5,7 @@
 import { Path, SVG } from '@wordpress/components';
 
 export const GridIcon = ( props ) => {
-	const iconProps = {...props};
+	const iconProps = { ...props };
 	if ( props.size ) {
 		iconProps.width = props.size;
 		iconProps.height = props.size;
