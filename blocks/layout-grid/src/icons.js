@@ -5,16 +5,17 @@
 import { Path, SVG } from '@wordpress/components';
 
 export const GridIcon = ( props ) => {
+	const iconProps = { ...props };
 	if ( props.size ) {
-		props.width = props.size;
-		props.height = props.size;
+		iconProps.width = props.size;
+		iconProps.height = props.size;
 	}
 
 	return (
 		<SVG xmlns="http://www.w3.org/2000/svg"
 			width="24" height="24"
 			viewBox="0 0 24 24"
-			{ ...props }
+			{ ...iconProps }
 		>
 			<Path d="M19 6H6c-1.1 0-2 .9-2 2v9c0 1.1.9 2 2 2h13c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-7.5 11.5H6c-.3 0-.5-.2-.5-.5V8c0-.3.2-.5.5-.5h5.5v10zm4 0H13v-10h2.5v10zm4-.5c0 .3-.2.5-.5.5h-2v-10h2c.3 0 .5.2.5.5v9z" />
 		</SVG>
