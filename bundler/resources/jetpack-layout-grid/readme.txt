@@ -24,6 +24,9 @@ You can follow development, file an issue, suggest features, and view the source
 
 == Changelog ==
 
+= 1.8.4 - 11th July 2023 =
+* Fix error in editor with icons
+
 = 1.8.3 - 16th May 2023 =
 * Fix crash in site editor
 
