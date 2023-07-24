@@ -8,8 +8,9 @@ import { __ } from '@wordpress/i18n';
  * Internal dependencies
  */
 import StarsIcon from './icon';
-import Edit from './edit';
-import Save from './save';
+import edit from './edit';
+import save from './save';
+import deprecated from './deprecated';
 
 import generated from './generated.json';
 
@@ -83,7 +84,8 @@ export function registerBlock() {
 				default: '#00000c',
 			},
 		},
-		edit: ( props ) => <Edit { ...props } />,
-		save: ( props ) => <Save { ...props } />,
+		edit,
+		save,
+		deprecated,
 	} );
 }
