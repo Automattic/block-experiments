@@ -25,7 +25,6 @@ setCategories( [
 import * as bauhausCentenaryBlock from '../blocks/bauhaus-centenary/src';
 import * as eventBlock from '../blocks/event/src';
 import * as layoutGridBlock from '../blocks/layout-grid/src';
-import * as motionBackgroundBlock from '../blocks/motion-background/src';
 import * as sketchBlock from '../blocks/sketch/src';
 import * as starscapeBlock from '../blocks/starscape/src';
 import * as wavesBlock from '../blocks/waves/src';
@@ -36,7 +35,6 @@ import * as modelViewerBlock from '../blocks/model-viewer/src';
 bauhausCentenaryBlock.registerBlock();
 eventBlock.registerBlock();
 layoutGridBlock.registerBlock();
-motionBackgroundBlock.registerBlock();
 sketchBlock.registerBlock();
 starscapeBlock.registerBlock();
 wavesBlock.registerBlock();
