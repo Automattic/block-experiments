@@ -1,7 +1,7 @@
 === Starscape Block ===
 Contributors: automattic, ajlende, pablohoneyhoney
-Stable tag: 1.0.3
-Tested up to: 6.0
+Stable tag: 2.0.0
+Tested up to: 6.3
 Requires at least: 5.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -29,6 +29,10 @@ You can follow development, file an issue, suggest features, and view the source
 4. Control the quantity of stars and speed of rotation.
 
 == Changelog ==
+
+= 2.0.0 - TODO =
+* Enable inner blocks support
+* Modernize block implementation
 
 = 1.0.3 - 1st July 2021 =
 * Improve compatibility with block directory

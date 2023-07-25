@@ -1,4 +1,66 @@
 /**
+ * External dependencies
+ */
+import { colord, extend } from 'colord';
+import namesPlugin from 'colord/plugins/names';
+import minifierPlugin from 'colord/plugins/minify';
+
+extend( [ namesPlugin, minifierPlugin ] );
+
+/**
+ * Generate pseudo-random numbers from a seed using an LCG algorithm.
+ *
+ * LCG values selected from L'Ecuyer, Pierre Math. Comp. 68 (1999), 249-260.
+ * @see {@link https://doi.org/10.1090%2FS0025-5718-99-00996-5}
+ *
+ * @param {number} seed Seed value (will be converted to 23-bit integer)
+ *
+ * @return {Generator<number>} Generator of random numbers between 0 and 1
+ */
+function* seededRandoms( seed ) {
+	const m = 0x7fffffff;
+	seed = ( seed >>> 0 ) % m;
+	while ( true ) {
+		seed = Math.imul( seed, 0x0034e7f7 ) % m;
+		yield ( seed & m ) / m;
+	}
+}
+
+/**
+ * 32-bit FNV hash function.
+ *
+ * @param {ArrayBuffer} buffer Data to hash
+ *
+ * @return {number} 32-bit hash for the array
+ */
+function hashUint32( buffer ) {
+	return new Uint32Array( buffer ).reduce(
+		( a, b ) => Math.imul( a, 0x01000193 ) ^ b,
+		0x811c9dc5
+	);
+}
+
+/**
+ * Generates a unique hash for the star box shadow arguments.
+ *
+ * @param {string} color Color option
+ * @param {number} radius Radius option
+ * @param {number} count Count option
+ *
+ * @return {number} 32-bit hash for the arguments
+ */
+function hashStarBoxShadowArgs( count, radius, color ) {
+	const colorData = new TextEncoder().encode( color );
+	const buffer = new ArrayBuffer(
+		// 2 64-bit floats + color string + padding to 4-byte uint32 boundary.
+		16 + colorData.byteLength + ( 4 - ( colorData.byteLength % 4 ) )
+	);
+	new Float64Array( buffer, 0, 2 ).set( [ count, radius ] );
+	new Uint8Array( buffer, 16 ).set( colorData );
+	return hashUint32( buffer );
+}
+
+/**
  * Calculates points randomly within a circle so we don't bother calculating
  * for the points that will never appear on screen.
  *
@@ -6,11 +68,9 @@
  *
  * @return {Object} Random { x, y } coordinates
  */
-const randomPoint = ( radius ) => {
-	/* eslint-disable no-restricted-syntax */
-	const a = Math.random() * 2 * Math.PI;
-	const r = radius * Math.sqrt( Math.random() );
-	/* eslint-enable no-restricted-syntax */
+const randomPoint = ( radius, prng ) => {
+	const a = prng.next().value * 2 * Math.PI;
+	const r = radius * Math.sqrt( prng.next().value );
 
 	return {
 		x: r * Math.cos( a ),
@@ -40,8 +100,12 @@ const starBoxShadow = ( { color, density, maxWidth, maxHeight } ) => {
 	const area = Math.PI * radius * radius;
 	const count = Math.floor( area * density * 1e-6 );
 
+	// Custom prng for deterministic results.
+	const seed = hashStarBoxShadowArgs( count, radius, color );
+	const prng = seededRandoms( seed );
+
 	return Array.from( { length: count }, () => {
-		const { x, y } = randomPoint( radius );
+		const { x, y } = randomPoint( radius, prng );
 		// Rounding to the nearest pixel saves up to 18% on string length
 		return `${ Math.round( x ) }px ${ Math.round( y ) }px ${ color }`;
 	} ).join( ',' );
@@ -88,14 +152,25 @@ const starBoxAnimation = ( { animation, duration } ) => ( {
  * Calculate all three sizes of stars for saving in the attributes.
  *
  * @param {Object} options Options
+ * @param {string} options.color CSS Color string for the stars
  * @param {number} options.density Range slider value between 1 and 100
  * @param {number} options.maxWidth Width in pixels that stars should be generated within
  * @param {number} options.maxHeight Height in pixels that stars should be generated within
  *
  * @return {Object[]} CSS style objects for each layer of stars
  */
-export const genStars = ( { density, maxWidth, maxHeight } ) =>
-	[
+export const genStars = ( { color: _color, density, maxWidth, maxHeight } ) => {
+	// A little bit of minification goes a long way here since the color of each
+	// individual star needs to be specified.
+	const color = colord( _color ).minify( {
+		hex: true,
+		alphaHex: true,
+		rgb: true,
+		hsl: true,
+		name: true,
+		transparent: true,
+	} );
+	return [
 		{
 			starSize: 1,
 			density: 4 * density + 10,
@@ -110,12 +185,13 @@ export const genStars = ( { density, maxWidth, maxHeight } ) =>
 		},
 	].map( ( variation ) =>
 		starBoxStyle( {
-			color: 'hsla(0, 100%, 100%, 0.8)',
+			color,
 			maxWidth,
 			maxHeight,
 			...variation,
 		} )
 	);
+};
 
 /**
  * Calculate all three sizes of stars for saving in the attributes.

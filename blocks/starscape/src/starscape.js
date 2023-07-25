@@ -1,44 +1,50 @@
 /**
- * External dependencies
+ * WordPress dependencies
  */
-import classnames from 'classnames';
+import { forwardRef } from '@wordpress/element';
 
-const Starscape = ( {
-	starStyles,
-	animationStyles,
-	children,
-	className,
-	background,
-} ) => {
+/**
+ * @typedef {Object} StarscapeProps
+ * @property {string}    [as]              HTML tag name.
+ * @property {Object}    [starStyles]      Styles for the stars.
+ * @property {Object}    [animationStyles] Styles for the animation.
+ * @property {WPElement} [children]        Children of the component.
+ */
+
+/**
+ * Starscape background effect component.
+ *
+ * @param {StarscapeProps} props Starscape props
+ *
+ * @returns {WPElement} Starscape component
+ */
+const Starscape = (
+	{
+		as: Component = 'div',
+		starStyles,
+		animationStyles,
+		intensity,
+		children,
+		...props
+	},
+	ref
+) => {
 	return (
-		<div
-			className={ classnames( 'wp-block-a8c-starscape', className ) }
-			style={ { background } }
-		>
-			<div
-				className="wp-block-a8c-starscape__stars"
-				style={ {
-					...starStyles[ 0 ],
-					...animationStyles[ 0 ],
-				} }
-			/>
-			<div
-				className="wp-block-a8c-starscape__stars"
-				style={ {
-					...starStyles[ 1 ],
-					...animationStyles[ 1 ],
-				} }
-			/>
-			<div
-				className="wp-block-a8c-starscape__stars"
-				style={ {
-					...starStyles[ 2 ],
-					...animationStyles[ 2 ],
-				} }
-			/>
+		<Component ref={ ref } { ...props }>
+			{ [ 0, 1, 2 ].map( ( i ) => (
+				<div
+					key={ i }
+					className="wp-block-a8c-starscape__stars"
+					style={ {
+						opacity: intensity / 100,
+						...starStyles[ i ],
+						...animationStyles[ i ],
+					} }
+				/>
+			) ) }
 			{ children }
-		</div>
+		</Component>
 	);
 };
 
-export default Starscape;
+export default forwardRef( Starscape );

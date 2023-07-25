@@ -1,47 +1,48 @@
 /**
- * External dependencies
- */
-import classnames from 'classnames';
-
-/**
  * WordPress dependencies
  */
-import { RichText, getColorClassName } from '@wordpress/block-editor';
+import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
 
 /**
  * Internal dependencies
  */
 import Starscape from './starscape';
+import { genStars, genAnimations } from './utils';
 
-const Save = ( { attributes, className } ) => {
-	const textColorClass = getColorClassName( 'color', attributes.textColor );
+function StarscapeSave( { attributes } ) {
+	const {
+		background,
+		color,
+		intensity,
+		density,
+		speed,
+		maxWidth,
+		maxHeight,
+		tagName,
+	} = attributes;
+
+	const starStyles = genStars( { color, density, maxWidth, maxHeight } );
+	const animationStyles = genAnimations( { speed } );
+
+	const blockProps = useBlockProps.save( {
+		style: { background },
+	} );
+
+	const innerBlocksProps = useInnerBlocksProps.save( {
+		className: 'wp-block-a8c-starscape__inner',
+	} );
 
 	return (
 		<Starscape
-			className={ className }
-			starStyles={ attributes.starStyles }
-			animationStyles={ attributes.animationStyles }
-			background={ attributes.background }
+			as={ tagName }
+			starStyles={ starStyles }
+			animationStyles={ animationStyles }
+			intensity={ intensity }
+			{ ...blockProps }
 		>
-			<RichText.Content
-				tagName="div"
-				className={ classnames(
-					'wp-block-a8c-starscape__heading',
-					{ [ `align${ attributes.align }` ]: attributes.align },
-					{
-						[ `has-text-align-${ attributes.textAlign }` ]: attributes.textAlign,
-					},
-					textColorClass
-				) }
-				style={ {
-					color: textColorClass
-						? undefined
-						: attributes.customTextColor,
-				} }
-				value={ attributes.heading }
-			/>
+			<div { ...innerBlocksProps } />
 		</Starscape>
 	);
-};
+}
 
-export default Save;
+export default StarscapeSave;
