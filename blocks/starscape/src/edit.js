@@ -124,7 +124,7 @@ function StarscapeEdit( { attributes, setAttributes, clientId } ) {
 			</InspectorControls>
 			<InspectorControls group="color">
 				<ColorGradientSettingsDropdown
-					panelId={ clientId }
+					{ ...colorGradientSettings }
 					settings={ [
 						{
 							label: __( 'Stars', 'starscape' ),
@@ -155,22 +155,22 @@ function StarscapeEdit( { attributes, setAttributes, clientId } ) {
 							resetAllFilter: () => ( { background: undefined } ),
 						},
 					] }
-					{ ...colorGradientSettings }
 					colors={ colors }
 					gradients={ gradients }
+					panelId={ clientId }
 					__experimentalIsRenderedInSidebar
 				/>
 				<ToolsPanelItem
-					panelId={ clientId }
-					isShownByDefault
+					label={ __( 'Star intensity', 'starscape' ) }
 					hasValue={ () =>
 						intensity !== attributesSettings.intensity.default
 					}
-					label={ __( 'Star intensity', 'starscape' ) }
 					onDeselect={ () => {
 						setAttributes( { intensity: undefined } );
 					} }
 					resetAllFilter={ () => ( { intensity: undefined } ) }
+					panelId={ clientId }
+					isShownByDefault
 				>
 					<RangeControl
 						label={ __( 'Star intensity', 'starscape' ) }
@@ -201,8 +201,6 @@ function StarscapeEdit( { attributes, setAttributes, clientId } ) {
 					<UnitControl
 						label={ __( 'Area width', 'starscape' ) }
 						labelPosition="top"
-						units={ pxUnits }
-						min={ 1 }
 						value={ areaWidth }
 						onChange={ ( nextAreaWidth ) => {
 							setAttributes( {
@@ -212,6 +210,8 @@ function StarscapeEdit( { attributes, setAttributes, clientId } ) {
 									: undefined,
 							} );
 						} }
+						min={ 1 }
+						units={ pxUnits }
 						size={ '__unstable-large' }
 						__nextHasNoMarginBottom
 					/>
@@ -235,6 +235,11 @@ function StarscapeEdit( { attributes, setAttributes, clientId } ) {
 				</Grid>
 				<SelectControl
 					label={ __( 'HTML element', 'starscape' ) }
+					help={ htmlElementMessages[ tagName ] }
+					value={ tagName }
+					onChange={ ( nextTagName ) =>
+						setAttributes( { tagName: nextTagName } )
+					}
 					options={ [
 						{
 							label: __( 'Default (<div>)', 'starscape' ),
@@ -247,11 +252,6 @@ function StarscapeEdit( { attributes, setAttributes, clientId } ) {
 						{ label: '<aside>', value: 'aside' },
 						{ label: '<footer>', value: 'footer' },
 					] }
-					value={ tagName }
-					onChange={ ( nextTagName ) =>
-						setAttributes( { tagName: nextTagName } )
-					}
-					help={ htmlElementMessages[ tagName ] }
 					__nextHasNoMarginBottom
 				/>
 			</InspectorControls>
