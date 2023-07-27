@@ -16,12 +16,12 @@ function StarscapeSave( { attributes } ) {
 		intensity,
 		density,
 		speed,
-		maxWidth,
-		maxHeight,
+		areaWidth,
+		areaHeight,
 		tagName,
 	} = attributes;
 
-	const starStyles = genStars( { color, density, maxWidth, maxHeight } );
+	const starStyles = genStars( { color, density, areaWidth, areaHeight } );
 	const animationStyles = genAnimations( { speed } );
 
 	const blockProps = useBlockProps.save( {

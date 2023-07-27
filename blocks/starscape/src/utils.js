@@ -84,15 +84,15 @@ const randomPoint = ( radius, prng ) => {
  * @param {Object} options Options
  * @param {string} options.color CSS Color string
  * @param {number} options.density Quantity of stars in stars per million pixels
- * @param {number} options.maxWidth Max width of the area to fill in pixels
- * @param {number} options.maxHeight Max height of the area to fill in pixels
+ * @param {number} options.areaWidth Max width of the area to fill in pixels
+ * @param {number} options.areaHeight Max height of the area to fill in pixels
  */
-const starBoxShadow = ( { color, density, maxWidth, maxHeight } ) => {
+const starBoxShadow = ( { color, density, areaWidth, areaHeight } ) => {
 	// Any points outside the circle covering the rectangle, centered on the
 	// midpoint of the bottom edge, won't be shown, so don't bother placing
 	// any there.
-	const base = maxWidth / 2;
-	const height = maxHeight;
+	const base = areaWidth / 2;
+	const height = areaHeight;
 	const radius = Math.sqrt( base * base + height * height );
 
 	// Star count calculation based on how dense the stars should be distributed
@@ -118,8 +118,8 @@ const starBoxShadow = ( { color, density, maxWidth, maxHeight } ) => {
  * @param {number} options.starSize Size of star in pixels
  * @param {string} options.color CSS Color string
  * @param {number} options.density Value between 0 and 1
- * @param {number} options.maxWidth Maximum width the container may be in pixels
- * @param {number} options.maxHeight Maximum height the container may be in pixels
+ * @param {number} options.areaWidth Maximum width the container may be in pixels
+ * @param {number} options.areaHeight Maximum height the container may be in pixels
  *
  * @return {Object} CSS style object to add to a component
  */
@@ -127,10 +127,10 @@ const starBoxStyle = ( {
 	starSize,
 	color,
 	density,
-	maxWidth,
-	maxHeight,
+	areaWidth,
+	areaHeight,
 } ) => ( {
-	boxShadow: starBoxShadow( { color, density, maxWidth, maxHeight } ),
+	boxShadow: starBoxShadow( { color, density, areaWidth, areaHeight } ),
 	width: `${ starSize }px`,
 	height: `${ starSize }px`,
 } );
@@ -154,12 +154,17 @@ const starBoxAnimation = ( { animation, duration } ) => ( {
  * @param {Object} options Options
  * @param {string} options.color CSS Color string for the stars
  * @param {number} options.density Range slider value between 1 and 100
- * @param {number} options.maxWidth Width in pixels that stars should be generated within
- * @param {number} options.maxHeight Height in pixels that stars should be generated within
+ * @param {number} options.areaWidth Width in pixels that stars should be generated within
+ * @param {number} options.areaHeight Height in pixels that stars should be generated within
  *
  * @return {Object[]} CSS style objects for each layer of stars
  */
-export const genStars = ( { color: _color, density, maxWidth, maxHeight } ) => {
+export const genStars = ( {
+	color: _color,
+	density,
+	areaWidth,
+	areaHeight,
+} ) => {
 	// A little bit of minification goes a long way here since the color of each
 	// individual star needs to be specified.
 	const color = colord( _color ).minify( {
@@ -186,8 +191,8 @@ export const genStars = ( { color: _color, density, maxWidth, maxHeight } ) => {
 	].map( ( variation ) =>
 		starBoxStyle( {
 			color,
-			maxWidth,
-			maxHeight,
+			areaWidth,
+			areaHeight,
 			...variation,
 		} )
 	);

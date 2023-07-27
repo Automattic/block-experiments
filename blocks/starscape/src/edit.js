@@ -42,8 +42,8 @@ function StarscapeEdit( { attributes, setAttributes, clientId } ) {
 		intensity = attributesSettings.intensity.default,
 		density = attributesSettings.density.default,
 		speed = attributesSettings.speed.default,
-		maxWidth = attributesSettings.maxWidth.default,
-		maxHeight = attributesSettings.maxHeight.default,
+		areaWidth = attributesSettings.areaWidth.default,
+		areaHeight = attributesSettings.areaHeight.default,
 		tagName: tagName = attributesSettings.tagName.default,
 		allowedBlocks,
 		templateLock,
@@ -56,8 +56,8 @@ function StarscapeEdit( { attributes, setAttributes, clientId } ) {
 	} );
 
 	const starStyles = useMemo(
-		() => genStars( { color, density, maxWidth, maxHeight } ),
-		[ color, density, maxWidth, maxHeight ]
+		() => genStars( { color, density, areaWidth, areaHeight } ),
+		[ color, density, areaWidth, areaHeight ]
 	);
 
 	const animationStyles = useMemo( () => genAnimations( { speed } ), [
@@ -203,11 +203,12 @@ function StarscapeEdit( { attributes, setAttributes, clientId } ) {
 						labelPosition="top"
 						units={ pxUnits }
 						min={ 1 }
-						value={ maxWidth }
-						onChange={ ( nextMaxWidth ) => {
+						value={ areaWidth }
+						onChange={ ( nextAreaWidth ) => {
 							setAttributes( {
-								maxWidth: nextMaxWidth
-									? parseInt( nextMaxWidth, 10 )
+								// Discard 'px' units and convert '' to undefined.
+								areaWidth: nextAreaWidth
+									? parseInt( nextAreaWidth, 10 )
 									: undefined,
 							} );
 						} }
@@ -219,11 +220,12 @@ function StarscapeEdit( { attributes, setAttributes, clientId } ) {
 						labelPosition="top"
 						units={ pxUnits }
 						min={ 1 }
-						value={ maxHeight }
-						onChange={ ( nextMaxHeight ) => {
+						value={ areaHeight }
+						onChange={ ( nextAreaHeight ) => {
 							setAttributes( {
-								maxHeight: nextMaxHeight
-									? parseInt( nextMaxHeight, 10 )
+								// Discard 'px' units and convert '' to undefined.
+								areaHeight: nextAreaHeight
+									? parseInt( nextAreaHeight, 10 )
 									: undefined,
 							} );
 						} }

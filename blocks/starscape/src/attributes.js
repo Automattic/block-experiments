@@ -23,11 +23,11 @@ export default {
 		type: 'number',
 		default: 20,
 	},
-	maxWidth: {
+	areaWidth: {
 		type: 'integer',
 		default: 1920,
 	},
-	maxHeight: {
+	areaHeight: {
 		type: 'integer',
 		default: 1080,
 	},

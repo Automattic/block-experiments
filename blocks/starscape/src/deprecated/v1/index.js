@@ -86,6 +86,10 @@ export default {
 			starStyles,
 			animationStyles,
 
+			// Renamed.
+			maxWidth,
+			maxHeight,
+
 			// Moved to InnerBlocks core/heading block.
 			heading,
 			textAlign,
@@ -100,6 +104,10 @@ export default {
 
 		const newAttributes = {
 			...commonAttributes,
+
+			// Renamed.
+			areaWidth: maxWidth,
+			areaHeight: maxHeight,
 
 			// Hard-coded in the old block styles with new default.
 			style: {
