@@ -53,7 +53,7 @@ function hashStarBoxShadowArgs( count, radius, color ) {
 	const colorData = new TextEncoder().encode( color );
 	const buffer = new ArrayBuffer(
 		// 2 64-bit floats + color string + padding to 4-byte uint32 boundary.
-		16 + colorData.byteLength + ( 4 - ( colorData.byteLength % 4 ) )
+		16 + colorData.byteLength + ( -colorData.byteLength & 3 )
 	);
 	new Float64Array( buffer, 0, 2 ).set( [ count, radius ] );
 	new Uint8Array( buffer, 16 ).set( colorData );
