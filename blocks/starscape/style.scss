@@ -20,7 +20,15 @@
 		transform: translateZ( 0 );
 	}
 
-	// v1 block styles.
+	/*
+	 * v1 block styles.
+	 */
+
+	&:has( > &__heading ) {
+		justify-content: initial;
+		padding: 0 40px;
+	}
+
 	&__heading {
 		z-index: 1;
 		width: 100%;
