@@ -86,9 +86,11 @@ export default {
 			starStyles,
 			animationStyles,
 
-			// Converted to InnerBlocks.
+			// Moved to InnerBlocks heading.
 			heading,
 			textAlign,
+			textColor,
+			customTextColor,
 
 			// Default changed.
 			background,
@@ -105,8 +107,21 @@ export default {
 
 		const newInnerBlocks = [
 			createBlock( 'core/heading', {
+				// Top-level moved to InnerBlocks.
 				content: heading,
 				textAlign,
+				style: {
+					textColor,
+					color: {
+						text: customTextColor ?? '#ffffff',
+					},
+				},
+
+				// Hard-coded in the old block styles.
+				typography: {
+					fontSize: '84px',
+					lineHeight: '1.3',
+				},
 			} ),
 		];
 
