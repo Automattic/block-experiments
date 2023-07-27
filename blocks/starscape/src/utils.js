@@ -18,11 +18,11 @@ extend( [ namesPlugin, minifierPlugin ] );
  * @return {Generator<number>} Generator of random numbers between 0 and 1
  */
 function* seededRandoms( seed ) {
-	const m = 0x7fffffff;
-	seed = ( seed >>> 0 ) % m;
+	const modulus = 0x7fffffff;
+	seed = ( seed >>> 0 ) % modulus;
 	while ( true ) {
-		seed = Math.imul( seed, 0x0034e7f7 ) % m;
-		yield ( seed & m ) / m;
+		seed = Math.imul( seed, 0x0034e7f7 ) % modulus;
+		yield ( seed & modulus ) / modulus;
 	}
 }
 
@@ -35,7 +35,7 @@ function* seededRandoms( seed ) {
  */
 function hashUint32( buffer ) {
 	return new Uint32Array( buffer ).reduce(
-		( a, b ) => Math.imul( a, 0x01000193 ) ^ b,
+		( hash, data ) => Math.imul( hash, 0x01000193 ) ^ data,
 		0x811c9dc5
 	);
 }
