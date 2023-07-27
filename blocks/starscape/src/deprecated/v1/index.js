@@ -1,4 +1,9 @@
 /**
+ * WordPress dependencies
+ */
+import { createBlock } from '@wordpress/blocks';
+
+/**
  * Internal dependencies
  */
 import Save from './save';
@@ -99,13 +104,10 @@ export default {
 		};
 
 		const newInnerBlocks = [
-			{
-				name: 'core/heading',
-				attributes: {
-					content: heading,
-					textAlign,
-				},
-			},
+			createBlock( 'core/heading', {
+				content: heading,
+				textAlign,
+			} ),
 		];
 
 		return [ newAttributes, newInnerBlocks ];
