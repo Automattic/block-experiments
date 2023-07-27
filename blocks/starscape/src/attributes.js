@@ -31,6 +31,10 @@ export default {
 		type: 'integer',
 		default: 1080,
 	},
+	minHeight: {
+		type: 'string',
+		// Default 430px in style.scss.
+	},
 	layout: {
 		type: 'object',
 		default: {

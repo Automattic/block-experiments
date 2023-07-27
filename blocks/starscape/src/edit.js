@@ -5,6 +5,7 @@ import {
 	InspectorControls,
 	useBlockProps,
 	useInnerBlocksProps,
+	useSetting,
 	__experimentalColorGradientSettingsDropdown as ColorGradientSettingsDropdown,
 	__experimentalUseMultipleOriginColorsAndGradients as useMultipleOriginColorsAndGradients,
 } from '@wordpress/block-editor';
@@ -13,10 +14,12 @@ import {
 	RangeControl,
 	SelectControl,
 	__experimentalGrid as Grid,
+	__experimentalParseQuantityAndUnitFromRawValue as parseQuantityAndUnitFromRawValue,
 	__experimentalToolsPanelItem as ToolsPanelItem,
 	__experimentalUnitControl as UnitControl,
 	__experimentalUseCustomUnits as useCustomUnits,
 } from '@wordpress/components';
+import { useInstanceId } from '@wordpress/compose';
 import { useMemo } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
@@ -45,15 +48,32 @@ function StarscapeEdit( { attributes, setAttributes, clientId } ) {
 		areaWidth = attributesSettings.areaWidth.default,
 		areaHeight = attributesSettings.areaHeight.default,
 		tagName: tagName = attributesSettings.tagName.default,
+		minHeight,
 		allowedBlocks,
 		templateLock,
 	} = attributes;
+
+	// Adding the instance id prevents the minHeight input from being removed
+	// when the value is deleted and another block is selected and this block
+	// is re-selected. ¯\_(ツ)_/¯
+	const instanceId = useInstanceId( UnitControl );
+	const inputId = `wp-block-a8c-starscape__height-input-${ instanceId }`;
 
 	const colorGradientSettings = useMultipleOriginColorsAndGradients();
 
 	const pxUnits = useCustomUnits( {
 		availableUnits: [ 'px' ],
 	} );
+
+	const spacingUnits = useSetting( 'spacing.units' );
+	const minHeightUnits = useCustomUnits( {
+		// Percentages are not supported for minHeight.
+		availableUnits: spacingUnits
+			? spacingUnits.filter( ( unit ) => unit !== '%' )
+			: [ 'px', 'em', 'rem', 'vw', 'vh' ],
+		defaultValues: { px: 430, em: 24, rem: 24, vw: 20, vh: 40 },
+	} );
+	const [ , minHeightUnit ] = parseQuantityAndUnitFromRawValue( minHeight );
 
 	const starStyles = useMemo(
 		() => genStars( { color, density, areaWidth, areaHeight } ),
@@ -66,7 +86,7 @@ function StarscapeEdit( { attributes, setAttributes, clientId } ) {
 
 	const blockProps = useBlockProps( {
 		className: 'wp-block-a8c-starscape',
-		style: { background },
+		style: { background, minHeight },
 	} );
 
 	const innerBlocksProps = useInnerBlocksProps(
@@ -183,6 +203,36 @@ function StarscapeEdit( { attributes, setAttributes, clientId } ) {
 						min={ 0 }
 						max={ 100 }
 						step={ 10 }
+						__nextHasNoMarginBottom
+					/>
+				</ToolsPanelItem>
+			</InspectorControls>
+			<InspectorControls group="dimensions">
+				<ToolsPanelItem
+					label={ __( 'Minimum block height', 'starscape' ) }
+					hasValue={ () => !! minHeight }
+					onDeselect={ () =>
+						setAttributes( { minHeight: undefined } )
+					}
+					resetAllFilter={ () => ( { minHeight: undefined } ) }
+					panelId={ clientId }
+					isShownByDefault
+				>
+					<UnitControl
+						label={ __( 'Minimum block height', 'starscape' ) }
+						labelPosition="top"
+						value={ minHeight }
+						onChange={ ( nextMinHeight ) => {
+							setAttributes( {
+								// Convert '' to undefined.
+								minHeight: nextMinHeight || undefined,
+							} );
+						} }
+						min={ minHeightUnit === 'px' ? 50 : 0 }
+						units={ minHeightUnits }
+						isResetValueOnUnitChange
+						id={ inputId }
+						size={ '__unstable-large' }
 						__nextHasNoMarginBottom
 					/>
 				</ToolsPanelItem>
