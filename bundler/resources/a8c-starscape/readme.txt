@@ -30,7 +30,7 @@ You can follow development, file an issue, suggest features, and view the source
 
 == Changelog ==
 
-= 2.0.0 - TODO =
+= 2.0.0 - 27th July 2023 =
 * Add inner blocks support
 * Add star color support
 * Add star intensity support
