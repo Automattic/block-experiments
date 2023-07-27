@@ -8,12 +8,12 @@ const Starscape = ( {
 	animationStyles,
 	children,
 	className,
-	...props
+	background,
 } ) => {
 	return (
 		<div
 			className={ classnames( 'wp-block-a8c-starscape', className ) }
-			{ ...props }
+			style={ { background } }
 		>
 			<div
 				className="wp-block-a8c-starscape__stars"
