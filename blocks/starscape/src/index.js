@@ -30,6 +30,9 @@ export function registerBlock() {
 				gradients: false,
 			},
 			html: false,
+			layout: {
+				allowJustification: false,
+			},
 			spacing: {
 				padding: true,
 				margin: [ 'top', 'bottom' ],

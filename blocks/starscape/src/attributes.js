@@ -31,6 +31,12 @@ export default {
 		type: 'integer',
 		default: 1080,
 	},
+	layout: {
+		type: 'object',
+		default: {
+			type: 'constrained',
+		},
+	},
 	tagName: {
 		type: 'string',
 		default: 'div',
