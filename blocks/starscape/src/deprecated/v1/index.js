@@ -101,6 +101,19 @@ export default {
 		const newAttributes = {
 			...commonAttributes,
 
+			// Hard-coded in the old block styles.
+			style: {
+				spacing: {
+					padding: {
+						right: '40px',
+						left: '40px',
+						top: '0px',
+						bottom: '0px',
+					},
+					blockGap: '0',
+				},
+			},
+
 			// Existing attribute with different default.
 			background: background ?? '#00000c',
 		};

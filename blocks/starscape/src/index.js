@@ -30,6 +30,15 @@ export function registerBlock() {
 				gradients: false,
 			},
 			html: false,
+			spacing: {
+				padding: true,
+				margin: [ 'top', 'bottom' ],
+				blockGap: true,
+				__experimentalDefaultControls: {
+					padding: true,
+					blockGap: true,
+				},
+			},
 		},
 		attributes,
 		edit,
