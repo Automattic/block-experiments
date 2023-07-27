@@ -9,10 +9,11 @@ import {
 	__experimentalUseMultipleOriginColorsAndGradients as useMultipleOriginColorsAndGradients,
 } from '@wordpress/block-editor';
 import {
+	PanelBody,
 	RangeControl,
 	SelectControl,
-	__experimentalToolsPanelItem as ToolsPanelItem,
 	__experimentalGrid as Grid,
+	__experimentalToolsPanelItem as ToolsPanelItem,
 	__experimentalUnitControl as UnitControl,
 	__experimentalUseCustomUnits as useCustomUnits,
 } from '@wordpress/components';
@@ -30,7 +31,6 @@ import {
 } from './constants';
 import Starscape from './starscape';
 import { genStars, genAnimations } from './utils';
-import { PanelBody } from '@wordpress/components';
 
 function StarscapeEdit( { attributes, setAttributes, clientId } ) {
 	const {
