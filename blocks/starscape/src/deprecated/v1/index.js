@@ -82,11 +82,11 @@ export default {
 	},
 	migrate: ( attributes ) => {
 		const {
-			// Removed entirely.
+			// Removed entirely in favor of deterministic generation.
 			starStyles,
 			animationStyles,
 
-			// Moved to InnerBlocks heading.
+			// Moved to InnerBlocks core/heading block.
 			heading,
 			textAlign,
 			textColor,
@@ -101,7 +101,7 @@ export default {
 		const newAttributes = {
 			...commonAttributes,
 
-			// Hard-coded in the old block styles.
+			// Hard-coded in the old block styles with new default.
 			style: {
 				spacing: {
 					padding: {
@@ -114,13 +114,13 @@ export default {
 				},
 			},
 
-			// Existing attribute with different default.
+			// Existing attribute with new default.
 			background: background ?? '#00000c',
 		};
 
 		const newInnerBlocks = [
 			createBlock( 'core/heading', {
-				// Top-level moved to InnerBlocks.
+				// Top-level heading attributes moved to InnerBlocks.
 				content: heading,
 				textAlign,
 				style: {
@@ -130,7 +130,7 @@ export default {
 					},
 				},
 
-				// Hard-coded in the old block styles.
+				// Hard-coded in the old block styles with a new default.
 				typography: {
 					fontSize: '84px',
 					lineHeight: '1.3',
