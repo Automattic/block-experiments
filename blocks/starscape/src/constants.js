@@ -113,21 +113,27 @@ export const colors = {
 
 export const htmlElementMessages = {
 	header: __(
-		'The <header> element should represent introductory content, typically a group of introductory or navigational aids.'
+		'The <header> element should represent introductory content, typically a group of introductory or navigational aids.',
+		'starscape'
 	),
 	main: __(
-		'The <main> element should be used for the primary content of your document only. '
+		'The <main> element should be used for the primary content of your document only.',
+		'starscape'
 	),
 	section: __(
-		"The <section> element should represent a standalone portion of the document that can't be better represented by another element."
+		"The <section> element should represent a standalone portion of the document that can't be better represented by another element.",
+		'starscape'
 	),
 	article: __(
-		'The <article> element should represent a self-contained, syndicatable portion of the document.'
+		'The <article> element should represent a self-contained, syndicatable portion of the document.',
+		'starscape'
 	),
 	aside: __(
-		"The <aside> element should represent a portion of a document whose content is only indirectly related to the document's main content."
+		"The <aside> element should represent a portion of a document whose content is only indirectly related to the document's main content.",
+		'starscape'
 	),
 	footer: __(
-		'The <footer> element should represent a footer for its nearest sectioning element (e.g.: <section>, <article>, <main> etc.).'
+		'The <footer> element should represent a footer for its nearest sectioning element (e.g.: <section>, <article>, <main> etc.).',
+		'starscape'
 	),
 };

@@ -127,7 +127,7 @@ function StarscapeEdit( { attributes, setAttributes, clientId } ) {
 					panelId={ clientId }
 					settings={ [
 						{
-							label: __( 'Stars' ),
+							label: __( 'Stars', 'starscape' ),
 							isShownByDefault: true,
 							colorValue: color,
 							onColorChange: ( nextColor ) => {
@@ -136,7 +136,7 @@ function StarscapeEdit( { attributes, setAttributes, clientId } ) {
 							resetAllFilter: () => ( { color: undefined } ),
 						},
 						{
-							label: __( 'Background' ),
+							label: __( 'Background', 'starscape' ),
 							isShownByDefault: true,
 							colorValue: background,
 							gradientValue: background,
@@ -166,7 +166,7 @@ function StarscapeEdit( { attributes, setAttributes, clientId } ) {
 					hasValue={ () =>
 						intensity !== attributesSettings.intensity.default
 					}
-					label={ __( 'Overlay opacity' ) }
+					label={ __( 'Star intensity', 'starscape' ) }
 					onDeselect={ () => {
 						setAttributes( { intensity: undefined } );
 					} }
@@ -215,7 +215,7 @@ function StarscapeEdit( { attributes, setAttributes, clientId } ) {
 						__nextHasNoMarginBottom
 					/>
 					<UnitControl
-						label={ __( 'Area height' ) }
+						label={ __( 'Area height', 'starscape' ) }
 						labelPosition="top"
 						units={ pxUnits }
 						min={ 1 }
@@ -232,9 +232,12 @@ function StarscapeEdit( { attributes, setAttributes, clientId } ) {
 					/>
 				</Grid>
 				<SelectControl
-					label={ __( 'HTML element' ) }
+					label={ __( 'HTML element', 'starscape' ) }
 					options={ [
-						{ label: __( 'Default (<div>)' ), value: 'div' },
+						{
+							label: __( 'Default (<div>)', 'starscape' ),
+							value: 'div',
+						},
 						{ label: '<header>', value: 'header' },
 						{ label: '<main>', value: 'main' },
 						{ label: '<section>', value: 'section' },
