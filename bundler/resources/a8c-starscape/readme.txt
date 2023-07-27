@@ -31,7 +31,10 @@ You can follow development, file an issue, suggest features, and view the source
 == Changelog ==
 
 = 2.0.0 - TODO =
-* Enable inner blocks support
+* Add inner blocks support
+* Add star color support
+* Add star intensity support
+* Add block tag name support
 * Modernize block implementation
 
 = 1.0.3 - 1st July 2021 =
