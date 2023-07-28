@@ -83,8 +83,8 @@ export default {
 	migrate: ( attributes ) => {
 		const {
 			// Removed entirely in favor of deterministic generation.
-			starStyles,
-			animationStyles,
+			// starStyles,
+			// animationStyles,
 
 			// Renamed.
 			maxWidth,
@@ -99,16 +99,13 @@ export default {
 			// Default changed.
 			background,
 
-			...commonAttributes
+			// Unchanged attributes with defaults.
+			align,
+			density,
+			speed,
 		} = attributes;
 
 		const newAttributes = {
-			...commonAttributes,
-
-			// Renamed.
-			areaWidth: maxWidth,
-			areaHeight: maxHeight,
-
 			// Hard-coded in the old block styles with new default.
 			style: {
 				spacing: {
@@ -122,15 +119,36 @@ export default {
 				},
 			},
 
+			// Renamed.
+			areaWidth: maxWidth ?? 1920,
+			areaHeight: maxHeight ?? 1080,
+
 			// Existing attribute with new default.
 			background: background ?? '#00000c',
+
+			// Workaround for unchanged attributes with unchanged defaults.
+			// See https://github.com/WordPress/gutenberg/pull/53120
+			align: align ?? 'full',
+			density: density ?? 20,
+			speed: speed ?? 20,
+
+			// Workaround for new attributes with new defaults.
+			// See https://github.com/WordPress/gutenberg/pull/53120
+			color: '#fff',
+			intensity: 80,
+			layout: {
+				type: 'constrained',
+			},
+			tagName: 'div',
 		};
 
 		const newInnerBlocks = [
 			createBlock( 'core/heading', {
 				// Top-level heading attributes moved to InnerBlocks.
 				content: heading,
-				textAlign,
+
+				textAlign: textAlign ?? 'center',
+
 				style: {
 					textColor,
 					color: {
