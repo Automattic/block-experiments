@@ -1,106 +1,250 @@
 /**
- * External dependencies
- */
-import classnames from 'classnames';
-
-/**
  * WordPress dependencies
  */
 import {
-	AlignmentToolbar,
-	BlockControls,
 	InspectorControls,
-	RichText,
-	withColors,
-	__experimentalPanelColorGradientSettings as PanelColorGradientSettings,
+	useBlockProps,
+	useInnerBlocksProps,
 	useSetting,
+	__experimentalColorGradientSettingsDropdown as ColorGradientSettingsDropdown,
+	__experimentalUseMultipleOriginColorsAndGradients as useMultipleOriginColorsAndGradients,
 } from '@wordpress/block-editor';
-import { BaseControl, PanelBody, RangeControl } from '@wordpress/components';
-import { compose, withInstanceId } from '@wordpress/compose';
+import {
+	PanelBody,
+	RangeControl,
+	SelectControl,
+	__experimentalGrid as Grid,
+	__experimentalParseQuantityAndUnitFromRawValue as parseQuantityAndUnitFromRawValue,
+	__experimentalToolsPanelItem as ToolsPanelItem,
+	__experimentalUnitControl as UnitControl,
+	__experimentalUseCustomUnits as useCustomUnits,
+} from '@wordpress/components';
+import { useInstanceId } from '@wordpress/compose';
+import { useMemo } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { genStars, genAnimations } from './utils';
-import colorGradientOptions from './colorGradientOptions';
+import attributesSettings from './attributes';
+import {
+	colors as starscapeColors,
+	gradients as starscapeGradients,
+	htmlElementMessages,
+} from './constants';
 import Starscape from './starscape';
+import { genStars, genAnimations } from './utils';
 
-const Edit = ( {
-	instanceId,
-	textColor,
-	setTextColor,
-	attributes,
-	setAttributes,
-	className,
-} ) => {
-	const themeColors = useSetting( 'color.palette' ) || [];
+function StarscapeEdit( { attributes, setAttributes, clientId } ) {
+	const {
+		// Prevent updates that clear an attribute from resulting in undefined
+		// when the property is required. First render grabs blockType defaults,
+		// but updates seem to clear it to undefined.
+		color = attributesSettings.color.default,
+		intensity = attributesSettings.intensity.default,
+		density = attributesSettings.density.default,
+		speed = attributesSettings.speed.default,
+		areaWidth = attributesSettings.areaWidth.default,
+		areaHeight = attributesSettings.areaHeight.default,
+
+		// Default values are defined in style.scss.
+		background,
+		minHeight,
+
+		// Undefined values are valid.
+		tagName,
+		allowedBlocks,
+		templateLock,
+	} = attributes;
+
+	// Adding the instance id prevents the minHeight input from being removed
+	// when the value is deleted and another block is selected and this block
+	// is re-selected. ¯\_(ツ)_/¯
+	const instanceId = useInstanceId( UnitControl );
+	const inputId = `wp-block-a8c-starscape__height-input-${ instanceId }`;
+
+	const colorGradientSettings = useMultipleOriginColorsAndGradients();
+
+	const pxUnits = useCustomUnits( {
+		availableUnits: [ 'px' ],
+	} );
+
+	const spacingUnits = useSetting( 'spacing.units' );
+	const minHeightUnits = useCustomUnits( {
+		// Percentages are not supported for minHeight.
+		availableUnits: spacingUnits
+			? spacingUnits.filter( ( unit ) => unit !== '%' )
+			: [ 'px', 'em', 'rem', 'vw', 'vh' ],
+		defaultValues: { px: 430, em: 24, rem: 24, vw: 20, vh: 40 },
+	} );
+	const [ , minHeightUnit ] = parseQuantityAndUnitFromRawValue( minHeight );
+
+	const starStyles = useMemo(
+		() => genStars( { color, density, areaWidth, areaHeight } ),
+		[ color, density, areaWidth, areaHeight ]
+	);
+
+	const animationStyles = useMemo( () => genAnimations( { speed } ), [
+		speed,
+	] );
+
+	const blockProps = useBlockProps( {
+		className: 'wp-block-a8c-starscape',
+		style: { background, minHeight },
+	} );
+
+	const innerBlocksProps = useInnerBlocksProps(
+		{
+			className: 'wp-block-a8c-starscape__inner',
+		},
+		{
+			allowedBlocks,
+			templateLock,
+			template: [
+				[
+					'core/heading',
+					{
+						textAlign: 'center',
+						placeholder: __( 'Write title…', 'starscape' ),
+					},
+				],
+			],
+		}
+	);
+
+	const colors = useMemo(
+		() => [ starscapeColors, ...colorGradientSettings.colors ],
+		[ colorGradientSettings.colors ]
+	);
+
+	const gradients = useMemo(
+		() => [ starscapeGradients, ...colorGradientSettings.gradients ],
+		[ colorGradientSettings.gradients ]
+	);
 
 	return (
 		<>
-			<BlockControls>
-				<AlignmentToolbar
-					value={ attributes.textAlign }
-					onChange={ ( textAlign ) => setAttributes( { textAlign } ) }
-				/>
-			</BlockControls>
-			<InspectorControls>
-				<PanelBody
-					title={ __( 'Stars', 'starscape' ) }
-					initialOpen={ false }
-				>
+			<InspectorControls group="settings">
+				<PanelBody title={ __( 'Stars', 'starscape' ) }>
 					<RangeControl
 						label={ __( 'Density', 'starscape' ) }
-						value={ attributes.density }
-						onChange={ ( density ) =>
-							setAttributes( {
-								density,
-								starStyles: genStars( {
-									...attributes,
-									density,
-								} ),
-							} )
+						value={ density }
+						onChange={ ( nextDensity ) =>
+							setAttributes( { density: nextDensity } )
 						}
 						min={ 1 }
 						max={ 100 }
 					/>
 					<RangeControl
 						label={ __( 'Speed', 'starscape' ) }
-						value={ attributes.speed }
-						onChange={ ( speed ) =>
-							setAttributes( {
-								speed,
-								animationStyles: genAnimations( { speed } ),
-							} )
+						value={ speed }
+						onChange={ ( nextSpeed ) =>
+							setAttributes( { speed: nextSpeed } )
 						}
 						min={ 1 }
 						max={ 100 }
 					/>
 				</PanelBody>
-				<PanelColorGradientSettings
-					title={ __( 'Color', 'starscape' ) }
-					colors={ [
-						...themeColors,
-						...colorGradientOptions.colors,
-					] }
-					gradients={ colorGradientOptions.gradients }
+			</InspectorControls>
+			<InspectorControls group="color">
+				<ColorGradientSettingsDropdown
+					{ ...colorGradientSettings }
 					settings={ [
 						{
-							label: __( 'Background', 'starscape' ),
-							gradientValue: attributes.background,
-							onGradientChange: ( background ) =>
-								setAttributes( { background } ),
+							label: __( 'Stars', 'starscape' ),
+							isShownByDefault: true,
+							colorValue: color,
+							onColorChange: ( nextColor ) => {
+								setAttributes( { color: nextColor } );
+							},
+							resetAllFilter: () => ( { color: undefined } ),
 						},
 						{
-							label: __( 'Text', 'starscape' ),
-							colorValue: textColor.color,
-							onColorChange: setTextColor,
+							label: __( 'Background', 'starscape' ),
+							isShownByDefault: true,
+							colorValue: background,
+							gradientValue: background,
+							onColorChange: ( nextBackground ) => {
+								if ( nextBackground )
+									setAttributes( {
+										background: nextBackground,
+									} );
+							},
+							onGradientChange: ( nextBackground ) => {
+								if ( nextBackground )
+									setAttributes( {
+										background: nextBackground,
+									} );
+							},
+							resetAllFilter: () => ( { background: undefined } ),
 						},
 					] }
+					colors={ colors }
+					gradients={ gradients }
+					panelId={ clientId }
+					__experimentalIsRenderedInSidebar
 				/>
-				<PanelBody
-					title={ __( 'Dimensions', 'starscape' ) }
-					initialOpen={ false }
+				<ToolsPanelItem
+					label={ __( 'Star intensity', 'starscape' ) }
+					hasValue={ () =>
+						intensity !== attributesSettings.intensity.default
+					}
+					onDeselect={ () => {
+						setAttributes( { intensity: undefined } );
+					} }
+					resetAllFilter={ () => ( { intensity: undefined } ) }
+					panelId={ clientId }
+					isShownByDefault
+				>
+					<RangeControl
+						label={ __( 'Star intensity', 'starscape' ) }
+						value={ intensity }
+						onChange={ ( nextIntensity ) =>
+							setAttributes( {
+								intensity: nextIntensity,
+							} )
+						}
+						min={ 0 }
+						max={ 100 }
+						step={ 10 }
+						__nextHasNoMarginBottom
+					/>
+				</ToolsPanelItem>
+			</InspectorControls>
+			<InspectorControls group="dimensions">
+				<ToolsPanelItem
+					label={ __( 'Minimum block height', 'starscape' ) }
+					hasValue={ () => !! minHeight }
+					onDeselect={ () =>
+						setAttributes( { minHeight: undefined } )
+					}
+					resetAllFilter={ () => ( { minHeight: undefined } ) }
+					panelId={ clientId }
+					isShownByDefault
+				>
+					<UnitControl
+						label={ __( 'Minimum block height', 'starscape' ) }
+						labelPosition="top"
+						value={ minHeight }
+						onChange={ ( nextMinHeight ) => {
+							setAttributes( {
+								// Convert '' to undefined.
+								minHeight: nextMinHeight || undefined,
+							} );
+						} }
+						min={ minHeightUnit === 'px' ? 50 : 0 }
+						units={ minHeightUnits }
+						isResetValueOnUnitChange
+						id={ inputId }
+						size={ '__unstable-large' }
+						__nextHasNoMarginBottom
+					/>
+				</ToolsPanelItem>
+			</InspectorControls>
+			<InspectorControls group="advanced">
+				<Grid
+					className="wp-block-a8c-starscape__advanced"
+					columns={ 2 }
 				>
 					<p>
 						{ __(
@@ -108,80 +252,74 @@ const Edit = ( {
 							'starscape'
 						) }
 					</p>
-					<BaseControl
-						className="wp-block-a8c-starscape-resolution-control"
-						id={ `wp-block-a8c-starscape-width-control-${ instanceId }` }
-						label={ __( 'Max Width', 'starscape' ) }
-					>
-						<input
-							id={ `wp-block-a8c-starscape-width-control-${ instanceId }` }
-							type="number"
-							min="0"
-							value={ attributes.maxWidth }
-							onChange={ ( ev ) => {
-								const maxWidth = parseInt(
-									ev.target.value,
-									10
-								);
-								setAttributes( {
-									maxWidth,
-									starStyles: genStars( {
-										...attributes,
-										maxWidth,
-									} ),
-								} );
-							} }
-						/>
-					</BaseControl>
-					<BaseControl
-						className="wp-block-a8c-starscape-resolution-control"
-						id={ `wp-block-a8c-starscape-height-control-${ instanceId }` }
-						label={ __( 'Max Height', 'starscape' ) }
-					>
-						<input
-							id={ `wp-block-a8c-starscape-height-control-${ instanceId }` }
-							type="number"
-							min="0"
-							value={ attributes.maxHeight }
-							onChange={ ( ev ) => {
-								const maxHeight = parseInt(
-									ev.target.value,
-									10
-								);
-								setAttributes( {
-									maxHeight,
-									starStyles: genStars( {
-										...attributes,
-										maxHeight,
-									} ),
-								} );
-							} }
-						/>
-					</BaseControl>
-				</PanelBody>
+					<UnitControl
+						label={ __( 'Area width', 'starscape' ) }
+						labelPosition="top"
+						value={ areaWidth }
+						onChange={ ( nextAreaWidth ) => {
+							setAttributes( {
+								// Discard 'px' units and convert '' to undefined.
+								areaWidth: nextAreaWidth
+									? parseInt( nextAreaWidth, 10 )
+									: undefined,
+							} );
+						} }
+						min={ 1 }
+						units={ pxUnits }
+						size={ '__unstable-large' }
+						__nextHasNoMarginBottom
+					/>
+					<UnitControl
+						label={ __( 'Area height', 'starscape' ) }
+						labelPosition="top"
+						units={ pxUnits }
+						min={ 1 }
+						value={ areaHeight }
+						onChange={ ( nextAreaHeight ) => {
+							setAttributes( {
+								// Discard 'px' units and convert '' to undefined.
+								areaHeight: nextAreaHeight
+									? parseInt( nextAreaHeight, 10 )
+									: undefined,
+							} );
+						} }
+						size={ '__unstable-large' }
+						__nextHasNoMarginBottom
+					/>
+				</Grid>
+				<SelectControl
+					label={ __( 'HTML element', 'starscape' ) }
+					help={ htmlElementMessages[ tagName ] }
+					value={ tagName }
+					onChange={ ( nextTagName ) =>
+						setAttributes( { tagName: nextTagName } )
+					}
+					options={ [
+						{
+							label: __( 'Default (<div>)', 'starscape' ),
+							value: 'div',
+						},
+						{ label: '<header>', value: 'header' },
+						{ label: '<main>', value: 'main' },
+						{ label: '<section>', value: 'section' },
+						{ label: '<article>', value: 'article' },
+						{ label: '<aside>', value: 'aside' },
+						{ label: '<footer>', value: 'footer' },
+					] }
+					__nextHasNoMarginBottom
+				/>
 			</InspectorControls>
 			<Starscape
-				className={ className }
-				starStyles={ attributes.starStyles }
-				animationStyles={ attributes.animationStyles }
-				background={ attributes.background }
+				as={ tagName }
+				starStyles={ starStyles }
+				animationStyles={ animationStyles }
+				intensity={ intensity }
+				{ ...blockProps }
 			>
-				<RichText
-					tagName="div"
-					className={ classnames(
-						'wp-block-a8c-starscape__heading',
-						textColor.class,
-						attributes.textAlign &&
-							`has-text-align-${ attributes.textAlign }`
-					) }
-					style={ { color: textColor.color } }
-					value={ attributes.heading }
-					placeholder={ __( 'Heading', 'starscape' ) }
-					onChange={ ( heading ) => setAttributes( { heading } ) }
-				/>
+				<div { ...innerBlocksProps } />
 			</Starscape>
 		</>
 	);
-};
+}
 
-export default compose( [ withInstanceId, withColors( 'textColor' ) ] )( Edit );
+export default StarscapeEdit;

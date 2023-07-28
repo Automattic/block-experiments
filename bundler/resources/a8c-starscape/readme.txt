@@ -1,8 +1,8 @@
 === Starscape Block ===
 Contributors: automattic, ajlende, pablohoneyhoney
-Stable tag: 1.0.3
-Tested up to: 6.0
-Requires at least: 5.3
+Stable tag: 2.0.0
+Tested up to: 6.3
+Requires at least: 6.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Tags: block, blocks
@@ -29,6 +29,19 @@ You can follow development, file an issue, suggest features, and view the source
 4. Control the quantity of stars and speed of rotation.
 
 == Changelog ==
+
+= 2.0.0 - 29th July 2023 =
+* Add inner blocks support
+* Add star color support
+* Add star intensity support
+* Add link color support
+* Add theme gradient background support
+* Add spacing support
+* Add minimum block height support
+* Add block tag name support
+* Add template lock and allowed block support for theme developers
+* Modernize block implementation
+* Performance improvements
 
 = 1.0.3 - 1st July 2021 =
 * Improve compatibility with block directory

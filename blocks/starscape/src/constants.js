@@ -1,9 +1,14 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
+import { __, _x } from '@wordpress/i18n';
 
-export default {
+export const gradients = {
+	name: _x(
+		'Starscape',
+		'Indicates this palette comes from the starscape block.',
+		'starscape'
+	),
 	gradients: [
 		{
 			name: __( 'Midnight', 'starscape' ),
@@ -66,10 +71,69 @@ export default {
 				'linear-gradient(141deg, rgb(47, 33, 34) 10%,rgb(108, 53, 58) 40%,rgb(207, 128, 75) 80%,rgb(255, 235, 89) 100%)',
 		},
 	],
+};
+
+export const colors = {
+	name: _x(
+		'Starscape',
+		'Indicates this palette comes from the starscape block.',
+		'starscape'
+	),
 	colors: [
 		{
-			name: __( 'White', 'starscape' ),
-			color: '#ffffff',
+			name: __( 'Class O', 'starscape' ),
+			color: '#ADE4FF',
+		},
+		{
+			name: __( 'Class B', 'starscape' ),
+			color: '#FEFEFF',
+		},
+		{
+			name: __( 'Class A', 'starscape' ),
+			color: '#FFFFD6',
+		},
+		{
+			name: __( 'Class F', 'starscape' ),
+			color: '#FFFE97',
+		},
+		{
+			name: __( 'Class G', 'starscape' ),
+			color: '#FEFF40',
+		},
+		{
+			name: __( 'Class K', 'starscape' ),
+			color: '#FF9940',
+		},
+		{
+			name: __( 'Class M', 'starscape' ),
+			color: '#C10000',
 		},
 	],
+};
+
+export const htmlElementMessages = {
+	header: __(
+		'The <header> element should represent introductory content, typically a group of introductory or navigational aids.',
+		'starscape'
+	),
+	main: __(
+		'The <main> element should be used for the primary content of your document only.',
+		'starscape'
+	),
+	section: __(
+		"The <section> element should represent a standalone portion of the document that can't be better represented by another element.",
+		'starscape'
+	),
+	article: __(
+		'The <article> element should represent a self-contained, syndicatable portion of the document.',
+		'starscape'
+	),
+	aside: __(
+		"The <aside> element should represent a portion of a document whose content is only indirectly related to the document's main content.",
+		'starscape'
+	),
+	footer: __(
+		'The <footer> element should represent a footer for its nearest sectioning element (e.g.: <section>, <article>, <main> etc.).',
+		'starscape'
+	),
 };
