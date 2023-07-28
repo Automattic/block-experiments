@@ -15,6 +15,7 @@ import deprecated from './deprecated';
 
 export function registerBlock() {
 	registerBlockType( 'a8c/starscape', {
+		apiVersion: 3,
 		title: __( 'Starscape', 'starscape' ),
 		description: __( 'Create content with stars in motion.', 'starscape' ),
 		icon: <StarsIcon />,
