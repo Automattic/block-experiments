@@ -46,9 +46,13 @@ function StarscapeEdit( { attributes, setAttributes, clientId } ) {
 		speed = attributesSettings.speed.default,
 		areaWidth = attributesSettings.areaWidth.default,
 		areaHeight = attributesSettings.areaHeight.default,
-		tagName: tagName = attributesSettings.tagName.default,
+
+		// Default values are defined in style.scss.
 		background,
 		minHeight,
+
+		// Undefined values are valid.
+		tagName,
 		allowedBlocks,
 		templateLock,
 	} = attributes;
