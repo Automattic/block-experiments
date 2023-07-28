@@ -9,7 +9,7 @@ export default {
 	},
 	background: {
 		type: 'string',
-		default: '#000',
+		// Default #000 in style.scss.
 	},
 	intensity: {
 		type: 'number',

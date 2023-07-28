@@ -37,17 +37,17 @@ import { genStars, genAnimations } from './utils';
 
 function StarscapeEdit( { attributes, setAttributes, clientId } ) {
 	const {
-		// TODO: Not sure why the default attributes from the block type aren't
-		// used here when the panel is reset, but it breaks the panel if we
-		// don't set these.
+		// Prevent updates that clear an attribute from resulting in undefined
+		// when the property is required. First render grabs blockType defaults,
+		// but updates seem to clear it to undefined.
 		color = attributesSettings.color.default,
-		background = attributesSettings.background.default,
 		intensity = attributesSettings.intensity.default,
 		density = attributesSettings.density.default,
 		speed = attributesSettings.speed.default,
 		areaWidth = attributesSettings.areaWidth.default,
 		areaHeight = attributesSettings.areaHeight.default,
 		tagName: tagName = attributesSettings.tagName.default,
+		background,
 		minHeight,
 		allowedBlocks,
 		templateLock,
