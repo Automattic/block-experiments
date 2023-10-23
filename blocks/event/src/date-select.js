@@ -13,7 +13,9 @@ const DateSelect = ( {
 } ) => (
 	<Dropdown
 		className={ className }
-		position="bottom left"
+		popoverProps={ {
+			placement: 'bottom-start',
+		} }
 		renderToggle={ ( { onToggle, isOpen } ) => (
 			<Button
 				className="button"

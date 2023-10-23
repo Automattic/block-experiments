@@ -24,7 +24,7 @@ import {
 	Button,
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
-import { __experimentalGetSettings, dateI18n } from '@wordpress/date';
+import { getSettings, dateI18n } from '@wordpress/date';
 
 /**
  * Internal dependencies
@@ -43,7 +43,7 @@ const Edit = ( {
 	setBackgroundColor,
 	isSelected,
 } ) => {
-	const settings = __experimentalGetSettings();
+	const settings = getSettings();
 
 	const classNames = [ textColor.class, backgroundColor.class ];
 	const style = {
@@ -152,7 +152,6 @@ const Edit = ( {
 						tagName="h3"
 						className="event__title"
 						value={ attributes.eventTitle }
-						keepPlaceholderOnFocus
 						onChange={ ( eventTitle ) =>
 							setAttributes( { eventTitle } )
 						}
@@ -190,8 +189,6 @@ const Edit = ( {
 						</span>
 						<RichText
 							value={ attributes.eventLocation }
-							multiline="false"
-							keepPlaceholderOnFocus
 							onChange={ ( eventLocation ) =>
 								setAttributes( { eventLocation } )
 							}
