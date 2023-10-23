@@ -2,7 +2,7 @@
 Contributors: automattic, ajlende, jasmussen
 Stable tag: 1.0.3
 Tested up to: 6.4
-Requires at least: 5.4
+Requires at least: 6.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Tags: block, event, card
