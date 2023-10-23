@@ -15,9 +15,9 @@ Let everyone know about the events going on. Whether you're hosting or attending
 
 ## Source and Support
 
-This block is in maintenance mode and will not be receiving new features.
+This block is no longer under active development and will not be receiving new features.
 
-Issues can be reported and the full source is available at the Github repo: <a href="https://github.com/Automattic/block-experiments">https://github.com/Automattic/block-experiments</a>
+Full source is available at the Github repo: <a href="https://github.com/Automattic/block-experiments">https://github.com/Automattic/block-experiments</a>
 
 == Screenshots ==
 
