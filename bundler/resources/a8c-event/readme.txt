@@ -1,7 +1,7 @@
 === Event Block ===
 Contributors: automattic, ajlende, jasmussen
 Stable tag: 1.0.2
-Tested up to: 6.0
+Tested up to: 6.4
 Requires at least: 5.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -15,7 +15,9 @@ Let everyone know about the events going on. Whether you're hosting or attending
 
 ## Source and Support
 
-You can follow development, file an issue, suggest features, and view the source at the Github repo: <a href="https://github.com/Automattic/block-experiments">https://github.com/Automattic/block-experiments</a>
+This block is in maintenance mode and will not be receiving new features.
+
+Issues can be reported and the full source is available at the Github repo: <a href="https://github.com/Automattic/block-experiments">https://github.com/Automattic/block-experiments</a>
 
 == Screenshots ==
 
