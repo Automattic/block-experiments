@@ -11,7 +11,7 @@ import {
 	RichText,
 	getColorClassName,
 } from '@wordpress/block-editor';
-import { __experimentalGetSettings, dateI18n } from '@wordpress/date';
+import { getSettings, dateI18n } from '@wordpress/date';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -20,7 +20,7 @@ import { __ } from '@wordpress/i18n';
 import DateSelect from './date-select';
 
 const Save = ( { attributes } ) => {
-	const settings = __experimentalGetSettings();
+	const settings = getSettings();
 
 	const classNames = [
 		getColorClassName( 'color', attributes.textColor ),

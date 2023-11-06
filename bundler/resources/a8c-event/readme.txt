@@ -1,8 +1,8 @@
 === Event Block ===
 Contributors: automattic, ajlende, jasmussen
-Stable tag: 1.0.2
-Tested up to: 6.0
-Requires at least: 5.4
+Stable tag: 1.0.3
+Tested up to: 6.4
+Requires at least: 6.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Tags: block, event, card
@@ -15,7 +15,9 @@ Let everyone know about the events going on. Whether you're hosting or attending
 
 ## Source and Support
 
-You can follow development, file an issue, suggest features, and view the source at the Github repo: <a href="https://github.com/Automattic/block-experiments">https://github.com/Automattic/block-experiments</a>
+This block is no longer under active development. Bug reports will be fixed, but no new features will be added.
+
+Full source is available at the Github repo: <a href="https://github.com/Automattic/block-experiments">https://github.com/Automattic/block-experiments</a>
 
 == Screenshots ==
 
@@ -23,6 +25,10 @@ You can follow development, file an issue, suggest features, and view the source
 2. Customizing the Event Block
 
 == Changelog ==
+
+= 1.0.3 - 23nd October 2023 =
+* Update to use stabilized APIs.
+* Fix console warnings in the editor.
 
 = 1.0.2 - 22nd July 2021 =
 * Improve compatibility with block directory
