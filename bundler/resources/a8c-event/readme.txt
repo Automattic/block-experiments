@@ -15,7 +15,7 @@ Let everyone know about the events going on. Whether you're hosting or attending
 
 ## Source and Support
 
-This block is no longer under active development and will not be receiving new features.
+This block is no longer under active development. Bug reports will be fixed, but no new features will be added.
 
 Full source is available at the Github repo: <a href="https://github.com/Automattic/block-experiments">https://github.com/Automattic/block-experiments</a>
 
