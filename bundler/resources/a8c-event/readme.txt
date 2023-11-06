@@ -26,7 +26,7 @@ Full source is available at the Github repo: <a href="https://github.com/Automat
 
 == Changelog ==
 
-= 1.0.3 - 23nd October 2023 =
+= 1.0.3 - 6th November 2023 =
 * Update to use stabilized APIs.
 * Fix console warnings in the editor.
 
