@@ -15,7 +15,8 @@ import {
  */
 import { usePreferredColorSchemeStyle } from '@wordpress/compose';
 import { __ } from '@wordpress/i18n';
-import { BottomSheet, InserterButton } from '@wordpress/components';
+import { BottomSheet } from '@wordpress/components';
+import { InserterButton } from '@wordpress/block-editor';
 import { Icon, close } from '@wordpress/icons';
 import { useMemo } from '@wordpress/element';
 
