@@ -26,7 +26,7 @@ function StarscapeSave( { attributes } ) {
 	const animationStyles = genAnimations( { speed } );
 
 	const blockProps = useBlockProps.save( {
-		style: { background, minHeight, overflow: 'hidden' },
+		style: { background, minHeight },
 	} );
 
 	const innerBlocksProps = useInnerBlocksProps.save( {

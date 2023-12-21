@@ -27,13 +27,12 @@ const Starscape = (
 		animationStyles,
 		intensity,
 		children,
-		style,
 		...props
 	},
 	ref
 ) => {
 	return (
-		<Component ref={ ref } style={ style } { ...props }>
+		<Component ref={ ref } { ...props }>
 			{ [ 0, 1, 2 ].map( ( i ) => (
 				<div
 					key={ i }
