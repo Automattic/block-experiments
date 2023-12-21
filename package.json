@@ -62,6 +62,7 @@
 		"colord": "^2.9.3",
 		"fast-average-color": "^7.0.1",
 		"perfect-freehand": "1.2.0",
+		"simplify-js": "1.2.4",
 		"tinycolor2": "^1.4.2"
 	}
 }
