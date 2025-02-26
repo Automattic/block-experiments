@@ -219,6 +219,8 @@ class ResizeGrid extends Component {
 				className={ classes }
 				onMouseDown={ this.onMouseDown }
 				onTouchStart={ this.onMouseDown }
+				onMouseUp={ this.onMouseUp }
+				onTouchEnd={ this.onMouseUp }
 				ref={ this.containerRef }
 			>
 				{ resizingColumn !== -1 && (
