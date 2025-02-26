@@ -160,9 +160,11 @@ class ResizeGrid extends Component {
 
 			if ( ev.button === 0 ) {
 				document.addEventListener( 'mousemove', this.onMouseMove );
+				document.addEventListener( 'mouseup', this.onMouseUp );
 				ev.preventDefault();
 			} else {
 				document.addEventListener( 'touchmove', this.onMouseMove );
+				document.addEventListener( 'touchend', this.onMouseUp );
 			}
 
 			ev.stopPropagation();
