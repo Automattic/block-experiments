@@ -41,7 +41,18 @@ class ResizeGrid extends Component {
 		const { totalColumns, layoutGrid } = this.props;
 		const start = layoutGrid.getStart( this.state.resizingColumn );
 		const span = layoutGrid.getSpan( this.state.resizingColumn );
-		const nearest = Math.min( totalColumns, Math.max( 0, findNearest( this.containerRef.current, this.getMouseX( mouse ), direction, totalColumns ) ) );
+		const nearest = Math.min(
+			totalColumns,
+			Math.max(
+				0,
+				findNearest(
+					this.containerRef.current,
+					this.getMouseX( mouse ),
+					direction,
+					totalColumns
+				)
+			)
+		);
 
 		if ( direction === 'left' ) {
 			if ( nearest === start ) {
@@ -85,7 +96,11 @@ class ResizeGrid extends Component {
 		const { width } = this.state;
 		const handleWidth = optionalWidth > 0 ? optionalWidth : width;
 
-		return offset - this.containerRef.current.getBoundingClientRect().left - ( ( handleWidth ) / 2 );
+		return (
+			offset -
+			this.containerRef.current.getBoundingClientRect().left -
+			handleWidth / 2
+		);
 	}
 
 	getAdjustedTop( offset ) {
@@ -114,15 +129,19 @@ class ResizeGrid extends Component {
 		return pos;
 	}
 
-	onMouseDown = ev => {
+	onMouseDown = ( ev ) => {
 		const { target } = ev;
 
 		// This is a bit of hardcoded DOM searching - we check if the current click is on a resize handle and then find the column associated with that
 		// There may be a better way.
-		if ( ( ev.button === 0 || ev.touches ) && ( target.dataset.resizeRight || target.dataset.resizeLeft ) ) {
+		if (
+			( ev.button === 0 || ev.touches ) &&
+			( target.dataset.resizeRight || target.dataset.resizeLeft )
+		) {
 			this.block = target.closest( '.wp-block' );
 
-			const { height, right, left, top } = this.block.getBoundingClientRect();
+			const { height, right, left, top } =
+				this.block.getBoundingClientRect();
 			const { width } = target.getBoundingClientRect();
 			const pos = this.getChildPosition( this.block );
 			const isLeft = target.dataset.resizeLeft;
@@ -134,7 +153,9 @@ class ResizeGrid extends Component {
 				width,
 				top: this.getAdjustedTop( top ),
 				direction: isLeft ? 'left' : 'right',
-				max: isLeft ? this.getAdjustedOffset( right, width ) : this.getAdjustedOffset( left, width ),
+				max: isLeft
+					? this.getAdjustedOffset( right, width )
+					: this.getAdjustedOffset( left, width ),
 			} );
 
 			if ( ev.button === 0 ) {
@@ -149,9 +170,9 @@ class ResizeGrid extends Component {
 
 			ev.stopPropagation();
 		}
-	}
+	};
 
-	onMouseMove = ev => {
+	onMouseMove = ( ev ) => {
 		ev.stopPropagation();
 
 		if ( ev.touches === undefined ) {
@@ -161,7 +182,9 @@ class ResizeGrid extends Component {
 		const { height } = this.block.getBoundingClientRect();
 
 		this.setState( {
-			xPos: this.getRestrictedOffset( this.getAdjustedOffset( this.getMouseX( ev ) ) ),
+			xPos: this.getRestrictedOffset(
+				this.getAdjustedOffset( this.getMouseX( ev ) )
+			),
 			height,
 		} );
 
@@ -170,28 +193,43 @@ class ResizeGrid extends Component {
 		if ( adjustment ) {
 			this.props.onResize( this.state.resizingColumn, adjustment );
 		}
-	}
+	};
 
-	onMouseUp = ev => {
+	onMouseUp = ( ev ) => {
 		this.setState( { resizingColumn: -1 } );
 
 		document.removeEventListener( 'mousemove', this.onMouseMove );
 		document.removeEventListener( 'mouseup', this.onMouseUp );
 		document.removeEventListener( 'touchmove', this.onMouseMove );
 		document.removeEventListener( 'touchend', this.onMouseUp );
-	}
+	};
 
 	render() {
 		const { className, children, isSelected } = this.props;
 		const { resizingColumn, xPos, height } = this.state;
 		const classes = classnames(
 			className,
-			resizingColumn !== -1 ? 'wp-block-jetpack-layout-grid__resizing' : null,
+			resizingColumn !== -1
+				? 'wp-block-jetpack-layout-grid__resizing'
+				: null
 		);
 
 		return (
-			<div className={ classes } onMouseDown={ this.onMouseDown } onTouchStart={ this.onMouseDown } ref={ this.containerRef }>
-				{ resizingColumn !== -1 && <ResizeHandle direction={ this.state.direction } height={ height } xPos={ xPos } top={ this.state.top } isSelected={ isSelected } /> }
+			<div
+				className={ classes }
+				onMouseDown={ this.onMouseDown }
+				onTouchStart={ this.onMouseDown }
+				ref={ this.containerRef }
+			>
+				{ resizingColumn !== -1 && (
+					<ResizeHandle
+						direction={ this.state.direction }
+						height={ height }
+						xPos={ xPos }
+						top={ this.state.top }
+						isSelected={ isSelected }
+					/>
+				) }
 				{ children }
 			</div>
 		);
