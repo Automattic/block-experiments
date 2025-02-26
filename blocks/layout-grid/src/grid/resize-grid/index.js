@@ -160,12 +160,9 @@ class ResizeGrid extends Component {
 
 			if ( ev.button === 0 ) {
 				document.addEventListener( 'mousemove', this.onMouseMove );
-				document.addEventListener( 'mouseup', this.onMouseUp );
-
 				ev.preventDefault();
 			} else {
 				document.addEventListener( 'touchmove', this.onMouseMove );
-				document.addEventListener( 'touchend', this.onMouseUp );
 			}
 
 			ev.stopPropagation();
@@ -196,12 +193,13 @@ class ResizeGrid extends Component {
 	};
 
 	onMouseUp = ( ev ) => {
-		this.setState( { resizingColumn: -1 } );
+		if ( this.state.resizingColumn === -1 ) {
+			return;
+		}
 
+		this.setState( { resizingColumn: -1 } );
 		document.removeEventListener( 'mousemove', this.onMouseMove );
-		document.removeEventListener( 'mouseup', this.onMouseUp );
 		document.removeEventListener( 'touchmove', this.onMouseMove );
-		document.removeEventListener( 'touchend', this.onMouseUp );
 	};
 
 	render() {
