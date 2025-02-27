@@ -140,6 +140,11 @@ class ResizeGrid extends Component {
 		) {
 			this.block = target.closest( '.wp-block' );
 
+			// Get the document that contains the target element. We need to use target.ownerDocument
+			// because the Gutenberg editor is iframed, so some events are prevented from bubbling to the document.
+			// https://github.com/WordPress/gutenberg/blob/trunk/packages/block-editor/src/components/iframe/index.js#L79
+			this.targetDocument = target.ownerDocument;
+
 			const { height, right, left, top } =
 				this.block.getBoundingClientRect();
 			const { width } = target.getBoundingClientRect();
@@ -159,12 +164,25 @@ class ResizeGrid extends Component {
 			} );
 
 			if ( ev.button === 0 ) {
-				document.addEventListener( 'mousemove', this.onMouseMove );
-				document.addEventListener( 'mouseup', this.onMouseUp );
+				// Add listeners to the target document instead of global document
+				this.targetDocument.addEventListener(
+					'mousemove',
+					this.onMouseMove
+				);
+				this.targetDocument.addEventListener(
+					'mouseup',
+					this.onMouseUp
+				);
 				ev.preventDefault();
 			} else {
-				document.addEventListener( 'touchmove', this.onMouseMove );
-				document.addEventListener( 'touchend', this.onMouseUp );
+				this.targetDocument.addEventListener(
+					'touchmove',
+					this.onMouseMove
+				);
+				this.targetDocument.addEventListener(
+					'touchend',
+					this.onMouseUp
+				);
 			}
 
 			ev.stopPropagation();
@@ -200,8 +218,14 @@ class ResizeGrid extends Component {
 		}
 
 		this.setState( { resizingColumn: -1 } );
-		document.removeEventListener( 'mousemove', this.onMouseMove );
-		document.removeEventListener( 'touchmove', this.onMouseMove );
+		this.targetDocument.removeEventListener(
+			'mousemove',
+			this.onMouseMove
+		);
+		this.targetDocument.removeEventListener(
+			'touchmove',
+			this.onMouseMove
+		);
 	};
 
 	render() {
@@ -219,8 +243,6 @@ class ResizeGrid extends Component {
 				className={ classes }
 				onMouseDown={ this.onMouseDown }
 				onTouchStart={ this.onMouseDown }
-				onMouseUp={ this.onMouseUp }
-				onTouchEnd={ this.onMouseUp }
 				ref={ this.containerRef }
 			>
 				{ resizingColumn !== -1 && (
