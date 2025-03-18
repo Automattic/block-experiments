@@ -22,10 +22,15 @@
 		"blockbook:build": "npm run build-css && blockbook build"
 	},
 	"devDependencies": {
+		"@babel/core": "^7.26.9",
 		"@babel/plugin-proposal-class-properties": "^7.18.6",
+		"@babel/plugin-transform-modules-commonjs": "^7.26.3",
+		"@babel/preset-env": "^7.26.9",
+		"@testing-library/jest-dom": "^6.6.3",
 		"@testing-library/react": "^16.2.0",
 		"@types/jest": "^29.5.14",
 		"@types/mocha": "^10.0.10",
+		"@wordpress/babel-preset-default": "^7.34.0",
 		"@wordpress/env": "^10.18.0",
 		"@wordpress/icons": "^10.18.0",
 		"@wordpress/jest-preset-default": "^12.18.0",
