@@ -4,12 +4,5 @@ module.exports = ( api ) => {
 	return {
 		presets: [ '@wordpress/babel-preset-default' ],
 		plugins: [ '@emotion/babel-plugin', 'babel-plugin-inline-json-import' ],
-		overrides: [
-			{
-				plugins: [
-					require.resolve( '@wordpress/block-library/babel-plugin' ),
-				],
-			},
-		],
 	};
 };
