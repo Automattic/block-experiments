@@ -1,11 +1,13 @@
 import path from 'path';
-import fs from 'fs-extra';
+import pkg from 'fs-extra';
+const { readFileSync, writeFileSync, existsSync, mkdirp, copy, chmodSync } =
+	pkg;
 import { camelcase, spinalcase } from 'stringcase';
 
 // Create an async function to handle the replace operations
 async function replaceInFile( options ) {
-	const { default: replace } = await import( 'replace-in-file' );
-	return replace.sync( options );
+	const { replaceInFile } = await import( 'replace-in-file' );
+	return replaceInFile( options );
 }
 
 function buildIndexPhp( {
@@ -16,7 +18,7 @@ function buildIndexPhp( {
 	resource,
 	locale,
 } ) {
-	let contents = fs.readFileSync(
+	let contents = readFileSync(
 		path.join( 'bundler', 'template', 'index.php' ),
 		'utf-8'
 	);
@@ -36,9 +38,7 @@ function buildIndexPhp( {
 			"include_once __DIR__ . '/blocks/" + blocks[ index ] + ".php';\n";
 
 		if (
-			fs.existsSync(
-				path.join( 'blocks', blocks[ index ], 'rest-api.php' )
-			)
+			existsSync( path.join( 'blocks', blocks[ index ], 'rest-api.php' ) )
 		) {
 			contents += "include_once __DIR__ . '/blocks/rest-api.php';\n";
 		}
@@ -48,7 +48,7 @@ function buildIndexPhp( {
 }
 
 function buildIndexJs( blocks, isLabs ) {
-	let contents = fs.readFileSync(
+	let contents = readFileSync(
 		path.join( 'bundler', 'template', 'index.js' ),
 		'utf-8'
 	);
@@ -80,7 +80,7 @@ function buildStyle( blocks, title, fileType ) {
 	for ( let index = 0; index < blocks.length; index++ ) {
 		const styleName = `./blocks/${ blocks[ index ] }/${ fileType }.scss`;
 
-		if ( fs.existsSync( styleName ) ) {
+		if ( existsSync( styleName ) ) {
 			contents += `@import '${ styleName }';\n`;
 		}
 	}
@@ -88,24 +88,25 @@ function buildStyle( blocks, title, fileType ) {
 	return contents;
 }
 
-function storeFile( contents, fileName ) {
-	fs.mkdirp( path.dirname( fileName ) )
-		.then( function () {
-			fs.writeFileSync( fileName, contents );
-		} )
-		.catch( function () {
-			console.error( 'Unable to create directory: ' + fileName );
-		} );
+async function storeFile( contents, fileName ) {
+	try {
+		await mkdirp( path.dirname( fileName ) );
+		writeFileSync( fileName, contents );
+	} catch ( error ) {
+		console.error(
+			`storeFile: Unable to create directory: ${ fileName }. Error: ${ error.message }`
+		);
+	}
 }
 
-function copyExtra( sourceDir, targetDir ) {
+async function copyExtra( sourceDir, targetDir ) {
 	const manifest = path.join( sourceDir, 'index.json' );
 
-	if ( fs.existsSync( manifest ) ) {
-		const json = JSON.parse( fs.readFileSync( manifest, 'utf8' ) );
+	if ( existsSync( manifest ) ) {
+		const json = JSON.parse( readFileSync( manifest, 'utf8' ) );
 
 		for ( let index = 0; index < json.length; index++ ) {
-			fs.copySync(
+			await copy(
 				path.join( sourceDir, json[ index ] ),
 				path.join( targetDir, json[ index ] )
 			);
@@ -124,18 +125,22 @@ async function copyBlocks( { blocks, resource }, targetDir ) {
 		const manifest = path.join( 'blocks', blocks[ index ] );
 
 		try {
-			await fs.mkdirp( path.dirname( targetFile ) );
-			fs.copySync( sourceFile, targetFile );
-
+			await mkdirp( path.dirname( targetFile ) );
+			if ( ! existsSync( sourceFile ) ) {
+				console.error( `Source file does not exist: ${ sourceFile }` );
+				continue;
+			}
+			await copy( sourceFile, targetFile );
 			await replaceInFile( {
 				files: targetFile,
 				from: /block-experiments/g,
 				to: spinalcase( resource ),
 			} );
-
-			copyExtra( manifest, path.join( targetDir, 'blocks' ) );
+			await copyExtra( manifest, path.join( targetDir, 'blocks' ) );
 		} catch ( error ) {
-			console.error( 'Unable to create directory: ' + targetFile );
+			console.error(
+				`copyBlocks: Unable to create directory: ${ targetFile }. Error: ${ error.message }`
+			);
 		}
 	}
 }
@@ -161,9 +166,9 @@ function packageBundle( { resource, version } ) {
 		`rm -rf ${ assets }`,
 	];
 
-	fs.mkdirp( 'build' ).then( function () {
-		fs.writeFileSync( './build/bundle.sh', lines.join( '\n' ) );
-		fs.chmodSync( './build/bundle.sh', 0o755 );
+	mkdirp( 'build' ).then( function () {
+		writeFileSync( './build/bundle.sh', lines.join( '\n' ) );
+		chmodSync( './build/bundle.sh', 0o755 );
 	} );
 }
 
