@@ -24,6 +24,9 @@ You can follow development, file an issue, suggest features, and view the source
 
 == Changelog ==
 
+= 1.8.5 - 28th March 2025 =
+* Fix drag resize listener for iframed block editor
+
 = 1.8.4 - 11th July 2023 =
 * Fix error in editor with icons
 
