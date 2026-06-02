@@ -10,12 +10,12 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout
-              uses: actions/checkout@v2
+              uses: actions/checkout@v6
               with:
                   ref: master
 
             - name: Setup Node
-              uses: actions/setup-node@v1
+              uses: actions/setup-node@v6
               with:
                   node-version: '12.x'
 
@@ -26,7 +26,7 @@ jobs:
               run: yarn install && yarn blockbook:build -- --output-public-path=/block-experiments && cp dist/index.html dist/404.html
 
             - name: Deploy
-              uses: peaceiris/actions-gh-pages@373f7f263a76c20808c831209c920827a82a2847 # v3.9.3
+              uses: peaceiris/actions-gh-pages@84c30a85c19949d7eee79c4ff27748b70285e453 # v4.1.0
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
                   publish_dir: ./dist
